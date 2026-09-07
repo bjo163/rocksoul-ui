@@ -108,8 +108,8 @@ function OverlayDemo() {
           {id:"three",label:"Disabled",content:<p>Disabled</p>,disabled:true},
         ]} />
       </div>
-      {dialog ? <Dialog open title={`Dialog ${dialog}`} size={dialog} onClose={()=>setDialog(null)}><p>Accessible modal state.</p></Dialog> : null}
-      {drawer ? <Drawer open title={`Drawer ${drawer}`} position={drawer} onClose={()=>setDrawer(null)}><p>Accessible drawer state.</p></Drawer> : null}
+      {dialog ? <Dialog open title={`Dialog ${dialog}`} size={dialog} onClose={()=>setDialog(null)} actions={<Button variant="primary" onClick={()=>setDialog(null)}>Confirm</Button>}><p>Accessible modal state.</p></Dialog> : null}
+      {drawer ? <Drawer open title={`Drawer ${drawer}`} position={drawer} onClose={()=>setDrawer(null)} footer={<Button variant="secondary" onClick={()=>setDrawer(null)}>Close</Button>}><p>Accessible drawer state.</p></Drawer> : null}
     </div>
   )
 }

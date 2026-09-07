@@ -62,6 +62,7 @@ export function FourRecordSummary({
                 "flex scroll-mt-24 flex-col border border-border bg-card p-4",
                 compact ? "min-h-44" : "min-h-72",
               )}
+              data-state={record.status === "partial" ? "partial" : "linked"}
             >
               <div className="flex items-start justify-between gap-3">
                 <span className={cn("mw-eyebrow", domainClass[record.domain])}>{record.domain}</span>

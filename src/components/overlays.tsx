@@ -63,12 +63,14 @@ export function Dialog({
   children,
   onClose,
   size = "md",
+  actions,
 }: {
   open: boolean
   title: string
   children: ReactNode
   onClose: () => void
   size?: "sm" | "md" | "lg"
+  actions?: ReactNode
 }) {
   const ref = useRef<HTMLDialogElement>(null)
   const restoreRef = useRef<HTMLElement | null>(null)
@@ -106,6 +108,7 @@ export function Dialog({
         <IconButton label="Close dialog" variant="ghost" onClick={onClose}>×</IconButton>
       </div>
       <div className="p-5">{children}</div>
+      {actions ? <div className="flex flex-wrap justify-end gap-2 border-t border-border p-4">{actions}</div> : null}
     </dialog>
   )
 }
@@ -116,12 +119,14 @@ export function Drawer({
   children,
   onClose,
   position = "right",
+  footer,
 }: {
   open: boolean
   title: string
   children: ReactNode
   onClose: () => void
   position?: "left" | "right" | "bottom-mobile"
+  footer?: ReactNode
 }) {
   const ref = useRef<HTMLDialogElement>(null)
   const restoreRef = useRef<HTMLElement | null>(null)
@@ -158,6 +163,7 @@ export function Drawer({
         <IconButton label="Close drawer" variant="ghost" onClick={onClose}>×</IconButton>
       </div>
       <div className="p-4">{children}</div>
+      {footer ? <div className="border-t border-border p-4">{footer}</div> : null}
     </dialog>
   )
 }

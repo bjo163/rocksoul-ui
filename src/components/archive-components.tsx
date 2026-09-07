@@ -63,7 +63,9 @@ export function MWHeader({
         </nav>
 
         <div className={cn("items-center gap-2", compact ? "flex" : "flex md:hidden")}>
-          {caseId ? <span className="mw-meta text-muted-foreground">{caseId}</span> : null}
+          {caseId ? <span className="mw-meta hidden text-muted-foreground sm:inline">{caseId}</span> : null}
+          <a href="#search" className="mw-touch inline-flex items-center justify-center border border-border px-2 font-mono text-[9px] font-bold uppercase">Search</a>
+          <Avatar label={surface === "community" ? "Member" : "Guest"} size="sm" />
           <button
             className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase"
             type="button"
@@ -557,7 +559,12 @@ export function PlatformSidebar({
       </nav>
       <div className="border-t border-border p-3">
         <p className="mw-meta text-success">{collapsed ? "●" : "System / online"}</p>
-        {!collapsed ? <p className="mw-meta mt-2 hidden text-muted-foreground lg:block">Researcher / fixture</p> : null}
+        {!collapsed ? (
+          <div className="mt-2 hidden items-center gap-2 lg:flex">
+            <Avatar label="Researcher" size="xs" />
+            <span className="mw-meta text-muted-foreground">Researcher / fixture</span>
+          </div>
+        ) : null}
       </div>
     </aside>
   )
