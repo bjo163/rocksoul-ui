@@ -1,99 +1,145 @@
 import { buttonVariants } from "../components/button"
-import { ThemeToggle } from "../components/theme-toggle"
+import { MWHeader, RepositoryCard } from "../components/archive-components"
 import { WorkflowStrip } from "../components/workflow-strip"
 
 const method = [
   ["observe", "01", "OBSERVE", "Something happened. Record it before the story hardens around it."],
   ["trace", "02", "TRACE", "Keep source, time, identity, and provenance attached to every fragment."],
-  ["reconstruct", "03", "RECONSTRUCT", "Build relationships without pretending correlation has become identity."],
+  ["reconstruct", "03", "RECONSTRUCT", "Build relationships without forcing identity."],
   ["weigh", "04", "WEIGH / MIZAN", "Expose dimensions, contradictions, confidence, and what is still missing."],
   ["verify", "05", "VERIFY", "Let supported stay supported, partial stay partial, and unresolved stay open."],
 ] as const
 
-const records = [
-  ["STORY", "What was told."],
-  ["EVENT", "What was recorded."],
-  ["PERSON", "Who may be involved."],
-  ["RGBL", "What the text preserves."],
-] as const
-
 export function LandingScreen() {
   return (
-    <div className="bg-background text-foreground">
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mw-shell flex min-h-16 items-center justify-between gap-4">
-          <a href="#top" className="mw-touch-link font-black uppercase tracking-[-0.03em]" aria-label="MoonWitness home">
-            MoonWitness
-          </a>
+    <div id="top" className="bg-background text-foreground">
+      <MWHeader />
 
-          <nav aria-label="Primary" className="hidden items-center gap-1 sm:flex">
-            <a href="#method" className="mw-touch-link px-3 font-mono text-[10px] uppercase tracking-[0.12em]">
-              Method
-            </a>
-            <a href="#universe" className="mw-touch-link px-3 font-mono text-[10px] uppercase tracking-[0.12em]">
-              Records
-            </a>
-            <a href="#case" className="mw-touch-link px-3 font-mono text-[10px] uppercase tracking-[0.12em]">
-              Golden case
-            </a>
-          </nav>
-
-          <ThemeToggle />
-        </div>
-      </header>
-
-      <main id="top">
-        <section className="mw-shell flex min-h-[82vh] flex-col justify-between py-10 sm:py-16">
+      <main>
+        <section className="mw-shell-wide flex min-h-[calc(100vh-64px)] flex-col justify-between py-12 sm:py-16">
           <div className="flex flex-wrap items-start justify-between gap-4">
-            <p className="mw-eyebrow text-primary">MoonWitness / Observatory interface</p>
-            <p className="mw-eyebrow text-muted-foreground">Design System v0.3</p>
+            <p className="mw-eyebrow text-primary">MoonWitness / Independent Observatory</p>
+            <p className="mw-meta text-muted-foreground">Rocksoul / connective thread</p>
           </div>
 
           <div className="max-w-6xl py-16">
             <p className="mw-eyebrow text-muted-foreground">Where myth fades to legend</p>
-            <h1 className="mt-5 text-balance text-[clamp(4rem,13vw,11rem)] font-black uppercase leading-[0.78] tracking-[-0.075em]">
+            <h1 className="mw-display mt-5 text-balance text-[clamp(4rem,12vw,8rem)] font-black uppercase leading-[0.82]">
               Observe.
               <br />
-              Don’t rush
+              Trace.
               <br />
-              the answer.
+              Don’t force
+              <br />
+              the ending.
             </h1>
-            <p className="mt-8 max-w-2xl text-pretty text-base leading-7 text-muted-foreground sm:text-xl sm:leading-8">
-              MoonWitness is an evidence-first interface for tracing records, reconstructing relationships,
-              weighing uncertainty, and keeping unresolved questions visible.
+            <p className="mw-reading mt-8 text-pretty text-base leading-7 text-muted-foreground sm:text-xl sm:leading-8">
+              MoonWitness traces records, reconstructs relationships, weighs uncertainty through Mizan,
+              and leaves unresolved questions visibly unresolved.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#case" className={buttonVariants({ variant: "primary", size: "lg" })}>
                 Open MW-0042
               </a>
-              <a href="#method" className={buttonVariants({ variant: "secondary", size: "lg" })}>
-                Read the method
+              <a href="#manifesto" className={buttonVariants({ variant: "secondary", size: "lg" })}>
+                Read manifesto
               </a>
             </div>
           </div>
 
-          <p className="max-w-xl font-mono text-[10px] uppercase leading-5 tracking-[0.12em] text-muted-foreground">
+          <p className="mw-meta max-w-xl leading-5 text-muted-foreground">
             Observe first · provenance stays attached · correlation is not causation · unresolved is a valid output
           </p>
         </section>
 
-        <div id="method" className="mw-shell scroll-mt-20">
+        <section id="manifesto" className="mw-shell-wide mw-section scroll-mt-20">
+          <div className="grid gap-12 lg:grid-cols-[0.65fr_1.35fr]">
+            <div>
+              <p className="mw-eyebrow text-primary">02 / Manifesto</p>
+              <h2 className="mw-display mt-4 text-5xl font-black uppercase leading-[0.95] sm:text-7xl">
+                Mystery can stay.
+                <br />
+                Evidence cannot hide.
+              </h2>
+            </div>
+            <div className="mw-reading self-end">
+              <p className="text-xl leading-8 sm:text-2xl sm:leading-9">
+                MoonWitness is not built to make every trail become a conclusion.
+              </p>
+              <p className="mt-6 text-base leading-7 text-muted-foreground">
+                A story may align with an event. A person may remain partial. A text may preserve the motif.
+                The interface should show what connects, what contradicts, who supplied it, and where certainty stops.
+              </p>
+              <p className="mt-6 text-base font-bold">Not enough yet is still an answer.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="rocksoul" className="mw-shell-wide mw-section">
+          <div className="grid min-h-[520px] gap-8 border border-border bg-card p-6 sm:p-10 lg:grid-cols-[1fr_1fr]">
+            <div className="flex flex-col justify-between">
+              <div>
+                <p className="mw-eyebrow text-primary">03 / Rocksoul</p>
+                <h2 className="mw-display mt-4 text-5xl font-black uppercase sm:text-7xl">
+                  The thread,
+                  <br />
+                  not the throne.
+                </h2>
+              </div>
+              <p className="mw-reading text-sm leading-6 text-muted-foreground">
+                Rocksoul moves across records and repositories as a connective character. MoonWitness remains the observatory and product identity.
+              </p>
+            </div>
+            <div
+              className="relative min-h-80 overflow-hidden border border-border bg-background"
+              aria-label="Abstract Rocksoul character field"
+            >
+              <div className="absolute inset-x-[20%] bottom-0 top-[22%] border-x border-border bg-panel" />
+              <div className="absolute left-1/2 top-[12%] size-28 -translate-x-1/2 rounded-full border border-primary bg-card" />
+              <div className="absolute bottom-6 left-6 right-6 border-t border-primary pt-3">
+                <span className="mw-meta text-primary">ROCKSOUL / CHARACTER SIGNAL</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="repositories" className="mw-shell-wide mw-section">
+          <div className="flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p className="mw-eyebrow text-primary">04 / Repository universe</p>
+              <h2 className="mw-display mt-3 text-4xl font-black uppercase sm:text-6xl">Five sources. One observatory.</h2>
+            </div>
+            <p className="mw-reading text-sm leading-6 text-muted-foreground">
+              STORY, EVENT, PERSON, and RGBL enter evidence reconstruction. AWS enters after correlation as the legal/regulatory boundary.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <RepositoryCard repo="rocksoul-legend" domain="STORY" status="healthy" records={1} schema="v1" lastSync="fixture" />
+            <RepositoryCard repo="rocksoul-event" domain="EVENT" status="healthy" records={1} schema="v1" lastSync="fixture" />
+            <RepositoryCard repo="rocksoul-superhero" domain="PERSON" status="degraded" records={1} schema="v1" lastSync="fixture" />
+            <RepositoryCard repo="rocksoul-rgbl" domain="RGBL" status="healthy" records={1} schema="v1" lastSync="fixture" />
+            <RepositoryCard repo="rocksoul-aws" domain="AWS / downstream" status="healthy" records={1} schema="v1" lastSync="fixture" />
+          </div>
+        </section>
+
+        <div id="method" className="mw-shell-wide scroll-mt-20">
           <WorkflowStrip />
         </div>
 
-        <section className="mw-shell mw-section">
+        <section className="mw-shell-wide mw-section">
           <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
             <div>
-              <p className="mw-eyebrow text-primary">The method</p>
-              <h2 className="mt-4 text-4xl font-black uppercase tracking-[-0.045em] sm:text-6xl">
+              <p className="mw-eyebrow text-primary">Method</p>
+              <h2 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">
                 From record
                 <br />
                 to restraint.
               </h2>
             </div>
 
-            <div className="grid gap-0 border-t border-border">
+            <div className="grid border-t border-border">
               {method.map(([id, number, title, copy]) => (
                 <article id={id} key={id} className="scroll-mt-24 border-b border-border py-6">
                   <div className="grid gap-4 sm:grid-cols-[80px_1fr_1.4fr]">
@@ -104,27 +150,6 @@ export function LandingScreen() {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section id="universe" className="mw-shell mw-section scroll-mt-20">
-          <p className="mw-eyebrow text-primary">Record universe</p>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {records.map(([name, copy]) => (
-              <article key={name} className="min-h-48 border border-border bg-card p-5">
-                <p className="mw-eyebrow text-muted-foreground">Peer record</p>
-                <h3 className="mt-8 text-3xl font-black">{name}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{copy}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-4 border border-primary/50 bg-card p-5 sm:ml-auto sm:max-w-2xl">
-            <p className="mw-eyebrow text-primary">Downstream boundary</p>
-            <h3 className="mt-3 text-2xl font-black">AWS / ANGEL WITH SHOTGUN</h3>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              AWS is not a fifth evidence record. It enters after correlation to ask what legal or regulatory rule could apply.
-            </p>
           </div>
         </section>
       </main>

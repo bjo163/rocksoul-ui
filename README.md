@@ -1,17 +1,22 @@
-# MoonWitness UI
+# Rocksoul UI
 
 Production-oriented, code-first UI system for the **MoonWitness** product ecosystem.
 
-**MoonWitness is the umbrella/product identity. Rocksoul is the character and connective thread.**
+- **Repository:** `rocksoul-ui`
+- **Package:** `@rocksoul/ui`
+- **Product umbrella:** MoonWitness
+- **Character / connective thread:** Rocksoul
 
-This repository stays separate from `rocksoul-assets`:
+> `rocksoul/ui` is used as the conceptual path. npm package names cannot use an unscoped slash, so the valid package identity is `@rocksoul/ui`.
+
+## Canonical chain
 
 ```text
 rocksoul-assets
-  design source / Penpot / contracts
+  tokens / primitives / components / patterns / 16 references
         ↓
-rocksoul-ui
-  @moonwitness/ui / Storybook / golden implementation
+@rocksoul/ui
+  production UI grammar / Storybook / golden implementation
         ↓
 rocksoul-web
   application consumer
@@ -26,70 +31,82 @@ rocksoul-web
 - Storybook
 - Storybook accessibility addon
 
-## Design system
+## Design parity
 
-Current implementation gate: **MoonWitness Design System v0.3**
+Current gate: **Rocksoul UI v0.4 / MoonWitness visual grammar**.
 
-v0.3 establishes:
+The implementation follows the design-source contracts in `rocksoul-assets`:
 
-- semantic light + dark tokens
-- editorial MoonWitness shell
-- visible focus and 44px minimum interactive targets
-- reduced-motion behavior
-- reusable primitives and case components
-- OBSERVE → TRACE → RECONSTRUCT → WEIGH → VERIFY product grammar
-- MW-0042 provenance + correlation + AWS boundary proof
+- exact semantic color tokens
+- Inter Tight direction for display, Inter body, IBM Plex Mono metadata
+- public/community expressive dark surfaces
+- platform/admin clean dense light surface
+- 1440 / 1024 / 768 / 390 / 320 responsive QA
+- visible focus, 44×44 touch targets, reduced motion
+- status never color-only
+- correlation always carries explanation
+- graph always carries a text equivalent
+- AWS legal boundary remains downstream from STORY/EVENT/PERSON/RGBL
+- legal interpretation never presents itself as a court judgment
+
+## 16-screen coverage
+
+1. Landing Hero
+2. Manifesto
+3. Rocksoul Character
+4. Repositories Overview
+5. STORY
+6. EVENT
+7. PERSON
+8. RGBL
+9. AWS
+10. Public Case
+11. Correlation
+12. AWS Legal
+13. Community
+14. Auth
+15. Platform Admin
+16. Design System
+
+All screen surfaces and reusable patterns are represented in Storybook.
 
 ## Golden case
 
-**MW-0042 — The Silent Flight** is a synthetic fixture.
-
-Its role is to prove mixed-certainty UI behavior:
+**MW-0042 — The Silent Flight** is synthetic/reference-only.
 
 - STORY → supported
 - EVENT → supported
 - PERSON → partial
 - RGBL → supported
-- Correlation → 0.87, not conclusive
-- AWS → downstream legal boundary, disputed
+- Correlation → 0.87, supported-not-conclusive
+- AWS → disputed / jurisdiction unresolved
 - Final state → unresolved
-
-Correlation is never presented as proof. AWS is not a fifth evidence record.
 
 ## Run
 
 ```bash
 npm install
 npm run dev
-```
-
-Storybook:
-
-```bash
 npm run storybook
-```
-
-Verification:
-
-```bash
 npm run ci
 ```
 
+`npm run ci` includes:
+
+1. token / identity audit
+2. TypeScript strict check
+3. Vite build
+4. Storybook build
+
 ## Branch contract
 
-Only two long-lived branches are used:
+Only two long-lived branches:
 
 ```text
 dev  ── verified promotion ──> main
 ```
 
 - `dev` — all active implementation and integration
-- `main` — stable, verified baseline
-- do not create `feature/*`, `fix/*`, or other working branches
-- do not implement directly on `main`
-
-## Scope boundary
-
-`rocksoul-ui` owns reusable visual/product grammar.
-
-`rocksoul-web` should consume this system later and own app-level concerns such as routing, data access, auth, SEO, deployment, analytics, and API integration.
+- `main` — stable verified baseline
+- no `feature/*`, `fix/*`, or other working branches
+- never implement directly on `main`
