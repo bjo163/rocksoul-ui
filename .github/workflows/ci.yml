@@ -28,8 +28,11 @@ jobs:
       - name: Install
         run: npm install --no-audit --no-fund
 
-      - name: Assets contract audit
+      - name: Design contract audit
         run: npm run audit:tokens
+
+      - name: Accessibility contract audit
+        run: npm run audit:a11y
 
       - name: Typecheck
         run: npm run typecheck

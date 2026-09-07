@@ -93,10 +93,11 @@ npm run ci
 
 `npm run ci` includes:
 
-1. token / identity audit
-2. TypeScript strict check
-3. Vite build
-4. Storybook build
+1. design-token / identity / component / pattern inventory audit
+2. accessibility contract audit
+3. TypeScript strict check
+4. Vite build
+5. Storybook build
 
 ## Branch contract
 

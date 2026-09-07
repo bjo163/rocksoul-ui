@@ -120,6 +120,60 @@ for (const component of requiredComponents) {
   if (!sourceText.includes(`export function ${component}`)) violations.push(`component inventory: missing export function ${component}`)
 }
 
+
+const patternSource = await readFile(path.join(src, "components", "patterns.tsx"), "utf8")
+const requiredPatterns = [
+  "PublicCasePattern",
+  "EvidenceGridPattern",
+  "CorrelationGraphPattern",
+  "CaseTimelinePattern",
+  "AWSLegalSummaryPattern",
+  "RepositoryMonitor",
+  "ModerationQueue",
+  "CommunityCaseThreadPattern",
+  "AuthFormPattern",
+  "SearchFiltersPattern",
+  "EmptyLoadingErrorPattern",
+  "RelatedCases",
+  "Pagination",
+]
+for (const pattern of requiredPatterns) {
+  if (!patternSource.includes(`export function ${pattern}`)) violations.push(`pattern inventory: missing export function ${pattern}`)
+}
+
+const componentStory = await readFile(path.join(src, "stories", "ComponentMatrix.stories.tsx"), "utf8")
+const requiredComponentProofs = [
+  "HeaderVariants",
+  "CaseVariants",
+  "EvidenceAndSourceVariants",
+  "CorrelationAndGraphVariants",
+  "TimelineVariants",
+  "LegalStateVariants",
+  "CommunityStateVariants",
+  "RepositoryAndMetricStates",
+]
+for (const proof of requiredComponentProofs) {
+  if (!componentStory.includes(`export const ${proof}`)) violations.push(`component story proof: missing ${proof}`)
+}
+
+const patternStory = await readFile(path.join(src, "stories", "PatternMatrix.stories.tsx"), "utf8")
+const requiredPatternProofs = [
+  "PublicCase",
+  "EvidenceGrid",
+  "CorrelationGraph",
+  "AWSLegalSummary",
+  "Timeline",
+  "RepositoryMonitorPattern",
+  "ModerationQueuePattern",
+  "CommunityThread",
+  "AuthForm",
+  "SearchAndFilters",
+  "EmptyLoadingError",
+]
+for (const proof of requiredPatternProofs) {
+  if (!patternStory.includes(`export const ${proof}`)) violations.push(`pattern story proof: missing ${proof}`)
+}
+
 if (violations.length) {
   console.error("Rocksoul UI contract audit failed:")
   for (const violation of violations) console.error(`- ${violation}`)
