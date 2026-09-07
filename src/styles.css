@@ -272,7 +272,7 @@ a {
 
 @media (max-width: 1023px) {
   .mw-shell-wide {
-    width: min(calc(100% - 48px), var(--mw-content-canvas));
+    width: min(calc(100% - 64px), var(--mw-content-canvas));
   }
 
   .rs-record-grid {
@@ -287,7 +287,7 @@ a {
 @media (max-width: 767px) {
   .mw-shell,
   .mw-shell-wide {
-    width: min(calc(100% - 32px), var(--mw-content-canvas));
+    width: min(calc(100% - 36px), var(--mw-content-canvas));
   }
 
   .rs-record-grid {

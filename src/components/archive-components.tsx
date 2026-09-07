@@ -467,10 +467,10 @@ export function PlatformSidebar({
   return (
     <aside
       className={cn(
-        "hidden min-h-[calc(100vh-64px)] shrink-0 border-r border-border bg-panel lg:block",
-        collapsed ? "w-16" : "w-[240px]",
+        "hidden min-h-[calc(100vh-64px)] shrink-0 border-r border-border bg-panel md:block",
+        collapsed ? "w-16" : "w-[84px] lg:w-[240px]",
       )}
-      data-state={collapsed ? "collapsed" : "expanded"}
+      data-state={collapsed ? "collapsed" : "responsive"}
     >
       <nav aria-label="Platform">
         {items.map((item) => (
@@ -479,12 +479,19 @@ export function PlatformSidebar({
             href="#platform"
             title={collapsed ? item : undefined}
             className={cn(
-              "mw-link w-full px-5 text-sm no-underline",
-              collapsed && "justify-center px-2 font-mono text-[10px]",
+              "mw-link w-full text-sm no-underline",
+              collapsed ? "justify-center px-2 font-mono text-[10px]" : "justify-center px-2 lg:justify-start lg:px-5",
               item === active ? "font-bold text-primary" : "text-muted-foreground hover:text-foreground",
             )}
           >
-            {collapsed ? item.slice(0, 2).toUpperCase() : item}
+            {collapsed ? (
+              item.slice(0, 2).toUpperCase()
+            ) : (
+              <>
+                <span className="font-mono text-[10px] lg:hidden">{item.slice(0, 2).toUpperCase()}</span>
+                <span className="hidden lg:inline">{item}</span>
+              </>
+            )}
           </a>
         ))}
       </nav>

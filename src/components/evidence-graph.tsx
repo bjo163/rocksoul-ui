@@ -12,6 +12,13 @@ const domainTone: Record<RecordDomain, string> = {
   RGBL: "text-rgbl-blue",
 }
 
+const nodePosition: Record<RecordDomain, string> = {
+  STORY: "left-[8%] top-[10%]",
+  EVENT: "right-[8%] top-[10%]",
+  PERSON: "bottom-[10%] left-[8%]",
+  RGBL: "bottom-[10%] right-[8%]",
+}
+
 const edgeLegend: Array<{ type: EdgeType; label: string; className: string }> = [
   { type: "supports", label: "supports", className: "border-success" },
   { type: "temporal", label: "temporal", className: "border-rgbl-green" },
@@ -42,28 +49,22 @@ export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
         <Badge variant="unresolved">not causation</Badge>
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-          {records.slice(0, 2).map((record) => (
-            <GraphNode key={record.domain} record={record} selected={selected} onSelect={setSelected} />
-          ))}
+      <div className="relative mx-auto mt-6 aspect-square w-full max-w-[430px]" aria-label="Interactive case relationship graph">
+        <svg className="absolute inset-0 size-full" viewBox="0 0 100 100" aria-hidden="true">
+          <line x1="50" y1="50" x2="22" y2="22" className="text-rgbl-red" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+          <line x1="50" y1="50" x2="78" y2="22" className="text-rgbl-green" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+          <line x1="50" y1="50" x2="22" y2="78" className="text-warning" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+          <line x1="50" y1="50" x2="78" y2="78" className="text-rgbl-blue" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+        </svg>
+
+        <div className="absolute left-1/2 top-1/2 flex size-[clamp(82px,22vw,104px)] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-primary bg-panel text-center">
+          <span className="mw-meta text-muted-foreground">Case</span>
+          <strong className="mw-display mt-1 text-3xl">{score.toFixed(2)}</strong>
         </div>
 
-        <div
-          className="flex min-h-28 items-center justify-center border-2 border-primary bg-background px-5 text-center"
-          aria-label={`Case correlation score ${score.toFixed(2)}`}
-        >
-          <div>
-            <p className="mw-meta text-muted-foreground">Case</p>
-            <p className="mw-display mt-1 text-5xl font-black">{score.toFixed(2)}</p>
-          </div>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-          {records.slice(2).map((record) => (
-            <GraphNode key={record.domain} record={record} selected={selected} onSelect={setSelected} />
-          ))}
-        </div>
+        {records.map((record) => (
+          <GraphNode key={record.domain} record={record} selected={selected} onSelect={setSelected} />
+        ))}
       </div>
 
       <div className="mt-5 flex flex-wrap gap-3" aria-label="Relationship legend">
@@ -114,19 +115,24 @@ export function GraphNode({
     <button
       type="button"
       className={cn(
-        "mw-touch min-h-24 rounded-none border p-4 text-left transition-colors",
+        "absolute flex size-[clamp(64px,18vw,82px)] flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity]",
+        nodePosition[record.domain],
         record.domain === "PERSON"
           ? "border-warning"
           : active
             ? "border-foreground bg-panel"
-            : "border-border bg-background hover:border-border-strong hover:bg-panel",
+            : record.domain === "STORY"
+              ? "border-rgbl-red"
+              : record.domain === "EVENT"
+                ? "border-rgbl-green"
+                : "border-rgbl-blue",
       )}
       aria-pressed={active}
+      aria-label={`${record.domain}: ${record.status}. Select relationship node.`}
       onClick={() => onSelect(record.domain)}
     >
-      <span className={cn("mw-eyebrow", domainTone[record.domain])}>{record.domain}</span>
-      <span className="mt-2 block text-sm font-semibold">{record.recordId}</span>
-      <span className="mw-meta mt-1 block text-muted-foreground">{record.status}</span>
+      <span className={cn("font-mono text-[9px] font-bold uppercase", domainTone[record.domain])}>{record.domain}</span>
+      <span className="mt-1 font-mono text-[8px] uppercase text-muted-foreground">{record.status}</span>
     </button>
   )
 }

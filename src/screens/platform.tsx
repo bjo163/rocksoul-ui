@@ -22,7 +22,7 @@ export function PlatformScreen() {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase lg:hidden"
+            className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase md:hidden"
             onClick={() => setMenuOpen(true)}
           >
             Menu
