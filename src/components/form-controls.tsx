@@ -34,7 +34,7 @@ function FieldFrame({ id, label, helper, error, children }: FieldFrameProps) {
   )
 }
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   label: string
   helper?: string
   error?: string

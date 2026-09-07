@@ -22,7 +22,7 @@ export const CaseAndRelationshipStates: Story = {
   render: () => (
     <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground">
       <div className="grid gap-4 lg:grid-cols-2">
-        <CaseCard caseId="MW-0042" title="The Silent Flight" summary="Enough to investigate. Not enough to close." status="unresolved" traceCount={4} updatedAt="05:30" featured />
+        <CaseCard caseId="MW-0042" title="The Silent Flight" summary="Enough to investigate. Not enough to close." status="unresolved" traceCount={4} updatedAt="05:30" variant="featured" />
         <div className="border border-border bg-card p-5">
           <p className="mw-meta text-muted-foreground">Graph edge variants</p>
           <div className="mt-4 flex flex-wrap gap-4">
