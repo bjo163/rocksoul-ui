@@ -10,8 +10,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "audit:tokens": "node scripts/token-audit.mjs",
-    "ci": "npm run audit:tokens && npm run audit:a11y && npm run typecheck && npm run build && npm run build-storybook",
-    "audit:a11y": "node scripts/a11y-audit.mjs"
+    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run typecheck && npm run build && npm run build-storybook",
+    "audit:a11y": "node scripts/a11y-audit.mjs",
+    "audit:domains": "node scripts/domain-audit.mjs"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",

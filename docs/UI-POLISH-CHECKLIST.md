@@ -106,6 +106,18 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] S01-S16 presence is enforced by CI.
 - [x] Dedicated primitive/component/pattern Storybook contract matrices.
 
+## Domain-specific screen fidelity
+- [x] STORY shows source type, locator, independence, and narrative provenance.
+- [x] EVENT shows canonical 02:14–02:37 LOCAL/FIXTURE temporal window.
+- [x] EVENT timeline repeats the canonical bounded interval.
+- [x] PERSON shows role = match, movement = match, identity = NOT VERIFIED.
+- [x] PERSON identity remains a visible closure blocker.
+- [x] RGBL shows RED=movement, GREEN=return, BLUE=night, LIGHT=unresolved relation.
+- [x] RGBL explicitly separates semantic relation from causal assertion.
+- [x] AWS shows LAW-FIX-01 and LAW-FIX-02 as synthetic/reference-only instruments.
+- [x] AWS uses the semantic boundary before legal review.
+- [x] Domain-specific fixture/screen fidelity is enforced by CI.
+
 ## MW-0042 integrity
 - [x] STORY/EVENT/PERSON/RGBL remain separate peer records.
 - [x] AWS remains downstream from correlation.
@@ -181,6 +193,7 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 ## Engineering gates
 - [x] Design-contract audit.
 - [x] Accessibility-contract audit.
+- [x] Domain-specific MW-0042 audit.
 - [x] TypeScript strict.
 - [x] Vite production build.
 - [x] Storybook production build.
