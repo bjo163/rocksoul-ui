@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Inter", "Arial", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+  --color-background: var(--rs-background);
+  --color-foreground: var(--rs-foreground);
+  --color-card: var(--rs-card);
+  --color-card-foreground: var(--rs-card-foreground);
+  --color-muted: var(--rs-muted);
+  --color-muted-foreground: var(--rs-muted-foreground);
+  --color-border: var(--rs-border);
+  --color-primary: var(--rs-primary);
+  --color-primary-foreground: var(--rs-primary-foreground);
+  --color-success: var(--rs-success);
+  --color-warning: var(--rs-warning);
+  --color-info: var(--rs-info);
+  --color-rgbl-red: var(--rs-rgbl-red);
+  --color-rgbl-green: var(--rs-rgbl-green);
+  --color-rgbl-blue: var(--rs-rgbl-blue);
+  --color-rgbl-light: var(--rs-rgbl-light);
+}
+
+:root {
+  color-scheme: dark;
+  --rs-background: #0b0b0b;
+  --rs-foreground: #f7f4ec;
+  --rs-card: #151515;
+  --rs-card-foreground: #f7f4ec;
+  --rs-muted: #242424;
+  --rs-muted-foreground: #a3a3a3;
+  --rs-border: #2e2e2e;
+  --rs-primary: #d1132a;
+  --rs-primary-foreground: #ffffff;
+  --rs-success: #16a36a;
+  --rs-warning: #d89b17;
+  --rs-info: #3b82f6;
+  --rs-rgbl-red: #e51735;
+  --rs-rgbl-green: #10b981;
+  --rs-rgbl-blue: #3b82f6;
+  --rs-rgbl-light: #f4c542;
+}
+
+.light {
+  color-scheme: light;
+  --rs-background: #f7f4ec;
+  --rs-foreground: #0b0b0b;
+  --rs-card: #ffffff;
+  --rs-card-foreground: #0b0b0b;
+  --rs-muted: #eeeae0;
+  --rs-muted-foreground: #666666;
+  --rs-border: #d9d6ce;
+  --rs-primary: #b70f24;
+  --rs-primary-foreground: #ffffff;
+  --rs-success: #147a51;
+  --rs-warning: #9b6b0b;
+  --rs-info: #2867c7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--rs-background);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--rs-background);
+  color: var(--rs-foreground);
+  font-family: var(--font-sans);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--rs-foreground) 72%, transparent);
+  outline-offset: 3px;
+}
+
+.rs-record-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 0.9rem;
+}
+
+.rs-two-column {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  gap: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
