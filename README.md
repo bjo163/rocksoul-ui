@@ -1,25 +1,20 @@
-# Rocksoul UI
+# MoonWitness UI
 
-Standalone, code-first visual system for the Rocksoul ecosystem.
+Production-oriented, code-first UI system for the **MoonWitness** product ecosystem.
 
-This repository is intentionally separate from `bjo163/moonwitness`.
+**MoonWitness is the umbrella/product identity. Rocksoul is the character and connective thread.**
 
-## Why it exists
-
-`rocksoul-assets` keeps visual references and design-source artifacts.
-
-`rocksoul-ui` turns those references into reusable production React components and Storybook stories.
+This repository stays separate from `rocksoul-assets`:
 
 ```text
 rocksoul-assets
-      ↓
-visual reference
-      ↓
+  design source / Penpot / contracts
+        ↓
 rocksoul-ui
-      ↓
-React components + Storybook
-      ↓
-future apps
+  @moonwitness/ui / Storybook / golden implementation
+        ↓
+rocksoul-web
+  application consumer
 ```
 
 ## Stack
@@ -31,31 +26,47 @@ future apps
 - Storybook
 - Storybook accessibility addon
 
-## First golden slice
+## Design system
 
-**MW-0042 — The Silent Flight**
+Current implementation gate: **MoonWitness Design System v0.3**
 
-The fixture is synthetic. It exists to prove UI behavior for mixed certainty:
+v0.3 establishes:
+
+- semantic light + dark tokens
+- editorial MoonWitness shell
+- visible focus and 44px minimum interactive targets
+- reduced-motion behavior
+- reusable primitives and case components
+- OBSERVE → TRACE → RECONSTRUCT → WEIGH → VERIFY product grammar
+- MW-0042 provenance + correlation + AWS boundary proof
+
+## Golden case
+
+**MW-0042 — The Silent Flight** is a synthetic fixture.
+
+Its role is to prove mixed-certainty UI behavior:
 
 - STORY → supported
 - EVENT → supported
 - PERSON → partial
 - RGBL → supported
 - Correlation → 0.87, not conclusive
-- AWS → disputed / jurisdiction unresolved
+- AWS → downstream legal boundary, disputed
 - Final state → unresolved
+
+Correlation is never presented as proof. AWS is not a fifth evidence record.
 
 ## Run
 
 ```bash
 npm install
-npm run storybook
+npm run dev
 ```
 
-Playground:
+Storybook:
 
 ```bash
-npm run dev
+npm run storybook
 ```
 
 Verification:
@@ -64,31 +75,21 @@ Verification:
 npm run ci
 ```
 
-## Branch workflow
+## Branch contract
+
+Only two long-lived branches are used:
 
 ```text
-main
-  ↓
-dev
-  ↓
-feature/*
+dev  ── verified promotion ──> main
 ```
 
-Do not implement directly on `main`.
+- `dev` — all active implementation and integration
+- `main` — stable, verified baseline
+- do not create `feature/*`, `fix/*`, or other working branches
+- do not implement directly on `main`
 
-## Current scope
+## Scope boundary
 
-Phase 1 intentionally stays small:
+`rocksoul-ui` owns reusable visual/product grammar.
 
-- semantic tokens
-- Button
-- Badge
-- Case Header
-- Four Record Summary
-- Correlation Score
-- Legal Status
-- MW-0042 Overview
-- Storybook responsive stories
-- CI
-
-Next slices: Evidence → Correlation graph → AWS → Community → Platform.
+`rocksoul-web` should consume this system later and own app-level concerns such as routing, data access, auth, SEO, deployment, analytics, and API integration.

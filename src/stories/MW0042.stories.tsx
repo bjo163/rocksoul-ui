@@ -12,9 +12,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-function Frame({ width }: { width: number }) {
+function Frame({ width, theme = "dark" }: { width: number; theme?: "dark" | "light" }) {
   return (
-    <div className="min-h-screen bg-background p-4 text-foreground">
+    <div data-theme={theme} className="min-h-screen bg-background p-4 text-foreground">
       <div style={{ width, maxWidth: "100%", margin: "0 auto" }}>
         <MW0042Overview />
       </div>
@@ -32,4 +32,8 @@ export const Tablet768: Story = {
 
 export const Mobile390: Story = {
   render: () => <Frame width={390} />,
+}
+
+export const LightMode: Story = {
+  render: () => <Frame width={1440} theme="light" />,
 }
