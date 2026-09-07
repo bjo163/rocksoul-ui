@@ -28,7 +28,7 @@ const checks = [
   [styles.includes(":focus-visible"), "global visible focus rule"],
   [styles.includes("--mw-touch-min: 44px;"), "44px minimum touch token"],
   [styles.includes("@media (prefers-reduced-motion: reduce)"), "reduced motion rule"],
-  [graph.includes('aria-pressed={active}'), "graph keyboard selected state"],
+  [graph.includes('aria-pressed={state === "selected"}'), "graph keyboard selected state"],
   [graph.includes("Text equivalent"), "graph semantic text equivalent"],
   [forms.includes("aria-describedby"), "form helper/error association"],
   [forms.includes("aria-invalid"), "form invalid state"],
