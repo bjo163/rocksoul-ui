@@ -1,35 +1,45 @@
 import { useEffect, useId, useRef, type ReactNode } from "react"
-import { Button } from "./button"
 import { cn } from "../lib/cn"
 
 export function IconButton({
   label,
   children,
   variant = "outline",
+  size = "md",
+  loading = false,
+  disabled,
+  className,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string
   children: ReactNode
   variant?: "ghost" | "outline" | "danger"
+  size?: "sm" | "md" | "lg"
+  loading?: boolean
 }) {
   return (
     <button
       aria-label={label}
       title={label}
+      aria-busy={loading || undefined}
+      disabled={disabled || loading}
       className={cn(
-        "mw-touch inline-flex items-center justify-center rounded-none border p-2 transition-colors",
+        "relative inline-flex min-h-11 min-w-11 items-center justify-center rounded-none border transition-colors disabled:pointer-events-none disabled:opacity-45",
+        size === "lg" ? "p-3" : size === "sm" ? "p-2" : "p-2.5",
         variant === "ghost" && "border-transparent bg-transparent hover:bg-panel",
         variant === "outline" && "border-border bg-card hover:border-border-strong hover:bg-panel",
         variant === "danger" && "border-primary bg-transparent text-primary hover:bg-primary/10",
+        className,
       )}
       {...props}
     >
-      {children}
+      <span className={cn(loading && "invisible")}>{children}</span>
+      {loading ? <span className="absolute inset-0 flex items-center justify-center" aria-hidden="true">···</span> : null}
     </button>
   )
 }
 
-export function Tooltip({ label, children }: { label: string; children: ReactNode }) {
+export function Tooltip({ label, children, shortcut }: { label: string; children: ReactNode; shortcut?: string }) {
   const id = useId()
   return (
     <span className="group relative inline-flex">
@@ -39,7 +49,7 @@ export function Tooltip({ label, children }: { label: string; children: ReactNod
         role="tooltip"
         className="pointer-events-none absolute left-1/2 top-[calc(100%+8px)] z-30 hidden -translate-x-1/2 whitespace-nowrap border border-border bg-overlay px-2 py-1 text-xs text-foreground group-focus-within:block group-hover:block"
       >
-        {label}
+        {label}{shortcut ? <span className="ml-2 font-mono text-[10px] text-muted-foreground">{shortcut}</span> : null}
       </span>
     </span>
   )
@@ -50,14 +60,17 @@ export function Dialog({
   title,
   children,
   onClose,
+  size = "md",
 }: {
   open: boolean
   title: string
   children: ReactNode
   onClose: () => void
+  size?: "sm" | "md" | "lg"
 }) {
   const ref = useRef<HTMLDialogElement>(null)
   const restoreRef = useRef<HTMLElement | null>(null)
+  const titleId = useId()
 
   useEffect(() => {
     const dialog = ref.current
@@ -73,7 +86,13 @@ export function Dialog({
   return (
     <dialog
       ref={ref}
-      className="w-[min(92vw,640px)] rounded-none border border-border bg-card p-0 text-foreground backdrop:bg-black/70"
+      aria-labelledby={titleId}
+      className={cn(
+        "rounded-none border border-border bg-card p-0 text-foreground backdrop:bg-black/70",
+        size === "sm" && "w-[min(92vw,420px)]",
+        size === "md" && "w-[min(92vw,640px)]",
+        size === "lg" && "w-[min(94vw,960px)]",
+      )}
       onCancel={(event) => {
         event.preventDefault()
         onClose()
@@ -81,10 +100,8 @@ export function Dialog({
       onClose={() => restoreRef.current?.focus()}
     >
       <div className="flex items-center justify-between border-b border-border p-4">
-        <h2 className="text-lg font-bold">{title}</h2>
-        <Button variant="ghost" onClick={onClose} aria-label="Close dialog">
-          Close
-        </Button>
+        <h2 id={titleId} className="text-lg font-bold">{title}</h2>
+        <IconButton label="Close dialog" variant="ghost" onClick={onClose}>×</IconButton>
       </div>
       <div className="p-5">{children}</div>
     </dialog>
@@ -96,14 +113,17 @@ export function Drawer({
   title,
   children,
   onClose,
+  position = "right",
 }: {
   open: boolean
   title: string
   children: ReactNode
   onClose: () => void
+  position?: "left" | "right" | "bottom-mobile"
 }) {
   const ref = useRef<HTMLDialogElement>(null)
   const restoreRef = useRef<HTMLElement | null>(null)
+  const titleId = useId()
 
   useEffect(() => {
     const drawer = ref.current
@@ -118,7 +138,13 @@ export function Drawer({
   return (
     <dialog
       ref={ref}
-      className="fixed inset-y-0 right-0 m-0 h-dvh w-[min(90vw,420px)] max-w-none rounded-none border-l border-border bg-card p-0 text-foreground backdrop:bg-black/70"
+      aria-labelledby={titleId}
+      className={cn(
+        "fixed m-0 max-w-none rounded-none border-border bg-card p-0 text-foreground backdrop:bg-black/70",
+        position === "right" && "inset-y-0 right-0 h-dvh w-[min(90vw,420px)] border-l",
+        position === "left" && "inset-y-0 left-0 h-dvh w-[min(90vw,420px)] border-r",
+        position === "bottom-mobile" && "inset-x-0 bottom-0 h-auto max-h-[80dvh] w-full border-t sm:inset-y-0 sm:left-auto sm:right-0 sm:h-dvh sm:w-[min(90vw,420px)] sm:border-l sm:border-t-0",
+      )}
       onCancel={(event) => {
         event.preventDefault()
         onClose()
@@ -126,10 +152,8 @@ export function Drawer({
       onClose={() => restoreRef.current?.focus()}
     >
       <div className="flex min-h-16 items-center justify-between border-b border-border px-4">
-        <h2 className="text-base font-bold">{title}</h2>
-        <Button variant="ghost" onClick={onClose}>
-          Close
-        </Button>
+        <h2 id={titleId} className="text-base font-bold">{title}</h2>
+        <IconButton label="Close drawer" variant="ghost" onClick={onClose}>×</IconButton>
       </div>
       <div className="p-4">{children}</div>
     </dialog>
@@ -139,9 +163,13 @@ export function Drawer({
 export function Avatar({
   label,
   size = "md",
+  src,
+  status,
 }: {
   label?: string
   size?: "xs" | "sm" | "md" | "lg"
+  src?: string
+  status?: "online" | "away" | "offline"
 }) {
   const classes = {
     xs: "size-6 text-[9px]",
@@ -150,51 +178,50 @@ export function Avatar({
     lg: "size-12 text-sm",
   }
   const initials = label
-    ? label
-        .split(/\s+/)
-        .map((part) => part[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase()
+    ? label.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase()
     : "?"
   return (
-    <span
-      className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-full border border-border bg-panel font-mono font-bold uppercase",
+    <span className="relative inline-flex shrink-0" aria-label={label ?? "Anonymous"}>
+      <span className={cn(
+        "inline-flex items-center justify-center overflow-hidden rounded-full border border-border bg-panel font-mono font-bold uppercase",
         classes[size],
-      )}
-      aria-label={label ?? "Anonymous"}
-    >
-      {initials}
+      )}>
+        {src ? <img src={src} alt="" className="size-full object-cover" /> : initials}
+      </span>
+      {status ? (
+        <span
+          className={cn(
+            "absolute bottom-0 right-0 size-2.5 rounded-full border border-background",
+            status === "online" ? "bg-success" : status === "away" ? "bg-warning" : "bg-unresolved",
+          )}
+          aria-label={status}
+        />
+      ) : null}
     </span>
   )
 }
 
-export function Divider({ legal = false }: { legal?: boolean }) {
+export function Divider({ variant = "default" }: { variant?: "default" | "soft" | "legal-boundary" }) {
   return (
     <div
       role="separator"
-      className={cn("w-full", legal ? "h-0.5 bg-primary" : "h-px bg-border")}
-      aria-label={legal ? "AWS legal boundary" : undefined}
+      className={cn(
+        "w-full",
+        variant === "default" && "h-px bg-border",
+        variant === "soft" && "h-px bg-border opacity-50",
+        variant === "legal-boundary" && "h-0.5 bg-primary",
+      )}
+      aria-label={variant === "legal-boundary" ? "AWS legal boundary" : undefined}
     />
   )
 }
 
-export function Skeleton({
-  variant = "text",
-}: {
-  variant?: "text" | "card" | "table-row" | "graph-node"
-}) {
+export function Skeleton({ variant = "text" }: { variant?: "text" | "card" | "table-row" | "graph-node" }) {
   const classes = {
     text: "h-4 w-full",
     card: "h-40 w-full",
     "table-row": "h-10 w-full",
-    "graph-node": "size-20",
+    "graph-node": "size-20 rounded-full",
   }
-  return (
-    <span
-      className={cn("block animate-pulse bg-panel motion-reduce:animate-none", classes[variant])}
-      aria-hidden="true"
-    />
-  )
+  return <span className={cn("block animate-pulse bg-panel motion-reduce:animate-none", classes[variant])} aria-hidden="true" />
 }
