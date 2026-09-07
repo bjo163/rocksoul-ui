@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { Badge } from "./badge"
 import { Button } from "./button"
 import { Input, Select, Textarea } from "./form-controls"
@@ -15,8 +15,23 @@ export function MWHeader({
   surface?: "web" | "community"
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24)
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    return () => window.removeEventListener("scroll", update)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
+    <header
+      className={cn(
+        "sticky top-0 z-30 border-b backdrop-blur transition-colors",
+        scrolled ? "border-border bg-background/95" : "border-transparent bg-background/80",
+      )}
+      data-state={scrolled ? "scrolled" : "transparent"}
+    >
       <div className="mw-shell-wide flex min-h-16 items-center justify-between gap-4">
         <a href="#top" className="mw-link flex-col items-start justify-center no-underline">
           <span className="text-sm font-bold">MOONWITNESS</span>
@@ -441,21 +456,35 @@ export function MetricTile({
   )
 }
 
-export function PlatformSidebar({ active = "Cases" }: { active?: string }) {
+export function PlatformSidebar({
+  active = "Cases",
+  collapsed = false,
+}: {
+  active?: string
+  collapsed?: boolean
+}) {
   const items = ["Dashboard", "Cases", "Repositories", "Evidence", "Correlation", "Legal", "Community", "Audit"]
   return (
-    <aside className="hidden min-h-[calc(100vh-64px)] w-[240px] shrink-0 border-r border-border bg-panel lg:block">
+    <aside
+      className={cn(
+        "hidden min-h-[calc(100vh-64px)] shrink-0 border-r border-border bg-panel lg:block",
+        collapsed ? "w-16" : "w-[240px]",
+      )}
+      data-state={collapsed ? "collapsed" : "expanded"}
+    >
       <nav aria-label="Platform">
         {items.map((item) => (
           <a
             key={item}
             href="#platform"
+            title={collapsed ? item : undefined}
             className={cn(
               "mw-link w-full px-5 text-sm no-underline",
+              collapsed && "justify-center px-2 font-mono text-[10px]",
               item === active ? "font-bold text-primary" : "text-muted-foreground hover:text-foreground",
             )}
           >
-            {item}
+            {collapsed ? item.slice(0, 2).toUpperCase() : item}
           </a>
         ))}
       </nav>
@@ -527,5 +556,120 @@ export function CommunityComposer() {
         <Button type="submit">Submit context</Button>
       </div>
     </form>
+  )
+}
+
+
+export function CaseCard({
+  caseId,
+  title,
+  summary,
+  status,
+  traceCount,
+  updatedAt,
+  featured = false,
+  selected = false,
+}: {
+  caseId: string
+  title: string
+  summary: string
+  status: "supported" | "partial" | "unresolved" | "disputed"
+  traceCount: number
+  updatedAt: string
+  featured?: boolean
+  selected?: boolean
+}) {
+  return (
+    <article
+      className={cn(
+        "border bg-card p-5 transition-colors hover:border-border-strong",
+        selected ? "border-foreground" : featured ? "border-primary" : "border-border",
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <span className="mw-meta text-muted-foreground">CASE / {caseId}</span>
+        <Badge variant={status}>{status}</Badge>
+      </div>
+      <h3 className="mw-display mt-5 text-2xl font-black uppercase">{title}</h3>
+      <p className="mt-3 text-sm leading-6 text-muted-foreground">{summary}</p>
+      <div className="mw-meta mt-5 flex flex-wrap gap-4 border-t border-border pt-4 text-muted-foreground">
+        <span>{traceCount} traces</span>
+        <span>updated {updatedAt}</span>
+      </div>
+    </article>
+  )
+}
+
+export function GraphEdge({
+  type,
+  label,
+  highlighted = false,
+  dimmed = false,
+}: {
+  type: "supports" | "contradicts" | "references" | "temporal" | "identity" | "legal"
+  label?: string
+  highlighted?: boolean
+  dimmed?: boolean
+}) {
+  const className =
+    type === "supports" || type === "temporal"
+      ? "border-success"
+      : type === "identity"
+        ? "border-warning"
+        : type === "references"
+          ? "border-info"
+          : "border-primary"
+
+  return (
+    <span
+      className={cn(
+        "inline-flex min-h-8 items-center border-l-2 pl-2 font-mono text-[10px] font-bold uppercase tracking-[0.08em]",
+        className,
+        highlighted ? "text-foreground" : "text-muted-foreground",
+        dimmed && "opacity-40",
+      )}
+      aria-label={`${type} relationship${label ? `: ${label}` : ""}`}
+    >
+      {label ?? type}
+    </span>
+  )
+}
+
+export function AWSBoundary({
+  children,
+  active = true,
+}: {
+  children?: ReactNode
+  active?: boolean
+}) {
+  return (
+    <section
+      className={cn("border-t-2 pt-5", active ? "border-primary" : "border-border")}
+      aria-label="AWS legal boundary"
+    >
+      <p className={cn("mw-eyebrow", active ? "text-primary" : "text-muted-foreground")}>THE BOUNDARY / AWS</p>
+      {children ? <div className="mt-4">{children}</div> : null}
+    </section>
+  )
+}
+
+export function CaseTimeline({
+  entries,
+}: {
+  entries: Array<{
+    timestamp: string
+    title: string
+    description: string
+    source: string
+    status: string
+    flagged?: boolean
+  }>
+}) {
+  return (
+    <section aria-label="Case timeline" className="border-t border-border">
+      {entries.map((entry) => (
+        <TimelineEntry key={`${entry.timestamp}-${entry.title}`} {...entry} />
+      ))}
+    </section>
   )
 }
