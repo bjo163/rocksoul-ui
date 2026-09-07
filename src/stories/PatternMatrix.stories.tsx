@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   AWSLegalSummaryPattern,
+  AuthFormPattern,
   CaseTimelinePattern,
   CommunityCaseThreadPattern,
   CorrelationGraphPattern,
@@ -12,6 +13,7 @@ import {
   SearchFiltersPattern,
 } from "../components/patterns"
 import { StatePanel } from "../components/archive-components"
+import { MW0042Overview } from "../screens/mw0042-overview"
 import { mw0042 } from "../fixtures/mw0042"
 
 const meta = {
@@ -26,6 +28,7 @@ const Frame = ({ children }: { children: React.ReactNode }) => (
   <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground">{children}</div>
 )
 
+export const PublicCase: Story = { render: () => <MW0042Overview /> }
 export const EvidenceGrid: Story = { render: () => <Frame><EvidenceGridPattern records={mw0042.records} /></Frame> }
 export const CorrelationGraph: Story = { render: () => <Frame><CorrelationGraphPattern records={mw0042.records} correlation={mw0042.correlation} /></Frame> }
 export const AWSLegalSummary: Story = {
@@ -48,6 +51,7 @@ export const CommunityThread: Story = {
     submission={mw0042.community.submission}
   /></Frame>,
 }
+export const AuthForm: Story = { render: () => <Frame><div className="mx-auto max-w-xl border border-border bg-card p-6"><AuthFormPattern /></div></Frame> }
 export const SearchAndFilters: Story = { render: () => <Frame><SearchFiltersPattern /></Frame> }
 export const EmptyLoadingError: Story = {
   render: () => <Frame><EmptyLoadingErrorPattern><div className="grid gap-4 lg:grid-cols-3"><StatePanel state="empty" /><StatePanel state="loading" /><StatePanel state="error" /></div></EmptyLoadingErrorPattern></Frame>,
