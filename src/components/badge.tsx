@@ -3,19 +3,27 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../lib/cn"
 
 const badgeVariants = cva(
-  "inline-flex min-h-6 items-center rounded-full border px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.08em]",
+  "inline-flex items-center rounded-full border font-mono font-semibold uppercase tracking-[0.08em]",
   {
     variants: {
       variant: {
-        neutral: "border-border bg-muted text-muted-foreground",
-        supported: "border-success/40 bg-success/10 text-success",
-        partial: "border-warning/40 bg-warning/10 text-warning",
-        unresolved: "border-border bg-muted text-foreground",
-        disputed: "border-primary/40 bg-primary/10 text-primary",
-        info: "border-info/40 bg-info/10 text-info",
+        neutral: "border-border-strong bg-panel text-muted-foreground",
+        supported: "border-success bg-panel text-success",
+        verified: "border-verified bg-panel text-verified",
+        contested: "border-primary bg-panel text-primary",
+        partial: "border-warning bg-panel text-warning",
+        unresolved: "border-unresolved bg-panel text-unresolved",
+        restricted: "border-restricted bg-panel text-restricted",
+        prohibited: "border-prohibited bg-panel text-prohibited",
+        disputed: "border-primary bg-panel text-primary",
+        info: "border-info bg-panel text-info",
+      },
+      size: {
+        sm: "min-h-6 px-2.5 py-1 text-[10px]",
+        md: "min-h-7 px-3 py-1 text-[11px]",
       },
     },
-    defaultVariants: { variant: "neutral" },
+    defaultVariants: { variant: "neutral", size: "sm" },
   },
 )
 
@@ -23,8 +31,8 @@ export interface BadgeProps
   extends HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof badgeVariants> {}
 
-export function Badge({ className, variant, ...props }: BadgeProps) {
-  return <span className={cn(badgeVariants({ variant }), className)} {...props} />
+export function Badge({ className, variant, size, ...props }: BadgeProps) {
+  return <span className={cn(badgeVariants({ variant, size }), className)} {...props} />
 }
 
 export { badgeVariants }
