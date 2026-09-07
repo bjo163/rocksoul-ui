@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useId, useState, type ReactNode } from "react"
 import { Badge } from "./badge"
 import { Button } from "./button"
 import { Input, Select, Textarea } from "./form-controls"
@@ -16,6 +16,7 @@ export function MWHeader({
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const mobileNavId = useId()
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24)
@@ -62,7 +63,7 @@ export function MWHeader({
             className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase"
             type="button"
             aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
+            aria-controls={mobileNavId}
             onClick={() => setMenuOpen(true)}
           >
             Menu
@@ -70,7 +71,7 @@ export function MWHeader({
         </div>
       </div>
       <Drawer open={menuOpen} title="MoonWitness" onClose={() => setMenuOpen(false)}>
-        <nav id="mobile-navigation" className="grid">
+        <nav id={mobileNavId} className="grid">
           {["Observe", "Records", "Cases", "Community", "Search"].map((label) => (
             <a
               key={label}

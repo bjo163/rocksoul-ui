@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react"
+import { useEffect, useId, useRef, type ReactNode } from "react"
 import { Button } from "./button"
 import { cn } from "../lib/cn"
 
@@ -30,7 +30,7 @@ export function IconButton({
 }
 
 export function Tooltip({ label, children }: { label: string; children: ReactNode }) {
-  const id = useRef(`tooltip-${Math.random().toString(36).slice(2)}`).current
+  const id = useId()
   return (
     <span className="group relative inline-flex">
       <span aria-describedby={id}>{children}</span>
@@ -103,11 +103,15 @@ export function Drawer({
   onClose: () => void
 }) {
   const ref = useRef<HTMLDialogElement>(null)
+  const restoreRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     const drawer = ref.current
     if (!drawer) return
-    if (open && !drawer.open) drawer.showModal()
+    if (open && !drawer.open) {
+      restoreRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+      drawer.showModal()
+    }
     if (!open && drawer.open) drawer.close()
   }, [open])
 
@@ -119,6 +123,7 @@ export function Drawer({
         event.preventDefault()
         onClose()
       }}
+      onClose={() => restoreRef.current?.focus()}
     >
       <div className="flex min-h-16 items-center justify-between border-b border-border px-4">
         <h2 className="text-base font-bold">{title}</h2>
