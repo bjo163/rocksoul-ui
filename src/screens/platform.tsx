@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Button } from "../components/button"
 import {
   AuditEventRow,
@@ -6,17 +7,39 @@ import {
   RepositoryHealthRow,
   SubmissionCard,
 } from "../components/archive-components"
+import { Drawer } from "../components/overlays"
 import { CaseHeader } from "../components/case-header"
 import { LegalStatus } from "../components/legal-status"
 import { mw0042 } from "../fixtures/mw0042"
 
+const nav = ["Dashboard", "Cases", "Repositories", "Evidence", "Correlation", "Legal", "Community", "Audit"]
+
 export function PlatformScreen() {
+  const [menuOpen, setMenuOpen] = useState(false)
   return (
     <div id="platform" className="mw-platform min-h-screen bg-background text-foreground">
       <header className="flex min-h-16 items-center justify-between border-b border-border px-5 sm:px-8">
-        <strong className="text-sm">MOONWITNESS / PLATFORM</strong>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase lg:hidden"
+            onClick={() => setMenuOpen(true)}
+          >
+            Menu
+          </button>
+          <strong className="text-sm">MOONWITNESS / PLATFORM</strong>
+        </div>
         <span className="mw-meta text-muted-foreground">{mw0042.caseId}</span>
       </header>
+      <Drawer open={menuOpen} title="Platform navigation" onClose={() => setMenuOpen(false)}>
+        <nav className="grid">
+          {nav.map((item) => (
+            <a key={item} href="#platform" className="mw-link border-b border-border text-sm" onClick={() => setMenuOpen(false)}>
+              {item}
+            </a>
+          ))}
+        </nav>
+      </Drawer>
       <div className="flex">
         <PlatformSidebar />
         <main className="min-w-0 flex-1 px-4 py-8 sm:px-8 lg:px-14">
