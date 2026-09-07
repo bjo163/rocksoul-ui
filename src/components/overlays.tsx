@@ -9,6 +9,7 @@ export function IconButton({
   loading = false,
   disabled,
   className,
+  type = "button",
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string
@@ -19,6 +20,7 @@ export function IconButton({
 }) {
   return (
     <button
+      type={type}
       aria-label={label}
       title={label}
       aria-busy={loading || undefined}

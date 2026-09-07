@@ -10,28 +10,35 @@ import type { RecordDomain, RecordStatus } from "./four-record-summary"
 export function MWHeader({
   caseId,
   surface = "web",
+  variant = "auto",
 }: {
   caseId?: string
   surface?: "web" | "community"
+  variant?: "auto" | "transparent" | "solid" | "compact-mobile"
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const mobileNavId = useId()
 
   useEffect(() => {
+    if (variant !== "auto") return
     const update = () => setScrolled(window.scrollY > 24)
     update()
     window.addEventListener("scroll", update, { passive: true })
     return () => window.removeEventListener("scroll", update)
-  }, [])
+  }, [variant])
+
+  const resolved = variant === "auto" ? (scrolled ? "solid" : "transparent") : variant
+  const compact = resolved === "compact-mobile"
 
   return (
     <header
       className={cn(
         "sticky top-0 z-30 border-b backdrop-blur transition-colors",
-        scrolled ? "border-border bg-background/95" : "border-transparent bg-background/80",
+        resolved === "solid" ? "border-border bg-background/95" : "border-transparent bg-background/80",
       )}
-      data-state={scrolled ? "scrolled" : "transparent"}
+      data-state={scrolled ? "scrolled" : "default"}
+      data-variant={resolved}
     >
       <div className="mw-shell-wide flex min-h-16 items-center justify-between gap-4">
         <a href="#top" className="mw-link flex-col items-start justify-center no-underline">
@@ -39,7 +46,7 @@ export function MWHeader({
           <span className="mw-meta text-muted-foreground">INDEPENDENT OBSERVATORY</span>
         </a>
 
-        <nav aria-label="Primary" className="hidden items-center md:flex">
+        <nav aria-label="Primary" className={cn("items-center", compact ? "hidden" : "hidden md:flex")}>
           {["Observe", "Records", "Cases", "Community"].map((label) => (
             <a
               key={label}
@@ -49,15 +56,13 @@ export function MWHeader({
               {label}
             </a>
           ))}
-          <a href="#search" className="mw-link px-3 font-mono text-[10px] font-bold uppercase tracking-[0.1em]">
-            Search
-          </a>
+          <a href="#search" className="mw-link px-3 font-mono text-[10px] font-bold uppercase tracking-[0.1em]">Search</a>
           <span className="mw-meta ml-2 border border-success px-2 py-1 text-success">Live</span>
           <ThemeToggle />
           <Avatar label={surface === "community" ? "Member" : "Guest"} size="sm" />
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className={cn("items-center gap-2", compact ? "flex" : "flex md:hidden")}>
           {caseId ? <span className="mw-meta text-muted-foreground">{caseId}</span> : null}
           <button
             className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase"
@@ -70,7 +75,7 @@ export function MWHeader({
           </button>
         </div>
       </div>
-      <Drawer open={menuOpen} title="MoonWitness" onClose={() => setMenuOpen(false)}>
+      <Drawer open={menuOpen} title="MoonWitness" onClose={() => setMenuOpen(false)} position="right">
         <nav id={mobileNavId} className="grid">
           {["Observe", "Records", "Cases", "Community", "Search"].map((label) => (
             <a
@@ -566,7 +571,7 @@ export function SearchFilters({
   chips?: string[]
 }) {
   return (
-    <form id="search" className="grid gap-4 border border-border bg-card p-4">
+    <form id="search" className="grid gap-4 border border-border bg-card p-4" onSubmit={(event) => event.preventDefault()}>
       <div className="grid gap-3 md:grid-cols-[1fr_220px_180px_auto]">
         <Input label="Search" variant="search" placeholder="Search records, IDs, sources…" />
         <Select label="Status" defaultValue="all" options={[
@@ -628,7 +633,7 @@ export function StatePanel({ state }: { state: "empty" | "loading" | "error" }) 
 export function CommunityComposer({ mode = "context" }: { mode?: "context" | "question" }) {
   const question = mode === "question"
   return (
-    <form className={cn("border bg-card p-4", question ? "border-info" : "border-primary")}>
+    <form className={cn("border bg-card p-4", question ? "border-info" : "border-primary")} onSubmit={(event) => event.preventDefault()}>
       <p className={cn("mw-eyebrow", question ? "text-info" : "text-primary")}>{question ? "Ask a question" : "Submit context"}</p>
       <p className="mt-3 text-lg font-bold">{question ? "Question the score. Keep the evidence intact." : "Source first. Interpretation later."}</p>
       <div className="mt-4 grid gap-4">

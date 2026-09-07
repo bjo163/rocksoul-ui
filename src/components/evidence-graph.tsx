@@ -1,15 +1,19 @@
-import { useState } from "react"
+import { useId, useState } from "react"
 import { Badge } from "./badge"
 import type { RecordDomain, RecordSummary } from "./four-record-summary"
 import { cn } from "../lib/cn"
 
 type EdgeType = "supports" | "contradicts" | "references" | "temporal" | "identity" | "legal"
+export type GraphNodeType = RecordDomain | "AWS" | "CASE"
+export type GraphNodeState = "default" | "selected" | "dimmed" | "unresolved"
 
-const domainTone: Record<RecordDomain, string> = {
-  STORY: "text-rgbl-red",
-  EVENT: "text-rgbl-green",
-  PERSON: "text-warning",
-  RGBL: "text-rgbl-blue",
+const nodeTone: Record<GraphNodeType, string> = {
+  STORY: "text-rgbl-red border-rgbl-red",
+  EVENT: "text-rgbl-green border-rgbl-green",
+  PERSON: "text-warning border-warning",
+  RGBL: "text-rgbl-blue border-rgbl-blue",
+  AWS: "text-primary border-primary",
+  CASE: "text-foreground border-primary",
 }
 
 const nodePosition: Record<RecordDomain, string> = {
@@ -34,17 +38,16 @@ export interface EvidenceGraphProps {
 }
 
 export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
-  const [selected, setSelected] = useState<RecordDomain>("EVENT")
-  const selectedRecord = records.find((record) => record.domain === selected) ?? records[0]
+  const headingId = useId()
+  const [selected, setSelected] = useState<GraphNodeType>("EVENT")
+  const selectedRecord = records.find((record) => record.domain === selected)
 
   return (
-    <section aria-labelledby="evidence-graph-heading" className="border border-border bg-card p-5">
+    <section aria-labelledby={headingId} className="border border-border bg-card p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="mw-meta text-muted-foreground">Relationship graph</p>
-          <h3 id="evidence-graph-heading" className="mw-display mt-2 text-2xl font-bold">
-            Separate records. Shared correlation layer.
-          </h3>
+          <h3 id={headingId} className="mw-display mt-2 text-2xl font-bold">Separate records. Shared correlation layer.</h3>
         </div>
         <Badge variant="unresolved">not causation</Badge>
       </div>
@@ -57,32 +60,67 @@ export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
           <line x1="50" y1="50" x2="78" y2="78" className="text-rgbl-blue" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
         </svg>
 
-        <div className="absolute left-1/2 top-1/2 flex size-[clamp(82px,22vw,104px)] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-primary bg-panel text-center">
-          <span className="mw-meta text-muted-foreground">Case</span>
-          <strong className="mw-display mt-1 text-3xl">{score.toFixed(2)}</strong>
-        </div>
+        <GraphNode
+          type="CASE"
+          label={score.toFixed(2)}
+          status="correlation"
+          relationCount={4}
+          state={selected === "CASE" ? "selected" : "default"}
+          className="absolute left-1/2 top-1/2 size-[clamp(82px,22vw,104px)] -translate-x-1/2 -translate-y-1/2"
+          onSelect={() => setSelected("CASE")}
+        />
 
         {records.map((record) => (
-          <GraphNode key={record.domain} record={record} selected={selected} onSelect={setSelected} />
+          <GraphNode
+            key={record.domain}
+            type={record.domain}
+            label={record.domain}
+            status={record.status}
+            relationCount={1}
+            state={selected === record.domain ? "selected" : record.domain === "PERSON" ? "unresolved" : "default"}
+            className={cn("absolute", nodePosition[record.domain])}
+            onSelect={() => setSelected(record.domain)}
+          />
         ))}
+      </div>
+
+      <div className="mt-4 flex justify-end">
+        <GraphNode
+          type="AWS"
+          label="AWS"
+          status="after boundary"
+          relationCount={1}
+          state="dimmed"
+          onSelect={() => setSelected("AWS")}
+        />
       </div>
 
       <div className="mt-5 flex flex-wrap gap-3" aria-label="Relationship legend">
         {edgeLegend.map((edge) => (
-          <span key={edge.type} className={cn("mw-meta border-l-2 pl-2 text-muted-foreground", edge.className)}>
-            {edge.label}
-          </span>
+          <span key={edge.type} className={cn("mw-meta border-l-2 pl-2 text-muted-foreground", edge.className)}>{edge.label}</span>
         ))}
       </div>
 
-      {selectedRecord ? (
-        <div className="mt-5 border-l-2 border-primary bg-background p-4" aria-live="polite">
-          <p className={cn("mw-eyebrow", domainTone[selectedRecord.domain])}>{selectedRecord.domain} selected</p>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {selectedRecord.description} Provenance: {selectedRecord.source}. Verification state: {selectedRecord.verification}.
-          </p>
-        </div>
-      ) : null}
+      <div className="mt-5 border-l-2 border-primary bg-background p-4" aria-live="polite">
+        {selectedRecord ? (
+          <>
+            <p className={cn("mw-eyebrow", nodeTone[selectedRecord.domain].split(" ")[0])}>{selectedRecord.domain} selected</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              {selectedRecord.description} Provenance: {selectedRecord.source}. Verification state: {selectedRecord.verification}.
+            </p>
+          </>
+        ) : selected === "CASE" ? (
+          <>
+            <p className="mw-eyebrow text-primary">CASE selected</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">Aggregate correlation is {score.toFixed(2)}. It is not a factual or causal conclusion.</p>
+          </>
+        ) : (
+          <>
+            <p className="mw-eyebrow text-primary">AWS selected</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">AWS remains dimmed until the legal boundary. It is downstream of evidence reconstruction.</p>
+          </>
+        )}
+      </div>
 
       <div className="mt-6 border-t border-border pt-4">
         <h4 className="mw-meta text-muted-foreground">Text equivalent</h4>
@@ -93,6 +131,7 @@ export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
               {record.domain === "PERSON" ? "Identity relation remains unresolved." : "Source relation remains independently inspectable."}
             </li>
           ))}
+          <li><strong>CASE</strong> → aggregate score {score.toFixed(2)}; correlation is not causation.</li>
           <li><strong>AWS</strong> → legal relation starts only after the evidence correlation boundary.</li>
         </ul>
       </div>
@@ -101,38 +140,43 @@ export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
 }
 
 export function GraphNode({
-  record,
-  selected,
+  type,
+  label,
+  status,
+  relationCount = 0,
+  state = "default",
+  className,
   onSelect,
 }: {
-  record: RecordSummary
-  selected: RecordDomain
-  onSelect: (domain: RecordDomain) => void
+  type: GraphNodeType
+  label: string
+  status: string
+  relationCount?: number
+  state?: GraphNodeState
+  className?: string
+  onSelect?: () => void
 }) {
-  const active = selected === record.domain
-
   return (
     <button
       type="button"
       className={cn(
-        "absolute flex size-[clamp(64px,18vw,82px)] flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity]",
-        nodePosition[record.domain],
-        record.domain === "PERSON"
-          ? "border-warning"
-          : active
-            ? "border-foreground bg-panel"
-            : record.domain === "STORY"
-              ? "border-rgbl-red"
-              : record.domain === "EVENT"
-                ? "border-rgbl-green"
-                : "border-rgbl-blue",
+        "flex min-h-11 min-w-11 flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity]",
+        nodeTone[type],
+        state === "selected" && "bg-panel ring-2 ring-foreground ring-offset-2 ring-offset-background",
+        state === "dimmed" && "opacity-40",
+        state === "unresolved" && "border-dashed",
+        className?.includes("absolute") ? "" : "",
+        className,
       )}
-      aria-pressed={active}
-      aria-label={`${record.domain}: ${record.status}. Select relationship node.`}
-      onClick={() => onSelect(record.domain)}
+      data-type={type.toLowerCase()}
+      data-state={state}
+      aria-pressed={state === "selected"}
+      aria-label={`${type}: ${status}. ${relationCount} relationships. Select relationship node.`}
+      onClick={onSelect}
     >
-      <span className={cn("font-mono text-[9px] font-bold uppercase", domainTone[record.domain])}>{record.domain}</span>
-      <span className="mt-1 font-mono text-[8px] uppercase text-muted-foreground">{record.status}</span>
+      <span className="font-mono text-[9px] font-bold uppercase">{label}</span>
+      <span className="mt-1 font-mono text-[8px] uppercase text-muted-foreground">{status}</span>
+      <span className="sr-only">{relationCount} relationships</span>
     </button>
   )
 }

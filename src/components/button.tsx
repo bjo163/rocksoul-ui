@@ -42,10 +42,12 @@ export function Button({
   leading,
   trailing,
   children,
+  type = "button",
   ...props
 }: ButtonProps) {
   return (
     <button
+      type={type}
       className={cn(buttonVariants({ variant, size }), className)}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
