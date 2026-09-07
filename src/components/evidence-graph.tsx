@@ -99,7 +99,7 @@ export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
   )
 }
 
-function GraphNode({
+export function GraphNode({
   record,
   selected,
   onSelect,
