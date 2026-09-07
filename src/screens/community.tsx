@@ -1,12 +1,7 @@
 import { Button } from "../components/button"
-import {
-  CommunityComposer,
-  DiscussionItem,
-  MetricTile,
-  MWHeader,
-  SubmissionCard,
-} from "../components/archive-components"
+import { MetricTile, MWHeader } from "../components/archive-components"
 import { CaseHeader } from "../components/case-header"
+import { CommunityCaseThreadPattern } from "../components/patterns"
 import { mw0042 } from "../fixtures/mw0042"
 
 export function CommunityScreen() {
@@ -30,33 +25,11 @@ export function CommunityScreen() {
         />
 
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.4fr_.7fr]">
-          <section className="border border-border bg-card p-5" aria-labelledby="discussion-heading">
-            <p className="mw-meta text-muted-foreground">Discussion</p>
-            <h2 id="discussion-heading" className="mt-2 text-xl font-bold">Questions stay separate from evidence.</h2>
-            <DiscussionItem
-              kind="question"
-              author="Member"
-              role="member"
-              timestamp="05:14"
-              body="If the person match is partial, why is the overall correlation still high?"
-            />
-            <DiscussionItem
-              kind="moderator-note"
-              author="Moderator"
-              role="moderator"
-              timestamp="05:20"
-              body="Temporal and source-independence dimensions are strong. Identity remains a blocking uncertainty and is shown separately."
-            />
-            <div className="mt-5">
-              <SubmissionCard
-                id={mw0042.community.submission.id}
-                state={mw0042.community.submission.state}
-                title={mw0042.community.submission.title}
-                body={mw0042.community.submission.body}
-                canonicalEvidence={false}
-              />
-            </div>
-          </section>
+          <CommunityCaseThreadPattern
+            question="If the person match is partial, why is the overall correlation still high?"
+            moderatorNote="Temporal and source-independence dimensions are strong. Identity remains a blocking uncertainty and is shown separately."
+            submission={mw0042.community.submission}
+          />
 
           <aside className="grid content-start gap-4">
             <div className="grid grid-cols-3 gap-3">
@@ -64,7 +37,6 @@ export function CommunityScreen() {
               <MetricTile label="Saved" value={String(mw0042.community.saved)} context="case saves" />
               <MetricTile label="Discussion" value={String(mw0042.community.discussions)} context="threads" />
             </div>
-            <CommunityComposer />
             <p className="mw-meta border border-warning p-4 text-warning">
               Community submission ≠ canonical evidence. Provenance must survive review first.
             </p>

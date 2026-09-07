@@ -1,9 +1,12 @@
 import { CaseHeader } from "../components/case-header"
-import { CorrelationScore } from "../components/correlation-score"
-import { EvidenceGraph } from "../components/evidence-graph"
 import { FourRecordSummary } from "../components/four-record-summary"
-import { LegalStatus } from "../components/legal-status"
 import { MWHeader } from "../components/archive-components"
+import {
+  AWSLegalSummaryPattern,
+  CorrelationGraphPattern,
+  EvidenceGridPattern,
+  RelatedCases,
+} from "../components/patterns"
 import { mw0042 } from "../fixtures/mw0042"
 
 export function MW0042Overview() {
@@ -39,27 +42,69 @@ export function MW0042Overview() {
           />
         </div>
 
+        <section className="pt-10">
+          <FourRecordSummary records={mw0042.records} compact />
+        </section>
+
         <section id="evidence" className="scroll-mt-24 pt-10">
-          <FourRecordSummary records={mw0042.records} />
+          <EvidenceGridPattern records={mw0042.records} />
         </section>
 
-        <section id="correlation" className="scroll-mt-24 pt-6">
-          <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
-            <CorrelationScore {...mw0042.correlation} />
-            <EvidenceGraph records={mw0042.records} score={mw0042.correlation.score} />
+        <section id="correlation" className="scroll-mt-24 pt-10">
+          <p className="mw-eyebrow text-primary">MW-0042 / Correlation</p>
+          <h2 className="mw-display mt-4 max-w-5xl text-4xl font-black uppercase leading-[0.94] sm:text-6xl">
+            The trails are starting to line up.
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground">That still doesn’t make them the same thing.</p>
+          <div className="mt-6">
+            <CorrelationGraphPattern records={mw0042.records} correlation={mw0042.correlation} />
           </div>
         </section>
 
-        <section id="aws" className="scroll-mt-24 pt-6">
-          <div className="mb-4 flex items-center gap-4">
-            <div className="h-0.5 flex-1 bg-primary" aria-hidden="true" />
-            <span className="mw-eyebrow text-primary">The boundary</span>
-            <div className="h-0.5 flex-1 bg-primary" aria-hidden="true" />
-          </div>
-          <LegalStatus {...mw0042.legal} />
+        <section id="aws" className="scroll-mt-24 pt-10">
+          <AWSLegalSummaryPattern
+            legal={mw0042.legal}
+            sources={[
+              {
+                id: "LAW-FIX-01",
+                title: "Synthetic Cross-Border Movement Instrument",
+                excerpt: "Reference-only fixture used to prove legal-source presentation.",
+                locator: "fixture/aws/0042/law-01",
+              },
+              {
+                id: "LAW-FIX-02",
+                title: "Synthetic Protected-Passage Rule",
+                excerpt: "Reference-only fixture. No real jurisdiction is asserted.",
+                locator: "fixture/aws/0042/law-02",
+              },
+            ]}
+          />
         </section>
 
-        <footer className="mt-8 border-t border-border pt-4">
+        <section className="pt-10">
+          <RelatedCases
+            cases={[
+              {
+                caseId: "MW-0038",
+                title: "Night Window",
+                summary: "A separate synthetic case sharing temporal structure, not identity.",
+                status: "partial",
+                traceCount: 3,
+                updatedAt: "fixture",
+              },
+              {
+                caseId: "MW-0048",
+                title: "Return Signal",
+                summary: "A separate synthetic case sharing motif structure, not causation.",
+                status: "unresolved",
+                traceCount: 2,
+                updatedAt: "fixture",
+              },
+            ]}
+          />
+        </section>
+
+        <footer className="mt-10 border-t border-border pt-4">
           <p className="mw-meta text-muted-foreground">
             Fixture only · correlation is not causation · unresolved remains a valid final state
           </p>
