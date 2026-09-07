@@ -59,6 +59,44 @@ export const mw0042 = {
       status: "supported",
     },
   ] satisfies RecordSummary[],
+  recordDetails: {
+    STORY: {
+      sourceType: "synthetic-archive-note",
+      locator: "fixture/story/0042/a",
+      independent: true,
+    },
+    EVENT: {
+      temporal: {
+        start: "02:14",
+        end: "02:37",
+        timezone: "LOCAL/FIXTURE",
+      },
+      sourceType: "synthetic-event-log",
+      locator: "fixture/event/0042/a",
+      independent: true,
+    },
+    PERSON: {
+      matchDimensions: {
+        role: true,
+        movement: true,
+        identity: false,
+      },
+      sourceType: "synthetic-person-record",
+      locator: "fixture/person/0042/a",
+      independent: true,
+    },
+    RGBL: {
+      channels: {
+        red: "movement",
+        green: "return",
+        blue: "night",
+        light: "unresolved relation",
+      },
+      sourceType: "synthetic-text-fragment",
+      locator: "fixture/rgbl/0042/a",
+      independent: true,
+    },
+  },
   correlation: {
     score: 0.87,
     confidence: "medium-high",
@@ -73,11 +111,29 @@ export const mw0042 = {
   },
   legal: {
     status: "disputed" as const,
-    jurisdiction: "jurisdiction unresolved",
-    review: "needs legal review",
+    jurisdiction: "UNRESOLVED / FIXTURE",
+    review: "needs-legal-review",
     prompt:
-      "Even if the movement happened as reconstructed, the applicable authority and rule remain unresolved.",
+      "Even if the movement happened as reconstructed, what authority or rule would apply?",
     basis: "LAW-FIX-01 / LAW-FIX-02 · reference-only",
+    instruments: [
+      {
+        id: "LAW-FIX-01",
+        title: "Synthetic Cross-Border Movement Instrument",
+        type: "fixture-instrument",
+        status: "reference-only",
+        locator: "fixture/aws/0042/law-01",
+      },
+      {
+        id: "LAW-FIX-02",
+        title: "Synthetic Protected-Passage Rule",
+        type: "fixture-instrument",
+        status: "reference-only",
+        locator: "fixture/aws/0042/law-02",
+      },
+    ],
+    conclusion:
+      "The fixture intentionally does not resolve jurisdiction. The legal layer demonstrates how MoonWitness separates evidence reconstruction from legal interpretation.",
   },
   community: {
     following: 128,
