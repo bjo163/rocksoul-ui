@@ -13,6 +13,7 @@ const [
   community,
   publicCase,
   patterns,
+  eventIntelligence,
 ] = await Promise.all([
   read("src/styles.css"),
   read("src/components/evidence-graph.tsx"),
@@ -22,6 +23,7 @@ const [
   read("src/screens/community.tsx"),
   read("src/screens/mw0042-overview.tsx"),
   read("src/components/patterns.tsx"),
+  read("src/components/event-intelligence.tsx"),
 ])
 
 const checks = [
@@ -40,6 +42,9 @@ const checks = [
   [community.includes("Community submission ≠ canonical evidence"), "community/canonical separation"],
   [publicCase.includes("EvidenceGridPattern"), "public provenance inspection pattern"],
   [patterns.includes('aria-label="Pagination"'), "pagination navigation label"],
+  [eventIntelligence.includes("Text equivalent"), "event topology text equivalent"],
+  [eventIntelligence.includes('role="progressbar"'), "historicity semantic progress"],
+  [eventIntelligence.includes("Confidence is scoped evidence assessment"), "historicity confidence scope guardrail"],
 ]
 
 const failures = checks.filter(([ok]) => !ok).map(([, label]) => label)

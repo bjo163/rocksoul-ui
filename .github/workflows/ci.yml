@@ -33,6 +33,8 @@ jobs:
         run: npm run audit:tokens
       - name: Accessibility contract audit
         run: npm run audit:a11y
+      - name: Research visual contract audit
+        run: npm run audit:research-visuals
       - name: Domain contract audit
         run: npm run audit:domains
       - name: Rocksoul assets v2 sync audit

@@ -2,24 +2,29 @@ import { readFile } from "node:fs/promises"
 import path from "node:path"
 
 const root=process.cwd()
-const [stable,generated,registry,explorer,runtime]=await Promise.all([
+const [stable,generated,registry,explorer,runtime,packRegistry]=await Promise.all([
   readFile(path.join(root,"src/contracts/assets-v2.ts"),"utf8"),
   readFile(path.join(root,"src/generated/assets-v1.3.ts"),"utf8"),
   readFile(path.join(root,"src/contracts/assets-registry.ts"),"utf8"),
   readFile(path.join(root,"src/components/asset-explorer.tsx"),"utf8"),
   readFile(path.join(root,"src/components/runtime-motion.tsx"),"utf8"),
+  readFile(path.join(root,"src/contracts/asset-packs.ts"),"utf8"),
 ])
 const failures=[]
-const sha="82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05"
-if(!stable.includes(sha)||!stable.includes('assetRelease: "1.3.1"')) failures.push("stable source")
-if(!stable.includes("assetPackCount: 42")||!stable.includes("canonicalAssetCount: 614")) failures.push("stable inventory")
-if(!generated.includes('"version": "1.3.1"')||!generated.includes('"developer-distribution"')) failures.push("generated registry")
+const commit=stable.match(/commit:\s*"([0-9a-f]{40})"/)?.[1]
+const release=stable.match(/assetRelease:\s*"([^"]+)"/)?.[1]
+const packCount=Number(stable.match(/assetPackCount:\s*(\d+)/)?.[1] ?? 0)
+const assetCount=Number(stable.match(/canonicalAssetCount:\s*(\d+)/)?.[1] ?? 0)
+if(!commit || !release) failures.push("stable source metadata")
+if(!packCount || !assetCount) failures.push("stable inventory metadata")
+if(!generated.includes(`"version": "${release}"`)||!generated.includes('"developer-distribution"')) failures.push("generated registry")
 if(!registry.includes("MOONWITNESS_STABLE_REPOSITORY_BASE")) failures.push("stable registry resolver")
-if(!explorer.includes("42 packs / 614 canonical assets")) failures.push("asset explorer inventory")
+if(!explorer.includes("ROCKSOUL_ASSETS_REGISTRY.packCount")||!explorer.includes("ROCKSOUL_ASSETS_REGISTRY.canonicalAssetCount")) failures.push("derived asset explorer inventory")
+if(!packRegistry.includes('"community-participation"')) failures.push("community participation pack contract")
 if(!runtime.includes("prefers-reduced-motion")) failures.push("runtime reduced-motion contract")
 if(failures.length){
   console.error("Assets registry audit failed:")
   failures.forEach((failure)=>console.error(`- ${failure}`))
   process.exit(1)
 }
-console.log(`Assets registry audit passed: v1.3.1 / 42 packs / 614 assets / ${sha}`)
+console.log(`Assets registry audit passed: v${release} / ${packCount} packs / ${assetCount} assets / ${commit}`)

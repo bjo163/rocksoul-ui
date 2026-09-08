@@ -5,16 +5,22 @@ import os from "node:os"
 
 const root = process.cwd()
 const contract = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
+const repositoryMatch = contract.match(/repository:\s*"([^"]+)"/)
+const refMatch = contract.match(/ref:\s*"([^"]+)"/)
 const runtimeMatch = contract.match(/commit:\s*"([0-9a-f]{40})"/)
 const acceptedMainMatch = contract.match(/acceptedMainCommit:\s*"([0-9a-f]{40})"/)
 const releaseMatch = contract.match(/assetRelease:\s*"([^"]+)"/)
 const countMatch = contract.match(/assetPackCount:\s*(\d+)/)
 
-if (!runtimeMatch || !acceptedMainMatch || !releaseMatch || !countMatch) {
+if (!repositoryMatch || !refMatch || !runtimeMatch || !acceptedMainMatch || !releaseMatch || !countMatch) {
   console.error("Assets freshness audit failed: stable sync metadata not found.")
   process.exit(1)
 }
 
+const sourceRepository = repositoryMatch[1]
+const sourceRef = refMatch[1]
+const gitRemote = `https://github.com/${sourceRepository}.git`
+const rawBase = `https://raw.githubusercontent.com/${sourceRepository}/${sourceRef}`
 const runtimeCommit = runtimeMatch[1]
 const acceptedMainCommit = acceptedMainMatch[1]
 const expectedRelease = releaseMatch[1]
@@ -24,7 +30,7 @@ let current = ""
 try {
   current = execFileSync(
     "git",
-    ["ls-remote", "https://github.com/bjo163/rocksoul-assets.git", "refs/heads/main"],
+    ["ls-remote", gitRemote, `refs/heads/${sourceRef}`],
     { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
   ).trim().split(/\s+/)[0]
 } catch {
@@ -52,8 +58,8 @@ function allowedPostReleaseFile(file) {
 
 try {
   const [versionResponse, packsResponse] = await Promise.all([
-    fetch("https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/VERSION"),
-    fetch("https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/moonwitness/asset-packs.json"),
+    fetch(`${rawBase}/VERSION`),
+    fetch(`${rawBase}/moonwitness/asset-packs.json`),
   ])
 
   if (!versionResponse.ok || !packsResponse.ok) {
@@ -75,8 +81,8 @@ try {
   let changedFiles = []
   try {
     execFileSync("git", ["init", "-q", worktree], { stdio: "ignore" })
-    execFileSync("git", ["-C", worktree, "remote", "add", "origin", "https://github.com/bjo163/rocksoul-assets.git"], { stdio: "ignore" })
-    execFileSync("git", ["-C", worktree, "fetch", "-q", "--no-tags", "--depth=64", "origin", "main"], { stdio: "ignore" })
+    execFileSync("git", ["-C", worktree, "remote", "add", "origin", gitRemote], { stdio: "ignore" })
+    execFileSync("git", ["-C", worktree, "fetch", "-q", "--no-tags", "--depth=64", "origin", sourceRef], { stdio: "ignore" })
     const fetchedHead = execFileSync("git", ["-C", worktree, "rev-parse", "FETCH_HEAD"], { encoding: "utf8" }).trim()
     if (fetchedHead !== current) throw new Error(`assets head moved during audit: ${current} -> ${fetchedHead}`)
     execFileSync("git", ["-C", worktree, "cat-file", "-e", `${acceptedMainCommit}^{commit}`], { stdio: "ignore" })

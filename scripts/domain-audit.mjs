@@ -5,9 +5,18 @@ const root = process.cwd()
 const fixture = await readFile(path.join(root, "src", "fixtures", "mw0042.ts"), "utf8")
 const screens = await readFile(path.join(root, "src", "screens", "domain-screens.tsx"), "utf8")
 const ecosystem = await readFile(path.join(root, "src", "contracts", "ecosystem-domains.ts"), "utf8")
+const domainContract = JSON.parse(await readFile(path.join(root, "src", "generated", "research-domains.json"), "utf8"))
 const graph = await readFile(path.join(root, "src", "components", "evidence-graph.tsx"), "utf8")
 const summary = await readFile(path.join(root, "src", "components", "domain-record-summary.tsx"), "utf8")
 const assetsV2 = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
+const researchDomainMap = await readFile(path.join(root, "src", "components", "research-domain-ownership-map.tsx"), "utf8")
+
+function hasOwner(domain, repository, prefix) {
+  const entries = [...(domainContract.domains ?? []), domainContract.relationshipLayer].filter(Boolean)
+  const owner = entries.find((entry) => entry.domain === domain)
+  return owner?.repository === repository && owner?.prefix === prefix
+}
+
 
 const checks = [
   [fixture.includes('start: "02:14"') && fixture.includes('end: "02:37"') && fixture.includes('timezone: "LOCAL/FIXTURE"'), "EVENT temporal fixture"],
@@ -18,17 +27,19 @@ const checks = [
   [screens.includes("Identity dimensions / partial"), "PERSON screen-specific presentation"],
   [screens.includes("RGBL channels / semantic source reading"), "RGBL screen-specific presentation"],
   [screens.includes("AWSBoundary") && screens.includes("LegalStatus"), "AWS downstream legal presentation"],
-  [ecosystem.includes('STORY: { repository: "rocksoul-mftl", prefix: "mftl:" }'), "STORY canonical owner"],
-  [ecosystem.includes('EVENT: { repository: "rocksoul-legend", prefix: "legend:" }'), "EVENT canonical owner"],
-  [ecosystem.includes('PERSON: { repository: "rocksoul-superhero", prefix: "superhero:" }'), "PERSON canonical owner"],
-  [ecosystem.includes('PERSPECTIVE: { repository: "rocksoul-jizz", prefix: "jizz:" }'), "PERSPECTIVE canonical owner"],
-  [ecosystem.includes('TEXT: { repository: "rocksoul-rgbl", prefix: "rgbl:" }'), "TEXT semantic owner"],
-  [ecosystem.includes('LAW: { repository: "rocksoul-aws", prefix: "aws:" }'), "LAW semantic owner"],
-  [ecosystem.includes('RELATIONSHIP: { repository: "rocksoul-correlation", prefix: "correlation:" }'), "RELATIONSHIP canonical owner"],
+  [hasOwner("STORY", "rocksoul-mftl", "mftl:"), "STORY canonical owner"],
+  [hasOwner("EVENT", "rocksoul-legend", "legend:"), "EVENT canonical owner"],
+  [hasOwner("PERSON", "rocksoul-superhero", "superhero:"), "PERSON canonical owner"],
+  [hasOwner("PERSPECTIVE", "rocksoul-jizz", "jizz:"), "PERSPECTIVE canonical owner"],
+  [hasOwner("TEXT", "rocksoul-rgbl", "rgbl:"), "TEXT semantic owner"],
+  [hasOwner("LAW", "rocksoul-aws", "aws:"), "LAW semantic owner"],
+  [hasOwner("RELATIONSHIP", "rocksoul-correlation", "correlation:"), "RELATIONSHIP canonical owner"],
   [graph.includes('PERSPECTIVE: "text-warning border-warning"'), "PERSPECTIVE graph-node support"],
   [summary.includes("ResearchDomain") && summary.includes("canonicalOwnerFor"), "generic domain-record summary"],
   [assetsV2.includes('PERSPECTIVE / Perspectives') && assetsV2.includes('repo: "rocksoul-jizz"'), "PERSPECTIVE resource descriptor"],
   [assetsV2.includes('RELATIONSHIP / Correlation') && assetsV2.includes('repo: "rocksoul-correlation"'), "RELATIONSHIP resource descriptor"],
+  [researchDomainMap.includes("canonicalDomainOwners") && researchDomainMap.includes("Text equivalent"), "data-driven research-domain ownership visual"],
+  [!["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-jizz"].some((repo) => researchDomainMap.includes(repo)), "ownership visual contains no duplicated repository literals"],
 ]
 
 const failures = checks.filter(([ok]) => !ok).map(([, label]) => label)

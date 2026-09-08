@@ -1,11 +1,11 @@
 export const moonWitnessAssetPacks = {
   "product-icons": { id: "product-icons", count: 44, root: "icons", manifest: "icons/icons.json" },
   "dashboard": { id: "dashboard", count: 20, root: "dashboard-pack", manifest: "dashboard-pack/dashboard-pack.json" },
-  "data-viz": { id: "data-viz", count: 16, root: "data-viz", manifest: "data-viz/data-viz.json" },
+  "data-viz": { id: "data-viz", count: 20, root: "data-viz", manifest: "data-viz/data-viz.json" },
   "hero-backgrounds": { id: "hero-backgrounds", count: 8, root: "hero-backgrounds", manifest: "hero-backgrounds/backgrounds.json" },
   "state-illustrations": { id: "state-illustrations", count: 12, root: "state-illustrations", manifest: "state-illustrations/states.json" },
   "motion": { id: "motion", count: 12, root: "motion", manifest: "motion/motion.json" },
-  "application-screens": { id: "application-screens", count: 12, root: "ui/v2", manifest: "ui/v2/manifest.json" },
+  "application-screens": { id: "application-screens", count: 20, root: "ui/v2", manifest: "ui/v2/manifest.json" },
   "sfx": { id: "sfx", count: 14, root: "sfx", manifest: "sfx/sounds.json" },
   "graph-vector": { id: "graph-vector", count: 10, root: "graph-pack", manifest: "graph-pack/manifest.json" },
   "badge-status": { id: "badge-status", count: 12, root: "badge-pack", manifest: "badge-pack/manifest.json" },
@@ -41,6 +41,7 @@ export const moonWitnessAssetPacks = {
   "cinematic-hero": { id: "cinematic-hero", count: 12, root: "cinematic-hero-pack", manifest: "cinematic-hero-pack/manifest.json" },
   "runtime-motion": { id: "runtime-motion", count: 12, root: "runtime-motion-pack", manifest: "runtime-motion-pack/manifest.json" },
   "developer-distribution": { id: "developer-distribution", count: 4, root: "developer-pack", manifest: "developer-pack/manifest.json" },
+  "community-participation": { id: "community-participation", count: 8, root: "community-participation-pack", manifest: "community-participation-pack/manifest.json" },
 } as const
 
 export type MoonWitnessAssetPackId = keyof typeof moonWitnessAssetPacks
