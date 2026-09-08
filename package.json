@@ -1,6 +1,6 @@
 {
   "name": "@rocksoul/ui",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -19,7 +19,13 @@
     "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run audit:assets-sync && npm run audit:application && npm run typecheck && npm run build:lib && npm run audit:package && npm run build:playground && npm run build-storybook",
     "prepare": "npm run build:lib",
     "audit:assets-sync": "node scripts/assets-sync-audit.mjs",
-    "audit:assets-freshness": "node scripts/assets-freshness-audit.mjs"
+    "audit:assets-freshness": "node scripts/assets-freshness-audit.mjs",
+    "test:unit": "vitest run",
+    "test:browser": "playwright test",
+    "test:visual:compare": "node scripts/visual-compare.mjs",
+    "test:consumer": "node scripts/consumer-smoke.mjs",
+    "audit:assets-integrity": "node scripts/assets-integrity-audit.mjs",
+    "audit:release": "node scripts/release-audit.mjs"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
@@ -38,7 +44,16 @@
     "typescript": "7.0.2",
     "vite": "8.2.2",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "jsdom": "^27.0.0",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "vitest": "^4.0.0"
   },
   "engines": {
     "node": ">=22"

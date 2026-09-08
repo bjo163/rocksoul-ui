@@ -4,6 +4,7 @@ import { AuditEventRow, MetricTile } from "../components/archive-components"
 import { CaseHeader } from "../components/case-header"
 import { AWSLegalSummaryPattern, ModerationQueue, RepositoryMonitor } from "../components/patterns"
 import { mw0042 } from "../fixtures/mw0042"
+import type { ApplicationActions } from "../contracts/interactions"
 
 const notifications: AppNotification[] = [
   {
@@ -22,7 +23,7 @@ const notifications: AppNotification[] = [
   },
 ]
 
-export function PlatformScreen() {
+export function PlatformScreen({ actions }: { actions?: ApplicationActions } = {}) {
   return (
     <ApplicationShell
       activeResource="cases"
@@ -43,7 +44,7 @@ export function PlatformScreen() {
           status="unresolved"
           variant="platform"
           metadata={[{ label: "review", value: "needs-review" }]}
-          actions={<Button variant="secondary">Keep case unresolved</Button>}
+          actions={<Button variant="secondary" onClick={() => void actions?.onPlatformAction?.({ action: "keep-unresolved", resource: mw0042.caseId })}>Keep case unresolved</Button>}
         />
 
         <section className="mt-6 border border-border bg-card p-4">
@@ -99,10 +100,10 @@ export function PlatformScreen() {
         </section>
 
         <div className="sticky bottom-0 mt-6 flex flex-wrap gap-2 border-t border-border bg-background/95 py-3 backdrop-blur md:static md:bg-transparent">
-          <Button variant="danger">Request context</Button>
-          <Button variant="secondary">Flag record</Button>
-          <Button variant="secondary">Keep case unresolved</Button>
-          <Button variant="ghost">Return to queue</Button>
+          <Button variant="danger" onClick={() => void actions?.onPlatformAction?.({ action: "request-context", resource: mw0042.caseId })}>Request context</Button>
+          <Button variant="secondary" onClick={() => void actions?.onPlatformAction?.({ action: "flag-record", resource: mw0042.caseId })}>Flag record</Button>
+          <Button variant="secondary" onClick={() => void actions?.onPlatformAction?.({ action: "keep-unresolved", resource: mw0042.caseId })}>Keep case unresolved</Button>
+          <Button variant="ghost" onClick={() => void actions?.onPlatformAction?.({ action: "return-to-queue", resource: mw0042.caseId })}>Return to queue</Button>
         </div>
       </div>
     </ApplicationShell>
