@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
     lib: {
-      entry: resolve(__dirname, "src/library-entry.ts"),
+      entry: resolve(import.meta.dirname, "src/library-entry.ts"),
       formats: ["es"],
       fileName: "index",
       cssFileName: "styles",
