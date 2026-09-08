@@ -33,6 +33,9 @@ jobs:
         run: npm run audit:domains
       - name: Rocksoul assets v2 sync audit
         run: npm run audit:assets-sync
+
+      - name: Rocksoul assets remote freshness
+        run: npm run audit:assets-freshness
       - name: Application framework audit
         run: npm run audit:application
       - name: Typecheck

@@ -200,4 +200,4 @@ The v2 application contract is mirrored from the asset source:
 - canonical MoonWitness editable-vector brand source family;
 - compact mobile MW-0042 record treatment.
 
-`npm run audit:assets-sync` prevents undocumented drift from the recorded asset sync point.
+`npm run audit:assets-sync` verifies the implemented v2 contract, while `npm run audit:assets-freshness` compares the recorded sync SHA against the live `rocksoul-assets/main` tip. A newer asset commit therefore fails UI CI until the delta is reviewed.

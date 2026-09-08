@@ -173,6 +173,7 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Notifications mark-all-read + system synchronization state.
 - [x] Mobile MW-0042 compact records aligned to 390 reference rhythm.
 - [x] Assets v2 sync audit is enforced by CI.
+- [x] Remote assets freshness against live `rocksoul-assets/main` is enforced by CI.
 
 ## Application framework
 - [x] Shared responsive ApplicationShell.
