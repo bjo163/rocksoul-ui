@@ -161,9 +161,9 @@ A newer `rocksoul-assets` commit must be reviewed before UI CI is allowed to cla
 
 ## Asset packs v1.3
 
-`@rocksoul/ui 0.11.0` implements the stable **MoonWitness Complete Asset Packs v1.3.0** contract from `rocksoul-assets/main@e2dd99735e9225d368f6c520c6ac1980219115ba`.
+`@rocksoul/ui 0.12.0` implements the stable **MoonWitness Complete Asset Packs v1.3.1** contract from `rocksoul-assets/main@82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05`.
 
-- **41** typed asset packs;
+- **42** typed asset packs;
 - canonical MoonWitness brand, graph, source, geospatial, evidence, correlation, workflow, accessibility, integrity, export and cinematic families;
 - `MoonWitnessAssetProvider` resolves app-hosted assets or a canonical remote base;
 - product UI prefers SVG while raster/video derivatives remain delivery formats;
@@ -230,3 +230,10 @@ Reusable research surfaces added in v0.12.0:
 - `ProvenanceRail` — STORY / CLAIM / EVIDENCE / SOURCE / TEXT / EVENT / PERSON / LAW flow using canonical correlation-semantics assets.
 
 These components keep live semantics in HTML and use Rocksoul assets as visual support rather than baking research content into imagery.
+
+
+## Cinematic public hero
+
+`CinematicWebHero` implements the application-facing `moonwitness/cinematic-web-hero/manifest.json` delivery profile. It uses the photographic desktop/mobile masters from `rocksoul-assets` while keeping navigation, headline, CTA, evidence semantics, archive labels and accessibility as live HTML/SVG.
+
+The component is static under reduced-motion preferences, keeps correlation distinct from causation, and exposes its asset set as a replaceable typed prop for consumers.
