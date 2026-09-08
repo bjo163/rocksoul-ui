@@ -5,7 +5,9 @@ import os from "node:os"
 
 const root = process.cwd()
 const contract = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
-const repositoryMatch = contract.match(/repository:\s*"([^"]+)"/)\nconst refMatch = contract.match(/ref:\s*"([^"]+)"/)\nconst runtimeMatch = contract.match(/commit:\s*"([0-9a-f]{40})"/)
+const repositoryMatch = contract.match(/repository:\s*"([^"]+)"/)
+const refMatch = contract.match(/ref:\s*"([^"]+)"/)
+const runtimeMatch = contract.match(/commit:\s*"([0-9a-f]{40})"/)
 const acceptedMainMatch = contract.match(/acceptedMainCommit:\s*"([0-9a-f]{40})"/)
 const releaseMatch = contract.match(/assetRelease:\s*"([^"]+)"/)
 const countMatch = contract.match(/assetPackCount:\s*(\d+)/)
@@ -15,7 +17,11 @@ if (!repositoryMatch || !refMatch || !runtimeMatch || !acceptedMainMatch || !rel
   process.exit(1)
 }
 
-const sourceRepository = repositoryMatch[1]\nconst sourceRef = refMatch[1]\nconst gitRemote = `https://github.com/${sourceRepository}.git`\nconst rawBase = `https://raw.githubusercontent.com/${sourceRepository}/${sourceRef}`\nconst runtimeCommit = runtimeMatch[1]
+const sourceRepository = repositoryMatch[1]
+const sourceRef = refMatch[1]
+const gitRemote = `https://github.com/${sourceRepository}.git`
+const rawBase = `https://raw.githubusercontent.com/${sourceRepository}/${sourceRef}`
+const runtimeCommit = runtimeMatch[1]
 const acceptedMainCommit = acceptedMainMatch[1]
 const expectedRelease = releaseMatch[1]
 const expectedPackCount = Number(countMatch[1])
@@ -84,7 +90,8 @@ try {
       "git",
       ["-C", worktree, "diff", "--name-only", acceptedMainCommit, current],
       { encoding: "utf8" },
-    ).split(/\r?\n/).map((value) => value.trim()).filter(Boolean)
+    ).split(/\r?
+/).map((value) => value.trim()).filter(Boolean)
   } finally {
     await rm(worktree, { recursive: true, force: true })
   }
