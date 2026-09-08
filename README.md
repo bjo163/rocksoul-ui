@@ -140,6 +140,21 @@ dist/assets/*
 
 React and React DOM remain peer dependencies so the consumer owns the runtime instance.
 
+## Browser and consumer QA
+
+Repository CI now verifies both code contracts and real-browser behavior:
+
+```bash
+npm run test:unit
+npm run build:lib
+npm run test:consumer
+npm run test:browser
+```
+
+The Playwright matrix covers desktop `1440×1024` and mobile `390×844`, rejects serious/critical WCAG violations and horizontal overflow, checks the application-shell skip link with keyboard navigation, and smoke-tests reduced-motion rendering. CI installs Chromium explicitly; local browser runs require a Playwright Chromium install.
+
+`test:consumer` imports the package through its own public `@rocksoul/ui` exports after build, so broken export maps cannot hide behind source-level tests.
+
 ## Git dependency handoff
 
 ```bash
