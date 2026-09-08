@@ -5,7 +5,7 @@ import {
   type ImgHTMLAttributes,
   type ReactNode,
 } from "react"
-import { moonWitnessAssetRelativePath, type MoonWitnessAssetPackId, type MoonWitnessSfxId } from "../contracts/asset-packs"
+import { moonWitnessAssetPacks, moonWitnessAssetRelativePath, type MoonWitnessAssetPackId, type MoonWitnessSfxId } from "../contracts/asset-packs"
 import {
   MOONWITNESS_STABLE_REPOSITORY_BASE,
   resolveMoonWitnessRegistryAssetUrl,
@@ -137,7 +137,7 @@ export function useMoonWitnessSfx({
 export const moonWitnessAssetConsumption = {
   localMirrorBase: DEFAULT_ASSET_BASE,
   registryRepositoryBase: MOONWITNESS_STABLE_REPOSITORY_BASE,
-  packCount: 42,
+  packCount: Object.keys(moonWitnessAssetPacks).length,
   preferSvgInProductUi: true,
   rasterIsDerivative: true,
   runtimeMotionFormats: ["svg", "apng", "webm", "lottie"],
