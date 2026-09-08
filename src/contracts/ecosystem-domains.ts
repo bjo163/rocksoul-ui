@@ -1,3 +1,5 @@
+import researchDomains from "../generated/research-domains.json"
+
 export type ResearchDomain = "STORY" | "EVENT" | "PERSON" | "TEXT" | "LAW" | "PERSPECTIVE"
 export type PublicGraphDomain = ResearchDomain | "RELATIONSHIP"
 export type ReferenceNodeKind = "story" | "claim" | "evidence" | "source" | "text" | "event" | "person" | "law" | "case" | "location"
@@ -13,78 +15,25 @@ export type CanonicalDomainOwner = {
   defaultKind: ReferenceNodeKind
 }
 
-export const canonicalDomainOwners = {
-  STORY: {
-    label: "Story",
-    repository: "rocksoul-mftl",
-    prefix: "mftl:",
-    resource: "case",
-    nodeKind: "story",
-    iconAssetId: "case",
-    idKinds: { SOURCE: "source", CLAIM: "claim", EVIDENCE: "evidence", CAND: "story", MYTH: "story", ENTITY: "story" },
-    defaultKind: "story",
-  },
-  EVENT: {
-    label: "Event",
-    repository: "rocksoul-legend",
-    prefix: "legend:",
-    resource: "event",
-    nodeKind: "event",
-    iconAssetId: "event",
-    idKinds: { EVT: "event", PLC: "location", SRC: "source", CLM: "claim", EVD: "evidence", REL: "event", ART: "event" },
-    defaultKind: "event",
-  },
-  PERSON: {
-    label: "Person",
-    repository: "rocksoul-superhero",
-    prefix: "superhero:",
-    resource: "person",
-    nodeKind: "person",
-    iconAssetId: "person",
-    idKinds: { PER: "person", SRC: "source", CLM: "claim", EVD: "evidence", REL: "person" },
-    defaultKind: "person",
-  },
-  TEXT: {
-    label: "Text",
-    repository: "rocksoul-rgbl",
-    prefix: "rgbl:",
-    resource: "rgbl",
-    nodeKind: "text",
-    iconAssetId: "rgbl",
-    idKinds: {},
-    defaultKind: "text",
-  },
-  LAW: {
-    label: "Law",
-    repository: "rocksoul-aws",
-    prefix: "aws:",
-    resource: "aws",
-    nodeKind: "law",
-    iconAssetId: "aws",
-    idKinds: {},
-    defaultKind: "law",
-  },
-  PERSPECTIVE: {
-    label: "Perspective",
-    repository: "rocksoul-jizz",
-    prefix: "jizz:",
-    resource: "perspective",
-    nodeKind: "case",
-    iconAssetId: "perspective",
-    idKinds: {},
-    defaultKind: "case",
-  },
-  RELATIONSHIP: {
-    label: "Relationship",
-    repository: "rocksoul-correlation",
-    prefix: "correlation:",
-    resource: "correlation",
-    nodeKind: "case",
-    iconAssetId: "correlation",
-    idKinds: {},
-    defaultKind: "case",
-  },
-} as const satisfies Record<PublicGraphDomain, CanonicalDomainOwner>
+const domainEntries = [...researchDomains.domains, researchDomains.relationshipLayer]
+
+export const canonicalDomainOwners = Object.fromEntries(
+  domainEntries.map((entry) => [
+    entry.domain,
+    {
+      label: entry.label,
+      repository: entry.repository,
+      prefix: entry.prefix,
+      resource: entry.resource,
+      nodeKind: entry.nodeKind,
+      iconAssetId: entry.iconAssetId,
+      idKinds: entry.idKinds,
+      defaultKind: entry.defaultKind,
+    },
+  ]),
+) as Record<PublicGraphDomain, CanonicalDomainOwner>
+
+export const researchDomainVisualContract = researchDomains
 
 export interface QualifiedReference {
   ref: string
@@ -101,7 +50,7 @@ export function canonicalOwnerFor(domain: PublicGraphDomain): CanonicalDomainOwn
 }
 
 export function isResearchDomain(value: string): value is ResearchDomain {
-  return value in canonicalDomainOwners && value !== "RELATIONSHIP"
+  return Object.prototype.hasOwnProperty.call(canonicalDomainOwners, value) && value !== "RELATIONSHIP"
 }
 
 export function parseQualifiedReference(ref: string): QualifiedReference | null {
