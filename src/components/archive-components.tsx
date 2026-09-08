@@ -18,6 +18,7 @@ export function MWHeader({
   caseId,
   surface = "web",
   variant = "auto",
+  homeHref = "#top",
   brandLabel = "INDEPENDENT OBSERVATORY",
   navItems = [
     { label: "Observe", href: "#method" },
@@ -31,6 +32,7 @@ export function MWHeader({
   caseId?: string
   surface?: "web" | "community"
   variant?: "auto" | "transparent" | "solid" | "compact-mobile"
+  homeHref?: string
   brandLabel?: string
   navItems?: MWHeaderNavItem[]
   searchHref?: string
@@ -50,13 +52,6 @@ export function MWHeader({
 
   const resolved = variant === "auto" ? (scrolled ? "solid" : "transparent") : variant
   const compact = resolved === "compact-mobile"
-  const items = navigation ?? [
-    { label: "Observe", href: "#method" },
-    { label: "Records", href: "#method" },
-    { label: "Cases", href: "#case" },
-    { label: "Community", href: "#method" },
-  ]
-
   return (
     <header
       className={cn(
