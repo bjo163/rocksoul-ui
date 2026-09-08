@@ -38,6 +38,14 @@ const assessmentBadge = {
   unresolved: "unresolved",
 } as const
 
+const legalResultBadge = {
+  permitted: "verified",
+  restricted: "restricted",
+  prohibited: "prohibited",
+  disputed: "disputed",
+  unresolved: "unresolved",
+} as const
+
 function assessmentFor(
   assessments: readonly LegalApplicabilityAssessment[],
   axisId: string,
@@ -116,7 +124,7 @@ export function LegalApplicabilityMatrix({
           <p className="mw-meta text-muted-foreground">Reviewed result vocabulary</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {legalResultVocabulary.map((state) => (
-              <Badge key={state.id} variant={state.id === "permitted" ? "verified" : state.id}>
+              <Badge key={state.id} variant={legalResultBadge[state.id as keyof typeof legalResultBadge] ?? "neutral"}>
                 {state.label}
               </Badge>
             ))}
