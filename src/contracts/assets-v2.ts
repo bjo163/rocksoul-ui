@@ -1,7 +1,7 @@
 export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
-  commit: "61170933b759fc90134b3659c1a2574de7ce580c",
+  commit: "f0f93363c73895e52987f9a3c757e4f5115eca99",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
@@ -36,6 +36,7 @@ export const v2ResourceDescriptors = [
   { resource: "person", label: "PERSON / People", path: "/people", repo: "rocksoul-superhero" },
   { resource: "rgbl", label: "TEXT / RGBL", path: "/sources", repo: "rocksoul-rgbl" },
   { resource: "aws", label: "LAW / AWS", path: "/aws", repo: "rocksoul-aws" },
+  { resource: "correlation", label: "CORRELATION / Evidence Graph", path: "/correlation", repo: "rocksoul-correlation" },
 ] as const
 
 export const v2ScreenContract = [
