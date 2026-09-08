@@ -1,6 +1,6 @@
-import { buttonVariants } from "../components/button"
 import { MWHeader, RepositoryCard } from "../components/archive-components"
 import { WorkflowStrip } from "../components/workflow-strip"
+import { CinematicWebHero } from "../components/cinematic-web-hero"
 
 const method = [
   ["observe", "01", "OBSERVE", "Something happened. Record it before the story hardens around it."],
@@ -11,44 +11,7 @@ const method = [
 ] as const
 
 export function LandingHeroScreen() {
-  return (
-    <section className="mw-shell-wide flex min-h-[calc(100vh-64px)] flex-col justify-between py-12 sm:py-16">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <p className="mw-eyebrow text-primary">MoonWitness / Independent Observatory</p>
-        <p className="mw-meta text-muted-foreground">Rocksoul / connective thread</p>
-      </div>
-
-      <div className="max-w-6xl py-16">
-        <p className="mw-eyebrow text-muted-foreground">Where myth fades to legend</p>
-        <h1 className="mw-display mt-5 text-balance text-[clamp(4rem,12vw,8rem)] font-black uppercase leading-[0.82]">
-          Observe.
-          <br />
-          Trace.
-          <br />
-          Don’t force
-          <br />
-          the ending.
-        </h1>
-        <p className="mw-reading mt-8 text-pretty text-base leading-7 text-muted-foreground sm:text-xl sm:leading-8">
-          MoonWitness traces records, reconstructs relationships, weighs uncertainty through Mizan,
-          and leaves unresolved questions visibly unresolved.
-        </p>
-
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="#case" className={buttonVariants({ variant: "primary", size: "lg" })}>
-            Open MW-0042
-          </a>
-          <a href="#manifesto" className={buttonVariants({ variant: "secondary", size: "lg" })}>
-            Read manifesto
-          </a>
-        </div>
-      </div>
-
-      <p className="mw-meta max-w-xl leading-5 text-muted-foreground">
-        Observe first · provenance stays attached · correlation is not causation · unresolved is a valid output
-      </p>
-    </section>
-  )
+  return <CinematicWebHero />
 }
 
 export function ManifestoScreen() {
