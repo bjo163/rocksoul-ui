@@ -20,7 +20,7 @@ describe("CinematicWebHero", () => {
     expect(labelledBy[0]).not.toBe(labelledBy[1])
 
     for (const id of labelledBy) {
-      expect(id ? container.querySelector(`#${CSS.escape(id)}`) : null).toBeInstanceOf(HTMLHeadingElement)
+      expect(id ? document.getElementById(id) : null).toBeInstanceOf(HTMLHeadingElement)
     }
   })
 })
