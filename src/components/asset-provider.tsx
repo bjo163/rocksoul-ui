@@ -1,0 +1,104 @@
+import {
+  createContext,
+  useCallback,
+  useContext,
+  type ImgHTMLAttributes,
+  type ReactNode,
+} from "react"
+import { moonWitnessAssetPacks, moonWitnessAssetRelativePath, type MoonWitnessAssetPackId, type MoonWitnessSfxId } from "../contracts/asset-packs"
+
+const DEFAULT_ASSET_BASE = "/assets/moonwitness"
+
+const AssetBaseContext = createContext(DEFAULT_ASSET_BASE)
+
+function cleanBase(base: string) {
+  return base.replace(/\/+$/, "")
+}
+
+export function MoonWitnessAssetProvider({
+  baseUrl = DEFAULT_ASSET_BASE,
+  children,
+}: {
+  baseUrl?: string
+  children: ReactNode
+}) {
+  return <AssetBaseContext.Provider value={cleanBase(baseUrl)}>{children}</AssetBaseContext.Provider>
+}
+
+export function useMoonWitnessAssetBaseUrl() {
+  return useContext(AssetBaseContext)
+}
+
+export function resolveMoonWitnessAssetUrl(baseUrl: string, pack: MoonWitnessAssetPackId, file: string) {
+  return `${cleanBase(baseUrl)}/${moonWitnessAssetRelativePath(pack, file)}`
+}
+
+export function MoonWitnessAssetImage({
+  pack,
+  file,
+  alt,
+  ...props
+}: ImgHTMLAttributes<HTMLImageElement> & {
+  pack: MoonWitnessAssetPackId
+  file: string
+  alt: string
+}) {
+  const baseUrl = useMoonWitnessAssetBaseUrl()
+  return <img src={resolveMoonWitnessAssetUrl(baseUrl, pack, file)} alt={alt} {...props} />
+}
+
+export function MoonWitnessStatusAsset({
+  status,
+  label = status,
+  className,
+}: {
+  status: "supported" | "verified" | "partial" | "unresolved" | "blocked" | "disputed" | "degraded" | "offline" | "needs-context" | "source-linked" | "legal-review" | "archived"
+  label?: string
+  className?: string
+}) {
+  return (
+    <span className={className}>
+      <MoonWitnessAssetImage pack="badge-status" file={`svg/${status}.svg`} alt="" aria-hidden="true" />
+      <span className="sr-only">{label}</span>
+    </span>
+  )
+}
+
+export function MoonWitnessPersonaAvatar({
+  persona,
+  alt,
+  className,
+}: {
+  persona: "rocksoul" | "researcher" | "analyst" | "moderator" | "admin" | "community-member" | "anonymous-source" | "protected-witness" | "ai-system"
+  alt: string
+  className?: string
+}) {
+  return <MoonWitnessAssetImage pack="persona-avatar" file={`svg/${persona}.svg`} alt={alt} className={className} />
+}
+
+export function useMoonWitnessSfx({
+  enabled = false,
+  volume = 0.35,
+  format = "ogg",
+}: {
+  enabled?: boolean
+  volume?: number
+  format?: "ogg" | "wav"
+} = {}) {
+  const baseUrl = useMoonWitnessAssetBaseUrl()
+  return useCallback((id: MoonWitnessSfxId) => {
+    if (!enabled || typeof Audio === "undefined") return
+    const src = `${cleanBase(baseUrl)}/sfx/generated/${id}.${format}`
+    const audio = new Audio(src)
+    audio.volume = Math.max(0, Math.min(1, volume))
+    void audio.play().catch(() => undefined)
+  }, [baseUrl, enabled, format, volume])
+}
+
+export const moonWitnessAssetConsumption = {
+  canonicalBase: DEFAULT_ASSET_BASE,
+  packCount: Object.keys(moonWitnessAssetPacks).length,
+  preferSvgInProductUi: true,
+  rasterIsDerivative: true,
+  sfxOptInOnly: true,
+} as const
