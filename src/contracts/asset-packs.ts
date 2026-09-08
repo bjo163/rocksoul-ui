@@ -52,5 +52,5 @@ export const moonWitnessAssetPackVersion = "1.3.0" as const
 export const moonWitnessAssetPackIndexPath = "asset-packs.json" as const
 
 export function moonWitnessAssetRelativePath(pack: MoonWitnessAssetPackId, file: string) {
-  return `${moonWitnessAssetPacks[pack].root}/${file.replace(/^\\/+/, "")}`
+  return `${moonWitnessAssetPacks[pack].root}/${file.replace(/^\/+/, "")}`
 }
