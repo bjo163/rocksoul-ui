@@ -194,7 +194,7 @@ Candidate snapshot:
 
 ```text
 assets branch : feat/complete-visual-language-v1.3
-assets commit : 7c5c17ea9748499523bc2f4d9c759963f902fc4a
+assets commit : 2f458f0b0c34b936f15e08eb2f0d6fd39bd39b6d
 registry      : 1.3.0
 packs         : 41
 canonical SVG : 591

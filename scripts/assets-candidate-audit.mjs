@@ -11,7 +11,7 @@ const [stable,candidate,generated]=await Promise.all([
 
 const failures=[]
 const stableSha="95a6912409f849029e18093658b1c0e8158a32f0"
-const candidateSha="7c5c17ea9748499523bc2f4d9c759963f902fc4a"
+const candidateSha="2f458f0b0c34b936f15e08eb2f0d6fd39bd39b6d"
 const candidateRef="feat/complete-visual-language-v1.3"
 
 if(!stable.includes(stableSha) || !stable.includes('assetRelease: "1.2.0"')) failures.push("stable v1.2 channel")

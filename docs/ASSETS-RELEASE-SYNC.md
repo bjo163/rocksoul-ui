@@ -57,7 +57,7 @@ The UI system implements all 19 pack contracts through a typed provider. Core ru
 
 ## v1.3 candidate
 
-UI dev tracks a separate release candidate at `feat/complete-visual-language-v1.3@7c5c17ea9748499523bc2f4d9c759963f902fc4a`.
+UI dev tracks a separate release candidate at `feat/complete-visual-language-v1.3@2f458f0b0c34b936f15e08eb2f0d6fd39bd39b6d`.
 
 - Stable release lock remains `rocksoul-assets/main@95a6912409f849029e18093658b1c0e8158a32f0` / v1.2.0.
 - Candidate developer registry reports 40 packs and 591 canonical assets.

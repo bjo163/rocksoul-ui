@@ -3,7 +3,7 @@ import { assets as candidateAssets } from "../generated/assets-v1.3"
 export const ROCKSOUL_ASSETS_CANDIDATE = {
   repository: "bjo163/rocksoul-assets",
   ref: "feat/complete-visual-language-v1.3",
-  commit: "7c5c17ea9748499523bc2f4d9c759963f902fc4a",
+  commit: "2f458f0b0c34b936f15e08eb2f0d6fd39bd39b6d",
   registryVersion: "1.3.0",
   status: "release-candidate-pending-ci",
   upstreamStableRelease: "1.2.0",

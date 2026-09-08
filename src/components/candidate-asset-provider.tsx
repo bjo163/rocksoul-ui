@@ -7,7 +7,7 @@ import {
 } from "../contracts/assets-candidate"
 
 export const MOONWITNESS_CANDIDATE_ASSET_BASE =
-  "https://raw.githubusercontent.com/bjo163/rocksoul-assets/7c5c17ea9748499523bc2f4d9c759963f902fc4a/moonwitness"
+  "https://raw.githubusercontent.com/bjo163/rocksoul-assets/2f458f0b0c34b936f15e08eb2f0d6fd39bd39b6d/moonwitness"
 
 function cleanBase(base: string) {
   return base.replace(/\/+$/, "")
