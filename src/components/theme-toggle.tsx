@@ -1,44 +1,60 @@
 import { useEffect, useState } from "react"
 
-type Theme = "dark" | "light"
+export type ThemePreference = "light" | "dark" | "system"
+type EffectiveTheme = "light" | "dark"
 
-function applyTheme(theme: Theme) {
+const preferenceOrder: ThemePreference[] = ["system", "dark", "light"]
+
+function resolveTheme(preference: ThemePreference): EffectiveTheme {
+  if (preference === "light" || preference === "dark") return preference
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
+}
+
+function applyTheme(preference: ThemePreference) {
+  const effective = resolveTheme(preference)
   const root = document.documentElement
-  root.dataset.theme = theme
-  root.classList.toggle("light", theme === "light")
+  root.dataset.themePreference = preference
+  root.dataset.theme = effective
+  root.classList.toggle("light", effective === "light")
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark")
+  const [preference, setPreference] = useState<ThemePreference>("system")
+  const [effective, setEffective] = useState<EffectiveTheme>("dark")
 
   useEffect(() => {
     const stored = window.localStorage.getItem("mw-theme")
-    const preferred: Theme =
-      stored === "light" || stored === "dark"
-        ? stored
-        : window.matchMedia("(prefers-color-scheme: light)").matches
-          ? "light"
-          : "dark"
-
-    setTheme(preferred)
-    applyTheme(preferred)
+    const initial: ThemePreference =
+      stored === "light" || stored === "dark" || stored === "system" ? stored : "system"
+    setPreference(initial)
   }, [])
 
-  const nextTheme = theme === "dark" ? "light" : "dark"
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: light)")
+    const sync = () => {
+      applyTheme(preference)
+      setEffective(resolveTheme(preference))
+    }
+    sync()
+    media.addEventListener("change", sync)
+    return () => media.removeEventListener("change", sync)
+  }, [preference])
+
+  const currentIndex = preferenceOrder.indexOf(preference)
+  const next = preferenceOrder[(currentIndex + 1) % preferenceOrder.length]
 
   return (
     <button
       type="button"
-      className="inline-flex min-h-11 min-w-11 items-center justify-center border border-border bg-card px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-muted"
-      aria-label={`Switch to ${nextTheme} mode`}
-      aria-pressed={theme === "light"}
+      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-[16px] border border-border bg-background px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-muted"
+      aria-label={`Theme ${preference}, currently ${effective}. Switch to ${next}.`}
+      title={`Theme: ${preference} · effective: ${effective}`}
       onClick={() => {
-        setTheme(nextTheme)
-        applyTheme(nextTheme)
-        window.localStorage.setItem("mw-theme", nextTheme)
+        setPreference(next)
+        window.localStorage.setItem("mw-theme", next)
       }}
     >
-      {theme === "dark" ? "Light" : "Dark"}
+      {preference}
     </button>
   )
 }

@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react"
 import { Badge } from "./badge"
 import { Button } from "./button"
+import { MoonWitnessBrand } from "./brand"
 import { Input } from "./form-controls"
 import { Avatar, Dialog, Drawer, IconButton } from "./overlays"
 import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
+import { v2NavigationItems, v2ResourceDescriptors } from "../contracts/assets-v2"
 
 export type BackendState = "online" | "degraded" | "offline"
-export type ResourceGroup = "Research" | "Workspaces" | "Account" | "System"
+export type ResourceGroup = "System" | "Resource" | "Workspace" | "Account"
 
 export interface AppResource {
   id: string
@@ -16,26 +18,66 @@ export interface AppResource {
   group: ResourceGroup
   description: string
   shortcut?: string
-  badge?: string
-  requiredPermission?: string
+  resource?: string
+  requiredPermission: string
 }
 
-export const applicationResources: AppResource[] = [
-  { id: "dashboard", label: "Dashboard", href: "#dashboard", group: "Research", description: "Overview, metrics, recent activity.", shortcut: "D" },
-  { id: "cases", label: "Cases", href: "#cases", group: "Research", description: "Investigative case review.", shortcut: "C" },
-  { id: "repositories", label: "Repositories", href: "#repositories", group: "Research", description: "Source repository health.", shortcut: "R" },
-  { id: "evidence", label: "Evidence", href: "#evidence", group: "Research", description: "Inspect provenance and source trails.", shortcut: "E" },
-  { id: "correlation", label: "Correlation", href: "#correlation", group: "Research", description: "Relationship and Mizan review.", shortcut: "M" },
-  { id: "legal", label: "Legal", href: "#legal", group: "Research", description: "AWS legal/regulatory layer.", shortcut: "L" },
-  { id: "kanban", label: "Kanban", href: "#kanban", group: "Workspaces", description: "Research work board.", shortcut: "K" },
-  { id: "calendar", label: "Calendar", href: "#calendar", group: "Workspaces", description: "Review windows and scheduled work.", shortcut: "A" },
-  { id: "chat", label: "Chat", href: "#chat", group: "Workspaces", description: "Team discussion and review context.", shortcut: "H" },
-  { id: "ai-workspace", label: "AI Workspace", href: "#ai-workspace", group: "Workspaces", description: "Evidence-aware analysis workspace.", shortcut: "I" },
-  { id: "community", label: "Community", href: "#community", group: "Workspaces", description: "Discussion and context submissions." },
-  { id: "profile", label: "Profile / Settings", href: "#profile", group: "Account", description: "Identity and preferences." },
-  { id: "authorization", label: "Authorization", href: "#authorization", group: "System", description: "Roles, permissions, and access states.", requiredPermission: "authz:read" },
-  { id: "audit", label: "Audit", href: "#audit", group: "System", description: "Review and action history.", requiredPermission: "audit:read" },
-]
+const descriptionById: Record<string, string> = {
+  dashboard: "What changed, what needs attention, and what can wait.",
+  cases: "Investigative case review.",
+  kanban: "Move work, not evidence.",
+  calendar: "Reviews, releases, and research checkpoints.",
+  chat: "Case conversations and review context.",
+  ai: "Ask across records while keeping citations visible.",
+  resources: "AutoMenu resource descriptors and permissions.",
+  profile: "Profile identity and preferences.",
+  settings: "Appearance, notifications, security, and integrations.",
+}
+
+const shortcutById: Record<string, string> = {
+  dashboard: "D",
+  cases: "C",
+  kanban: "K",
+  calendar: "A",
+  chat: "H",
+  ai: "I",
+  resources: "R",
+  profile: "P",
+  settings: "S",
+}
+
+const groupByKind: Record<string, ResourceGroup> = {
+  system: "System",
+  resource: "Resource",
+  workspace: "Workspace",
+  account: "Account",
+}
+
+export const applicationResources: AppResource[] = v2NavigationItems.map((item) => ({
+  id: item.id,
+  label: item.label,
+  href: item.path,
+  group: groupByKind[item.kind],
+  description: descriptionById[item.id],
+  shortcut: shortcutById[item.id],
+  resource: "resource" in item ? item.resource : undefined,
+  requiredPermission: item.permission,
+}))
+
+export const resourceDescriptors = v2ResourceDescriptors
+
+export const defaultApplicationPermissions = [
+  "authenticated",
+  "case:read",
+  "review:read",
+  "community:read",
+  "ai:use",
+  "resource:read",
+] as const
+
+function canSee(resource: AppResource, permissions: readonly string[]) {
+  return permissions.includes(resource.requiredPermission)
+}
 
 export function Breadcrumbs({ items }: { items: Array<{ label: string; href?: string }> }) {
   return (
@@ -58,13 +100,7 @@ export function Breadcrumbs({ items }: { items: Array<{ label: string; href?: st
   )
 }
 
-export function BackendStatus({
-  state,
-  label = "Backend",
-}: {
-  state: BackendState
-  label?: string
-}) {
+export function BackendStatus({ state, label = "Backend" }: { state: BackendState; label?: string }) {
   const variant = state === "online" ? "supported" : state === "degraded" ? "partial" : "contested"
   return <Badge variant={variant}>{label}: {state}</Badge>
 }
@@ -73,44 +109,45 @@ export function AutoMenu({
   resources = applicationResources,
   activeId,
   compact = false,
-  permissions = [],
+  permissions = defaultApplicationPermissions,
   onNavigate,
 }: {
   resources?: AppResource[]
   activeId?: string
   compact?: boolean
-  permissions?: string[]
+  permissions?: readonly string[]
   onNavigate?: () => void
 }) {
-  const visible = resources.filter((item) => !item.requiredPermission || permissions.includes(item.requiredPermission))
-  const groups = Array.from(new Set(visible.map((item) => item.group)))
+  const visible = resources.filter((item) => canSee(item, permissions))
 
   return (
-    <nav aria-label="Resource navigation" className="grid">
-      {groups.map((group) => (
-        <section key={group} className="border-b border-border py-2">
-          {!compact ? <p className="mw-meta px-3 py-2 text-muted-foreground">{group}</p> : null}
-          {visible.filter((item) => item.group === group).map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              title={compact ? `${item.label} — ${item.description}` : undefined}
-              aria-current={item.id === activeId ? "page" : undefined}
-              onClick={onNavigate}
-              className={cn(
-                "mw-link w-full gap-3 no-underline",
-                compact ? "justify-center px-2" : "px-3",
-                item.id === activeId ? "bg-card font-bold text-primary" : "text-muted-foreground hover:bg-card hover:text-foreground",
-              )}
-            >
-              <span className="font-mono text-[10px] font-black uppercase">
-                {compact ? item.label.slice(0, 2) : item.label}
-              </span>
-              {!compact && item.badge ? <Badge variant="info">{item.badge}</Badge> : null}
-            </a>
-          ))}
-        </section>
-      ))}
+    <nav aria-label="Resource navigation" data-mode="AutoMenu">
+      <div className="grid gap-1 p-2">
+        {visible.map((item) => (
+          <a
+            key={item.id}
+            href={item.href}
+            title={compact ? `${item.label} — ${item.description}` : undefined}
+            aria-current={item.id === activeId ? "page" : undefined}
+            onClick={onNavigate}
+            className={cn(
+              "mw-link min-h-9 w-full rounded-[8px] no-underline",
+              compact ? "justify-center px-2" : "justify-center px-2 lg:justify-start lg:px-3",
+              item.id === activeId ? "bg-card font-bold text-foreground" : "text-muted-foreground hover:bg-card hover:text-foreground",
+            )}
+          >
+            <span className={cn("mr-2 size-2 rounded-full", item.id === activeId ? "bg-primary" : "bg-unresolved")} aria-hidden="true" />
+            {compact ? (
+              <span className="font-mono text-[9px] font-black uppercase">{item.label.slice(0, 2)}</span>
+            ) : (
+              <>
+                <span className="font-mono text-[9px] font-black uppercase lg:hidden">{item.label.slice(0, 2)}</span>
+                <span className="hidden text-sm lg:inline">{item.label}</span>
+              </>
+            )}
+          </a>
+        ))}
+      </div>
     </nav>
   )
 }
@@ -123,24 +160,10 @@ export interface AppNotification {
   variant: "case-update" | "reply" | "review" | "system"
 }
 
-export function NotificationsPanel({
-  open,
-  onClose,
-  notifications,
-}: {
-  open: boolean
-  onClose: () => void
-  notifications: AppNotification[]
-}) {
+export function NotificationsPanel({ open, onClose, notifications }: { open: boolean; onClose: () => void; notifications: AppNotification[] }) {
   return (
-    <Drawer
-      open={open}
-      title="Notifications"
-      onClose={onClose}
-      position="right"
-      footer={<Button variant="secondary" onClick={onClose}>Close</Button>}
-    >
-      <div className="grid">
+    <Drawer open={open} title="Notifications" onClose={onClose} position="right" footer={<Button variant="secondary" onClick={onClose}>Close</Button>}>
+      <div className="grid" data-state={notifications.length ? "unread" : "empty"}>
         {notifications.length ? notifications.map((item) => (
           <article key={item.id} className={cn("border-b border-border p-4", item.state === "unread" && "bg-panel")}>
             <div className="flex items-center justify-between gap-3">
@@ -161,25 +184,19 @@ export function NotificationsPanel({
   )
 }
 
-export function UserMenu({
-  name,
-  role,
-}: {
-  name: string
-  role: string
-}) {
+export function UserMenu({ name, role }: { name: string; role: string }) {
   return (
     <details className="relative">
-      <summary className="mw-touch flex cursor-pointer list-none items-center gap-2 border border-border bg-card px-2">
+      <summary className="mw-touch flex cursor-pointer list-none items-center gap-2 rounded-full border border-border bg-background px-2">
         <Avatar label={name} size="sm" />
-        <span className="hidden text-left lg:block">
+        <span className="hidden text-left xl:block">
           <span className="block text-xs font-bold">{name}</span>
           <span className="mw-meta block text-muted-foreground">{role}</span>
         </span>
       </summary>
       <div className="absolute right-0 top-[calc(100%+8px)] z-40 w-56 border border-border bg-card p-2 shadow-lg">
-        <a href="#profile" className="mw-link w-full px-3 text-sm">Profile / Settings</a>
-        <a href="#authorization" className="mw-link w-full px-3 text-sm">Authorization</a>
+        <a href="/profile" className="mw-link w-full px-3 text-sm">Profile</a>
+        <a href="/settings" className="mw-link w-full px-3 text-sm">Settings</a>
         <button type="button" className="mw-link w-full px-3 text-left text-sm text-primary">Sign out</button>
       </div>
     </details>
@@ -190,41 +207,26 @@ export function CommandPalette({
   open,
   onClose,
   resources = applicationResources,
-  permissions = [],
+  permissions = defaultApplicationPermissions,
 }: {
   open: boolean
   onClose: () => void
   resources?: AppResource[]
-  permissions?: string[]
+  permissions?: readonly string[]
 }) {
   const [query, setQuery] = useState("")
   const results = useMemo(() => {
     const needle = query.trim().toLowerCase()
-    return resources.filter((item) => {
-      if (item.requiredPermission && !permissions.includes(item.requiredPermission)) return false
-      return !needle || `${item.label} ${item.description}`.toLowerCase().includes(needle)
-    })
+    return resources.filter((item) => canSee(item, permissions) && (!needle || `${item.label} ${item.description}`.toLowerCase().includes(needle)))
   }, [permissions, query, resources])
 
   return (
-    <Dialog open={open} title="Command palette" onClose={onClose} size="lg">
-      <Input
-        label="Search commands and resources"
-        variant="search"
-        size="lg"
-        value={query}
-        onChange={(event) => setQuery(event.currentTarget.value)}
-        placeholder="Cases, Kanban, AI Workspace…"
-        autoFocus
-      />
-      <div className="mt-4 grid max-h-[55vh] overflow-y-auto border border-border">
+    <Dialog open={open} title="Command palette / ⌘K" onClose={onClose} size="lg">
+      <Input label="Search actions, resources, cases" variant="search" size="lg" value={query} onChange={(event) => setQuery(event.currentTarget.value)} placeholder="Search actions, resources, cases…" autoFocus />
+      <p className="mw-meta mt-5 text-muted-foreground">Quick actions</p>
+      <div className="mt-3 grid max-h-[55vh] overflow-y-auto border border-border">
         {results.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            className="grid min-h-14 grid-cols-[1fr_auto] gap-4 border-b border-border p-3 no-underline hover:bg-panel"
-            onClick={onClose}
-          >
+          <a key={item.id} href={item.href} className="grid min-h-14 grid-cols-[1fr_auto] gap-4 border-b border-border p-3 no-underline hover:bg-panel" onClick={onClose}>
             <span>
               <span className="block text-sm font-bold">{item.label}</span>
               <span className="mt-1 block text-xs text-muted-foreground">{item.description}</span>
@@ -256,22 +258,14 @@ export function AppTopbar({
   onOpenNotifications: () => void
 }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
-      <div className="flex min-h-16 items-center gap-3 px-3 sm:px-5">
+    <header className="sticky top-0 z-30 border-b border-border bg-panel/95 backdrop-blur" role="banner">
+      <div className="flex min-h-[68px] items-center gap-3 px-3 sm:px-5 lg:px-8">
         <IconButton label="Open navigation" className="md:hidden" onClick={onOpenMenu}>≡</IconButton>
-        <div className="min-w-0 flex-1">
-          <Breadcrumbs items={breadcrumbs} />
-        </div>
+        <div className="min-w-0 flex-1"><Breadcrumbs items={breadcrumbs} /></div>
         <div className="hidden sm:block"><BackendStatus state={backendState} /></div>
         <IconButton label="Open command palette" aria-keyshortcuts="Control+K Meta+K" onClick={onOpenCommands}>⌘</IconButton>
-        <button
-          type="button"
-          className="mw-touch relative inline-flex items-center justify-center border border-border bg-card px-3 font-mono text-[10px] font-bold uppercase"
-          onClick={onOpenNotifications}
-          aria-label={`Notifications, ${unreadCount} unread`}
-        >
-          N
-          {unreadCount ? <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-primary px-1 text-center text-[9px] text-white">{unreadCount}</span> : null}
+        <button type="button" className="mw-touch relative inline-flex items-center justify-center rounded-full border border-border bg-background px-3 font-mono text-[10px] font-bold uppercase" onClick={onOpenNotifications} aria-label={`Notifications, ${unreadCount} unread`}>
+          {unreadCount || 0}
         </button>
         <ThemeToggle />
         <UserMenu name={user.name} role={user.role} />
@@ -285,8 +279,8 @@ export function ApplicationShell({
   breadcrumbs,
   children,
   backendState = "online",
-  user = { name: "Researcher", role: "reviewer" },
-  permissions = ["authz:read", "audit:read"],
+  user = { name: "Rocksoul", role: "researcher" },
+  permissions = defaultApplicationPermissions,
   resources = applicationResources,
   notifications = [],
 }: {
@@ -295,14 +289,14 @@ export function ApplicationShell({
   children: ReactNode
   backendState?: BackendState
   user?: { name: string; role: string }
-  permissions?: string[]
+  permissions?: readonly string[]
   resources?: AppResource[]
   notifications?: AppNotification[]
 }) {
   const [navOpen, setNavOpen] = useState(false)
   const [commandsOpen, setCommandsOpen] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false)
-  const [compact, setCompact] = useState(true)
+  const [compact, setCompact] = useState(false)
   const unreadCount = notifications.filter((item) => item.state === "unread").length
 
   useEffect(() => {
@@ -318,34 +312,30 @@ export function ApplicationShell({
 
   return (
     <div className="mw-platform min-h-screen bg-background text-foreground">
-      <AppTopbar
-        breadcrumbs={breadcrumbs}
-        backendState={backendState}
-        user={user}
-        unreadCount={unreadCount}
-        onOpenMenu={() => setNavOpen(true)}
-        onOpenCommands={() => setCommandsOpen(true)}
-        onOpenNotifications={() => setNotificationsOpen(true)}
-      />
+      <a href="#mw-main-content" className="fixed left-3 top-3 z-50 -translate-y-20 bg-primary px-4 py-3 text-sm font-bold text-white focus:translate-y-0">Skip to main content</a>
 
-      <div className="flex min-h-[calc(100vh-64px)]">
-        <aside className={cn("hidden shrink-0 border-r border-border bg-panel md:block", compact ? "w-[84px]" : "w-[272px]")}>
-          <div className="flex min-h-14 items-center justify-between border-b border-border px-3">
-            {!compact ? <strong className="text-sm">MOONWITNESS</strong> : <strong className="mw-meta text-primary">MW</strong>}
-            <IconButton label={compact ? "Expand sidebar" : "Compact sidebar"} size="sm" variant="ghost" onClick={() => setCompact((value) => !value)}>
-              {compact ? "›" : "‹"}
-            </IconButton>
+      <div className="flex min-h-screen">
+        <aside className={cn("relative hidden shrink-0 border-r border-border bg-panel md:block", compact ? "w-[72px]" : "w-[72px] lg:w-[220px]")} data-state={compact ? "compact" : "expanded"}>
+          <div className="flex min-h-[112px] items-center justify-between border-b border-border px-3">
+            <MoonWitnessBrand compact={compact} className={cn(!compact && "hidden lg:inline-flex")} />
+            {!compact ? <MoonWitnessBrand compact className="lg:hidden" /> : null}
+            <IconButton label={compact ? "Expand sidebar" : "Compact sidebar"} size="sm" variant="ghost" className="hidden lg:inline-flex" onClick={() => setCompact((value) => !value)}>{compact ? "›" : "‹"}</IconButton>
           </div>
           <AutoMenu resources={resources} activeId={activeResource} compact={compact} permissions={permissions} />
-          <div className="border-t border-border p-3 sm:hidden">
-            <BackendStatus state={backendState} />
+          <div className="absolute bottom-6 hidden px-4 lg:block">
+            <p className="mw-meta text-muted-foreground">CMD K / COMMAND</p>
+            <p className="mw-meta mt-3 text-muted-foreground">AUTO MENU / LIVE</p>
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1">{children}</main>
+        <div className="min-w-0 flex-1">
+          <AppTopbar breadcrumbs={breadcrumbs} backendState={backendState} user={user} unreadCount={unreadCount} onOpenMenu={() => setNavOpen(true)} onOpenCommands={() => setCommandsOpen(true)} onOpenNotifications={() => setNotificationsOpen(true)} />
+          <main id="mw-main-content" className="min-w-0" tabIndex={-1}>{children}</main>
+        </div>
       </div>
 
       <Drawer open={navOpen} title="Navigation" onClose={() => setNavOpen(false)} position="left">
+        <MoonWitnessBrand className="mb-5" />
         <div className="mb-4"><BackendStatus state={backendState} /></div>
         <AutoMenu resources={resources} activeId={activeResource} permissions={permissions} onNavigate={() => setNavOpen(false)} />
       </Drawer>
