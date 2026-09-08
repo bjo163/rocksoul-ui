@@ -1,5 +1,6 @@
 export * from "./tokens"
 export * from "./contracts/assets-v2"
+export * from "./contracts/asset-packs"
 export * from "./contracts/interactions"
 export * from "./components/navigation"
 export * from "./components/brand"
