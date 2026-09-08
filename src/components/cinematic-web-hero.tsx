@@ -25,6 +25,9 @@ export interface CinematicWebHeroProps {
   witnessCaption?: ReactNode
   footerCenter?: ReactNode
   footerRight?: ReactNode
+  footerMark?: ReactNode
+  id?: string
+  archiveId?: string
   className?: string
 }
 
@@ -53,6 +56,9 @@ export function CinematicWebHero({
   witnessCaption = <>ROCKSOUL —<br />THE WITNESS IN MOTION</>,
   footerCenter = <>CATALOGING THE UNEXPLAINED SINCE NOW</>,
   footerRight = <>A MORE CURIOUS TOMORROW</>,
+  footerMark = <b aria-hidden="true">◕◕◯</b>,
+  id,
+  archiveId,
   className = "",
 }: CinematicWebHeroProps) {
   const archiveItems = archive ?? [
@@ -68,7 +74,7 @@ export function CinematicWebHero({
   } as CSSProperties
 
   return (
-    <section className={`mw-cinematic-web-hero ${className}`.trim()} style={overlayStyle} aria-labelledby="mw-cinematic-web-hero-title">
+    <section id={id} className={`mw-cinematic-web-hero ${className}`.trim()} style={overlayStyle} aria-labelledby="mw-cinematic-web-hero-title">
       <picture className="mw-cinematic-web-hero__master" aria-hidden="true">
         <source media="(max-width: 700px)" srcSet={assets.mobile} />
         <img src={assets.desktop} alt="" fetchPriority="high" />
@@ -119,7 +125,7 @@ export function CinematicWebHero({
         SAME PLANET.<br />MORE TO SEE.
       </aside>
 
-      <div className="mw-cinematic-web-hero__archive" aria-label="Archive contact sheet">
+      <div id={archiveId} className="mw-cinematic-web-hero__archive" aria-label="Archive contact sheet">
         {archiveItems.map((item) => (
           <figure key={item.code}>
             <img src={item.src} alt="" aria-hidden="true" loading="lazy" />
@@ -132,7 +138,7 @@ export function CinematicWebHero({
       <footer className="mw-cinematic-web-hero__footer">
         <span><i aria-hidden="true" />01 / INDEPENDENT OBSERVATORY</span>
         <span>{footerCenter}</span>
-        <span>{footerRight} <b aria-hidden="true">◕◕◯</b></span>
+        <span>{footerRight} {footerMark}</span>
       </footer>
     </section>
   )

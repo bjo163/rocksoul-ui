@@ -77,6 +77,9 @@ try {
     "moonWitnessAssets",
     "AssetExplorer",
     "MoonWitnessRuntimeMotion",
+    "CinematicWebHero",
+    "cinematicWebHeroAssets",
+    "cinematicWebHeroContract",
   ]
   for(const name of requiredExports){
     if(!(name in library)) failures.push(`missing runtime export ${name}`)

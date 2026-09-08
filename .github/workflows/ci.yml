@@ -52,6 +52,8 @@ jobs:
         run: npm run build:lib
       - name: Package artifact audit
         run: npm run audit:package
+      - name: Release closure audit
+        run: npm run audit:release
       - name: Build playground
         run: npm run build:playground
       - name: Build Storybook

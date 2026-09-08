@@ -16,7 +16,7 @@
     "audit:domains": "node scripts/domain-audit.mjs",
     "audit:application": "node scripts/application-audit.mjs",
     "audit:package": "node scripts/package-audit.mjs",
-    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run audit:assets-sync && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:application && npm run typecheck && npm run build:lib && npm run audit:package && npm run build:playground && npm run build-storybook",
+    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run audit:assets-sync && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:application && npm run typecheck && npm run build:lib && npm run audit:package && npm run audit:release && npm run build:playground && npm run build-storybook",
     "prepare": "npm run build:lib",
     "audit:assets-sync": "node scripts/assets-sync-audit.mjs",
     "audit:assets-freshness": "node scripts/assets-freshness-audit.mjs",
