@@ -13,8 +13,11 @@ const [contracts,shell,screens,stories,theme,four]=await Promise.all([
 ])
 
 const failures=[]
-const expectedSha="d293b0f1190fee3d0079aada222bcb2a255dcde6"
+const expectedSha="5abae50b6b994d2cd4fcb12360db620acbac37bd"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
+if(!contracts.includes('assetRelease: "1.0.0"')) failures.push("assets release 1.0.0")
+if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
+if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.push("live Penpot verification boundary")
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
   if(!contracts.includes(`id: "${id}"`)) failures.push(`v2 navigation item ${id}`)
 }

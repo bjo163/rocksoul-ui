@@ -151,7 +151,10 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Moderation state is visible.
 
 ## Rocksoul Assets v2 sync
-- [x] Synced against `rocksoul-assets/main@d293b0f1190fee3d0079aada222bcb2a255dcde6`.
+- [x] Asset repository release v1.0.0 recognized.
+- [x] Asset repository acceptance = passed.
+- [x] Live Penpot verification remains manual-follow-up, not falsely claimed.
+- [x] Synced against `rocksoul-assets/main@5abae50b6b994d2cd4fcb12360db620acbac37bd`.
 - [x] Manifest schema v3 recognized.
 - [x] Canonical MoonWitness brand vector family packaged for consumers.
 - [x] Brand tagline: Truth leaves a trace.

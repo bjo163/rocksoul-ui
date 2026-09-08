@@ -182,10 +182,12 @@ Current UI sync point:
 
 ```text
 rocksoul-assets/main
-d293b0f1190fee3d0079aada222bcb2a255dcde6
+5abae50b6b994d2cd4fcb12360db620acbac37bd
         ↓
 @rocksoul/ui 0.6.0
 ```
+
+Asset repository release: **v1.0.0** — repository acceptance **PASSED**. Live Penpot native reconstruction / interaction / font / final contrast verification remains an explicitly manual follow-up and is not falsely marked complete.
 
 The v2 application contract is mirrored from the asset source:
 
