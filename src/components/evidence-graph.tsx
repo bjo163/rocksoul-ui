@@ -179,8 +179,8 @@ export function GraphNode({
       aria-label={`${type}: ${status}. ${relationCount} relationships. Select relationship node.`}
       onClick={onSelect}
     >
-      <span className="font-mono text-[9px] font-bold uppercase">{label}</span>
-      <span className="mt-1 font-mono text-[8px] uppercase text-muted-foreground">{status}</span>
+      <span className="font-mono text-[10px] font-bold uppercase">{label}</span>
+      <span className="mt-1 font-mono text-[10px] uppercase text-muted-foreground">{status}</span>
       <span className="sr-only">{relationCount} relationships</span>
     </button>
   )
