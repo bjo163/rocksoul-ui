@@ -304,11 +304,11 @@ export function ProfileSettingsScreen() {
 }
 
 export function AuthorizationScreen() {
-  const capabilities = [
-    ["View canonical records", "ALLOWED", "verified" as const],
-    ["Request context", "ALLOWED", "verified" as const],
-    ["Resolve identity blocker", "REQUIRES EVIDENCE", "partial" as const],
-    ["Publish legal conclusion", "LEGAL REVIEWER+", "prohibited" as const],
+  const capabilities: Array<[string, string, "verified" | "partial" | "prohibited"]> = [
+    ["View canonical records", "ALLOWED", "verified"],
+    ["Request context", "ALLOWED", "verified"],
+    ["Resolve identity blocker", "REQUIRES EVIDENCE", "partial"],
+    ["Publish legal conclusion", "LEGAL REVIEWER+", "prohibited"],
   ]
   return (
     <Shell activeResource="settings" section="SECURITY" title="Authorization UX">
