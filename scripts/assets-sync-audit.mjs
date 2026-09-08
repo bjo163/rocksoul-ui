@@ -59,10 +59,11 @@ for(const file of [
   "public/brand/logo-stacked.svg","public/brand/wordmark.svg","public/brand/logo-monochrome.svg",
   "public/brand/rocksoul-lockup.svg","public/brand/favicon.svg","public/brand/apple-touch-icon.svg",
   "public/brand/app-icon-maskable.svg","public/brand/app-icon.svg","public/brand/social-avatar.svg",
-  "public/brand/og-card.svg","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest"
+  "public/brand/og-card.svg","public/brand/generated/og-card-1200x630.png","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest"
 ]){
   try{await access(path.join(root,file))}catch{failures.push(`brand asset ${file}`)}
 }
+try{await access(path.join(root,".github/workflows/sync-brand-binary.yml"))}catch{failures.push("canonical brand binary sync workflow")}
 if(expectedAssetCount<1) failures.push("canonical asset inventory")
 if(failures.length){
   console.error("Assets v2 sync audit failed:")
