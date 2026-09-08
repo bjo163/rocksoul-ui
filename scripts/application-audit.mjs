@@ -23,6 +23,7 @@ if (!shell.includes("requiredPermission")) failures.push("authorization-aware Au
 if (!archive.includes('data-navigation="auto-menu"') || !archive.includes("<AutoMenu")) failures.push("legacy sidebar must remain AutoMenu-driven")
 if (!shell.includes('event.key.toLowerCase() === "k"')) failures.push("Ctrl/Cmd+K command palette shortcut")
 if (!shell.includes("Open case by ID") || !shell.includes("Create review task") || !shell.includes("Ask AI Workspace")) failures.push("command palette quick actions")
+if (!shell.includes("AppCommandAction") || !shell.includes("commandActions?: AppCommandAction[]") || !shell.includes("quickActions={commandActions}")) failures.push("custom command palette actions")
 if (!shell.includes("Mark all read")) failures.push("notifications mark-all-read")
 for (const id of ["17","18","19","20","21","22","23","24","25","26","27"]) {
   if (!stories.includes(`S${id}`)) failures.push(`Storybook screen ${id}`)
