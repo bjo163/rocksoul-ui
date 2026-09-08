@@ -5,7 +5,7 @@ import { Input, Select, Textarea } from "./form-controls"
 import { Avatar, Drawer } from "./overlays"
 import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
-import type { RecordDomain, RecordStatus } from "./four-record-summary"
+import type { RecordDomain } from "./four-record-summary"\nimport type { SemanticBadgeVariant } from "../contracts/status-semantics"
 import { AutoMenu, applicationResources } from "./application-shell"
 import { useApplicationActions, type CommunitySubmitPayload } from "../contracts/interactions"
 
@@ -127,7 +127,7 @@ export interface EvidenceCardProps {
   claim: string
   provenance: string
   verification: string
-  status: RecordStatus | "disputed"
+  status: SemanticBadgeVariant
   canonical: boolean
   selected?: boolean
   flagged?: boolean
@@ -165,7 +165,7 @@ export function EvidenceCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span className={cn("mw-eyebrow", domainTone[domain])}>{domain}</span>
-        <Badge variant={status === "disputed" ? "disputed" : status}>{status}</Badge>
+        <Badge variant={status}>{status}</Badge>
       </div>
       <p className="mw-meta mt-4 text-muted-foreground">{recordId}</p>
       <p className="mt-3 text-base font-bold">{claim}</p>
