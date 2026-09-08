@@ -219,3 +219,14 @@ dev  ── verified promotion ──> main
 `UI / MoonWitness × Rocksoul`
 
 </div>
+
+## Research observatory components
+
+Reusable research surfaces added in v0.12.0:
+
+- `DossierHeader` — editorial/cinematic record header backed by canonical Rocksoul assets;
+- `EvidenceMatrix` — sticky, keyboard-accessible claim × evidence inspection;
+- `ObservatorySectionNav` — sticky long-form section navigation with active-section tracking;
+- `ProvenanceRail` — STORY / CLAIM / EVIDENCE / SOURCE / TEXT / EVENT / PERSON / LAW flow using canonical correlation-semantics assets.
+
+These components keep live semantics in HTML and use Rocksoul assets as visual support rather than baking research content into imagery.
