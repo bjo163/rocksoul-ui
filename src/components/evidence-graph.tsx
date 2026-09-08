@@ -168,7 +168,7 @@ export function GraphNode({
         "flex min-h-11 min-w-11 flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity] hover:border-foreground hover:bg-panel",
         nodeTone[type],
         state === "selected" && "bg-panel ring-2 ring-foreground ring-offset-2 ring-offset-background",
-        state === "dimmed" && "opacity-80",
+        state === "dimmed" && "opacity-90",
         state === "unresolved" && "border-dashed",
         className?.includes("absolute") ? "" : "",
         className,
