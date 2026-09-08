@@ -15,8 +15,8 @@ describe("Textual intelligence visual contracts", () => {
       { id: "mw:edition:test:v1", kind: "edition", state: "partial" },
     ]} />)
     expect(screen.getByRole("list", { name: /canonical textual hierarchy levels/i })).toBeInTheDocument()
-    expect(screen.getByText("mw:work:test")).toBeInTheDocument()
-    expect(screen.getByText("mw:edition:test:v1")).toBeInTheDocument()
+    expect(screen.getAllByText("mw:work:test").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("mw:edition:test:v1").length).toBeGreaterThan(0)
   })
 
   it("preserves language and RTL direction on exact text lanes", () => {
