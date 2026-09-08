@@ -18,6 +18,9 @@ const checks = [
   [screens.includes("Identity dimensions / partial"), "PERSON screen-specific presentation"],
   [screens.includes("RGBL channels / semantic source reading"), "RGBL screen-specific presentation"],
   [screens.includes("AWSBoundary") && screens.includes("LegalStatus"), "AWS downstream legal presentation"],
+  [ecosystem.includes('STORY: { repository: "rocksoul-mftl", prefix: "mftl:" }'), "STORY canonical owner"],
+  [ecosystem.includes('EVENT: { repository: "rocksoul-legend", prefix: "legend:" }'), "EVENT canonical owner"],
+  [ecosystem.includes('PERSON: { repository: "rocksoul-superhero", prefix: "superhero:" }'), "PERSON canonical owner"],
   [ecosystem.includes('PERSPECTIVE: { repository: "rocksoul-jizz", prefix: "jizz:" }'), "PERSPECTIVE canonical owner"],
   [ecosystem.includes('TEXT: { repository: "rocksoul-rgbl", prefix: "rgbl:" }'), "TEXT semantic owner"],
   [ecosystem.includes('LAW: { repository: "rocksoul-aws", prefix: "aws:" }'), "LAW semantic owner"],
@@ -25,6 +28,7 @@ const checks = [
   [graph.includes('PERSPECTIVE: "text-warning border-warning"'), "PERSPECTIVE graph-node support"],
   [summary.includes("ResearchDomain") && summary.includes("canonicalOwnerFor"), "generic domain-record summary"],
   [assetsV2.includes('PERSPECTIVE / Perspectives') && assetsV2.includes('repo: "rocksoul-jizz"'), "PERSPECTIVE resource descriptor"],
+  [assetsV2.includes('RELATIONSHIP / Correlation') && assetsV2.includes('repo: "rocksoul-correlation"'), "RELATIONSHIP resource descriptor"],
 ]
 
 const failures = checks.filter(([ok]) => !ok).map(([, label]) => label)
