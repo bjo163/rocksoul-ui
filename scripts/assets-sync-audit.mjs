@@ -13,9 +13,9 @@ const [contracts,shell,screens,stories,theme,four]=await Promise.all([
 ])
 
 const failures=[]
-const expectedSha="5abae50b6b994d2cd4fcb12360db620acbac37bd"
+const expectedSha="61170933b759fc90134b3659c1a2574de7ce580c"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
-if(!contracts.includes('assetRelease: "1.0.0"')) failures.push("assets release 1.0.0")
+if(!contracts.includes('assetRelease: "1.1.0"')) failures.push("assets release 1.1.0")
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
 if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.push("live Penpot verification boundary")
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
@@ -23,6 +23,9 @@ for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources"
 }
 for(const resource of ["case","event","person","rgbl","aws"]){
   if(!contracts.includes(`resource: "${resource}"`)) failures.push(`resource descriptor ${resource}`)
+}
+for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws"]){
+  if(!contracts.includes(`repo: "${repo}"`)) failures.push(`canonical repository ${repo}`)
 }
 for(let id=17;id<=27;id++){
   if(!stories.includes(`export const S${id}`)) failures.push(`v2 Storybook screen ${id}`)
