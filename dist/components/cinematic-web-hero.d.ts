@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { type CinematicWebHeroAssetSet } from "../contracts/cinematic-web-hero";
 export interface CinematicWebHeroEvidenceItem {
     id: "STORY" | "EVENT" | "PERSON" | "RGBL";

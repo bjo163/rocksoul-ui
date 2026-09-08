@@ -2349,7 +2349,7 @@ export declare const moonWitnessAssets: {
 export declare const ROCKSOUL_ASSETS_REGISTRY: {
     readonly repository: "bjo163/rocksoul-assets";
     readonly ref: "main";
-    readonly commit: "4050b6b5ea88f187a31a304bf978abfe637db9ce";
+    readonly commit: "5b035d0d83612f847ccd8b35f2c1b04022500110";
     readonly version: "1.3.1";
     readonly packCount: number;
     readonly canonicalAssetCount: 634;
@@ -2362,6 +2362,7 @@ export type MoonWitnessAssetRegistryPackId = keyof typeof assets.packs;
 export type MoonWitnessAssetRegistryFormat = "svg" | "png";
 export type MoonWitnessAssetRootMode = "repository" | "moonwitness";
 export declare const MOONWITNESS_STABLE_REPOSITORY_BASE: string;
+export declare const MOONWITNESS_ACCEPTED_REPOSITORY_BASE: string;
 export declare function moonWitnessRegistryAssetPath(pack: MoonWitnessAssetRegistryPackId, assetId: string, options?: {
     format?: MoonWitnessAssetRegistryFormat;
     size?: string;

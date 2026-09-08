@@ -14,12 +14,28 @@ export declare const moonWitnessTokens: {
             readonly restricted: "var(--mw-status-restricted)";
             readonly prohibited: "var(--mw-status-prohibited)";
             readonly info: "var(--mw-status-info)";
+            readonly foreground: {
+                readonly supported: "var(--mw-status-supported-fg)";
+                readonly verified: "var(--mw-status-verified-fg)";
+                readonly contested: "var(--mw-status-contested-fg)";
+                readonly partial: "var(--mw-status-partial-fg)";
+                readonly unresolved: "var(--mw-status-unresolved-fg)";
+                readonly restricted: "var(--mw-status-restricted-fg)";
+                readonly prohibited: "var(--mw-status-prohibited-fg)";
+                readonly info: "var(--mw-status-info-fg)";
+            };
         };
         readonly rgbl: {
             readonly red: "var(--mw-rgbl-red)";
             readonly green: "var(--mw-rgbl-green)";
             readonly blue: "var(--mw-rgbl-blue)";
             readonly light: "var(--mw-rgbl-light)";
+            readonly foreground: {
+                readonly red: "var(--mw-rgbl-red-fg)";
+                readonly green: "var(--mw-rgbl-green-fg)";
+                readonly blue: "var(--mw-rgbl-blue-fg)";
+                readonly light: "var(--mw-rgbl-light-fg)";
+            };
         };
     };
     readonly breakpoint: {

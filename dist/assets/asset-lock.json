@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "scope": "mirrored-core-and-runtime-packs",
   "sourceRepository": "bjo163/rocksoul-assets",
-  "sourceCommit": "4050b6b5ea88f187a31a304bf978abfe637db9ce",
+  "sourceCommit": "5b035d0d83612f847ccd8b35f2c1b04022500110",
   "release": "1.3.1",
   "files": [
     {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { LegalApplicabilityMatrix } from "../components/legal-applicability-matrix"
 
 const meta = {
