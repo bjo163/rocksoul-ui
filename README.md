@@ -134,6 +134,8 @@ Build output:
 dist/index.js
 dist/index.d.ts
 dist/styles.css
+dist/brand/*
+dist/assets/*
 ```
 
 React and React DOM remain peer dependencies so the consumer owns the runtime instance.
@@ -156,6 +158,33 @@ npm run audit:assets-freshness
 ```
 
 A newer `rocksoul-assets` commit must be reviewed before UI CI is allowed to claim parity. Generated browser/app/social delivery files are mirrored read-only from canonical SVG-derived assets; edit the source in `rocksoul-assets`, then resynchronize.
+
+## Asset packs v1.1
+
+`@rocksoul/ui 0.8.0` mirrors the released MoonWitness production packs from `rocksoul-assets@f0f93363c73895e52987f9a3c757e4f5115eca99`:
+
+- 44 product icons;
+- 20 dashboard widgets;
+- 16 data-viz components;
+- 8 hero backgrounds;
+- 12 state illustrations;
+- 6 motion references;
+- 10 SFX cues with WAV + OGG delivery.
+
+All 134 manifest/delivery files are locked to their canonical Git blob SHA and checked in CI. Consumers can resolve package assets through `@rocksoul/ui/assets/*`.
+
+Canonical resource mapping now includes six descriptors:
+
+```text
+STORY       → rocksoul-mftl
+EVENT       → rocksoul-legend
+PERSON      → rocksoul-superhero
+TEXT        → rocksoul-rgbl
+LAW         → rocksoul-aws
+CORRELATION → rocksoul-correlation
+```
+
+Correlation remains a public evidence-graph/explainability layer; it does not become a verdict or duplicate canonical domain records.
 
 ## Run
 

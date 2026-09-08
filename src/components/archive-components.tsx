@@ -7,6 +7,7 @@ import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
 import type { RecordDomain, RecordStatus } from "./four-record-summary"
 import { AutoMenu, applicationResources } from "./application-shell"
+import { useApplicationActions, type CommunitySubmitPayload } from "../contracts/interactions"
 
 export function MWHeader({
   caseId,
@@ -599,87 +600,60 @@ export function StatePanel({
   lastKnownState = "No cached state available.",
   requiredPermission = "resource:read",
   currentRole = "researcher",
+  onRetry,
+  onRequestAccess,
+  onClearFilters,
 }: {
   state: "empty" | "loading" | "error" | "offline" | "forbidden"
   traceId?: string
   lastKnownState?: string
   requiredPermission?: string
   currentRole?: string
+  onRetry?: () => void | Promise<void>
+  onRequestAccess?: () => void | Promise<void>
+  onClearFilters?: () => void | Promise<void>
 }) {
-  if (state === "loading") {
-    return (
-      <div className="border border-border bg-card p-6" aria-busy="true">
-        <p className="mw-eyebrow text-success">Loading</p>
-        <div className="mt-6 grid gap-4" aria-hidden="true">
-          <div className="h-5 w-full rounded-full bg-background" />
-          <div className="h-5 w-3/4 rounded-full bg-background" />
-          <div className="h-24 w-full rounded-[8px] bg-background" />
-          <div className="h-24 w-full rounded-[8px] bg-background" />
-        </div>
-        <p className="mt-6 text-sm text-muted-foreground">Preserve layout. No jumping.</p>
-      </div>
-    )
-  }
-  if (state === "error") {
-    return (
-      <div className="border border-primary bg-card p-6" role="alert">
-        <p className="mw-eyebrow text-primary">Error</p>
-        <h3 className="mt-4 text-lg font-bold">Couldn’t load records.</h3>
-        <p className="mt-2 text-sm text-muted-foreground">Backend is reachable, but the query failed. Existing records are unchanged.</p>
-        <p className="mw-meta mt-4 text-muted-foreground">Trace / {traceId}</p>
-        <Button className="mt-5" variant="danger">Try again</Button>
-      </div>
-    )
-  }
-  if (state === "offline") {
-    return (
-      <div className="border border-warning bg-card p-6" role="status">
-        <p className="mw-eyebrow text-warning">Backend offline</p>
-        <h3 className="mt-4 text-lg font-bold">The service is unreachable.</h3>
-        <p className="mt-2 text-sm text-muted-foreground">This is a connectivity failure, not an empty result.</p>
-        <p className="mw-meta mt-4 text-muted-foreground">Last known state / {lastKnownState}</p>
-        <Button className="mt-5" variant="secondary">Retry connection</Button>
-      </div>
-    )
-  }
-  if (state === "forbidden") {
-    return (
-      <div className="border border-primary bg-card p-6" role="alert">
-        <p className="mw-eyebrow text-primary">Forbidden</p>
-        <h3 className="mt-4 text-lg font-bold">This action needs more access.</h3>
-        <dl className="mw-meta mt-4 grid gap-2 text-muted-foreground">
-          <div className="flex justify-between gap-3"><dt>Required</dt><dd className="text-foreground">{requiredPermission}</dd></div>
-          <div className="flex justify-between gap-3"><dt>Current role</dt><dd className="text-foreground">{currentRole}</dd></div>
-        </dl>
-        <Button className="mt-5" variant="danger">Request access</Button>
-      </div>
-    )
-  }
-  return (
-    <div className="border border-info bg-card p-6">
-      <p className="mw-eyebrow text-info">Empty</p>
-      <h3 className="mt-4 text-lg font-bold">Nothing here yet.</h3>
-      <p className="mt-2 text-sm text-muted-foreground">Change filters or create a record.</p>
-      <Button className="mt-5" variant="secondary">Clear filters</Button>
-    </div>
-  )
+  const actions = useApplicationActions()
+  const retry = onRetry ?? (() => actions.onRetry?.(state))
+  const requestAccess = onRequestAccess ?? (() => actions.onRequestAccess?.({ permission: requiredPermission, currentRole }))
+  const clearFilters = onClearFilters ?? actions.onClearFilters
+
+  if (state === "loading") return <div className="border border-border bg-card p-6" aria-busy="true"><p className="mw-eyebrow text-success">Loading</p><div className="mt-6 grid gap-4" aria-hidden="true"><div className="h-5 w-full rounded-full bg-background" /><div className="h-5 w-3/4 rounded-full bg-background" /><div className="h-24 w-full rounded-[8px] bg-background" /><div className="h-24 w-full rounded-[8px] bg-background" /></div><p className="mt-6 text-sm text-muted-foreground">Preserve layout. No jumping.</p></div>
+  if (state === "error") return <div className="border border-primary bg-card p-6" role="alert"><p className="mw-eyebrow text-primary">Error</p><h3 className="mt-4 text-lg font-bold">Couldn’t load records.</h3><p className="mt-2 text-sm text-muted-foreground">Backend is reachable, but the query failed. Existing records are unchanged.</p><p className="mw-meta mt-4 text-muted-foreground">Trace / {traceId}</p><Button className="mt-5" variant="danger" onClick={() => void retry?.()}>Try again</Button></div>
+  if (state === "offline") return <div className="border border-warning bg-card p-6" role="status"><p className="mw-eyebrow text-warning">Backend offline</p><h3 className="mt-4 text-lg font-bold">The service is unreachable.</h3><p className="mt-2 text-sm text-muted-foreground">This is a connectivity failure, not an empty result.</p><p className="mw-meta mt-4 text-muted-foreground">Last known state / {lastKnownState}</p><Button className="mt-5" variant="secondary" onClick={() => void retry?.()}>Retry connection</Button></div>
+  if (state === "forbidden") return <div className="border border-primary bg-card p-6" role="alert"><p className="mw-eyebrow text-primary">Forbidden</p><h3 className="mt-4 text-lg font-bold">This action needs more access.</h3><dl className="mw-meta mt-4 grid gap-2 text-muted-foreground"><div className="flex justify-between gap-3"><dt>Required</dt><dd className="text-foreground">{requiredPermission}</dd></div><div className="flex justify-between gap-3"><dt>Current role</dt><dd className="text-foreground">{currentRole}</dd></div></dl><Button className="mt-5" variant="danger" onClick={() => void requestAccess?.()}>Request access</Button></div>
+  return <div className="border border-info bg-card p-6"><p className="mw-eyebrow text-info">Empty</p><h3 className="mt-4 text-lg font-bold">Nothing here yet.</h3><p className="mt-2 text-sm text-muted-foreground">Change filters or create a record.</p><Button className="mt-5" variant="secondary" onClick={() => void clearFilters?.()}>Clear filters</Button></div>
 }
 
-export function CommunityComposer({ mode = "context" }: { mode?: "context" | "question" }) {
+export function CommunityComposer({
+  mode = "context",
+  onSubmit,
+}: {
+  mode?: "context" | "question"
+  onSubmit?: (payload: CommunitySubmitPayload) => void | Promise<void>
+}) {
   const question = mode === "question"
+  const actions = useApplicationActions()
+  const [source, setSource] = useState("")
+  const [body, setBody] = useState("")
+  const submit = onSubmit ?? actions.onCommunitySubmit
   return (
-    <form className={cn("border bg-card p-4", question ? "border-info" : "border-primary")} onSubmit={(event) => event.preventDefault()}>
+    <form
+      className={cn("border bg-card p-4", question ? "border-info" : "border-primary")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (!body.trim()) return
+        void submit?.({ mode, source: question ? undefined : source.trim() || undefined, body: body.trim() })
+        setBody("")
+        if (!question) setSource("")
+      }}
+    >
       <p className={cn("mw-eyebrow", question ? "text-info" : "text-primary")}>{question ? "Ask a question" : "Submit context"}</p>
       <p className="mt-3 text-lg font-bold">{question ? "Question the score. Keep the evidence intact." : "Source first. Interpretation later."}</p>
       <div className="mt-4 grid gap-4">
-        {!question ? <Input label="Source / provenance" placeholder="Paste source ID or locator" /> : null}
-        <Textarea
-          label={question ? "Question" : "Context"}
-          maxLength={600}
-          characterCount
-          placeholder={question ? "What needs explanation?" : "What does this add, and what remains uncertain?"}
-        />
-        <Button type="submit">{question ? "Ask question" : "Submit context"}</Button>
+        {!question ? <Input label="Source / provenance" value={source} onChange={(event) => setSource(event.currentTarget.value)} placeholder="Paste source ID or locator" /> : null}
+        <Textarea label={question ? "Question" : "Context"} value={body} onChange={(event) => setBody(event.currentTarget.value)} maxLength={600} characterCount placeholder={question ? "What needs explanation?" : "What does this add, and what remains uncertain?"} />
+        <Button type="submit" disabled={!body.trim()}>{question ? "Ask question" : "Submit context"}</Button>
       </div>
     </form>
   )

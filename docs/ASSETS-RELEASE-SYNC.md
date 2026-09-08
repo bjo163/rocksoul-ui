@@ -4,7 +4,7 @@ Current design source:
 
 ```text
 bjo163/rocksoul-assets
-main @ 61170933b759fc90134b3659c1a2574de7ce580c
+main @ f0f93363c73895e52987f9a3c757e4f5115eca99
 release: 1.1.0
 repository acceptance: passed
 ```
@@ -43,3 +43,8 @@ The following remain external live-Penpot verification and are intentionally not
 - final live contrast/accessibility review.
 
 These are workspace verification gates, not missing code contracts.
+
+
+## Asset packs v1.1
+
+The UI package mirrors 134 consumer-facing pack files from the canonical release: icons, dashboard widgets, data-viz, hero backgrounds, state illustrations, motion references, and SFX delivery. `scripts/assets-integrity-audit.mjs` verifies every mirrored file against its canonical Git blob SHA.

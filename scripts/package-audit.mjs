@@ -6,7 +6,7 @@ const root=process.cwd()
 const pkg=JSON.parse(await readFile(path.join(root,"package.json"),"utf8"))
 const failures=[]
 
-const requiredFiles=[
+const requiredFiles=["dist/assets/icons/icons.json","dist/assets/dashboard-pack/dashboard-pack.json","dist/assets/data-viz/data-viz.json","dist/assets/hero-backgrounds/backgrounds.json","dist/assets/state-illustrations/states.json","dist/assets/motion/motion.json","dist/assets/sfx/sounds.json","dist/assets/sfx/generated/manifest.json",
   "dist/index.js",
   "dist/index.d.ts",
   "dist/styles.css",
@@ -43,6 +43,7 @@ if(pkg.types!=="./dist/index.d.ts") failures.push("types export")
 if(pkg.style!=="./dist/styles.css") failures.push("style export")
 if(pkg.exports?.["./styles.css"]!=="./dist/styles.css") failures.push("styles export")
 if(pkg.exports?.["./brand/*"]!=="./dist/brand/*") failures.push("brand wildcard export")
+if(pkg.exports?.["./assets/*"]!=="./dist/assets/*") failures.push("asset pack wildcard export")
 try {
   const manifest=JSON.parse(await readFile(path.join(root,"dist","brand","generated","manifest.json"),"utf8"))
   if(manifest.outputs?.length!==11) failures.push("generated brand delivery inventory")

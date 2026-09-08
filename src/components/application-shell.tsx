@@ -7,6 +7,8 @@ import { Avatar, Dialog, Drawer, IconButton } from "./overlays"
 import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
 import { v2NavigationItems, v2ResourceDescriptors } from "../contracts/assets-v2"
+import { useApplicationActions } from "../contracts/interactions"
+import { NavigationLink } from "./navigation"
 
 export type BackendState = "online" | "degraded" | "offline"
 export type ResourceGroup = "System" | "Resource" | "Workspace" | "Account"
@@ -87,9 +89,9 @@ export function Breadcrumbs({ items }: { items: Array<{ label: string; href?: st
           <li key={`${item.label}-${index}`} className="flex min-w-0 items-center gap-2">
             {index > 0 ? <span className="mw-meta text-muted-foreground" aria-hidden="true">/</span> : null}
             {item.href ? (
-              <a href={item.href} className="mw-link min-h-0 truncate font-mono text-[10px] font-bold uppercase text-muted-foreground hover:text-foreground">
+              <NavigationLink href={item.href} className="mw-link min-h-0 truncate font-mono text-[10px] font-bold uppercase text-muted-foreground hover:text-foreground">
                 {item.label}
-              </a>
+              </NavigationLink>
             ) : (
               <span className="truncate font-mono text-[10px] font-bold uppercase">{item.label}</span>
             )}
@@ -119,12 +121,11 @@ export function AutoMenu({
   onNavigate?: () => void
 }) {
   const visible = resources.filter((item) => canSee(item, permissions))
-
   return (
     <nav aria-label="Resource navigation" data-mode="AutoMenu">
       <div className="grid gap-1 p-2">
         {visible.map((item) => (
-          <a
+          <NavigationLink
             key={item.id}
             href={item.href}
             title={compact ? `${item.label} — ${item.description}` : undefined}
@@ -145,7 +146,7 @@ export function AutoMenu({
                 <span className="hidden text-sm lg:inline">{item.label}</span>
               </>
             )}
-          </a>
+          </NavigationLink>
         ))}
       </div>
     </nav>
@@ -164,16 +165,20 @@ export function NotificationsPanel({
   open,
   onClose,
   notifications,
+  onMarkAllRead,
 }: {
   open: boolean
   onClose: () => void
   notifications: AppNotification[]
+  onMarkAllRead?: () => void | Promise<void>
 }) {
+  const actions = useApplicationActions()
+  const markAllRead = onMarkAllRead ?? actions.onMarkAllNotificationsRead
   return (
     <Drawer open={open} title="Notifications" onClose={onClose} position="right" footer={<Button variant="secondary" onClick={onClose}>Close</Button>}>
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <p className="mw-meta text-muted-foreground">{notifications.filter((item) => item.state === "unread").length} unread</p>
-        <button type="button" className="mw-link min-h-0 font-mono text-[10px] font-bold uppercase text-primary">Mark all read</button>
+        <button type="button" className="mw-link min-h-0 font-mono text-[10px] font-bold uppercase text-primary" onClick={() => void markAllRead?.()}>Mark all read</button>
       </div>
       <div className="grid" data-state={notifications.length ? "unread" : "empty"}>
         {notifications.length ? notifications.map((item) => (
@@ -186,36 +191,26 @@ export function NotificationsPanel({
             <p className="mw-meta mt-3 text-muted-foreground">{item.state}</p>
           </article>
         )) : (
-          <div className="p-6">
-            <p className="mw-eyebrow text-muted-foreground">No notifications</p>
-            <p className="mt-3 text-sm">Nothing needs your attention.</p>
-          </div>
+          <div className="p-6"><p className="mw-eyebrow text-muted-foreground">No notifications</p><p className="mt-3 text-sm">Nothing needs your attention.</p></div>
         )}
-        {notifications.length ? (
-          <article className="border-b border-border p-4">
-            <p className="mw-meta text-success">System</p>
-            <p className="mt-2 text-xs leading-5">All repositories synchronized.</p>
-          </article>
-        ) : null}
+        {notifications.length ? <article className="border-b border-border p-4"><p className="mw-meta text-success">System</p><p className="mt-2 text-xs leading-5">All repositories synchronized.</p></article> : null}
       </div>
     </Drawer>
   )
 }
 
 export function UserMenu({ name, role }: { name: string; role: string }) {
+  const actions = useApplicationActions()
   return (
     <details className="relative">
       <summary className="mw-touch flex cursor-pointer list-none items-center gap-2 rounded-full border border-border bg-background px-2">
         <Avatar label={name} size="sm" />
-        <span className="hidden text-left xl:block">
-          <span className="block text-xs font-bold">{name}</span>
-          <span className="mw-meta block text-muted-foreground">{role}</span>
-        </span>
+        <span className="hidden text-left xl:block"><span className="block text-xs font-bold">{name}</span><span className="mw-meta block text-muted-foreground">{role}</span></span>
       </summary>
       <div className="absolute right-0 top-[calc(100%+8px)] z-40 w-56 border border-border bg-card p-2 shadow-lg">
-        <a href="/profile" className="mw-link w-full px-3 text-sm">Profile</a>
-        <a href="/settings" className="mw-link w-full px-3 text-sm">Settings</a>
-        <button type="button" className="mw-link w-full px-3 text-left text-sm text-primary">Sign out</button>
+        <NavigationLink href="/profile" className="mw-link w-full px-3 text-sm">Profile</NavigationLink>
+        <NavigationLink href="/settings" className="mw-link w-full px-3 text-sm">Settings</NavigationLink>
+        <button type="button" className="mw-link w-full px-3 text-left text-sm text-primary" onClick={() => void actions.onSignOut?.()}>Sign out</button>
       </div>
     </details>
   )
@@ -251,23 +246,23 @@ export function CommandPalette({
       <p className="mw-meta mt-5 text-muted-foreground">Quick actions</p>
       <div className="mt-3 grid border border-border">
         {quickActions.map((item) => (
-          <a key={item.label} href={item.href} className="grid min-h-13 grid-cols-[1fr_auto] items-center border-b border-border px-4 no-underline hover:bg-panel" onClick={onClose}>
+          <NavigationLink key={item.label} href={item.href} className="grid min-h-13 grid-cols-[1fr_auto] items-center border-b border-border px-4 no-underline hover:bg-panel" onClick={onClose}>
             <span className="text-sm font-bold">{item.label}</span>
             <span className="mw-meta text-muted-foreground">{item.shortcut}</span>
-          </a>
+          </NavigationLink>
         ))}
       </div>
 
       <p className="mw-meta mt-5 text-muted-foreground">Resources / Auto Menu</p>
       <div className="mt-3 grid max-h-[40vh] overflow-y-auto border border-border">
         {results.map((item) => (
-          <a key={item.id} href={item.href} className="grid min-h-14 grid-cols-[1fr_auto] gap-4 border-b border-border p-3 no-underline hover:bg-panel" onClick={onClose}>
+          <NavigationLink key={item.id} href={item.href} className="grid min-h-14 grid-cols-[1fr_auto] gap-4 border-b border-border p-3 no-underline hover:bg-panel" onClick={onClose}>
             <span>
               <span className="block text-sm font-bold">{item.label}</span>
               <span className="mt-1 block text-xs text-muted-foreground">{item.description}</span>
             </span>
             {item.shortcut ? <span className="mw-meta self-center text-muted-foreground">{item.shortcut}</span> : null}
-          </a>
+          </NavigationLink>
         ))}
         {!results.length ? <p className="p-5 text-sm text-muted-foreground">No matching command.</p> : null}
       </div>
