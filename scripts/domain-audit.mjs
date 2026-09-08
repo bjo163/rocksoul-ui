@@ -8,6 +8,7 @@ const ecosystem = await readFile(path.join(root, "src", "contracts", "ecosystem-
 const graph = await readFile(path.join(root, "src", "components", "evidence-graph.tsx"), "utf8")
 const summary = await readFile(path.join(root, "src", "components", "domain-record-summary.tsx"), "utf8")
 const assetsV2 = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
+const researchDomainMap = await readFile(path.join(root, "src", "components", "research-domain-ownership-map.tsx"), "utf8")
 
 const checks = [
   [fixture.includes('start: "02:14"') && fixture.includes('end: "02:37"') && fixture.includes('timezone: "LOCAL/FIXTURE"'), "EVENT temporal fixture"],
@@ -29,6 +30,8 @@ const checks = [
   [summary.includes("ResearchDomain") && summary.includes("canonicalOwnerFor"), "generic domain-record summary"],
   [assetsV2.includes('PERSPECTIVE / Perspectives') && assetsV2.includes('repo: "rocksoul-jizz"'), "PERSPECTIVE resource descriptor"],
   [assetsV2.includes('RELATIONSHIP / Correlation') && assetsV2.includes('repo: "rocksoul-correlation"'), "RELATIONSHIP resource descriptor"],
+  [researchDomainMap.includes("canonicalDomainOwners") && researchDomainMap.includes("Text equivalent"), "data-driven research-domain ownership visual"],
+  [!["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-jizz"].some((repo) => researchDomainMap.includes(repo)), "ownership visual contains no duplicated repository literals"],
 ]
 
 const failures = checks.filter(([ok]) => !ok).map(([, label]) => label)
