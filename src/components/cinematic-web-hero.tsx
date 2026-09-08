@@ -135,7 +135,7 @@ export function CinematicWebHero({
         SAME PLANET.<br />MORE TO SEE.
       </aside>
 
-      <div id={archiveId} className="mw-cinematic-web-hero__archive" aria-label="Archive contact sheet">
+      <div id={archiveId} className="mw-cinematic-web-hero__archive" aria-label="Archive contact sheet" tabIndex={0}>
         {archiveItems.map((item) => (
           <figure key={item.code}>
             <img src={item.src} alt="" aria-hidden="true" loading="lazy" />
