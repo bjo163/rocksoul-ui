@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { MoonWitnessAssetImage, MoonWitnessAssetProvider } from "../components/asset-provider"
+import { MOONWITNESS_STABLE_REPOSITORY_BASE, ROCKSOUL_ASSETS_REGISTRY } from "../contracts/assets-registry"
 
-const base = "https://raw.githubusercontent.com/bjo163/rocksoul-assets/95a6912409f849029e18093658b1c0e8158a32f0/moonwitness"
+const base = `${MOONWITNESS_STABLE_REPOSITORY_BASE}/moonwitness`
 
 const samples = [
   ["Graph vector", "graph-vector", "svg/evidence-graph.svg"],
@@ -18,8 +19,8 @@ function AssetPackGallery() {
   return (
     <MoonWitnessAssetProvider baseUrl={base}>
       <main className="min-h-screen bg-background p-6 text-foreground">
-        <p className="mw-eyebrow text-primary">MoonWitness Asset Packs / v1.2.0</p>
-        <h1 className="mw-display mt-3 text-4xl font-black uppercase">19 packs. One consumption contract.</h1>
+        <p className="mw-eyebrow text-primary">MoonWitness Asset Packs / registry</p>
+        <h1 className="mw-display mt-3 text-4xl font-black uppercase">{ROCKSOUL_ASSETS_REGISTRY.packCount} packs. One consumption contract.</h1>
         <p className="mt-3 max-w-2xl text-sm text-muted-foreground">Product UI prefers canonical SVG. Raster derivatives stay for external/raster-only delivery. SFX remains opt-in.</p>
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {samples.map(([label, pack, file]) => (
@@ -44,7 +45,7 @@ function AssetPackGallery() {
 }
 
 const meta = {
-  title: "Assets/v1.2 Pack Gallery",
+  title: "Assets/Registry Pack Gallery",
   component: AssetPackGallery,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof AssetPackGallery>
