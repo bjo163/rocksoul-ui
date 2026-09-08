@@ -16,7 +16,7 @@ for(const entry of lock.files ?? []){
     failures.push(`${entry.path}: missing`)
   }
 }
-if(lock.sourceCommit!=="e2dd99735e9225d368f6c520c6ac1980219115ba") failures.push("asset lock source commit")
+if(lock.sourceCommit!=="82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05") failures.push("asset lock source commit")
 if(lock.files?.length!==198) failures.push(`asset lock count ${lock.files?.length ?? 0} != 198`)
 if(failures.length){
   console.error("Asset pack integrity audit failed:")

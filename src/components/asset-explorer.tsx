@@ -65,7 +65,7 @@ export function AssetExplorer({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="mw-eyebrow text-primary">Asset explorer / v{moonWitnessAssets.version}</p>
-          <h2 className="mt-2 text-2xl font-bold">41 packs / 591 canonical assets</h2>
+          <h2 className="mt-2 text-2xl font-bold">42 packs / 614 canonical assets</h2>
         </div>
         <div className="flex gap-2" aria-label="Asset explorer view">
           <Button variant={view==="grid"?"primary":"secondary"} onClick={()=>setView("grid")}>Grid</Button>

@@ -127,7 +127,7 @@ export function useMoonWitnessSfx({
 export const moonWitnessAssetConsumption = {
   localMirrorBase: DEFAULT_ASSET_BASE,
   registryRepositoryBase: MOONWITNESS_STABLE_REPOSITORY_BASE,
-  packCount: 41,
+  packCount: 42,
   preferSvgInProductUi: true,
   rasterIsDerivative: true,
   runtimeMotionFormats: ["svg", "apng", "webm", "lottie"],
