@@ -19,10 +19,10 @@ export interface RecordSummary {
 
 const domains: RecordDomain[] = ["STORY", "EVENT", "PERSON", "RGBL"]
 const domainClass: Record<RecordDomain, string> = {
-  STORY: "text-rgbl-red",
-  EVENT: "text-rgbl-green",
+  STORY: "text-rgbl-red-fg",
+  EVENT: "text-rgbl-green-fg",
   PERSON: "text-warning",
-  RGBL: "text-rgbl-blue",
+  RGBL: "text-rgbl-blue-fg",
 }
 
 export function FourRecordSummary({ records, compact = false }: { records: RecordSummary[]; compact?: boolean }) {
