@@ -2,7 +2,7 @@ export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
   commit: "4050b6b5ea88f187a31a304bf978abfe637db9ce",
-  acceptedMainCommit: "4050b6b5ea88f187a31a304bf978abfe637db9ce",
+  acceptedMainCommit: "96df558c0cd2922715d73eced735234b2c73b333",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
@@ -12,7 +12,7 @@ export const ROCKSOUL_ASSETS_SYNC = {
   livePenpotVerification: "manual-follow-up",
   assetPackIndex: "moonwitness/asset-packs.json",
   assetPackCount: 43,
-  canonicalAssetCount: 622,
+  canonicalAssetCount: 634,
   developerDistribution: ["dist/assets.json", "dist/assets.ts", "dist/assets.css", "dist/sprite.svg"],
   mirroredRuntimeFiles: 202,
   mirroredCorePacks: {
