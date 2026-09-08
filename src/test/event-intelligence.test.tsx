@@ -16,8 +16,9 @@ describe("Event intelligence visual contracts", () => {
       ]}
     />)
     expect(screen.getByRole("img", { name: /event intelligence topology/i })).toBeInTheDocument()
-    expect(screen.getByText(/Event.*asserts.*Claim/)).toBeInTheDocument()
-    expect(screen.getByText(/Claim.*attested by.*Source/)).toBeInTheDocument()
+    const textEquivalent = screen.getAllByRole("listitem").map((item) => item.textContent ?? "").join(" ")
+    expect(textEquivalent).toMatch(/Event.*asserts.*Claim/)
+    expect(textEquivalent).toMatch(/Claim.*attested by.*Source/)
   })
 
   it("exposes historicity confidence semantically", () => {
