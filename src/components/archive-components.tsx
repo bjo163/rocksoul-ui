@@ -529,7 +529,7 @@ export function PlatformSidebar({
     <aside
       className={cn(
         "hidden min-h-[calc(100vh-64px)] shrink-0 flex-col border-r border-border bg-panel md:flex",
-        collapsed ? "w-16" : "w-[84px] lg:w-[272px]",
+        collapsed ? "w-[72px]" : "w-[72px] lg:w-[220px]",
       )}
       data-state={collapsed ? "collapsed" : "expanded"}
       data-navigation="auto-menu"
@@ -593,35 +593,74 @@ export function SearchFilters({
   )
 }
 
-export function StatePanel({ state }: { state: "empty" | "loading" | "error" }) {
+export function StatePanel({
+  state,
+  traceId = "TRACE-UNAVAILABLE",
+  lastKnownState = "No cached state available.",
+  requiredPermission = "resource:read",
+  currentRole = "researcher",
+}: {
+  state: "empty" | "loading" | "error" | "offline" | "forbidden"
+  traceId?: string
+  lastKnownState?: string
+  requiredPermission?: string
+  currentRole?: string
+}) {
   if (state === "loading") {
     return (
       <div className="border border-border bg-card p-6" aria-busy="true">
-        <span className="mw-meta text-muted-foreground" aria-hidden="true">···</span>
-        <p className="mw-eyebrow mt-3 text-muted-foreground">Loading</p>
-        <p className="mt-3 text-lg font-bold">Tracing the records…</p>
-        <p className="mt-2 text-sm text-muted-foreground">No conclusion is being drawn while data is incomplete.</p>
+        <p className="mw-eyebrow text-success">Loading</p>
+        <div className="mt-6 grid gap-4" aria-hidden="true">
+          <div className="h-5 w-full rounded-full bg-background" />
+          <div className="h-5 w-3/4 rounded-full bg-background" />
+          <div className="h-24 w-full rounded-[8px] bg-background" />
+          <div className="h-24 w-full rounded-[8px] bg-background" />
+        </div>
+        <p className="mt-6 text-sm text-muted-foreground">Preserve layout. No jumping.</p>
       </div>
     )
   }
   if (state === "error") {
     return (
       <div className="border border-primary bg-card p-6" role="alert">
-        <span className="mw-meta text-primary" aria-hidden="true">!</span>
-        <p className="mw-eyebrow mt-3 text-primary">Couldn’t load this source</p>
-        <p className="mt-3 text-lg font-bold">The trail broke here.</p>
-        <p className="mt-2 text-sm text-muted-foreground">Try the source again. Existing records remain unchanged.</p>
-        <Button className="mt-4" variant="danger">Retry source</Button>
+        <p className="mw-eyebrow text-primary">Error</p>
+        <h3 className="mt-4 text-lg font-bold">Couldn’t load records.</h3>
+        <p className="mt-2 text-sm text-muted-foreground">Backend is reachable, but the query failed. Existing records are unchanged.</p>
+        <p className="mw-meta mt-4 text-muted-foreground">Trace / {traceId}</p>
+        <Button className="mt-5" variant="danger">Try again</Button>
+      </div>
+    )
+  }
+  if (state === "offline") {
+    return (
+      <div className="border border-warning bg-card p-6" role="status">
+        <p className="mw-eyebrow text-warning">Backend offline</p>
+        <h3 className="mt-4 text-lg font-bold">The service is unreachable.</h3>
+        <p className="mt-2 text-sm text-muted-foreground">This is a connectivity failure, not an empty result.</p>
+        <p className="mw-meta mt-4 text-muted-foreground">Last known state / {lastKnownState}</p>
+        <Button className="mt-5" variant="secondary">Retry connection</Button>
+      </div>
+    )
+  }
+  if (state === "forbidden") {
+    return (
+      <div className="border border-primary bg-card p-6" role="alert">
+        <p className="mw-eyebrow text-primary">Forbidden</p>
+        <h3 className="mt-4 text-lg font-bold">This action needs more access.</h3>
+        <dl className="mw-meta mt-4 grid gap-2 text-muted-foreground">
+          <div className="flex justify-between gap-3"><dt>Required</dt><dd className="text-foreground">{requiredPermission}</dd></div>
+          <div className="flex justify-between gap-3"><dt>Current role</dt><dd className="text-foreground">{currentRole}</dd></div>
+        </dl>
+        <Button className="mt-5" variant="danger">Request access</Button>
       </div>
     )
   }
   return (
-    <div className="border border-border bg-card p-6">
-      <span className="mw-meta text-muted-foreground" aria-hidden="true">Ø</span>
-      <p className="mw-eyebrow mt-3 text-muted-foreground">Nothing here yet</p>
-      <p className="mt-3 text-lg font-bold">Still open.</p>
-      <p className="mt-2 text-sm text-muted-foreground">No record matches the current filters.</p>
-      <Button className="mt-4" variant="secondary">Clear filters</Button>
+    <div className="border border-info bg-card p-6">
+      <p className="mw-eyebrow text-info">Empty</p>
+      <h3 className="mt-4 text-lg font-bold">Nothing here yet.</h3>
+      <p className="mt-2 text-sm text-muted-foreground">Change filters or create a record.</p>
+      <Button className="mt-5" variant="secondary">Clear filters</Button>
     </div>
   )
 }

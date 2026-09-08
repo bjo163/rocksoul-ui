@@ -1,25 +1,34 @@
 import { useState } from "react"
-import { ApplicationShell, type AppNotification } from "../components/application-shell"
+import {
+  ApplicationShell,
+  CommandPalette,
+  NotificationsPanel,
+  applicationResources,
+  defaultApplicationPermissions,
+  resourceDescriptors,
+  type AppNotification,
+} from "../components/application-shell"
 import { Badge } from "../components/badge"
 import { Button } from "../components/button"
-import { Input, Select, Switch, Textarea } from "../components/form-controls"
+import { Input, Switch, Textarea } from "../components/form-controls"
 import { MetricTile, StatePanel } from "../components/archive-components"
-import { Tabs } from "../components/tabs"
-import { cn } from "../lib/cn"
+import { ThemeToggle } from "../components/theme-toggle"
 
-const notifications: AppNotification[] = [
-  { id: "N-1", title: "MW-0042 review changed", body: "Identity remains partial after the latest review.", state: "unread", variant: "review" },
-  { id: "N-2", title: "Repository recovered", body: "rocksoul-event is online.", state: "read", variant: "system" },
-  { id: "N-3", title: "Community context submitted", body: "SUB-0042-01 still needs provenance.", state: "unread", variant: "case-update" },
+export const applicationNotifications: AppNotification[] = [
+  { id: "N-1", title: "MW-0042 review changed", body: "Person identity remains incomplete.", state: "unread", variant: "review" },
+  { id: "N-2", title: "New trace linked", body: "EVENT-0042-A received a source-linked trace.", state: "unread", variant: "case-update" },
+  { id: "N-3", title: "RGBL source indexed", body: "A source fragment was indexed.", state: "unread", variant: "system" },
 ]
 
 function Shell({
   activeResource,
+  section,
   title,
   children,
   backendState = "online",
 }: {
   activeResource: string
+  section: string
   title: string
   children: React.ReactNode
   backendState?: "online" | "degraded" | "offline"
@@ -27,11 +36,11 @@ function Shell({
   return (
     <ApplicationShell
       activeResource={activeResource}
-      breadcrumbs={[{ label: "MoonWitness", href: "#dashboard" }, { label: title }]}
+      breadcrumbs={[{ label: section }, { label: title }]}
       backendState={backendState}
-      notifications={notifications}
+      notifications={applicationNotifications}
     >
-      <div className="px-4 py-8 sm:px-8 lg:px-12">
+      <div className="px-4 py-8 sm:px-8 lg:px-8">
         {children}
       </div>
     </ApplicationShell>
@@ -40,36 +49,43 @@ function Shell({
 
 export function DashboardScreen() {
   return (
-    <Shell activeResource="dashboard" title="Dashboard">
-      <p className="mw-eyebrow text-primary">Application / Dashboard</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Operational overview.</h1>
-      <p className="mw-reading mt-4 text-base leading-7 text-muted-foreground">Research state, queues, repository health, and review pressure without turning the dashboard into decoration.</p>
-      <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <MetricTile label="Open cases" value="18" delta="+2" context="needs review" tone="warning" />
-        <MetricTile label="Repositories" value="5" delta="4 online" context="1 degraded" />
-        <MetricTile label="Queue" value="7" delta="+1" context="community + legal" tone="warning" />
-        <MetricTile label="Backend" value="OK" delta="stable" context="fixture status" tone="good" />
+    <Shell activeResource="dashboard" section="HOME" title="Dashboard">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Good morning, Rocksoul.</h1>
+      <p className="mt-3 text-sm text-muted-foreground">What changed, what needs attention, and what can wait.</p>
+
+      <div className="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <MetricTile label="Open cases" value="42" context="active investigations" />
+        <MetricTile label="Review queue" value="07" context="needs context" tone="warning" />
+        <MetricTile label="Backend" value="HEALTHY" context="global service state" tone="good" />
+        <MetricTile label="Unread" value="3" context="notifications" tone="critical" />
       </div>
-      <div className="mt-8 grid gap-5 xl:grid-cols-[1.3fr_.7fr]">
+
+      <div className="mt-8 grid gap-5 xl:grid-cols-[1.9fr_1fr]">
         <section className="border border-border bg-card">
-          <div className="border-b border-border p-4"><p className="mw-meta text-muted-foreground">Recent activity</p></div>
+          <div className="border-b border-border p-5"><h2 className="text-lg font-bold">Recent activity</h2></div>
           {[
-            ["MW-0042", "review.unresolved", "05:32"],
-            ["SUB-0042-01", "context.requested", "05:31"],
-            ["rocksoul-event", "sync.completed", "05:29"],
-          ].map(([resource, action, time]) => (
-            <div key={`${resource}-${time}`} className="grid grid-cols-[1fr_1.3fr_auto] gap-3 border-b border-border p-4 text-sm">
-              <strong>{resource}</strong><span className="text-muted-foreground">{action}</span><span className="mw-meta">{time}</span>
+            ["CASE MW-0042", "Person identity remains incomplete", "12m", "text-primary"],
+            ["EVENT", "New trace linked to EVENT-0042-A", "43m", "text-success"],
+            ["RGBL", "Source fragment indexed", "2h", "text-info"],
+          ].map(([kind, action, time, tone]) => (
+            <div key={kind} className="grid grid-cols-[130px_1fr_auto] gap-4 border-b border-border p-5 text-sm">
+              <span className={`mw-meta ${tone}`}>{kind}</span>
+              <span>{action}</span>
+              <span className="mw-meta text-muted-foreground">{time}</span>
             </div>
           ))}
         </section>
+
         <section className="border border-border bg-card p-5">
-          <p className="mw-meta text-muted-foreground">Quick actions</p>
-          <div className="mt-4 grid gap-2">
-            <Button>Open review queue</Button>
-            <Button variant="secondary">Open AI Workspace</Button>
-            <Button variant="ghost">Inspect repositories</Button>
-          </div>
+          <h2 className="text-lg font-bold">Attention</h2>
+          <article className="mt-5 border border-warning bg-background p-5">
+            <p className="mw-meta text-warning">Review</p>
+            <p className="mt-3 text-sm font-bold">7 submissions need context</p>
+          </article>
+          <article className="mt-4 border border-primary bg-background p-5">
+            <p className="mw-meta text-primary">Legal</p>
+            <p className="mt-3 text-sm font-bold">2 disputed boundaries</p>
+          </article>
         </section>
       </div>
     </Shell>
@@ -77,38 +93,30 @@ export function DashboardScreen() {
 }
 
 const kanbanColumns = [
-  { title: "Observe", items: ["Capture new source", "Validate provenance"] },
-  { title: "Trace", items: ["Cross-link EVENT", "Resolve PERSON field"] },
-  { title: "Review", items: ["AWS jurisdiction", "MW-0042 closure gate"] },
-  { title: "Done", items: ["RGBL motif extraction"] },
+  { title: "INBOX", count: 5, tone: "neutral" as const, id: "MW-0042", item: "Identity context", meta: "Person · blocker" },
+  { title: "IN REVIEW", count: 3, tone: "info" as const, id: "SUB-0042-01", item: "Possible second trace", meta: "Needs context" },
+  { title: "BLOCKED", count: 2, tone: "partial" as const, id: "AWS-0042", item: "Jurisdiction unresolved", meta: "Legal review" },
+  { title: "DONE", count: 12, tone: "verified" as const, id: "EVENT-0042-A", item: "Timestamp verified", meta: "Source linked" },
 ]
 
 export function KanbanScreen() {
   return (
-    <Shell activeResource="kanban" title="Kanban">
-      <p className="mw-eyebrow text-primary">Workspace / Kanban</p>
-      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="mw-display text-4xl font-black uppercase sm:text-6xl">Research flow.</h1>
-          <p className="mt-3 text-sm text-muted-foreground">Board state is operational metadata, never evidence.</p>
-        </div>
-        <Button>Add work item</Button>
-      </div>
-      <div className="mt-8 grid gap-4 xl:grid-cols-4">
+    <Shell activeResource="kanban" section="WORK" title="Kanban">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Review workflow</h1>
+      <p className="mt-3 text-sm text-muted-foreground">Move work, not evidence. Status changes are audited.</p>
+
+      <div className="mt-10 grid gap-4 xl:grid-cols-4">
         {kanbanColumns.map((column) => (
-          <section key={column.title} className="border border-border bg-panel p-3">
+          <section key={column.title} className="min-h-[540px] border border-border bg-panel p-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold">{column.title}</h2>
-              <Badge variant="neutral">{column.items.length}</Badge>
+              <h2 className="mw-meta">{column.title} / {column.count}</h2>
+              <Badge variant={column.tone}>{column.count}</Badge>
             </div>
-            <div className="mt-3 grid gap-3">
-              {column.items.map((item) => (
-                <article key={item} className="border border-border bg-card p-4">
-                  <p className="text-sm font-bold">{item}</p>
-                  <p className="mw-meta mt-3 text-muted-foreground">MW-0042 / fixture</p>
-                </article>
-              ))}
-            </div>
+            <article className="mt-5 border border-border bg-background p-4">
+              <p className="mw-meta text-primary">{column.id}</p>
+              <p className="mt-3 text-sm font-bold">{column.item}</p>
+              <p className="mw-meta mt-3 text-muted-foreground">{column.meta}</p>
+            </article>
           </section>
         ))}
       </div>
@@ -117,25 +125,29 @@ export function KanbanScreen() {
 }
 
 export function CalendarScreen() {
-  const days = ["Mon 07", "Tue 08", "Wed 09", "Thu 10", "Fri 11", "Sat 12", "Sun 13"]
-  const events: Record<string, string[]> = {
-    "Tue 08": ["05:30 Case review", "10:00 Repository sync"],
-    "Wed 09": ["14:00 Legal review"],
-    "Fri 11": ["09:00 Community moderation"],
-  }
+  const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
   return (
-    <Shell activeResource="calendar" title="Calendar">
-      <p className="mw-eyebrow text-primary">Workspace / Calendar</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Review windows.</h1>
-      <div className="mt-8 grid gap-3 md:grid-cols-7">
-        {days.map((day) => (
-          <section key={day} className="min-h-48 border border-border bg-card p-3">
-            <h2 className="mw-meta text-muted-foreground">{day}</h2>
-            <div className="mt-4 grid gap-2">
-              {(events[day] ?? []).map((event) => <div key={event} className="border-l-2 border-primary bg-panel p-2 text-xs">{event}</div>)}
+    <Shell activeResource="calendar" section="WORK" title="Calendar">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">September 2026</h1>
+      <p className="mt-3 text-sm text-muted-foreground">Reviews, releases, and research checkpoints.</p>
+
+      <div className="mt-8 grid grid-cols-7 border border-border bg-card">
+        {days.map((day) => <div key={day} className="border-b border-r border-border p-3 text-center mw-meta text-muted-foreground">{day}</div>)}
+        {Array.from({ length: 35 }).map((_, index) => {
+          const day = index + 1
+          return (
+            <div key={day} className="min-h-28 border-b border-r border-border p-2">
+              <span className="mw-meta text-muted-foreground">{day <= 30 ? day : ""}</span>
+              {day === 8 ? (
+                <div className="mt-2 grid gap-1">
+                  <span className="border-l-2 border-primary bg-panel p-2 text-[10px]">MW-0042 REVIEW</span>
+                  <span className="border-l-2 border-success bg-panel p-2 text-[10px]">SOURCE SYNC</span>
+                  <span className="border-l-2 border-info bg-panel p-2 text-[10px]">RELEASE GATE</span>
+                </div>
+              ) : null}
             </div>
-          </section>
-        ))}
+          )
+        })}
       </div>
     </Shell>
   )
@@ -143,24 +155,25 @@ export function CalendarScreen() {
 
 export function ChatScreen() {
   return (
-    <Shell activeResource="chat" title="Chat">
-      <p className="mw-eyebrow text-primary">Workspace / Chat</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Discussion with provenance.</h1>
-      <div className="mt-8 grid min-h-[560px] gap-5 lg:grid-cols-[260px_1fr]">
-        <aside className="border border-border bg-panel p-3">
+    <Shell activeResource="chat" section="WORK" title="Chat">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Case conversations</h1>
+      <div className="mt-8 grid min-h-[640px] gap-5 lg:grid-cols-[280px_1fr]">
+        <aside className="border border-border bg-panel p-4">
           <p className="mw-meta text-muted-foreground">Channels</p>
-          {["# case-mw-0042", "# legal-review", "# repository-health"].map((channel, index) => (
-            <button key={channel} type="button" className={cn("mw-link w-full px-3 text-left text-sm", index === 0 ? "bg-card font-bold text-primary" : "text-muted-foreground")}>{channel}</button>
+          {["# mw-0042", "# research", "# legal-review"].map((channel, index) => (
+            <button key={channel} type="button" className={`mw-link mt-2 w-full px-3 text-left text-sm ${index === 0 ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
+              {channel}{index === 0 ? <Badge variant="info">3</Badge> : null}
+            </button>
           ))}
         </aside>
         <section className="flex flex-col border border-border bg-card">
-          <div className="border-b border-border p-4"><strong># case-mw-0042</strong></div>
-          <div className="flex-1 space-y-5 p-5">
-            <article><strong className="text-sm">Researcher</strong><p className="mt-2 text-sm">Identity dimension is still 0.64. Do not close.</p><p className="mw-meta mt-2 text-muted-foreground">05:28</p></article>
-            <article><strong className="text-sm">Reviewer</strong><p className="mt-2 text-sm">Agreed. I requested context on SUB-0042-01.</p><p className="mw-meta mt-2 text-muted-foreground">05:31</p></article>
+          <div className="border-b border-border p-4"><strong># mw-0042</strong></div>
+          <div className="flex-1 space-y-6 p-5">
+            <article><strong className="text-sm">Rocksoul</strong><p className="mt-2 text-sm">Identity match is still the blocker.</p></article>
+            <article><strong className="text-sm">Mira</strong><p className="mt-2 text-sm">I linked the source fragment. Provenance is complete.</p></article>
           </div>
           <form className="border-t border-border p-4" onSubmit={(event) => event.preventDefault()}>
-            <Textarea label="Message" maxLength={800} characterCount placeholder="Reference a case, source, or trace…" />
+            <Textarea label="Message #mw-0042…" maxLength={800} characterCount placeholder="Message #mw-0042…" />
             <div className="mt-3 flex justify-end"><Button type="submit">Send</Button></div>
           </form>
         </section>
@@ -170,149 +183,193 @@ export function ChatScreen() {
 }
 
 export function AIWorkspaceScreen() {
-  const [mode, setMode] = useState("mizan")
   return (
-    <Shell activeResource="ai-workspace" title="AI Workspace" backendState="degraded">
-      <p className="mw-eyebrow text-primary">Workspace / AI</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Evidence-aware analysis.</h1>
-      <p className="mw-reading mt-4 text-sm leading-6 text-muted-foreground">The workspace must show source scope, uncertainty, and the difference between evidence, inference, and legal interpretation.</p>
-      <div className="mt-8 grid gap-5 xl:grid-cols-[.75fr_1.25fr]">
-        <section className="border border-border bg-card p-5">
-          <Select
-            label="Analysis mode"
-            value={mode}
-            onChange={(event) => setMode(event.currentTarget.value)}
-            options={[
-              { label: "Mizan analysis", value: "mizan" },
-              { label: "Evidence summary", value: "evidence" },
-              { label: "Contradiction scan", value: "contradiction" },
-            ]}
-          />
-          <div className="mt-4"><Input label="Case scope" readOnly value="MW-0042" /></div>
-          <div className="mt-4"><Textarea label="Prompt" maxLength={1200} characterCount defaultValue="Explain why the case remains unresolved." /></div>
-          <div className="mt-4"><Button>Run analysis</Button></div>
+    <Shell activeResource="ai" section="WORK" title="AI Workspace">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">AI Workspace</h1>
+      <p className="mt-3 text-sm text-muted-foreground">Ask across records. Keep citations visible. Never collapse uncertainty.</p>
+
+      <div className="mt-8 grid gap-5 xl:grid-cols-[1.35fr_.65fr]">
+        <section className="flex min-h-[620px] flex-col border border-border bg-card p-5">
+          <p className="mw-meta text-muted-foreground">Conversation</p>
+          <article className="mt-6 border-l-2 border-info pl-4"><p className="mw-meta text-info">You</p><p className="mt-2 text-sm">Why is MW-0042 still unresolved?</p></article>
+          <article className="mt-6 border-l-2 border-primary pl-4">
+            <p className="mw-meta text-primary">MoonWitness AI</p>
+            <p className="mt-2 text-sm leading-7">Temporal and motif signals are strong, but identity remains partial.</p>
+            <p className="mt-2 text-sm leading-7">The legal layer also has unresolved jurisdiction.</p>
+            <div className="mt-5 border-t border-border pt-4">
+              <p className="mw-meta text-muted-foreground">Citations</p>
+              <p className="mt-2 font-mono text-xs">EVENT-0042-A · PERSON-0042-A · AWS-0042-A</p>
+            </div>
+            <p className="mw-meta mt-5 border-l-2 border-warning pl-3 text-warning">Correlation supports investigation, not closure.</p>
+          </article>
+          <form className="mt-auto border-t border-border pt-4" onSubmit={(event) => event.preventDefault()}>
+            <Textarea label="Ask with case context…" maxLength={1200} characterCount placeholder="Ask with case context…" />
+            <Button className="mt-3" type="submit">Ask</Button>
+          </form>
         </section>
-        <section className="border border-border bg-card p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="mw-meta text-muted-foreground">Analysis output / {mode}</p>
-            <Badge variant="partial">confidence: medium-high</Badge>
-          </div>
-          <h2 className="mt-5 text-xl font-bold">Closure is blocked by identity uncertainty.</h2>
-          <p className="mt-4 text-sm leading-7 text-muted-foreground">Temporal, motif, and source-independence dimensions align strongly. Identity remains partial and therefore cannot be aesthetically completed by the UI.</p>
-          <div className="mt-6 grid gap-2 border-t border-border pt-4">
-            <p className="mw-meta">Sources in scope</p>
-            {["SRC-STORY-0042-A", "SRC-EVENT-0042-A", "SRC-PERSON-0042-A", "SRC-RGBL-0042-A"].map((source) => <code key={source} className="text-xs">{source}</code>)}
-          </div>
-          <p className="mw-meta mt-6 border-l-2 border-warning pl-3 text-warning">Inference ≠ verified fact · legal review starts after AWS boundary</p>
-        </section>
+
+        <aside className="border border-border bg-panel p-5">
+          <p className="mw-meta text-muted-foreground">Context</p>
+          <dl className="mt-5 grid gap-5 text-sm">
+            <div><dt className="mw-meta text-muted-foreground">Case</dt><dd className="mt-2 font-bold">MW-0042 / The Silent Flight</dd></div>
+            <div><dt className="mw-meta text-muted-foreground">Sources</dt><dd className="mt-2">4 canonical records</dd></div>
+            <div><dt className="mw-meta text-muted-foreground">Legal</dt><dd className="mt-2">2 legal instruments</dd></div>
+            <div><dt className="mw-meta text-muted-foreground">Community</dt><dd className="mt-2">17 discussions</dd></div>
+          </dl>
+        </aside>
       </div>
+    </Shell>
+  )
+}
+
+const resourceAccess: Record<string, string> = {
+  case: "READ / WRITE",
+  event: "READ / WRITE",
+  person: "READ / REVIEW",
+  rgbl: "READ / WRITE",
+  aws: "REVIEWER+",
+}
+
+export function ResourcesScreen() {
+  return (
+    <Shell activeResource="resources" section="DATA" title="Resources">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Resource navigation</h1>
+      <p className="mt-3 text-sm text-muted-foreground">AutoMenu-driven. Routes are generated from resource descriptors and permissions.</p>
+
+      <section className="mt-8 border border-border bg-card p-5">
+        <p className="mw-meta text-primary">Auto Menu</p>
+        <div className="mt-5 overflow-x-auto">
+          <table className="w-full min-w-[680px] border-collapse text-left">
+            <thead><tr className="border-b border-border">{["Resource","Route","Repository","Access"].map((head)=><th key={head} className="p-3 mw-meta text-muted-foreground">{head}</th>)}</tr></thead>
+            <tbody>
+              {resourceDescriptors.map((item) => (
+                <tr key={item.resource} className="border-b border-border">
+                  <th className="p-4 text-sm">{item.label}</th>
+                  <td className="p-4 font-mono text-xs">{item.path}</td>
+                  <td className="p-4 font-mono text-xs text-muted-foreground">{item.repo}</td>
+                  <td className="p-4"><Badge variant={item.resource === "aws" ? "partial" : "verified"}>{resourceAccess[item.resource]}</Badge></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p className="mw-meta mt-6 border-l-2 border-primary pl-4 text-muted-foreground">
+        RULE / If a resource is registered and allowed, AutoMenu exposes it. No hand-maintained duplicate nav.
+      </p>
     </Shell>
   )
 }
 
 export function ProfileSettingsScreen() {
+  const [section, setSection] = useState("Profile")
+  const sections = ["Profile", "Appearance", "Notifications", "Security", "API / Integrations"]
   return (
-    <Shell activeResource="profile" title="Profile / Settings">
-      <p className="mw-eyebrow text-primary">Account / Profile + Settings</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Personal controls.</h1>
-      <Tabs
-        variant="archive"
-        items={[
-          {
-            id: "profile",
-            label: "Profile",
-            content: <div className="grid max-w-xl gap-4 py-6"><Input label="Display name" defaultValue="Researcher" /><Input label="Role" readOnly value="reviewer" /><Button>Save profile</Button></div>,
-          },
-          {
-            id: "preferences",
-            label: "Preferences",
-            content: <div className="max-w-xl py-6"><Switch label="Review notifications" defaultChecked /><Switch label="Repository health alerts" defaultChecked /><Switch label="Reduced visual density" /></div>,
-          },
-          {
-            id: "security",
-            label: "Security",
-            content: <div className="grid max-w-xl gap-4 py-6"><Input label="Session" readOnly value="Current browser / fixture" /><Button variant="danger">Sign out other sessions</Button></div>,
-          },
-        ]}
-      />
+    <Shell activeResource="settings" section="ACCOUNT" title="Profile / Settings">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Profile & Settings</h1>
+
+      <div className="mt-8 grid gap-5 lg:grid-cols-[330px_1fr]">
+        <aside className="border border-border bg-card p-6">
+          <div className="flex items-center gap-4 border-b border-border pb-6">
+            <span className="flex size-16 items-center justify-center rounded-full bg-primary text-lg font-bold text-white">RS</span>
+            <div><strong>Rocksoul</strong><p className="mw-meta mt-1 text-muted-foreground">researcher</p></div>
+          </div>
+          <nav className="mt-5 grid">
+            {sections.map((item) => <button key={item} type="button" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</button>)}
+          </nav>
+        </aside>
+
+        <section className="border border-border bg-card p-6">
+          <h2 className="text-xl font-bold">{section}</h2>
+          {section === "Profile" ? (
+            <div className="mt-6 grid max-w-xl gap-5"><Input label="Display name" defaultValue="Rocksoul" /><Input label="Role" readOnly value="researcher" /><Button>Save profile</Button></div>
+          ) : null}
+          {section === "Appearance" ? (
+            <div className="mt-6"><p className="mw-meta text-muted-foreground">Theme / Light · Dark · System</p><div className="mt-4"><ThemeToggle /></div></div>
+          ) : null}
+          {section === "Notifications" ? (
+            <div className="mt-6 max-w-xl"><Switch label="Case updates" defaultChecked /><Switch label="Mentions and review assignments" defaultChecked /></div>
+          ) : null}
+          {section === "Security" ? (
+            <div className="mt-6 grid max-w-xl gap-4"><Input label="Current session" readOnly value="Current browser / fixture" /><Button variant="danger">Sign out other sessions</Button></div>
+          ) : null}
+          {section === "API / Integrations" ? (
+            <div className="mt-6 grid max-w-xl gap-4"><StatePanel state="empty" /><Button variant="secondary">Add integration</Button></div>
+          ) : null}
+        </section>
+      </div>
     </Shell>
   )
 }
 
-export type AuthorizationState = "allowed" | "denied" | "pending"
-
-export function AuthorizationStateCard({
-  state,
-  permission,
-}: {
-  state: AuthorizationState
-  permission: string
-}) {
-  if (state === "pending") return <StatePanel state="loading" />
-  if (state === "denied") {
-    return (
-      <section className="border border-primary bg-card p-6" role="alert">
-        <Badge variant="prohibited">access denied</Badge>
-        <h2 className="mt-4 text-xl font-bold">You do not have this permission.</h2>
-        <p className="mt-2 text-sm text-muted-foreground">{permission}</p>
-        <Button className="mt-5" variant="secondary">Request access</Button>
-      </section>
-    )
-  }
-  return (
-    <section className="border border-success bg-card p-6">
-      <Badge variant="verified">access granted</Badge>
-      <h2 className="mt-4 text-xl font-bold">Permission available.</h2>
-      <p className="mt-2 text-sm text-muted-foreground">{permission}</p>
-    </section>
-  )
-}
-
 export function AuthorizationScreen() {
-  const permissions = [
-    ["cases:read", true, true, true],
-    ["cases:review", false, true, true],
-    ["legal:review", false, false, true],
-    ["audit:read", false, true, true],
-    ["authz:write", false, false, true],
-  ] as const
+  const capabilities = [
+    ["View canonical records", "ALLOWED", "verified" as const],
+    ["Request context", "ALLOWED", "verified" as const],
+    ["Resolve identity blocker", "REQUIRES EVIDENCE", "partial" as const],
+    ["Publish legal conclusion", "LEGAL REVIEWER+", "prohibited" as const],
+  ]
   return (
-    <Shell activeResource="authorization" title="Authorization">
-      <p className="mw-eyebrow text-primary">System / Authorization UX</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Access is visible.</h1>
-      <p className="mw-reading mt-4 text-sm leading-6 text-muted-foreground">Users should know whether an action is unavailable, forbidden, or still being resolved—without discovering it only after failure.</p>
-      <div className="mt-8 overflow-x-auto border border-border bg-card">
-        <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-          <thead><tr className="border-b border-border">{["Permission","Viewer","Reviewer","Admin"].map((head)=><th key={head} className="p-3 font-mono text-[10px] uppercase text-muted-foreground">{head}</th>)}</tr></thead>
-          <tbody>
-            {permissions.map(([permission, viewer, reviewer, admin]) => (
-              <tr key={permission} className="border-b border-border">
-                <th className="p-3 font-mono text-xs">{permission}</th>
-                {[viewer, reviewer, admin].map((allowed,index)=><td key={index} className="p-3"><Badge variant={allowed ? "verified" : "unresolved"}>{allowed ? "allow" : "deny"}</Badge></td>)}
-              </tr>
+    <Shell activeResource="settings" section="SECURITY" title="Authorization UX">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Authorization UX</h1>
+      <p className="mt-3 text-sm text-muted-foreground">Permissions are explained before actions fail.</p>
+
+      <section className="mt-8 border border-border bg-card p-6">
+        <h2 className="text-lg font-bold">Role: Researcher</h2>
+        <p className="mt-2 text-sm text-muted-foreground">Can inspect and review evidence. Cannot publish legal decisions.</p>
+
+        <div className="mt-8 grid gap-8 xl:grid-cols-[1.1fr_.7fr]">
+          <div className="grid">
+            <div className="grid grid-cols-[1fr_180px] border-b border-border py-3 mw-meta text-muted-foreground"><span>Capability</span><span>Access</span></div>
+            {capabilities.map(([capability, access, tone]) => (
+              <div key={capability} className="grid grid-cols-[1fr_180px] items-center border-b border-border py-4 text-sm">
+                <span>{capability}</span><Badge variant={tone}>{access}</Badge>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="mt-8 grid gap-4 lg:grid-cols-3">
-        <AuthorizationStateCard state="allowed" permission="cases:read" />
-        <AuthorizationStateCard state="denied" permission="legal:review" />
-        <AuthorizationStateCard state="pending" permission="authz:resolve" />
-      </div>
+          </div>
+          <div className="border border-primary bg-background p-6">
+            <p className="mw-meta text-primary">Action blocked</p>
+            <h3 className="mt-4 text-lg font-bold">You can’t publish this decision.</h3>
+            <p className="mt-3 text-sm text-muted-foreground">Legal Reviewer or Admin is required.</p>
+            <Button className="mt-6" variant="danger">Request access</Button>
+          </div>
+        </div>
+      </section>
     </Shell>
   )
 }
 
 export function ApplicationStatesScreen() {
   return (
-    <Shell activeResource="dashboard" title="Async states" backendState="offline">
-      <p className="mw-eyebrow text-primary">Application / States</p>
-      <h1 className="mw-display mt-4 text-4xl font-black uppercase sm:text-6xl">Failure is a designed state.</h1>
-      <div className="mt-8 grid gap-4 lg:grid-cols-3">
+    <Shell activeResource="dashboard" section="SYSTEM" title="System States" backendState="offline">
+      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Error / Empty / Loading / Offline / Forbidden</h1>
+      <p className="mt-3 text-sm text-muted-foreground">One recovery language across every resource.</p>
+      <div className="mt-8 grid gap-4 lg:grid-cols-2 xl:grid-cols-5">
+        <StatePanel state="error" traceId="TRACE-0042-QUERY" />
         <StatePanel state="empty" />
         <StatePanel state="loading" />
-        <StatePanel state="error" />
+        <StatePanel state="offline" lastKnownState="42 cases cached at 05:32" />
+        <StatePanel state="forbidden" requiredPermission="legal:publish" currentRole="researcher" />
       </div>
     </Shell>
+  )
+}
+
+export function CommandPaletteReferenceScreen() {
+  return (
+    <>
+      <DashboardScreen />
+      <CommandPalette open onClose={() => undefined} resources={applicationResources} permissions={defaultApplicationPermissions} />
+    </>
+  )
+}
+
+export function NotificationsReferenceScreen() {
+  return (
+    <>
+      <DashboardScreen />
+      <NotificationsPanel open onClose={() => undefined} notifications={applicationNotifications} />
+    </>
   )
 }
