@@ -5,26 +5,18 @@ const root = process.cwd()
 const fixture = await readFile(path.join(root, "src", "fixtures", "mw0042.ts"), "utf8")
 const screens = await readFile(path.join(root, "src", "screens", "domain-screens.tsx"), "utf8")
 const ecosystem = await readFile(path.join(root, "src", "contracts", "ecosystem-domains.ts"), "utf8")
+const domainContract = JSON.parse(await readFile(path.join(root, "src", "generated", "research-domains.json"), "utf8"))
 const graph = await readFile(path.join(root, "src", "components", "evidence-graph.tsx"), "utf8")
 const summary = await readFile(path.join(root, "src", "components", "domain-record-summary.tsx"), "utf8")
 const assetsV2 = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
 const researchDomainMap = await readFile(path.join(root, "src", "components", "research-domain-ownership-map.tsx"), "utf8")
 
-function ownerBlock(domain) {
-  const startPattern = new RegExp(`\\b${domain}\\s*:\\s*\\{`)
-  const match = startPattern.exec(ecosystem)
-  if (!match) return ""
-  const start = match.index
-  const nextDomain = /\n\s{2}[A-Z_]+\s*:\s*\{/g
-  nextDomain.lastIndex = start + match[0].length
-  const next = nextDomain.exec(ecosystem)
-  return ecosystem.slice(start, next?.index ?? ecosystem.length)
+function hasOwner(domain, repository, prefix) {
+  const entries = [...(domainContract.domains ?? []), domainContract.relationshipLayer].filter(Boolean)
+  const owner = entries.find((entry) => entry.domain === domain)
+  return owner?.repository === repository && owner?.prefix === prefix
 }
 
-function hasOwner(domain, repository, prefix) {
-  const block = ownerBlock(domain)
-  return block.includes(`repository: "${repository}"`) && block.includes(`prefix: "${prefix}"`)
-}
 
 const checks = [
   [fixture.includes('start: "02:14"') && fixture.includes('end: "02:37"') && fixture.includes('timezone: "LOCAL/FIXTURE"'), "EVENT temporal fixture"],
