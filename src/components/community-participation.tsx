@@ -1,5 +1,5 @@
 import type { ImgHTMLAttributes } from "react"
-import { MoonWitnessAssetImage } from "./asset-provider"
+import { MoonWitnessRegistryAssetImage } from "./asset-provider"
 import { resolveCommunitySourceLocator } from "../contracts/ecosystem-links"
 
 export const communityParticipationAssetIds = [
@@ -24,9 +24,9 @@ export function MoonWitnessCommunityParticipationAsset({
   alt: string
 }) {
   return (
-    <MoonWitnessAssetImage
+    <MoonWitnessRegistryAssetImage
       pack="community-participation"
-      file={`svg/${asset}.svg`}
+      assetId={asset}
       alt={alt}
       {...props}
     />
