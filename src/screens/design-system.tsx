@@ -124,9 +124,9 @@ export function DesignSystemScreen() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="mw-eyebrow text-warning">Visual language candidate / v1.3</p>
-            <h2 className="mt-2 text-2xl font-bold">40 packs / 587 canonical assets</h2>
+            <h2 className="mt-2 text-2xl font-bold">41 packs / 591 canonical assets</h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-              Unreleased upstream candidate. Stable v1.2 remains the default; this panel exists so the UI system can review the next visual grammar before promotion.
+              Release-candidate upstream branch. Stable v1.2 remains the default; this panel exists so the UI system can review the next visual grammar before promotion.
             </p>
           </div>
           <Badge variant="partial">UNRELEASED · {ROCKSOUL_ASSETS_CANDIDATE.commit.slice(0, 8)}</Badge>
