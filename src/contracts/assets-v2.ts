@@ -1,7 +1,7 @@
 export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
-  commit: "92e5d90058f0293525ecf26f228d94461f4738b9",
+  commit: "f0f93363c73895e52987f9a3c757e4f5115eca99",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
@@ -40,11 +40,12 @@ export const v2NavigationItems = [
 ] as const
 
 export const v2ResourceDescriptors = [
-  { resource: "case", label: "Cases", path: "/cases", repo: "moonwitness" },
-  { resource: "event", label: "Events", path: "/events", repo: "rocksoul-event" },
-  { resource: "person", label: "People", path: "/people", repo: "rocksoul-superhero" },
-  { resource: "rgbl", label: "RGBL Sources", path: "/sources", repo: "rocksoul-rgbl" },
-  { resource: "aws", label: "AWS Legal", path: "/aws", repo: "rocksoul-aws" },
+  { resource: "case", label: "STORY / Cases", path: "/cases", repo: "rocksoul-mftl" },
+  { resource: "event", label: "EVENT / Events", path: "/events", repo: "rocksoul-legend" },
+  { resource: "person", label: "PERSON / People", path: "/people", repo: "rocksoul-superhero" },
+  { resource: "rgbl", label: "TEXT / RGBL", path: "/sources", repo: "rocksoul-rgbl" },
+  { resource: "aws", label: "LAW / AWS", path: "/aws", repo: "rocksoul-aws" },
+  { resource: "correlation", label: "CORRELATION / Evidence Graph", path: "/correlation", repo: "rocksoul-correlation" },
 ] as const
 
 export const v2ScreenContract = [

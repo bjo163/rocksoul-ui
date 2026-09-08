@@ -40,6 +40,8 @@ jobs:
 
       - name: Rocksoul assets remote freshness
         run: npm run audit:assets-freshness
+      - name: Asset pack byte integrity
+        run: npm run audit:assets-integrity
       - name: Application framework audit
         run: npm run audit:application
       - name: Typecheck

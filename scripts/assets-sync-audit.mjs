@@ -13,7 +13,7 @@ const [contracts,shell,screens,stories,theme,four]=await Promise.all([
 ])
 
 const failures=[]
-const expectedSha="92e5d90058f0293525ecf26f228d94461f4738b9"
+const expectedSha="f0f93363c73895e52987f9a3c757e4f5115eca99"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
 if(!contracts.includes('assetRelease: "1.1.0"')) failures.push("assets release 1.1.0")
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
@@ -22,8 +22,11 @@ if(!contracts.includes("icons: 44") || !contracts.includes("dashboard: 20") || !
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
   if(!contracts.includes(`id: "${id}"`)) failures.push(`v2 navigation item ${id}`)
 }
-for(const resource of ["case","event","person","rgbl","aws"]){
+for(const resource of ["case","event","person","rgbl","aws","correlation"]){
   if(!contracts.includes(`resource: "${resource}"`)) failures.push(`resource descriptor ${resource}`)
+}
+for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-correlation"]){
+  if(!contracts.includes(`repo: "${repo}"`)) failures.push(`canonical repository ${repo}`)
 }
 for(let id=17;id<=27;id++){
   if(!stories.includes(`export const S${id}`)) failures.push(`v2 Storybook screen ${id}`)
@@ -56,6 +59,7 @@ for(const file of [
 ]){
   try{await access(path.join(root,file))}catch{failures.push(`brand asset ${file}`)}
 }
+try{await access(path.join(root,"public/assets/asset-lock.json"))}catch{failures.push("asset pack lock")}
 const brandManifest=JSON.parse(await read("public/brand/brand-assets.json"))
 if(brandManifest.tagline!=="Truth leaves a trace.") failures.push("brand tagline")
 if(brandManifest.assets?.length!==13) failures.push("brand source asset inventory")

@@ -4,18 +4,30 @@ Current design source:
 
 ```text
 bjo163/rocksoul-assets
-main @ 5abae50b6b994d2cd4fcb12360db620acbac37bd
-release: 1.0.0
+main @ f0f93363c73895e52987f9a3c757e4f5115eca99
+release: 1.1.0
 repository acceptance: passed
 ```
 
 Implemented consumer package:
 
 ```text
-@rocksoul/ui 0.6.0
+@rocksoul/ui
 ```
 
-The package implements the released repository contracts for the MoonWitness brand system, v1 visual baseline, authenticated v2 application shell/screens 17–27, AutoMenu navigation, resource descriptors, responsive shell geometry, and unified system states.
+The package implements the MoonWitness brand system, v1 visual baseline, authenticated v2 application shell/screens 17–27, AutoMenu navigation, canonical resource descriptors, responsive shell geometry, and unified system states.
+
+Canonical active repository map:
+
+```text
+STORY   → rocksoul-mftl
+EVENT   → rocksoul-legend
+PERSON  → rocksoul-superhero
+TEXT    → rocksoul-rgbl
+LAW     → rocksoul-aws
+```
+
+Release 1.1.0 also adds reusable product icon, dashboard, data-viz, hero-background, state-illustration, motion, and SFX packs. Those packs remain canonical in `rocksoul-assets`; UI consumers should integrate them deliberately rather than duplicating or editing their sources locally.
 
 ## Verification boundary
 
@@ -31,3 +43,8 @@ The following remain external live-Penpot verification and are intentionally not
 - final live contrast/accessibility review.
 
 These are workspace verification gates, not missing code contracts.
+
+
+## Asset packs v1.1
+
+The UI package mirrors 134 consumer-facing pack files from the canonical release: icons, dashboard widgets, data-viz, hero backgrounds, state illustrations, motion references, and SFX delivery. `scripts/assets-integrity-audit.mjs` verifies every mirrored file against its canonical Git blob SHA.
