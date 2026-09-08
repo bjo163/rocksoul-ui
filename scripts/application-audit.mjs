@@ -30,7 +30,7 @@ for (const id of ["17","18","19","20","21","22","23","24","25","26","27"]) {
 for (const state of ['state="empty"','state="loading"','state="error"','state="offline"','state="forbidden"']) {
   if (!screens.includes(state)) failures.push(`application state proof ${state}`)
 }
-for (const proof of ["MWHeaderNavigationItem", "homeHref", "searchHref", "navigation?: MWHeaderNavigationItem[]"]) {
+for (const proof of ["MWHeaderNavItem", "homeHref", "searchHref", "navItems?: MWHeaderNavItem[]"]) {
   if (!archive.includes(proof)) failures.push(`MWHeader navigation contract: ${proof}`)
 }
 
