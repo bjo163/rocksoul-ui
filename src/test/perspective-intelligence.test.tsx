@@ -38,6 +38,8 @@ describe("perspective intelligence visual system", () => {
         framingCells={[{ actor: "MEDIA", framing: "SOCIAL", value: .8 }]}
         signals={[{ id: "s1", label: "Shift", type: "DIVERGENCE", confidence: .8 }]}
         reactions={[{ type: "QUESTIONING", count: 2 }]}
+        snapshots={[{ id: "snap1", timestamp: "2026-09-08T00:00:00Z", divergence: .8, uncertainty: .3, perspectives: 2 }]}
+        changes={[]}
         provenance={[{ id: "issue", label: "ISSUE", state: "complete" }, { id: "source", label: "SOURCE", count: 2, state: "active" }]}
       />,
     )
@@ -45,6 +47,8 @@ describe("perspective intelligence visual system", () => {
     expect(screen.getByLabelText("Perspective geography coverage")).toBeInTheDocument()
     expect(screen.getByLabelText("Actor by framing matrix")).toBeInTheDocument()
     expect(screen.getByLabelText("Zigzag signal timeline")).toBeInTheDocument()
+    expect(screen.getByLabelText("Perspective temporal history")).toBeInTheDocument()
+    expect(screen.getByText("BASELINE ESTABLISHED")).toBeInTheDocument()
     expect(screen.getByLabelText("Reaction spectrum")).toBeInTheDocument()
     expect(screen.getByLabelText("Perspective coverage radar")).toBeInTheDocument()
     expect(screen.getByLabelText("Perspective provenance flow")).toBeInTheDocument()

@@ -5,6 +5,8 @@ import type {
   PerspectiveProvenanceStage,
   PerspectiveReactionPoint,
   PerspectiveSignalPoint,
+  PerspectiveSnapshotPoint,
+  PerspectiveChangePoint,
   PerspectiveVisualRecord,
 } from "../contracts/perspective-intelligence"
 import { clampPerspectiveMetric } from "../contracts/perspective-intelligence"
@@ -230,6 +232,63 @@ export function ZigzagTimeline({
   )
 }
 
+export function TemporalPerspectiveHistory({
+  snapshots,
+  changes = [],
+  className = "",
+}: {
+  snapshots: PerspectiveSnapshotPoint[]
+  changes?: PerspectiveChangePoint[]
+  className?: string
+}) {
+  const ordered = [...snapshots].sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp))
+  const linePoints = (key: "divergence" | "uncertainty") => ordered.map((item, index) => {
+    const x = ordered.length <= 1 ? 50 : 8 + (index / (ordered.length - 1)) * 84
+    const y = 86 - clampPerspectiveMetric(item[key]) * 68
+    return `${x},${y}`
+  }).join(" ")
+  return (
+    <section className={`mw-perspective-history ${className}`.trim()} aria-label="Perspective temporal history">
+      <div className="mw-perspective-history__chart">
+        <svg viewBox="0 0 100 100" role="img">
+          <title>{ordered.length > 1 ? "Comparable perspective snapshots over time" : "Perspective baseline snapshot; trend not yet established"}</title>
+          <line x1="7" y1="86" x2="93" y2="86" className="mw-zigzag-axis" />
+          <line x1="7" y1="18" x2="7" y2="86" className="mw-zigzag-axis" />
+          {ordered.length > 1 ? (
+            <>
+              <polyline points={linePoints("divergence")} className="mw-perspective-history__divergence" />
+              <polyline points={linePoints("uncertainty")} className="mw-perspective-history__uncertainty" />
+            </>
+          ) : null}
+          {ordered.map((item, index) => {
+            const x = ordered.length <= 1 ? 50 : 8 + (index / (ordered.length - 1)) * 84
+            const yd = 86 - clampPerspectiveMetric(item.divergence) * 68
+            const yu = 86 - clampPerspectiveMetric(item.uncertainty) * 68
+            return (
+              <g key={item.id}>
+                <circle cx={x} cy={yd} r="2.2" className="mw-perspective-history__dot-d" />
+                <circle cx={x} cy={yu} r="1.9" className="mw-perspective-history__dot-u" />
+                <text x={x} y="94" textAnchor="middle" className="mw-perspective-svg-label">{new Date(item.timestamp).toISOString().slice(0,10)}</text>
+              </g>
+            )
+          })}
+        </svg>
+        <div className="mw-perspective-history__legend">
+          <span><i className="mw-perspective-history__legend-d" />DIVERGENCE</span>
+          <span><i className="mw-perspective-history__legend-u" />UNCERTAINTY</span>
+        </div>
+      </div>
+      <div className="mw-perspective-history__ledger">
+        <strong>{ordered.length > 1 ? "CHANGE LEDGER" : "BASELINE ESTABLISHED"}</strong>
+        {ordered.length <= 1 ? <p>One comparable snapshot exists. JIZZ must not call this a trend until a later snapshot is measured with compatible methodology.</p> : null}
+        {changes.length ? (
+          <ol>{changes.map((change) => <li key={change.id}><b>{change.type}</b>{change.dimension ? <span>{change.dimension}</span> : null}{change.confidence !== undefined ? <em>{percent(change.confidence)}</em> : null}<small>{change.rationale ?? "Derived temporal change."}</small></li>)}</ol>
+        ) : <p>No CHANGE record has passed the temporal comparison gate yet.</p>}
+      </div>
+    </section>
+  )
+}
+
 export function ReactionSpectrum({
   reactions,
   className = "",
@@ -324,6 +383,8 @@ export function PerspectiveIntelligenceBoard({
   framingCells,
   signals,
   reactions,
+  snapshots = [],
+  changes = [],
   provenance,
   className = "",
 }: {
@@ -337,6 +398,8 @@ export function PerspectiveIntelligenceBoard({
   framingCells: ActorFramingCell[]
   signals: PerspectiveSignalPoint[]
   reactions: PerspectiveReactionPoint[]
+  snapshots?: PerspectiveSnapshotPoint[]
+  changes?: PerspectiveChangePoint[]
   provenance: PerspectiveProvenanceStage[]
   className?: string
 }) {
@@ -347,6 +410,7 @@ export function PerspectiveIntelligenceBoard({
       <DivergenceCompass divergence={divergence} convergence={convergence} uncertainty={uncertainty} coverage={(coverage.source + coverage.actor + coverage.geography + coverage.language + coverage.framing + coverage.position) / 6} />
       <div className="mw-perspective-board__wide"><ActorFramingMatrix cells={framingCells} /></div>
       <div className="mw-perspective-board__wide"><ZigzagTimeline signals={signals} /></div>
+      <div className="mw-perspective-board__wide"><TemporalPerspectiveHistory snapshots={snapshots} changes={changes} /></div>
       <ReactionSpectrum reactions={reactions} />
       <CoverageRadar coverage={coverage} />
       <div className="mw-perspective-board__wide"><ProvenanceFlow stages={provenance} /></div>

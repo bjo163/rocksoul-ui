@@ -36,6 +36,23 @@ export type PerspectiveReactionPoint = {
   count: number
 }
 
+export type PerspectiveSnapshotPoint = {
+  id: string
+  timestamp: string
+  divergence: number
+  uncertainty: number
+  perspectives: number
+}
+
+export type PerspectiveChangePoint = {
+  id: string
+  type: string
+  dimension?: string
+  confidence?: number
+  timestamp?: string
+  rationale?: string
+}
+
 export type PerspectiveCoverage = {
   source: number
   actor: number
