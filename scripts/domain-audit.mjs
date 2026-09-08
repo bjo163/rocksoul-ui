@@ -10,6 +10,19 @@ const summary = await readFile(path.join(root, "src", "components", "domain-reco
 const assetsV2 = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
 const researchDomainMap = await readFile(path.join(root, "src", "components", "research-domain-ownership-map.tsx"), "utf8")
 
+function ownerBlock(domain) {
+  const marker = "  " + domain + ": {"
+  const start = ecosystem.indexOf(marker)
+  if (start < 0) return ""
+  const end = ecosystem.indexOf("\n  },", start)
+  return ecosystem.slice(start, end < 0 ? ecosystem.length : end)
+}
+
+function hasOwner(domain, repository, prefix) {
+  const block = ownerBlock(domain)
+  return block.includes('repository: "' + repository + '"') && block.includes('prefix: "' + prefix + '"')
+}
+
 const checks = [
   [fixture.includes('start: "02:14"') && fixture.includes('end: "02:37"') && fixture.includes('timezone: "LOCAL/FIXTURE"'), "EVENT temporal fixture"],
   [fixture.includes("matchDimensions") && fixture.includes("identity: false"), "PERSON identity dimensions"],
@@ -19,13 +32,13 @@ const checks = [
   [screens.includes("Identity dimensions / partial"), "PERSON screen-specific presentation"],
   [screens.includes("RGBL channels / semantic source reading"), "RGBL screen-specific presentation"],
   [screens.includes("AWSBoundary") && screens.includes("LegalStatus"), "AWS downstream legal presentation"],
-  [ecosystem.includes('STORY: { repository: "rocksoul-mftl", prefix: "mftl:" }'), "STORY canonical owner"],
-  [ecosystem.includes('EVENT: { repository: "rocksoul-legend", prefix: "legend:" }'), "EVENT canonical owner"],
-  [ecosystem.includes('PERSON: { repository: "rocksoul-superhero", prefix: "superhero:" }'), "PERSON canonical owner"],
-  [ecosystem.includes('PERSPECTIVE: { repository: "rocksoul-jizz", prefix: "jizz:" }'), "PERSPECTIVE canonical owner"],
-  [ecosystem.includes('TEXT: { repository: "rocksoul-rgbl", prefix: "rgbl:" }'), "TEXT semantic owner"],
-  [ecosystem.includes('LAW: { repository: "rocksoul-aws", prefix: "aws:" }'), "LAW semantic owner"],
-  [ecosystem.includes('RELATIONSHIP: { repository: "rocksoul-correlation", prefix: "correlation:" }'), "RELATIONSHIP canonical owner"],
+  [hasOwner("STORY", "rocksoul-mftl", "mftl:"), "STORY canonical owner"],
+  [hasOwner("EVENT", "rocksoul-legend", "legend:"), "EVENT canonical owner"],
+  [hasOwner("PERSON", "rocksoul-superhero", "superhero:"), "PERSON canonical owner"],
+  [hasOwner("PERSPECTIVE", "rocksoul-jizz", "jizz:"), "PERSPECTIVE canonical owner"],
+  [hasOwner("TEXT", "rocksoul-rgbl", "rgbl:"), "TEXT semantic owner"],
+  [hasOwner("LAW", "rocksoul-aws", "aws:"), "LAW semantic owner"],
+  [hasOwner("RELATIONSHIP", "rocksoul-correlation", "correlation:"), "RELATIONSHIP canonical owner"],
   [graph.includes('PERSPECTIVE: "text-warning border-warning"'), "PERSPECTIVE graph-node support"],
   [summary.includes("ResearchDomain") && summary.includes("canonicalOwnerFor"), "generic domain-record summary"],
   [assetsV2.includes('PERSPECTIVE / Perspectives') && assetsV2.includes('repo: "rocksoul-jizz"'), "PERSPECTIVE resource descriptor"],
