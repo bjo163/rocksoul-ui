@@ -151,10 +151,10 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Moderation state is visible.
 
 ## Rocksoul Assets v2 sync
-- [x] Asset repository release v1.0.0 recognized.
+- [x] Asset repository release v1.3.1 recognized.
 - [x] Asset repository acceptance = passed.
 - [x] Live Penpot verification remains manual-follow-up, not falsely claimed.
-- [x] Synced against `rocksoul-assets/main@5abae50b6b994d2cd4fcb12360db620acbac37bd`.
+- [x] Accepted upstream head is `rocksoul-assets/main@96df558c0cd2922715d73eced735234b2c73b333`; runtime delivery remains pinned separately by `ROCKSOUL_ASSETS_SYNC.commit`.
 - [x] Manifest schema v3 recognized.
 - [x] Canonical MoonWitness brand vector family packaged for consumers.
 - [x] Generated brand delivery assets mirrored: PNG / ICO / social / OG / app / maskable.
@@ -263,7 +263,13 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] No legacy `@moonwitness/ui` identity.
 - [x] No raw TS/TSX hex styling.
 - [x] Pattern/component/screen inventories enforced by CI.
+- [x] Cinematic hero heading IDs remain unique across multiple rendered instances.
+- [x] Real package self-import smoke verifies public runtime exports after library build.
+- [x] Chromium browser QA runs at 1440×1024 and 390×844.
+- [x] Browser QA rejects serious/critical WCAG violations and horizontal overflow.
+- [x] Application-shell skip link is keyboard-tested in a real browser.
+- [x] Reduced-motion rendering is browser-smoke tested.
 
 ## External/manual validation
 - [ ] Final glyph metrics depend on actual Inter Tight / Inter / IBM Plex Mono availability in the consuming web runtime.
-- [ ] Pixel-by-pixel comparison against the 16 raster PNG references requires a browser/image pipeline; this environment can verify the canonical JSON contracts and editable golden SVGs but cannot fetch those large PNG blobs.
+- [ ] Pixel-by-pixel approval against all 16 raster PNG design references remains a deliberate human visual-review gate. Automated browser QA now covers semantics, keyboard access, responsive overflow, reduced motion, and WCAG blockers without pretending the code render is a 1:1 raster clone.
