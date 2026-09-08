@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "scope": "mirrored-core-and-runtime-packs",
   "sourceRepository": "bjo163/rocksoul-assets",
-  "sourceCommit": "e2dd99735e9225d368f6c520c6ac1980219115ba",
-  "release": "1.3.0",
+  "sourceCommit": "82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05",
+  "release": "1.3.1",
   "files": [
     {
       "source": "moonwitness/dashboard-pack/dashboard-pack.json",
