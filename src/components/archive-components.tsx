@@ -6,6 +6,7 @@ import { Avatar, Drawer } from "./overlays"
 import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
 import type { RecordDomain, RecordStatus } from "./four-record-summary"
+import { AutoMenu, applicationResources } from "./application-shell"
 
 export function MWHeader({
   caseId,
@@ -523,40 +524,28 @@ export function PlatformSidebar({
   active?: string
   collapsed?: boolean
 }) {
-  const items = ["Dashboard", "Cases", "Repositories", "Evidence", "Correlation", "Legal", "Community", "Audit"]
+  const activeId = active.toLowerCase().replace(/\s+/g, "-")
   return (
     <aside
       className={cn(
         "hidden min-h-[calc(100vh-64px)] shrink-0 flex-col border-r border-border bg-panel md:flex",
-        collapsed ? "w-16" : "w-[84px] lg:w-[240px]",
+        collapsed ? "w-16" : "w-[84px] lg:w-[272px]",
       )}
       data-state={collapsed ? "collapsed" : "expanded"}
+      data-navigation="auto-menu"
     >
       <div className="border-b border-border p-3">
         <p className="mw-meta text-primary">{collapsed ? "MW" : "MoonWitness"}</p>
         {!collapsed ? <p className="mw-meta mt-1 hidden text-muted-foreground lg:block">Workspace / Research</p> : null}
       </div>
-      <nav aria-label="Platform" className="flex-1">
-        {items.map((item) => (
-          <a
-            key={item}
-            href="#platform"
-            title={collapsed ? item : undefined}
-            className={cn(
-              "mw-link w-full text-sm no-underline",
-              collapsed ? "justify-center px-2 font-mono text-[10px]" : "justify-center px-2 lg:justify-start lg:px-5",
-              item === active ? "font-bold text-primary" : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {collapsed ? item.slice(0, 2).toUpperCase() : (
-              <>
-                <span className="font-mono text-[10px] lg:hidden">{item.slice(0, 2).toUpperCase()}</span>
-                <span className="hidden lg:inline">{item}</span>
-              </>
-            )}
-          </a>
-        ))}
-      </nav>
+      <div className="flex-1">
+        <AutoMenu
+          resources={applicationResources}
+          activeId={activeId}
+          compact={collapsed}
+          permissions={["authz:read", "audit:read"]}
+        />
+      </div>
       <div className="border-t border-border p-3">
         <p className="mw-meta text-success">{collapsed ? "●" : "System / online"}</p>
         {!collapsed ? (
