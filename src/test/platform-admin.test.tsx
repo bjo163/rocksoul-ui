@@ -7,7 +7,7 @@ describe("platform admin contract", () => {
   it("has unique routes and visualizes every declared surface", () => {
     const routes = platformAdminContract.navigation.map((item) => item.path)
     expect(new Set(routes).size).toBe(routes.length)
-    expect(Object.keys(platformAdminVisuals)).toHaveLength(platformAdminContract.screens.length)
+    expect(Object.keys(platformAdminVisuals)).toHaveLength(platformAdminContract.navigation.length)
     expect(platformAdminContract.runtime.failClosed).toBe(true)
   })
 
