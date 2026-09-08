@@ -50,6 +50,12 @@ export function MWHeader({
 
   const resolved = variant === "auto" ? (scrolled ? "solid" : "transparent") : variant
   const compact = resolved === "compact-mobile"
+  const items = navigation ?? [
+    { label: "Observe", href: "#method" },
+    { label: "Records", href: "#method" },
+    { label: "Cases", href: "#case" },
+    { label: "Community", href: "#method" },
+  ]
 
   return (
     <header
@@ -61,7 +67,7 @@ export function MWHeader({
       data-variant={resolved}
     >
       <div className="mw-shell-wide flex min-h-16 items-center justify-between gap-4">
-        <a href="#top" className="mw-link flex-col items-start justify-center no-underline">
+        <a href={homeHref} className="mw-link flex-col items-start justify-center no-underline">
           <span className="text-sm font-bold">MOONWITNESS</span>
           <span className="mw-meta text-muted-foreground">{brandLabel}</span>
         </a>
