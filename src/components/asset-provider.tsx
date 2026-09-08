@@ -93,6 +93,16 @@ export function MoonWitnessStatusAsset({
   )
 }
 
+export function MoonWitnessPersonMark({
+  alt = "Person",
+  className,
+}: {
+  alt?: string
+  className?: string
+}) {
+  return <MoonWitnessRegistryAssetImage pack="product-icons" assetId="person" alt={alt} className={className} />
+}
+
 export function MoonWitnessPersonaAvatar({
   persona,
   alt,
