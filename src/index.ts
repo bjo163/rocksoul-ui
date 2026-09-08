@@ -58,3 +58,6 @@ export * from "./components/record-field-grid"
 export * from "./components/research-domain-ownership-map"
 export * from "./contracts/legal-intelligence"
 export * from "./components/legal-applicability-matrix"
+
+export * from "./contracts/perspective-intelligence"
+export * from "./components/perspective-intelligence"
