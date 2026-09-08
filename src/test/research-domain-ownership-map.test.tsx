@@ -10,7 +10,7 @@ describe("Research domain ownership visual", () => {
     expect(screen.getByRole("img", { name: /research domain ownership/i })).toBeInTheDocument()
     for (const [domain, owner] of Object.entries(canonicalDomainOwners)) {
       expect(screen.getByText(domain, { selector: "strong" })).toBeInTheDocument()
-      expect(screen.getByText(new RegExp(owner.repository))).toBeInTheDocument()
+      expect(screen.getAllByText(new RegExp(owner.repository)).length).toBeGreaterThan(0)
     }
     expect(screen.getByText(/Text equivalent/i)).toBeInTheDocument()
   })
