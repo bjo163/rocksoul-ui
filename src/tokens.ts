@@ -30,6 +30,12 @@ export const moonWitnessTokens = {
       green: "var(--mw-rgbl-green)",
       blue: "var(--mw-rgbl-blue)",
       light: "var(--mw-rgbl-light)",
+      foreground: {
+        red: "var(--mw-rgbl-red-fg)",
+        green: "var(--mw-rgbl-green-fg)",
+        blue: "var(--mw-rgbl-blue-fg)",
+        light: "var(--mw-rgbl-light-fg)",
+      },
     },
   },
   breakpoint: {
