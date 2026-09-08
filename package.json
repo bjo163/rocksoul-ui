@@ -61,5 +61,6 @@
     "react": ">=19",
     "react-dom": ">=19"
   },
-  "main": "./dist/index.js"
+  "main": "./dist/index.js",
+  "style": "./dist/styles.css"
 }

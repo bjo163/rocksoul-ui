@@ -1,4 +1,5 @@
-import { access, readFile } from "node:fs/promises"
+import { access, readFile, stat } from "node:fs/promises"
+import { pathToFileURL } from "node:url"
 import path from "node:path"
 
 const root=process.cwd()
@@ -7,21 +8,51 @@ const failures=[]
 
 const requiredFiles=["dist/index.js","dist/index.d.ts","dist/styles.css"]
 for(const file of requiredFiles){
-  try{ await access(path.join(root,file)) }catch{ failures.push(`missing artifact ${file}`) }
+  try{
+    await access(path.join(root,file))
+    const info=await stat(path.join(root,file))
+    if(info.size===0) failures.push(`empty artifact ${file}`)
+  }catch{
+    failures.push(`missing artifact ${file}`)
+  }
 }
 
 if(pkg.name!=="@rocksoul/ui") failures.push("package name")
 if(pkg.main!=="./dist/index.js") failures.push("main export")
 if(pkg.module!=="./dist/index.js") failures.push("module export")
 if(pkg.types!=="./dist/index.d.ts") failures.push("types export")
+if(pkg.style!=="./dist/styles.css") failures.push("style export")
 if(pkg.exports?.["./styles.css"]!=="./dist/styles.css") failures.push("styles export")
 if(!pkg.peerDependencies?.react||!pkg.peerDependencies?.["react-dom"]) failures.push("React peer dependencies")
 if(!pkg.files?.includes("dist")) failures.push("dist package file allowlist")
 if(pkg.scripts?.prepare!=="npm run build:lib") failures.push("Git dependency prepare build")
+
 try {
-  const declarations = await readFile(path.join(root,"dist","index.d.ts"),"utf8")
-  if (declarations.includes("styles.css")) failures.push("type entry must not import CSS")
+  const declarations=await readFile(path.join(root,"dist","index.d.ts"),"utf8")
+  if(declarations.includes("styles.css")) failures.push("type entry must not import CSS")
 } catch {}
+
+try {
+  const library=await import(pathToFileURL(path.join(root,"dist","index.js")).href)
+  const requiredExports=[
+    "ApplicationShell",
+    "AutoMenu",
+    "DashboardScreen",
+    "KanbanScreen",
+    "CalendarScreen",
+    "ChatScreen",
+    "AIWorkspaceScreen",
+    "ProfileSettingsScreen",
+    "AuthorizationScreen",
+    "StatePanel",
+    "MW0042Overview",
+  ]
+  for(const name of requiredExports){
+    if(!(name in library)) failures.push(`missing runtime export ${name}`)
+  }
+}catch(error){
+  failures.push(`runtime import failed: ${error instanceof Error ? error.message : String(error)}`)
+}
 
 if(failures.length){
   console.error("Package contract audit failed:")
