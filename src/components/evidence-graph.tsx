@@ -1,10 +1,11 @@
 import { useId, useState } from "react"
 import { Badge } from "./badge"
 import type { RecordDomain, RecordSummary } from "./four-record-summary"
+import type { ResearchDomain } from "../contracts/ecosystem-domains"
 import { cn } from "../lib/cn"
 
 type EdgeType = "supports" | "contradicts" | "references" | "temporal" | "identity" | "legal"
-export type GraphNodeType = RecordDomain | "AWS" | "CASE"
+export type GraphNodeType = RecordDomain | ResearchDomain | "RELATIONSHIP" | "AWS" | "CASE"
 export type GraphNodeState = "default" | "selected" | "dimmed" | "unresolved"
 
 const nodeTone: Record<GraphNodeType, string> = {
@@ -12,7 +13,11 @@ const nodeTone: Record<GraphNodeType, string> = {
   EVENT: "text-rgbl-green border-rgbl-green",
   PERSON: "text-warning border-warning",
   RGBL: "text-rgbl-blue border-rgbl-blue",
+  TEXT: "text-rgbl-blue border-rgbl-blue",
   AWS: "text-primary border-primary",
+  LAW: "text-primary border-primary",
+  PERSPECTIVE: "text-warning border-warning",
+  RELATIONSHIP: "text-foreground border-primary",
   CASE: "text-foreground border-primary",
 }
 
