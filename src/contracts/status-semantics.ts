@@ -1,3 +1,5 @@
+import statusSemantics from "../generated/status-semantics.json"
+
 export type SemanticBadgeVariant =
   | "neutral"
   | "supported"
@@ -10,40 +12,12 @@ export type SemanticBadgeVariant =
   | "disputed"
   | "info"
 
-export const semanticStatusVariants = {
-  attested: "verified",
-  canonical: "verified",
-  verified: "verified",
-  supported: "supported",
-  strongly_supported: "supported",
-  supported_as_documentary_attestation: "supported",
-  supports: "supported",
-  reviewed: "supported",
-  primary: "verified",
-  high: "supported",
-  probable: "partial",
-  plausible: "partial",
-  partial: "partial",
-  contextualizes: "partial",
-  candidate: "partial",
-  medium: "partial",
-  disputed: "disputed",
-  contradicted: "disputed",
-  contradicts: "disputed",
-  rejected: "disputed",
-  unresolved: "unresolved",
-  unresolved_uncertainty: "unresolved",
-  alternative_explanation: "unresolved",
-  unverified: "unresolved",
-  indeterminate: "unresolved",
-  anonymous: "unresolved",
-  conflated: "contested",
-  legendary: "contested",
-  discovery_only: "info",
-  unknown: "neutral",
-} as const satisfies Record<string, SemanticBadgeVariant>
+export const semanticStatusVariants =
+  statusSemantics.variants as Record<string, SemanticBadgeVariant>
+
+export const statusVisualContract = statusSemantics
 
 export function semanticStatusVariant(value: string | null | undefined): SemanticBadgeVariant {
-  if (!value) return "neutral"
-  return semanticStatusVariants[value as keyof typeof semanticStatusVariants] ?? "neutral"
+  if (!value) return statusSemantics.defaultVariant as SemanticBadgeVariant
+  return semanticStatusVariants[value] ?? statusSemantics.defaultVariant as SemanticBadgeVariant
 }
