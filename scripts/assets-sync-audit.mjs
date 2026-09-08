@@ -13,7 +13,7 @@ const [contracts,shell,screens,stories,theme,four]=await Promise.all([
 ])
 
 const failures=[]
-const expectedSha="61170933b759fc90134b3659c1a2574de7ce580c"
+const expectedSha="f0f93363c73895e52987f9a3c757e4f5115eca99"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
 if(!contracts.includes('assetRelease: "1.1.0"')) failures.push("assets release 1.1.0")
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
@@ -21,10 +21,10 @@ if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.p
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
   if(!contracts.includes(`id: "${id}"`)) failures.push(`v2 navigation item ${id}`)
 }
-for(const resource of ["case","event","person","rgbl","aws"]){
+for(const resource of ["case","event","person","rgbl","aws","correlation"]){
   if(!contracts.includes(`resource: "${resource}"`)) failures.push(`resource descriptor ${resource}`)
 }
-for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws"]){
+for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-correlation"]){
   if(!contracts.includes(`repo: "${repo}"`)) failures.push(`canonical repository ${repo}`)
 }
 for(let id=17;id<=27;id++){
