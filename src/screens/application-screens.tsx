@@ -207,6 +207,7 @@ const resourceAccess: Record<string, string> = {
   person: "READ / REVIEW",
   rgbl: "READ / WRITE",
   aws: "REVIEWER+",
+  perspective: "READ / ANALYZE",
   correlation: "READ / ANALYZE",
 }
 
@@ -227,7 +228,7 @@ export function ResourcesScreen() {
                   <th className="p-4 text-sm">{item.label}</th>
                   <td className="p-4 font-mono text-xs">{item.path}</td>
                   <td className="p-4 font-mono text-xs text-muted-foreground">{item.repo}</td>
-                  <td className="p-4"><Badge variant={item.resource === "aws" ? "partial" : item.resource === "correlation" ? "info" : "verified"}>{resourceAccess[item.resource]}</Badge></td>
+                  <td className="p-4"><Badge variant={item.resource === "aws" ? "partial" : item.resource === "correlation" || item.resource === "perspective" ? "info" : "verified"}>{resourceAccess[item.resource]}</Badge></td>
                 </tr>
               ))}
             </tbody>

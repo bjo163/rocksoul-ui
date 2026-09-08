@@ -24,6 +24,12 @@ export interface AppResource {
   requiredPermission: string
 }
 
+export interface AppCommandAction {
+  label: string
+  href: string
+  shortcut?: string
+}
+
 const descriptionById: Record<string, string> = {
   dashboard: "What changed, what needs attention, and what can wait.",
   cases: "Investigative case review.",
@@ -216,28 +222,30 @@ export function UserMenu({ name, role }: { name: string; role: string }) {
   )
 }
 
+const defaultCommandActions: AppCommandAction[] = [
+  { label: "Open case by ID", shortcut: "C", href: "/cases" },
+  { label: "Create review task", shortcut: "R", href: "/work/kanban" },
+  { label: "Ask AI Workspace", shortcut: "A", href: "/ai" },
+]
+
 export function CommandPalette({
   open,
   onClose,
   resources = applicationResources,
   permissions = defaultApplicationPermissions,
+  quickActions = defaultCommandActions,
 }: {
   open: boolean
   onClose: () => void
   resources?: AppResource[]
   permissions?: readonly string[]
+  quickActions?: AppCommandAction[]
 }) {
   const [query, setQuery] = useState("")
   const results = useMemo(() => {
     const needle = query.trim().toLowerCase()
     return resources.filter((item) => canSee(item, permissions) && (!needle || `${item.label} ${item.description}`.toLowerCase().includes(needle)))
   }, [permissions, query, resources])
-
-  const quickActions = [
-    { label: "Open case by ID", shortcut: "C", href: "/cases" },
-    { label: "Create review task", shortcut: "R", href: "/work/kanban" },
-    { label: "Ask AI Workspace", shortcut: "A", href: "/ai" },
-  ]
 
   return (
     <Dialog open={open} title="Command palette / ⌘K" onClose={onClose} size="lg">
@@ -314,6 +322,7 @@ export function ApplicationShell({
   permissions = defaultApplicationPermissions,
   resources = applicationResources,
   notifications = [],
+  commandActions,
 }: {
   activeResource: string
   breadcrumbs: Array<{ label: string; href?: string }>
@@ -323,6 +332,7 @@ export function ApplicationShell({
   permissions?: readonly string[]
   resources?: AppResource[]
   notifications?: AppNotification[]
+  commandActions?: AppCommandAction[]
 }) {
   const [navOpen, setNavOpen] = useState(false)
   const [commandsOpen, setCommandsOpen] = useState(false)
@@ -371,7 +381,7 @@ export function ApplicationShell({
         <AutoMenu resources={resources} activeId={activeResource} permissions={permissions} onNavigate={() => setNavOpen(false)} />
       </Drawer>
 
-      <CommandPalette open={commandsOpen} onClose={() => setCommandsOpen(false)} resources={resources} permissions={permissions} />
+      <CommandPalette open={commandsOpen} onClose={() => setCommandsOpen(false)} resources={resources} permissions={permissions} quickActions={commandActions} />
       <NotificationsPanel open={notificationsOpen} onClose={() => setNotificationsOpen(false)} notifications={notifications} />
     </div>
   )

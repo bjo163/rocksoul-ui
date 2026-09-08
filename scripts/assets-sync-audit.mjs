@@ -26,10 +26,10 @@ for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","st
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
   if(!contracts.includes(`id: "${id}"`)) failures.push(`v2 navigation item ${id}`)
 }
-for(const resource of ["case","event","person","rgbl","aws","correlation"]){
+for(const resource of ["case","event","person","rgbl","aws","perspective","correlation"]){
   if(!contracts.includes(`resource: "${resource}"`)) failures.push(`resource descriptor ${resource}`)
 }
-for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-correlation"]){
+for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-jizz","rocksoul-correlation"]){
   if(!contracts.includes(`repo: "${repo}"`)) failures.push(`canonical repository ${repo}`)
 }
 for(let id=17;id<=27;id++){

@@ -48,6 +48,8 @@ jobs:
         run: npm run audit:application
       - name: Typecheck
         run: npm run typecheck
+      - name: Unit tests
+        run: npm run test:unit
       - name: Build consumable library
         run: npm run build:lib
       - name: Package artifact audit
