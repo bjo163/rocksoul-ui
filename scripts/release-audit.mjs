@@ -23,8 +23,8 @@ for(const symbol of ["CinematicWebHero","cinematicWebHeroAssets","cinematicWebHe
 }
 
 if(!assetsContract.includes('assetRelease: "1.3.1"')) failures.push("assets release v1.3.1")
-if(!/assetPackCount:\\s*\\d+/.test(assetsContract)) failures.push("asset pack inventory")
-if(!/canonicalAssetCount:\\s*\\d+/.test(assetsContract)) failures.push("canonical asset inventory")
+if(!/assetPackCount:\s*\d+/.test(assetsContract)) failures.push("asset pack inventory")
+if(!/canonicalAssetCount:\s*\d+/.test(assetsContract)) failures.push("canonical asset inventory")
 if(!heroContract.includes('profileVersion: "1.0.0"')) failures.push("cinematic delivery profile 1.0.0")
 if(!heroContract.includes('sourceRelease: "1.3.1"')) failures.push("cinematic source release v1.3.1")
 if(!readme.includes("@rocksoul/ui 0.12.0")) failures.push("README version closure")
