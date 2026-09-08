@@ -161,7 +161,7 @@ A newer `rocksoul-assets` commit must be reviewed before UI CI is allowed to cla
 
 ## Asset packs v1.3
 
-`@rocksoul/ui 0.10.0` implements the stable **MoonWitness Complete Asset Packs v1.3.0** contract from `rocksoul-assets/main@7d924d5915364b222e1d1287e493f4b742e283a3`.
+`@rocksoul/ui 0.11.0` implements the stable **MoonWitness Complete Asset Packs v1.3.0** contract from `rocksoul-assets/main@e2dd99735e9225d368f6c520c6ac1980219115ba`.
 
 - **41** typed asset packs;
 - canonical MoonWitness brand, graph, source, geospatial, evidence, correlation, workflow, accessibility, integrity, export and cinematic families;

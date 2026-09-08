@@ -14,12 +14,12 @@ const [contracts,shell,screens,stories,theme,four,packRegistry]=await Promise.al
 ])
 
 const failures=[]
-const expectedSha="7d924d5915364b222e1d1287e493f4b742e283a3"
+const expectedSha="e2dd99735e9225d368f6c520c6ac1980219115ba"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
 if(!contracts.includes('assetRelease: "1.3.0"')) failures.push("assets release 1.3.0")
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
 if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.push("live Penpot verification boundary")
-if(!contracts.includes("assetPackCount: 41") || !contracts.includes("motion: 12") || !contracts.includes("sfx: 14")) failures.push("asset pack v1.3 contract")
+if(!contracts.includes("assetPackCount: 41") || !contracts.includes("canonicalAssetCount: 591") || !contracts.includes("runtimeMotion: 12")) failures.push("asset pack v1.3 contract")
 for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","sfx","graph-vector","badge-status","source-file","geospatial","cursor-interaction","persona-avatar","social-campaign","platform-delivery","onboarding","document-report","notification","editorial","evidence-media","correlation-semantics","kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","theme-accessibility","privacy-redaction","evidence-integrity","export-seal","rocksoul-character","command-keyboard","texture-material","architecture-diagram","device-mockup","jurisdiction-locale","cinematic-hero","runtime-motion","developer-distribution"]){
   if(!packRegistry.includes(`"${pack}"`)) failures.push(`asset pack registry ${pack}`)
 }

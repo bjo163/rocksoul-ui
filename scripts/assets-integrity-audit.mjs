@@ -5,7 +5,6 @@ import path from "node:path"
 const root=process.cwd()
 const lock=JSON.parse(await readFile(path.join(root,"public/assets/asset-lock.json"),"utf8"))
 const failures=[]
-
 for(const entry of lock.files ?? []){
   try{
     const bytes=await readFile(path.join(root,entry.path))
@@ -17,10 +16,8 @@ for(const entry of lock.files ?? []){
     failures.push(`${entry.path}: missing`)
   }
 }
-
-if(lock.sourceCommit!=="95a6912409f849029e18093658b1c0e8158a32f0") failures.push("asset lock source commit")
-if(lock.files?.length!==148) failures.push(`asset lock count ${lock.files?.length ?? 0} != 148`)
-
+if(lock.sourceCommit!=="e2dd99735e9225d368f6c520c6ac1980219115ba") failures.push("asset lock source commit")
+if(lock.files?.length!==198) failures.push(`asset lock count ${lock.files?.length ?? 0} != 198`)
 if(failures.length){
   console.error("Asset pack integrity audit failed:")
   failures.forEach((failure)=>console.error(`- ${failure}`))

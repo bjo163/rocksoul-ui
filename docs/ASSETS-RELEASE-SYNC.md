@@ -4,7 +4,7 @@ Current design source:
 
 ```text
 bjo163/rocksoul-assets
-main @ 7d924d5915364b222e1d1287e493f4b742e283a3
+main @ e2dd99735e9225d368f6c520c6ac1980219115ba
 release: 1.3.0
 repository acceptance: passed
 ```
@@ -12,12 +12,27 @@ repository acceptance: passed
 Implemented consumer package:
 
 ```text
-@rocksoul/ui 0.10.0
+@rocksoul/ui 0.11.0
 ```
 
-The package implements the MoonWitness brand system, shared public/application visual grammar, authenticated v2 shell/screens, AutoMenu navigation, canonical resource descriptors, responsive shell geometry, unified system states, and typed access to the complete 41-family v1.3 asset registry.
+## Stable v1.3 contract
 
-Canonical active repository map:
+- 41 indexed asset families;
+- 591 canonical assets in the generated registry;
+- developer distribution: `dist/assets.json`, `dist/assets.ts`, `dist/assets.css`, `dist/sprite.svg`;
+- core + runtime delivery mirrored and byte-locked: 198 files;
+- Runtime Motion: SVG / APNG / WebM / Lottie;
+- SFX remains opt-in;
+- SVG remains preferred for product UI;
+- motion honors reduced-motion behavior;
+- correlation visuals do not imply causation;
+- graphs require accessible text/data equivalents.
+
+## Showcase implementation
+
+The upstream static showcase is not copied into the UI package. Its useful interaction grammar is implemented as reusable `AssetExplorer` behavior: search, categories, grid/compact view, pack detail dialog, and copy/open asset actions.
+
+## Canonical repository map
 
 ```text
 STORY       → rocksoul-mftl
@@ -28,17 +43,8 @@ LAW         → rocksoul-aws
 CORRELATION → rocksoul-correlation
 ```
 
-## Stable v1.3 contract
-
-`rocksoul-assets/main` is now the production design source for v1.3.0. UI consumers use the stable 41-pack contract; core runtime packs may remain mirrored and byte-locked, while larger delivery families are staged by the consuming application or resolved from the canonical asset base.
-
-CI verifies:
-
-- the recorded `rocksoul-assets/main` commit is still current;
-- the v1.3 release and 41-pack registry are present;
-- core mirrored assets retain byte integrity;
-- TypeScript, library build, playground, Storybook, accessibility and application contracts remain valid.
+Correlation owns reviewed cross-domain edges and explainability metadata only. It is not a verdict layer.
 
 ## Verification boundary
 
-Live native Penpot reconstruction/prototype/accessibility inspection remains a manual workspace gate and is not represented as repository CI.
+Repository/code parity is automated. Native Penpot reconstruction, live prototype/focus walkthrough, and final workspace contrast review remain explicit manual workspace gates.
