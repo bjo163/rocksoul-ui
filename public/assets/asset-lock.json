@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
-  "scope": "mirrored-core-runtime-packs",
+  "schemaVersion": 3,
+  "scope": "mirrored-core-and-runtime-packs",
   "sourceRepository": "bjo163/rocksoul-assets",
-  "sourceCommit": "95a6912409f849029e18093658b1c0e8158a32f0",
-  "release": "1.2.0",
+  "sourceCommit": "e2dd99735e9225d368f6c520c6ac1980219115ba",
+  "release": "1.3.0",
   "files": [
     {
       "source": "moonwitness/dashboard-pack/dashboard-pack.json",
@@ -634,6 +634,306 @@
       "path": "public/assets/motion/svg/upload-complete.svg",
       "blob": "aa753a9b9969be450b1613ea18f0f4b49d2c0e80",
       "size": 612
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/generated-manifest.json",
+      "path": "public/assets/runtime-motion-pack/generated-manifest.json",
+      "blob": "b40a1306da4380fa9eb3312a0953af762844b512",
+      "size": 4149
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/ai-orbit.json",
+      "path": "public/assets/runtime-motion-pack/lottie/ai-orbit.json",
+      "blob": "c9364b1a573ab2151477c7ad8aadc862c2dfae82",
+      "size": 599
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/backend-reconnect.json",
+      "path": "public/assets/runtime-motion-pack/lottie/backend-reconnect.json",
+      "blob": "820888fc041656d3a1b24557b5584b84657d4dbe",
+      "size": 617
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/case-resolved.json",
+      "path": "public/assets/runtime-motion-pack/lottie/case-resolved.json",
+      "blob": "28720719ea6c0678aa649bb98da00732ec141f46",
+      "size": 609
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/drawer-open.json",
+      "path": "public/assets/runtime-motion-pack/lottie/drawer-open.json",
+      "blob": "246a186e8ce06bcd4d22fbcf90708bc234c0f430",
+      "size": 605
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/evidence-linked.json",
+      "path": "public/assets/runtime-motion-pack/lottie/evidence-linked.json",
+      "blob": "b1bbb6303e09ca8a56b8c08b03cc651245209228",
+      "size": 613
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/focus-ring.json",
+      "path": "public/assets/runtime-motion-pack/lottie/focus-ring.json",
+      "blob": "4b19078f3abe6c85fd3c5013de7e79e5defa886a",
+      "size": 603
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/graph-connect.json",
+      "path": "public/assets/runtime-motion-pack/lottie/graph-connect.json",
+      "blob": "cf74a7cd2afa77ba11f7dfdcf5a0167f213416ae",
+      "size": 608
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/loading-trace.json",
+      "path": "public/assets/runtime-motion-pack/lottie/loading-trace.json",
+      "blob": "2df2bc8c8d6e6fb2a16bbc65905ee39111709ba7",
+      "size": 595
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/notification-in.json",
+      "path": "public/assets/runtime-motion-pack/lottie/notification-in.json",
+      "blob": "20d981a706a9be000fed008aa0a20ad01503527f",
+      "size": 614
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/pulse-alert.json",
+      "path": "public/assets/runtime-motion-pack/lottie/pulse-alert.json",
+      "blob": "2cd47a8f2bcb3c721fc226ed875fac94a5e1c68d",
+      "size": 591
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/sync-spin.json",
+      "path": "public/assets/runtime-motion-pack/lottie/sync-spin.json",
+      "blob": "4e860ac835ca33ed2d2ddd49108baa1710cf67a0",
+      "size": 601
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/lottie/upload-rise.json",
+      "path": "public/assets/runtime-motion-pack/lottie/upload-rise.json",
+      "blob": "b356be37ef82b19baa4943e15f0da2f57821c202",
+      "size": 605
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/manifest.json",
+      "path": "public/assets/runtime-motion-pack/manifest.json",
+      "blob": "b81074f2b6597a39f70e3d3d59824bd6450826f7",
+      "size": 1493
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/ai-orbit.png",
+      "path": "public/assets/runtime-motion-pack/png/ai-orbit.png",
+      "blob": "07e9d6c193fb3edb4151cd775947ff23a0e0d14b",
+      "size": 8633
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/backend-reconnect.png",
+      "path": "public/assets/runtime-motion-pack/png/backend-reconnect.png",
+      "blob": "87aeb2c6e036aa8b8680a7bc4137a9f072377db0",
+      "size": 11137
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/case-resolved.png",
+      "path": "public/assets/runtime-motion-pack/png/case-resolved.png",
+      "blob": "4eb3f1ddc3bd1446dded30f6aed7c39adfec431c",
+      "size": 4733
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/drawer-open.png",
+      "path": "public/assets/runtime-motion-pack/png/drawer-open.png",
+      "blob": "f1580ecb0d4b886ce70bcde2336cc00651239c11",
+      "size": 14411
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/evidence-linked.png",
+      "path": "public/assets/runtime-motion-pack/png/evidence-linked.png",
+      "blob": "4faedb62679bc78b824aba6fc64ebcb6720c24fb",
+      "size": 4218
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/focus-ring.png",
+      "path": "public/assets/runtime-motion-pack/png/focus-ring.png",
+      "blob": "63eb50b73f2f33c435bc680d6b643597935ca9c0",
+      "size": 25555
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/graph-connect.png",
+      "path": "public/assets/runtime-motion-pack/png/graph-connect.png",
+      "blob": "926718f13d3539bb49fde5f6e61a86cc946ec3e9",
+      "size": 4222
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/loading-trace.png",
+      "path": "public/assets/runtime-motion-pack/png/loading-trace.png",
+      "blob": "c301e472ba1518bd0baaa7845ab5bfac60bbaa17",
+      "size": 4681
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/notification-in.png",
+      "path": "public/assets/runtime-motion-pack/png/notification-in.png",
+      "blob": "a8ad953ba74e55f57734a2089cb4fbaedf0dd5db",
+      "size": 14209
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/pulse-alert.png",
+      "path": "public/assets/runtime-motion-pack/png/pulse-alert.png",
+      "blob": "2d8543739945d8892f2bee2425bb9e08a1c09307",
+      "size": 25581
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/sync-spin.png",
+      "path": "public/assets/runtime-motion-pack/png/sync-spin.png",
+      "blob": "1770514ed8a096448692188c80599234933e9330",
+      "size": 8693
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/png/upload-rise.png",
+      "path": "public/assets/runtime-motion-pack/png/upload-rise.png",
+      "blob": "f15d7218570272fee85b20e59048d229a2c3873c",
+      "size": 9441
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/ai-orbit.svg",
+      "path": "public/assets/runtime-motion-pack/svg/ai-orbit.svg",
+      "blob": "6e3fd9c6bb34f4ec53ead4ea584ba03872e6997d",
+      "size": 426
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/backend-reconnect.svg",
+      "path": "public/assets/runtime-motion-pack/svg/backend-reconnect.svg",
+      "blob": "6566856c7ba9e7dad32a07f8074e2d889a74d7fa",
+      "size": 449
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/case-resolved.svg",
+      "path": "public/assets/runtime-motion-pack/svg/case-resolved.svg",
+      "blob": "1227d38a029e9a1842634b49c89f8828642e4e43",
+      "size": 463
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/drawer-open.svg",
+      "path": "public/assets/runtime-motion-pack/svg/drawer-open.svg",
+      "blob": "c5a62cb013de124890105492feaee9df2fbfd6d5",
+      "size": 337
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/evidence-linked.svg",
+      "path": "public/assets/runtime-motion-pack/svg/evidence-linked.svg",
+      "blob": "85a9cea7bae965a345805af2c6ab28daa4f5decb",
+      "size": 528
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/focus-ring.svg",
+      "path": "public/assets/runtime-motion-pack/svg/focus-ring.svg",
+      "blob": "a63aeabea898d520f37280593ff62a7edecc8391",
+      "size": 461
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/graph-connect.svg",
+      "path": "public/assets/runtime-motion-pack/svg/graph-connect.svg",
+      "blob": "537b6ad142a928a94bc225fc4d6e9e5c5e61bc1f",
+      "size": 526
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/loading-trace.svg",
+      "path": "public/assets/runtime-motion-pack/svg/loading-trace.svg",
+      "blob": "f0584f7f4b0f475327fbc896acbc1311fbc4471a",
+      "size": 339
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/notification-in.svg",
+      "path": "public/assets/runtime-motion-pack/svg/notification-in.svg",
+      "blob": "e4a43a4751d794d0f62131e816ceae511e08f322",
+      "size": 341
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/pulse-alert.svg",
+      "path": "public/assets/runtime-motion-pack/svg/pulse-alert.svg",
+      "blob": "0f61716a4afab97768e89974d228eac05552ad6d",
+      "size": 462
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/sync-spin.svg",
+      "path": "public/assets/runtime-motion-pack/svg/sync-spin.svg",
+      "blob": "2753bb0ae022e4ac9cf040e867652109ca5250ab",
+      "size": 481
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/svg/upload-rise.svg",
+      "path": "public/assets/runtime-motion-pack/svg/upload-rise.svg",
+      "blob": "ed93f008e48f17ef4ceb469c4a8bddfeb4321f83",
+      "size": 415
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/ai-orbit.webm",
+      "path": "public/assets/runtime-motion-pack/webm/ai-orbit.webm",
+      "blob": "b65527f964b1b4349e7a135fc834a515d1d20560",
+      "size": 3376
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/backend-reconnect.webm",
+      "path": "public/assets/runtime-motion-pack/webm/backend-reconnect.webm",
+      "blob": "dd347f84b93345a6d6bfb2b677366d2acfea2e54",
+      "size": 5501
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/case-resolved.webm",
+      "path": "public/assets/runtime-motion-pack/webm/case-resolved.webm",
+      "blob": "9b2c0c8fcc7e492b3fa61e2843ed088ce9c36ae3",
+      "size": 5375
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/drawer-open.webm",
+      "path": "public/assets/runtime-motion-pack/webm/drawer-open.webm",
+      "blob": "dd2d1c15ab293dfffcb497382982297d55d6af5a",
+      "size": 3313
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/evidence-linked.webm",
+      "path": "public/assets/runtime-motion-pack/webm/evidence-linked.webm",
+      "blob": "00750afe4f86a2d1356a00d64b28d3eb8964c46f",
+      "size": 3745
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/focus-ring.webm",
+      "path": "public/assets/runtime-motion-pack/webm/focus-ring.webm",
+      "blob": "4d774d02ad1c6d0198a11ffd6d2b99137ad2da09",
+      "size": 8391
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/graph-connect.webm",
+      "path": "public/assets/runtime-motion-pack/webm/graph-connect.webm",
+      "blob": "757bd263571131dab5e3645337bb3da5ec324b93",
+      "size": 3534
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/loading-trace.webm",
+      "path": "public/assets/runtime-motion-pack/webm/loading-trace.webm",
+      "blob": "c683648c7d139e92a2577033a9ea25a17af4080a",
+      "size": 4130
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/notification-in.webm",
+      "path": "public/assets/runtime-motion-pack/webm/notification-in.webm",
+      "blob": "1d348fafd09095466d62aabfe97967a596776a18",
+      "size": 3378
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/pulse-alert.webm",
+      "path": "public/assets/runtime-motion-pack/webm/pulse-alert.webm",
+      "blob": "bb9107e5b3d8bc47ff0ef9dcc3033f7d717e2265",
+      "size": 8765
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/sync-spin.webm",
+      "path": "public/assets/runtime-motion-pack/webm/sync-spin.webm",
+      "blob": "aae55484a41c2d7cd0a80be1206f6c913ade2881",
+      "size": 3399
+    },
+    {
+      "source": "moonwitness/runtime-motion-pack/webm/upload-rise.webm",
+      "path": "public/assets/runtime-motion-pack/webm/upload-rise.webm",
+      "blob": "b73a429cf91288b46a3e55fe5ae94841f9b2afac",
+      "size": 2384
     },
     {
       "source": "moonwitness/sfx/generated/ai-complete.ogg",

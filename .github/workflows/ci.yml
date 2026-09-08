@@ -40,8 +40,8 @@ jobs:
 
       - name: Rocksoul assets remote freshness
         run: npm run audit:assets-freshness
-      - name: Rocksoul assets v1.3 candidate
-        run: npm run audit:assets-candidate
+      - name: MoonWitness asset registry v1.3
+        run: npm run audit:assets-registry
       - name: Asset pack byte integrity
         run: npm run audit:assets-integrity
       - name: Application framework audit

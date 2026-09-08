@@ -5,10 +5,16 @@ import {
   type ImgHTMLAttributes,
   type ReactNode,
 } from "react"
-import { moonWitnessAssetPacks, moonWitnessAssetRelativePath, type MoonWitnessAssetPackId, type MoonWitnessSfxId } from "../contracts/asset-packs"
+import { moonWitnessAssetRelativePath, type MoonWitnessAssetPackId, type MoonWitnessSfxId } from "../contracts/asset-packs"
+import {
+  MOONWITNESS_STABLE_REPOSITORY_BASE,
+  resolveMoonWitnessRegistryAssetUrl,
+  type MoonWitnessAssetRegistryFormat,
+  type MoonWitnessAssetRegistryPackId,
+  type MoonWitnessAssetRootMode,
+} from "../contracts/assets-registry"
 
-const DEFAULT_ASSET_BASE = "/assets/moonwitness"
-
+const DEFAULT_ASSET_BASE = "/assets"
 const AssetBaseContext = createContext(DEFAULT_ASSET_BASE)
 
 function cleanBase(base: string) {
@@ -45,6 +51,29 @@ export function MoonWitnessAssetImage({
 }) {
   const baseUrl = useMoonWitnessAssetBaseUrl()
   return <img src={resolveMoonWitnessAssetUrl(baseUrl, pack, file)} alt={alt} {...props} />
+}
+
+export function MoonWitnessRegistryAssetImage({
+  pack,
+  assetId,
+  format = "svg",
+  size,
+  baseUrl = MOONWITNESS_STABLE_REPOSITORY_BASE,
+  rootMode = "repository",
+  alt,
+  ...props
+}: Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
+  pack: MoonWitnessAssetRegistryPackId
+  assetId: string
+  format?: MoonWitnessAssetRegistryFormat
+  size?: string
+  baseUrl?: string
+  rootMode?: MoonWitnessAssetRootMode
+  alt: string
+}) {
+  const src = resolveMoonWitnessRegistryAssetUrl(pack, assetId, { format, size, baseUrl, rootMode })
+  if (!src) return null
+  return <img src={src} alt={alt} {...props} />
 }
 
 export function MoonWitnessStatusAsset({
@@ -96,9 +125,11 @@ export function useMoonWitnessSfx({
 }
 
 export const moonWitnessAssetConsumption = {
-  canonicalBase: DEFAULT_ASSET_BASE,
-  packCount: Object.keys(moonWitnessAssetPacks).length,
+  localMirrorBase: DEFAULT_ASSET_BASE,
+  registryRepositoryBase: MOONWITNESS_STABLE_REPOSITORY_BASE,
+  packCount: 41,
   preferSvgInProductUi: true,
   rasterIsDerivative: true,
+  runtimeMotionFormats: ["svg", "apng", "webm", "lottie"],
   sfxOptInOnly: true,
 } as const
