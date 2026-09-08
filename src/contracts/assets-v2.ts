@@ -2,6 +2,7 @@ export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
   commit: "82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05",
+  acceptedMainCommit: "595eb750934900a6545624cfbdb40b31994f335c",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
@@ -51,7 +52,7 @@ export const v2ResourceDescriptors = [
   { resource: "person", label: "PERSON / People", path: "/people", repo: "rocksoul-superhero" },
   { resource: "rgbl", label: "TEXT / RGBL", path: "/sources", repo: "rocksoul-rgbl" },
   { resource: "aws", label: "LAW / AWS", path: "/aws", repo: "rocksoul-aws" },
-  { resource: "perspective", label: "PERSPECTIVE / JIZZ", path: "/perspectives", repo: "rocksoul-jizz" },
+  { resource: "perspective", label: "PERSPECTIVE / Perspectives", path: "/perspectives", repo: "rocksoul-jizz" },
   { resource: "correlation", label: "CORRELATION / Evidence Graph", path: "/correlation", repo: "rocksoul-correlation" },
 ] as const
 
