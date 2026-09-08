@@ -3,22 +3,26 @@ import path from "node:path"
 
 const root=process.cwd()
 const read=(file)=>readFile(path.join(root,file),"utf8")
-const [contracts,shell,screens,stories,theme,four]=await Promise.all([
+const [contracts,shell,screens,stories,theme,four,packRegistry]=await Promise.all([
   read("src/contracts/assets-v2.ts"),
   read("src/components/application-shell.tsx"),
   read("src/screens/application-screens.tsx"),
   read("src/stories/V2Screens.stories.tsx"),
   read("src/components/theme-toggle.tsx"),
   read("src/components/four-record-summary.tsx"),
+  read("src/contracts/asset-packs.ts"),
 ])
 
 const failures=[]
-const expectedSha="f0f93363c73895e52987f9a3c757e4f5115eca99"
+const expectedSha="95a6912409f849029e18093658b1c0e8158a32f0"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
-if(!contracts.includes('assetRelease: "1.1.0"')) failures.push("assets release 1.1.0")
+if(!contracts.includes('assetRelease: "1.2.0"')) failures.push("assets release 1.2.0")
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
 if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.push("live Penpot verification boundary")
-if(!contracts.includes("icons: 44") || !contracts.includes("dashboard: 20") || !contracts.includes("dataViz: 16") || !contracts.includes("heroBackgrounds: 8") || !contracts.includes("stateIllustrations: 12") || !contracts.includes("motion: 6") || !contracts.includes("sfx: 10")) failures.push("asset pack counts")
+if(!contracts.includes("assetPackCount: 19") || !contracts.includes("motion: 12") || !contracts.includes("sfx: 14")) failures.push("asset pack v1.2 contract")
+for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","sfx","graph-vector","badge-status","source-file","geospatial","cursor-interaction","persona-avatar","social-campaign","platform-delivery","onboarding","document-report","notification","editorial"]){
+  if(!packRegistry.includes(`"${pack}"`)) failures.push(`asset pack registry ${pack}`)
+}
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
   if(!contracts.includes(`id: "${id}"`)) failures.push(`v2 navigation item ${id}`)
 }

@@ -1,22 +1,24 @@
 export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
-  commit: "f0f93363c73895e52987f9a3c757e4f5115eca99",
+  commit: "95a6912409f849029e18093658b1c0e8158a32f0",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
-  assetRelease: "1.1.0",
+  assetRelease: "1.2.0",
   assetReleaseStatus: "released",
   repositoryAcceptance: "passed",
   livePenpotVerification: "manual-follow-up",
-  assetPacks: {
+  assetPackIndex: "moonwitness/asset-packs.json",
+  assetPackCount: 19,
+  mirroredCorePacks: {
     icons: 44,
     dashboard: 20,
     dataViz: 16,
     heroBackgrounds: 8,
     stateIllustrations: 12,
-    motion: 6,
-    sfx: 10,
+    motion: 12,
+    sfx: 14,
   },
 } as const
 

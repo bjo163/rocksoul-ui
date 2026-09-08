@@ -159,21 +159,21 @@ npm run audit:assets-freshness
 
 A newer `rocksoul-assets` commit must be reviewed before UI CI is allowed to claim parity. Generated browser/app/social delivery files are mirrored read-only from canonical SVG-derived assets; edit the source in `rocksoul-assets`, then resynchronize.
 
-## Asset packs v1.1
+## Asset packs v1.2
 
-`@rocksoul/ui 0.8.0` mirrors the released MoonWitness production packs from `rocksoul-assets@f0f93363c73895e52987f9a3c757e4f5115eca99`:
+`@rocksoul/ui 0.9.0` implements the **MoonWitness Complete Asset Packs v1.2.0** contract from `rocksoul-assets@95a6912409f849029e18093658b1c0e8158a32f0`.
 
-- 44 product icons;
-- 20 dashboard widgets;
-- 16 data-viz components;
-- 8 hero backgrounds;
-- 12 state illustrations;
-- 6 motion references;
-- 10 SFX cues with WAV + OGG delivery.
+- **19** typed asset packs;
+- Motion expanded to **12** animated SVG references;
+- SFX expanded to **14** deterministic WAV/OGG cues;
+- secondary Graph, Badge, Source/File, Geospatial, Cursor, Persona, Social, Platform Delivery, Onboarding, Document/Report, Notification, and Editorial packs;
+- `MoonWitnessAssetProvider` resolves canonical app-hosted assets at `/assets/moonwitness`;
+- `MoonWitnessAssetImage`, status/persona helpers, and opt-in `useMoonWitnessSfx`;
+- product UI prefers SVG; generated PNG remains derivative delivery for raster-only/external consumers.
 
-All 134 manifest/delivery files are locked to their canonical Git blob SHA and checked in CI. Consumers can resolve package assets through `@rocksoul/ui/assets/*`.
+The UI package keeps the seven core runtime packs mirrored and byte-locked. Secondary delivery packs are **staged by the consuming application** under `/assets/moonwitness` rather than duplicating hundreds of social/store/email PNG derivatives inside the UI-system package.
 
-Canonical resource mapping now includes six descriptors:
+Canonical resources remain:
 
 ```text
 STORY       → rocksoul-mftl
@@ -184,7 +184,7 @@ LAW         → rocksoul-aws
 CORRELATION → rocksoul-correlation
 ```
 
-Correlation remains a public evidence-graph/explainability layer; it does not become a verdict or duplicate canonical domain records.
+Correlation owns reviewed cross-domain edges and explainability metadata, not verdicts or duplicate canonical records.
 
 ## Run
 
