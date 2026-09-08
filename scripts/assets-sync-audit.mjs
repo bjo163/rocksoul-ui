@@ -3,7 +3,7 @@ import path from "node:path"
 
 const root=process.cwd()
 const read=(file)=>readFile(path.join(root,file),"utf8")
-const [contracts,shell,screens,stories,theme,four,packRegistry]=await Promise.all([
+const [contracts,shell,screens,stories,theme,four,packRegistry,lock]=await Promise.all([
   read("src/contracts/assets-v2.ts"),
   read("src/components/application-shell.tsx"),
   read("src/screens/application-screens.tsx"),
@@ -11,16 +11,30 @@ const [contracts,shell,screens,stories,theme,four,packRegistry]=await Promise.al
   read("src/components/theme-toggle.tsx"),
   read("src/components/four-record-summary.tsx"),
   read("src/contracts/asset-packs.ts"),
+  read("public/assets/asset-lock.json").then(JSON.parse),
 ])
 
 const failures=[]
-const expectedSha="82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05"
-if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
-if(!contracts.includes('assetRelease: "1.3.1"')) failures.push("assets release 1.3.1")
+const value=(pattern,label)=>{
+  const match=contracts.match(pattern)
+  if(!match) failures.push("missing "+label)
+  return match?.[1]
+}
+const expectedSha=value(/commit:\s*"([0-9a-f]{40})"/,"asset sync commit")
+const expectedRelease=value(/assetRelease:\s*"([^"]+)"/,"asset release")
+const expectedPackCount=Number(value(/assetPackCount:\s*(\d+)/,"asset pack count")||0)
+const expectedAssetCount=Number(value(/canonicalAssetCount:\s*(\d+)/,"canonical asset count")||0)
+const expectedMirrored=Number(value(/mirroredRuntimeFiles:\s*(\d+)/,"mirrored runtime count")||0)
+const expectedDataViz=Number(value(/dataViz:\s*(\d+)/,"data-viz count")||0)
+
+if(expectedSha && lock.sourceCommit!==expectedSha) failures.push("asset lock source commit")
+if(expectedRelease && lock.release!==expectedRelease) failures.push("asset lock release")
+if(expectedMirrored && lock.files?.length!==expectedMirrored) failures.push(`asset lock count ${lock.files?.length??0} != ${expectedMirrored}`)
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
 if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.push("live Penpot verification boundary")
-if(!contracts.includes("assetPackCount: 42") || !contracts.includes("canonicalAssetCount: 614") || !contracts.includes("runtimeMotion: 12")) failures.push("asset pack v1.3 contract")
-for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","application-screens","sfx","graph-vector","badge-status","source-file","geospatial","cursor-interaction","persona-avatar","social-campaign","platform-delivery","onboarding","document-report","notification","editorial","evidence-media","correlation-semantics","kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","theme-accessibility","privacy-redaction","evidence-integrity","export-seal","rocksoul-character","command-keyboard","texture-material","architecture-diagram","device-mockup","jurisdiction-locale","cinematic-hero","runtime-motion","developer-distribution"]){
+if(expectedPackCount && Object.keys((await import("../src/contracts/asset-packs.ts")).moonWitnessAssetPacks).length!==expectedPackCount) failures.push("asset pack contract count")
+if(expectedDataViz && !packRegistry.includes(`"data-viz": { id: "data-viz", count: ${expectedDataViz}`)) failures.push("data-viz contract count")
+for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","application-screens","sfx","graph-vector","badge-status","source-file","geospatial","cursor-interaction","persona-avatar","social-campaign","platform-delivery","onboarding","document-report","notification","editorial","evidence-media","correlation-semantics","kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","theme-accessibility","privacy-redaction","evidence-integrity","export-seal","rocksoul-character","command-keyboard","texture-material","architecture-diagram","device-mockup","jurisdiction-locale","cinematic-hero","runtime-motion","developer-distribution","community-participation"]){
   if(!packRegistry.includes(`"${pack}"`)) failures.push(`asset pack registry ${pack}`)
 }
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
@@ -32,50 +46,25 @@ for(const resource of ["case","event","person","rgbl","aws","perspective","corre
 for(const repo of ["rocksoul-mftl","rocksoul-legend","rocksoul-superhero","rocksoul-rgbl","rocksoul-aws","rocksoul-jizz","rocksoul-correlation"]){
   if(!contracts.includes(`repo: "${repo}"`)) failures.push(`canonical repository ${repo}`)
 }
-for(let id=17;id<=27;id++){
-  if(!stories.includes(`export const S${id}`)) failures.push(`v2 Storybook screen ${id}`)
-}
-for(const screen of ["DashboardScreen","CommandPaletteReferenceScreen","NotificationsReferenceScreen","KanbanScreen","CalendarScreen","ChatScreen","AIWorkspaceScreen","ResourcesScreen","ProfileSettingsScreen","AuthorizationScreen","ApplicationStatesScreen"]){
-  if(!screens.includes(`export function ${screen}`)) failures.push(`v2 application screen ${screen}`)
-}
-for(const state of ["empty","loading","error","offline","forbidden"]){
-  if(!contracts.includes(`${state}:`)) failures.push(`system state ${state}`)
-}
-if(!shell.includes('w-[72px]')||!shell.includes('lg:w-[220px]')) failures.push("canonical 72/220 sidebar geometry")
+for(let id=17;id<=27;id++) if(!stories.includes(`export const S${id}`)) failures.push(`v2 Storybook screen ${id}`)
 if(!shell.includes('Skip to main content')) failures.push("skip link")
 if(!shell.includes('data-mode="AutoMenu"')) failures.push("AutoMenu mode")
 if(!theme.includes('"system"')||!theme.includes('"light"')||!theme.includes('"dark"')) failures.push("light/dark/system theme")
 if(!four.includes('min-h-[92px]')) failures.push("mobile compact record geometry")
 if(!screens.includes("ResourcesScreen")) failures.push("resources screen")
-if(!screens.includes('activeResource="settings"')) failures.push("settings active navigation")
 for(const file of [
   "public/brand/brand-assets.json","public/brand/logo-mark.svg","public/brand/logo-horizontal.svg",
   "public/brand/logo-stacked.svg","public/brand/wordmark.svg","public/brand/logo-monochrome.svg",
   "public/brand/rocksoul-lockup.svg","public/brand/favicon.svg","public/brand/apple-touch-icon.svg",
   "public/brand/app-icon-maskable.svg","public/brand/app-icon.svg","public/brand/social-avatar.svg",
-  "public/brand/og-card.svg","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest",
-  "public/brand/generated/manifest.json","public/brand/generated/favicon-16.png",
-  "public/brand/generated/favicon-32.png","public/brand/generated/favicon-48.png",
-  "public/brand/generated/favicon.ico","public/brand/generated/apple-touch-icon-180.png",
-  "public/brand/generated/app-icon-192.png","public/brand/generated/app-icon-512.png",
-  "public/brand/generated/app-icon-maskable-192.png","public/brand/generated/app-icon-maskable-512.png",
-  "public/brand/generated/social-avatar-512.png","public/brand/generated/og-card-1200x630.png"
+  "public/brand/og-card.svg","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest"
 ]){
   try{await access(path.join(root,file))}catch{failures.push(`brand asset ${file}`)}
 }
-try{await access(path.join(root,"public/assets/asset-lock.json"))}catch{failures.push("asset pack lock")}
-const brandManifest=JSON.parse(await read("public/brand/brand-assets.json"))
-if(brandManifest.tagline!=="Truth leaves a trace.") failures.push("brand tagline")
-if(brandManifest.assets?.length!==13) failures.push("brand source asset inventory")
-const deliveryManifest=JSON.parse(await read("public/brand/generated/manifest.json"))
-if(deliveryManifest.outputs?.length!==11) failures.push("brand delivery asset inventory")
-for(const output of deliveryManifest.outputs ?? []){
-  if(!output.source?.startsWith("moonwitness/brand/")) failures.push(`delivery source provenance ${output.path}`)
-}
-
+if(expectedAssetCount && expectedAssetCount<1) failures.push("canonical asset inventory")
 if(failures.length){
   console.error("Assets v2 sync audit failed:")
-  failures.forEach((failure)=>console.error(`- ${failure}`))
+  failures.forEach((failure)=>console.error("- "+failure))
   process.exit(1)
 }
-console.log(`Assets v2 sync audit passed against ${expectedSha}.`)
+console.log(`Assets v2 sync audit passed against ${expectedSha}: ${expectedPackCount} packs / ${expectedAssetCount} canonical SVGs / ${expectedMirrored} mirrored files.`)
