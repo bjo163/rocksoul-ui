@@ -184,7 +184,7 @@ Current UI sync point:
 rocksoul-assets/main
 5abae50b6b994d2cd4fcb12360db620acbac37bd
         ↓
-@rocksoul/ui 0.6.0
+@rocksoul/ui 0.7.0
 ```
 
 Asset repository release: **v1.0.0** — repository acceptance **PASSED**. Live Penpot native reconstruction / interaction / font / final contrast verification remains an explicitly manual follow-up and is not falsely marked complete.
@@ -201,3 +201,25 @@ The v2 application contract is mirrored from the asset source:
 - compact mobile MW-0042 record treatment.
 
 `npm run audit:assets-sync` verifies the implemented v2 contract, while `npm run audit:assets-freshness` compares the recorded sync SHA against the live `rocksoul-assets/main` tip. A newer asset commit therefore fails UI CI until the delta is reviewed.
+
+
+### Generated brand delivery assets
+
+`@rocksoul/ui 0.7.0` mirrors the release delivery outputs from `rocksoul-assets` so consumers can use production-ready browser/app/social files directly:
+
+```text
+brand/generated/favicon-16.png
+brand/generated/favicon-32.png
+brand/generated/favicon-48.png
+brand/generated/favicon.ico
+brand/generated/apple-touch-icon-180.png
+brand/generated/app-icon-192.png
+brand/generated/app-icon-512.png
+brand/generated/app-icon-maskable-192.png
+brand/generated/app-icon-maskable-512.png
+brand/generated/social-avatar-512.png
+brand/generated/og-card-1200x630.png
+brand/generated/manifest.json
+```
+
+These outputs are mirrored read-only from the canonical SVG-derived assets. Do not edit them inside `rocksoul-ui`; update `rocksoul-assets` first, then resynchronize.

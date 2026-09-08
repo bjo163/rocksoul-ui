@@ -157,6 +157,9 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Synced against `rocksoul-assets/main@5abae50b6b994d2cd4fcb12360db620acbac37bd`.
 - [x] Manifest schema v3 recognized.
 - [x] Canonical MoonWitness brand vector family packaged for consumers.
+- [x] Generated brand delivery assets mirrored: PNG / ICO / social / OG / app / maskable.
+- [x] Generated delivery manifest preserves canonical SVG provenance.
+- [x] Consumer package exposes generated delivery files under `brand/generated/*`.
 - [x] Brand tagline: Truth leaves a trace.
 - [x] Application shell desktop sidebar = 220px.
 - [x] Application shell tablet rail = 72px.

@@ -17,6 +17,18 @@ export const moonWitnessBrandAssets = {
   ogCard: "brand/og-card.svg",
   safariPinned: "brand/safari-pinned-tab.svg",
   webmanifest: "brand/site.webmanifest",
+  deliveryManifest: "brand/generated/manifest.json",
+  favicon16: "brand/generated/favicon-16.png",
+  favicon32: "brand/generated/favicon-32.png",
+  favicon48: "brand/generated/favicon-48.png",
+  faviconIco: "brand/generated/favicon.ico",
+  appleTouch180: "brand/generated/apple-touch-icon-180.png",
+  appIcon192: "brand/generated/app-icon-192.png",
+  appIcon512: "brand/generated/app-icon-512.png",
+  appIconMaskable192: "brand/generated/app-icon-maskable-192.png",
+  appIconMaskable512: "brand/generated/app-icon-maskable-512.png",
+  socialAvatar512: "brand/generated/social-avatar-512.png",
+  ogCard1200x630: "brand/generated/og-card-1200x630.png",
 } as const
 
 export function MoonWitnessMark({

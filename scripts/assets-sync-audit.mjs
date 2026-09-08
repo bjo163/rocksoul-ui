@@ -45,13 +45,24 @@ for(const file of [
   "public/brand/logo-stacked.svg","public/brand/wordmark.svg","public/brand/logo-monochrome.svg",
   "public/brand/rocksoul-lockup.svg","public/brand/favicon.svg","public/brand/apple-touch-icon.svg",
   "public/brand/app-icon-maskable.svg","public/brand/app-icon.svg","public/brand/social-avatar.svg",
-  "public/brand/og-card.svg","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest"
+  "public/brand/og-card.svg","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest",
+  "public/brand/generated/manifest.json","public/brand/generated/favicon-16.png",
+  "public/brand/generated/favicon-32.png","public/brand/generated/favicon-48.png",
+  "public/brand/generated/favicon.ico","public/brand/generated/apple-touch-icon-180.png",
+  "public/brand/generated/app-icon-192.png","public/brand/generated/app-icon-512.png",
+  "public/brand/generated/app-icon-maskable-192.png","public/brand/generated/app-icon-maskable-512.png",
+  "public/brand/generated/social-avatar-512.png","public/brand/generated/og-card-1200x630.png"
 ]){
   try{await access(path.join(root,file))}catch{failures.push(`brand asset ${file}`)}
 }
 const brandManifest=JSON.parse(await read("public/brand/brand-assets.json"))
 if(brandManifest.tagline!=="Truth leaves a trace.") failures.push("brand tagline")
 if(brandManifest.assets?.length!==13) failures.push("brand source asset inventory")
+const deliveryManifest=JSON.parse(await read("public/brand/generated/manifest.json"))
+if(deliveryManifest.outputs?.length!==11) failures.push("brand delivery asset inventory")
+for(const output of deliveryManifest.outputs ?? []){
+  if(!output.source?.startsWith("moonwitness/brand/")) failures.push(`delivery source provenance ${output.path}`)
+}
 
 if(failures.length){
   console.error("Assets v2 sync audit failed:")
