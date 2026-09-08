@@ -30,6 +30,9 @@ type RegistryPack = {
 export const MOONWITNESS_STABLE_REPOSITORY_BASE =
   `https://raw.githubusercontent.com/${ROCKSOUL_ASSETS_SYNC.repository}/${ROCKSOUL_ASSETS_SYNC.commit}`
 
+export const MOONWITNESS_ACCEPTED_REPOSITORY_BASE =
+  `https://raw.githubusercontent.com/${ROCKSOUL_ASSETS_SYNC.repository}/${ROCKSOUL_ASSETS_SYNC.acceptedMainCommit}`
+
 function cleanBase(base: string) {
   return base.replace(/\/+$/, "")
 }
