@@ -124,7 +124,7 @@ export function DesignSystemScreen() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="mw-eyebrow text-warning">Visual language / stable v1.3</p>
-            <h2 className="mt-2 text-2xl font-bold">41 packs / 591 canonical assets</h2>
+            <h2 className="mt-2 text-2xl font-bold">42 packs / 614 canonical assets</h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
               Released upstream visual language. The registry, runtime motion, and developer distribution are now stable UI contracts.
             </p>
