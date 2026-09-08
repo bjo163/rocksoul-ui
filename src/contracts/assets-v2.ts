@@ -5,14 +5,29 @@ export const ROCKSOUL_ASSETS_SYNC = {
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
-  assetRelease: "1.1.0",
+  assetRelease: "1.2.0",
   assetReleaseStatus: "released",
   repositoryAcceptance: "passed",
   livePenpotVerification: "manual-follow-up",
-  assetPacks: { icons: 44, dashboard: 20, dataViz: 16, heroBackgrounds: 8, stateIllustrations: 12, motion: 6, sfx: 10 },
+  assetPackIndex: "moonwitness/asset-packs.json",
+  assetPackCount: 19,
+  mirroredCorePacks: {
+    icons: 44,
+    dashboard: 20,
+    dataViz: 16,
+    heroBackgrounds: 8,
+    stateIllustrations: 12,
+    motion: 12,
+    sfx: 14,
+  },
 } as const
 
-export const moonWitnessBrandContract = { brand: "MoonWitness", ecosystem: "MoonWitness × Rocksoul", tagline: "Truth leaves a trace.", sourceType: "editable-vector" } as const
+export const moonWitnessBrandContract = {
+  brand: "MoonWitness",
+  ecosystem: "MoonWitness × Rocksoul",
+  tagline: "Truth leaves a trace.",
+  sourceType: "editable-vector",
+} as const
 
 export const v2NavigationItems = [
   { id: "dashboard", label: "Dashboard", path: "/", kind: "system", permission: "authenticated" },
@@ -36,23 +51,41 @@ export const v2ResourceDescriptors = [
 ] as const
 
 export const v2ScreenContract = [
-  { id: "17", slug: "dashboard", activeNav: "Dashboard" }, { id: "18", slug: "command-palette", activeNav: "Dashboard", overlay: true },
-  { id: "19", slug: "notifications", activeNav: "Dashboard", overlay: true }, { id: "20", slug: "kanban", activeNav: "Kanban" },
-  { id: "21", slug: "calendar", activeNav: "Calendar" }, { id: "22", slug: "chat", activeNav: "Chat" },
-  { id: "23", slug: "ai-workspace", activeNav: "AI Workspace" }, { id: "24", slug: "resources", activeNav: "Resources" },
-  { id: "25", slug: "profile-settings", activeNav: "Settings" }, { id: "26", slug: "authorization", activeNav: "Settings" },
+  { id: "17", slug: "dashboard", activeNav: "Dashboard" },
+  { id: "18", slug: "command-palette", activeNav: "Dashboard", overlay: true },
+  { id: "19", slug: "notifications", activeNav: "Dashboard", overlay: true },
+  { id: "20", slug: "kanban", activeNav: "Kanban" },
+  { id: "21", slug: "calendar", activeNav: "Calendar" },
+  { id: "22", slug: "chat", activeNav: "Chat" },
+  { id: "23", slug: "ai-workspace", activeNav: "AI Workspace" },
+  { id: "24", slug: "resources", activeNav: "Resources" },
+  { id: "25", slug: "profile-settings", activeNav: "Settings" },
+  { id: "26", slug: "authorization", activeNav: "Settings" },
   { id: "27", slug: "system-states", activeNav: "Dashboard" },
 ] as const
 
 export const v2ShellContract = {
-  desktop: { width: 1440, sidebar: 220, behavior: "persistent" }, tablet: { width: 768, sidebar: 72, behavior: "icon-rail" }, mobile: { width: 390, sidebar: 0, behavior: "drawer" },
-  backendStates: ["online", "degraded", "offline"], themeStates: ["light", "dark", "system"], sidebarStates: ["expanded", "compact", "drawer-open", "drawer-closed"],
-  notificationStates: ["empty", "unread", "open"], userMenuStates: ["closed", "open"],
-  accessibility: { skipLink: true, landmarks: ["navigation", "banner", "main"], keyboardCommandPalette: true, focusVisible: true, drawerFocusTrap: true },
+  desktop: { width: 1440, sidebar: 220, behavior: "persistent" },
+  tablet: { width: 768, sidebar: 72, behavior: "icon-rail" },
+  mobile: { width: 390, sidebar: 0, behavior: "drawer" },
+  backendStates: ["online", "degraded", "offline"],
+  themeStates: ["light", "dark", "system"],
+  sidebarStates: ["expanded", "compact", "drawer-open", "drawer-closed"],
+  notificationStates: ["empty", "unread", "open"],
+  userMenuStates: ["closed", "open"],
+  accessibility: {
+    skipLink: true,
+    landmarks: ["navigation", "banner", "main"],
+    keyboardCommandPalette: true,
+    focusVisible: true,
+    drawerFocusTrap: true,
+  },
 } as const
 
 export const v2SystemStateContract = {
-  loading: ["skeleton-or-progress", "accessible-busy-state", "reduced-motion-safe"], empty: ["headline", "supporting-copy", "recovery-or-create-action"],
-  error: ["error-summary", "system-context", "retry-or-back-action", "trace-id-when-available"], offline: ["backend-status", "last-known-state", "retry"],
+  loading: ["skeleton-or-progress", "accessible-busy-state", "reduced-motion-safe"],
+  empty: ["headline", "supporting-copy", "recovery-or-create-action"],
+  error: ["error-summary", "system-context", "retry-or-back-action", "trace-id-when-available"],
+  offline: ["backend-status", "last-known-state", "retry"],
   forbidden: ["required-permission", "current-role", "request-access-when-available"],
 } as const

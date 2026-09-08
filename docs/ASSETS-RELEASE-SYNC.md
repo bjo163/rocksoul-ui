@@ -4,8 +4,8 @@ Current design source:
 
 ```text
 bjo163/rocksoul-assets
-main @ f0f93363c73895e52987f9a3c757e4f5115eca99
-release: 1.1.0
+main @ 95a6912409f849029e18093658b1c0e8158a32f0
+release: 1.2.0
 repository acceptance: passed
 ```
 
@@ -48,3 +48,8 @@ These are workspace verification gates, not missing code contracts.
 ## Asset packs v1.1
 
 The UI package mirrors 134 consumer-facing pack files from the canonical release: icons, dashboard widgets, data-viz, hero backgrounds, state illustrations, motion references, and SFX delivery. `scripts/assets-integrity-audit.mjs` verifies every mirrored file against its canonical Git blob SHA.
+
+
+## v1.2 consumption boundary
+
+The UI system implements all 19 pack contracts through a typed provider. Core runtime packs remain mirrored and byte-locked in this repository. Secondary PNG delivery for social, platform/store, email, report, and other raster-specific consumers is staged by each application from `rocksoul-assets` under `/assets/moonwitness`, matching the canonical consumption contract.

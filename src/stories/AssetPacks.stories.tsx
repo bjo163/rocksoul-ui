@@ -1,43 +1,50 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { MoonWitnessAssetImage, MoonWitnessAssetProvider } from "../components/asset-provider"
+
+const base = "https://raw.githubusercontent.com/bjo163/rocksoul-assets/95a6912409f849029e18093658b1c0e8158a32f0/moonwitness"
 
 const samples = [
-  ["Product icon", "/assets/icons/svg/navigation/dashboard.svg"],
-  ["Dashboard widget", "/assets/dashboard-pack/widgets/correlation-insight.svg"],
-  ["Data viz", "/assets/data-viz/charts/node-link-correlation.svg"],
-  ["Hero background", "/assets/hero-backgrounds/svg/observatory-grid.svg"],
-  ["State illustration", "/assets/state-illustrations/svg/offline-backend.svg"],
-  ["Motion reference", "/assets/motion/svg/observatory-ring.svg"],
+  ["Graph vector", "graph-vector", "svg/evidence-graph.svg"],
+  ["Badge", "badge-status", "svg/verified.svg"],
+  ["Source file", "source-file", "svg/pdf.svg"],
+  ["Geospatial", "geospatial", "svg/map-pin.svg"],
+  ["Persona", "persona-avatar", "svg/researcher.svg"],
+  ["Onboarding", "onboarding", "svg/correlate-evidence.svg"],
+  ["Notification", "notification", "svg/inbox-card.svg"],
+  ["Editorial", "editorial", "svg/lunar-observatory.svg"],
 ] as const
 
 function AssetPackGallery() {
   return (
-    <main className="min-h-screen bg-background p-6 text-foreground">
-      <p className="mw-eyebrow text-primary">MoonWitness Asset Packs / v1.1.0</p>
-      <h1 className="mw-display mt-3 text-4xl font-black uppercase">Design once. Trace everywhere.</h1>
-      <p className="mt-3 max-w-2xl text-sm text-muted-foreground">Representative production assets mirrored byte-for-byte from rocksoul-assets. SFX is opt-in and never autoplayed.</p>
-      <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {samples.map(([label, src]) => (
-          <article key={label} className="border border-border bg-card p-4">
-            <p className="mw-meta text-muted-foreground">{label}</p>
-            <div className="mt-4 flex min-h-48 items-center justify-center overflow-hidden bg-panel p-4">
-              <img src={src} alt={label} className="max-h-56 max-w-full" />
-            </div>
-          </article>
-        ))}
-      </div>
-      <section className="mt-6 border border-border bg-card p-5">
-        <p className="mw-meta text-muted-foreground">SFX / explicit preview only</p>
-        <audio className="mt-4 w-full" controls preload="none">
-          <source src="/assets/sfx/generated/notification.ogg" type="audio/ogg" />
-          <source src="/assets/sfx/generated/notification.wav" type="audio/wav" />
-        </audio>
-      </section>
-    </main>
+    <MoonWitnessAssetProvider baseUrl={base}>
+      <main className="min-h-screen bg-background p-6 text-foreground">
+        <p className="mw-eyebrow text-primary">MoonWitness Asset Packs / v1.2.0</p>
+        <h1 className="mw-display mt-3 text-4xl font-black uppercase">19 packs. One consumption contract.</h1>
+        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">Product UI prefers canonical SVG. Raster derivatives stay for external/raster-only delivery. SFX remains opt-in.</p>
+        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {samples.map(([label, pack, file]) => (
+            <article key={label} className="border border-border bg-card p-4">
+              <p className="mw-meta text-muted-foreground">{label}</p>
+              <div className="mt-4 flex min-h-44 items-center justify-center overflow-hidden bg-panel p-4">
+                <MoonWitnessAssetImage pack={pack} file={file} alt={label} className="max-h-48 max-w-full" />
+              </div>
+            </article>
+          ))}
+        </div>
+        <section className="mt-6 border border-border bg-card p-5">
+          <p className="mw-meta text-muted-foreground">SFX / explicit preview only</p>
+          <audio className="mt-4 w-full" controls preload="none">
+            <source src={`${base}/sfx/generated/notification.ogg`} type="audio/ogg" />
+            <source src={`${base}/sfx/generated/notification.wav`} type="audio/wav" />
+          </audio>
+        </section>
+      </main>
+    </MoonWitnessAssetProvider>
   )
 }
 
 const meta = {
-  title: "Assets/v1.1 Pack Gallery",
+  title: "Assets/v1.2 Pack Gallery",
   component: AssetPackGallery,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof AssetPackGallery>

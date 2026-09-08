@@ -1,8 +1,9 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "scope": "mirrored-core-runtime-packs",
   "sourceRepository": "bjo163/rocksoul-assets",
-  "sourceCommit": "f0f93363c73895e52987f9a3c757e4f5115eca99",
-  "release": "1.1.0",
+  "sourceCommit": "95a6912409f849029e18093658b1c0e8158a32f0",
+  "release": "1.2.0",
   "files": [
     {
       "source": "moonwitness/dashboard-pack/dashboard-pack.json",
@@ -559,8 +560,8 @@
     {
       "source": "moonwitness/motion/motion.json",
       "path": "public/assets/motion/motion.json",
-      "blob": "9d35e08c4e9b07e5d6d4f31d188f55b6ff0e3d2f",
-      "size": 342
+      "blob": "dd3a50b64dbfe35e16832dde36aa77138751859b",
+      "size": 474
     },
     {
       "source": "moonwitness/motion/svg/ai-thinking.svg",
@@ -575,10 +576,28 @@
       "size": 605
     },
     {
+      "source": "moonwitness/motion/svg/case-resolved.svg",
+      "path": "public/assets/motion/svg/case-resolved.svg",
+      "blob": "1dd6ff80a0b04f57470c87a680d77e033958a2f5",
+      "size": 570
+    },
+    {
       "source": "moonwitness/motion/svg/correlation-edge-draw.svg",
       "path": "public/assets/motion/svg/correlation-edge-draw.svg",
       "blob": "3f5aff942ce447754ec828f6d1b982b6c97b984e",
       "size": 565
+    },
+    {
+      "source": "moonwitness/motion/svg/drawer-open.svg",
+      "path": "public/assets/motion/svg/drawer-open.svg",
+      "blob": "06eac0d44e264eaa3da5cb52d7620b5db632b1b4",
+      "size": 492
+    },
+    {
+      "source": "moonwitness/motion/svg/loading-trace.svg",
+      "path": "public/assets/motion/svg/loading-trace.svg",
+      "blob": "9315dd9154f2b3bb29ba23158d75e5801a71b73f",
+      "size": 494
     },
     {
       "source": "moonwitness/motion/svg/logo-reveal.svg",
@@ -587,16 +606,34 @@
       "size": 646
     },
     {
+      "source": "moonwitness/motion/svg/notification-pulse.svg",
+      "path": "public/assets/motion/svg/notification-pulse.svg",
+      "blob": "28ee728f0b07e692a0e89dc9a6b813c7670d4b7a",
+      "size": 569
+    },
+    {
       "source": "moonwitness/motion/svg/observatory-ring.svg",
       "path": "public/assets/motion/svg/observatory-ring.svg",
       "blob": "facc0d54d50abd0a7c8d81f4151d5dcc509715f9",
       "size": 526
     },
     {
+      "source": "moonwitness/motion/svg/success-check.svg",
+      "path": "public/assets/motion/svg/success-check.svg",
+      "blob": "7cdee7567c778c415fc42d3fa06d9e8261f024ea",
+      "size": 444
+    },
+    {
       "source": "moonwitness/motion/svg/trace-node-pulse.svg",
       "path": "public/assets/motion/svg/trace-node-pulse.svg",
       "blob": "550ae8833ab2174686990d6e4017d0113d86d2c1",
       "size": 724
+    },
+    {
+      "source": "moonwitness/motion/svg/upload-complete.svg",
+      "path": "public/assets/motion/svg/upload-complete.svg",
+      "blob": "aa753a9b9969be450b1613ea18f0f4b49d2c0e80",
+      "size": 612
     },
     {
       "source": "moonwitness/sfx/generated/ai-complete.ogg",
@@ -609,6 +646,42 @@
       "path": "public/assets/sfx/generated/ai-complete.wav",
       "blob": "9e753849ef0921c20ab41f1535bcafed93ed6be1",
       "size": 24740
+    },
+    {
+      "source": "moonwitness/sfx/generated/ai-start.ogg",
+      "path": "public/assets/sfx/generated/ai-start.ogg",
+      "blob": "5c5a3fa8cd51537b9341bb80126c153023851e4f",
+      "size": 5095
+    },
+    {
+      "source": "moonwitness/sfx/generated/ai-start.wav",
+      "path": "public/assets/sfx/generated/ai-start.wav",
+      "blob": "b89a3173ef467323e82e61e8d3221bdb0aaa7670",
+      "size": 21212
+    },
+    {
+      "source": "moonwitness/sfx/generated/case-open.ogg",
+      "path": "public/assets/sfx/generated/case-open.ogg",
+      "blob": "bc6f747798775d7d36a9e951ab21ad70a16ff846",
+      "size": 4688
+    },
+    {
+      "source": "moonwitness/sfx/generated/case-open.wav",
+      "path": "public/assets/sfx/generated/case-open.wav",
+      "blob": "6e9a61325cb580faca3ace81c8d4f7458faf462e",
+      "size": 19448
+    },
+    {
+      "source": "moonwitness/sfx/generated/case-resolved.ogg",
+      "path": "public/assets/sfx/generated/case-resolved.ogg",
+      "blob": "25a89becf2b535f82821d567f924ba28e474a334",
+      "size": 5664
+    },
+    {
+      "source": "moonwitness/sfx/generated/case-resolved.wav",
+      "path": "public/assets/sfx/generated/case-resolved.wav",
+      "blob": "c44444dc9d2e42668d2de96d5c92a3f83c98c02c",
+      "size": 30032
     },
     {
       "source": "moonwitness/sfx/generated/command-open.ogg",
@@ -649,8 +722,8 @@
     {
       "source": "moonwitness/sfx/generated/manifest.json",
       "path": "public/assets/sfx/generated/manifest.json",
-      "blob": "6a1ac0e72cd2caf2e146a5ba6ec889810ca82b01",
-      "size": 1613
+      "blob": "8909c6d446d5370feefd2bf6f7580fe932764b97",
+      "size": 2208
     },
     {
       "source": "moonwitness/sfx/generated/notification-critical.ogg",
@@ -713,6 +786,18 @@
       "size": 7100
     },
     {
+      "source": "moonwitness/sfx/generated/upload-complete.ogg",
+      "path": "public/assets/sfx/generated/upload-complete.ogg",
+      "blob": "9a180d1edf0e7d62ea8c28ce2b5ea4d3a90f8d91",
+      "size": 4866
+    },
+    {
+      "source": "moonwitness/sfx/generated/upload-complete.wav",
+      "path": "public/assets/sfx/generated/upload-complete.wav",
+      "blob": "82758460b1e9883a19271f44a99e55e7270d8d0b",
+      "size": 21212
+    },
+    {
       "source": "moonwitness/sfx/generated/warning.ogg",
       "path": "public/assets/sfx/generated/warning.ogg",
       "blob": "d085b9ec699fa47826c8b70138d3129fa04768b5",
@@ -727,8 +812,8 @@
     {
       "source": "moonwitness/sfx/sounds.json",
       "path": "public/assets/sfx/sounds.json",
-      "blob": "601d955f6c972a7492243c081168536e30fc284d",
-      "size": 754
+      "blob": "a498856c47b5dea745fc030fae1962153f8f4b11",
+      "size": 990
     },
     {
       "source": "moonwitness/state-illustrations/states.json",
