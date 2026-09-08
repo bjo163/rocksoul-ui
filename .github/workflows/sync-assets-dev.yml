@@ -1,0 +1,87 @@
+name: Sync Canonical Assets To UI Dev
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - ".github/workflows/sync-assets-dev.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch immutable assets source
+        env:
+          ASSETS_SHA: 4050b6b5ea88f187a31a304bf978abfe637db9ce
+        run: |
+          git clone --filter=blob:none --no-checkout https://github.com/bjo163/rocksoul-assets.git /tmp/assets
+          git -C /tmp/assets fetch --depth=1 origin "$ASSETS_SHA"
+          git -C /tmp/assets checkout --detach "$ASSETS_SHA"
+          test "$(git -C /tmp/assets rev-parse HEAD)" = "$ASSETS_SHA"
+      - name: Synchronize generated registry and mirrored core assets
+        env:
+          ASSETS_SHA: 4050b6b5ea88f187a31a304bf978abfe637db9ce
+        run: |
+          node <<'NODE'
+          const fs=require("fs")
+          const path=require("path")
+          const crypto=require("crypto")
+          const src="/tmp/assets"
+          const readJson=(p)=>JSON.parse(fs.readFileSync(p,"utf8"))
+          const copy=(from,to)=>{fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(from,to)}
+
+          copy(path.join(src,"dist/assets.ts"),"src/generated/assets-v1.3.ts")
+          for(const name of ["assets.json","assets.ts","assets.css","sprite.svg"]){
+            copy(path.join(src,"dist",name),path.join("public/assets/developer-v1.3",name))
+          }
+          copy(path.join(src,"moonwitness/asset-packs.json"),"public/assets/developer-v1.3/asset-packs.json")
+          fs.mkdirSync("public/assets/moonwitness",{recursive:true})
+          copy(path.join(src,"moonwitness/asset-packs.json"),"public/assets/moonwitness/asset-packs.json")
+
+          const oldLock=readJson("public/assets/asset-lock.json")
+          const bySource=new Map((oldLock.files||[]).map(x=>[x.source,x.path]))
+          const dataVizDir=path.join(src,"moonwitness/data-viz/charts")
+          for(const name of fs.readdirSync(dataVizDir).filter(x=>x.endsWith(".svg"))){
+            const source="moonwitness/data-viz/charts/"+name
+            if(!bySource.has(source)) bySource.set(source,"public/assets/data-viz/charts/"+name)
+          }
+          bySource.set("moonwitness/data-viz/data-viz.json","public/assets/data-viz/data-viz.json")
+
+          const files=[]
+          for(const [source,dest] of [...bySource.entries()].sort((a,b)=>a[0].localeCompare(b[0]))){
+            const from=path.join(src,source)
+            if(!fs.existsSync(from)) throw new Error("Missing canonical source "+source)
+            copy(from,dest)
+            const bytes=fs.readFileSync(dest)
+            const header=Buffer.from("blob "+bytes.length+"\0")
+            const blob=crypto.createHash("sha1").update(header).update(bytes).digest("hex")
+            files.push({source,path:dest,blob,size:bytes.length})
+          }
+          fs.writeFileSync("public/assets/asset-lock.json",JSON.stringify({
+            schemaVersion:3,
+            scope:"mirrored-core-and-runtime-packs",
+            sourceRepository:"bjo163/rocksoul-assets",
+            sourceCommit:process.env.ASSETS_SHA,
+            release:"1.3.1",
+            files
+          },null,2)+"\n")
+          console.log({mirrored:files.length})
+          NODE
+      - name: Commit synchronized mirror
+        run: |
+          git config user.name "moonwitness-ui-sync-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/generated public/assets
+          if git diff --cached --quiet; then
+            echo "UI asset mirror already current."
+          else
+            git commit -m "assets(ui): sync LEGEND visual registry and mirror"
+            git push origin HEAD:dev
+          fi
