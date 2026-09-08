@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react"
+import { useId, type CSSProperties, type ReactNode } from "react"
 import { cinematicWebHeroAssets, type CinematicWebHeroAssetSet } from "../contracts/cinematic-web-hero"
 
 export interface CinematicWebHeroEvidenceItem {
@@ -61,6 +61,8 @@ export function CinematicWebHero({
   archiveId,
   className = "",
 }: CinematicWebHeroProps) {
+  const generatedTitleId = useId()
+  const titleId = `${generatedTitleId}-cinematic-title`
   const archiveItems = archive ?? [
     { label: "TRACES DON'T LIE.", code: "KODAK 400TX", src: assets.archive[0] },
     { label: "STILL HERE.", code: "36 / 36A", src: assets.archive[1] },
@@ -74,7 +76,7 @@ export function CinematicWebHero({
   } as CSSProperties
 
   return (
-    <section id={id} className={`mw-cinematic-web-hero ${className}`.trim()} style={overlayStyle} aria-labelledby="mw-cinematic-web-hero-title">
+    <section id={id} className={`mw-cinematic-web-hero ${className}`.trim()} style={overlayStyle} aria-labelledby={titleId}>
       <picture className="mw-cinematic-web-hero__master" aria-hidden="true">
         <source media="(max-width: 700px)" srcSet={assets.mobile} />
         <img
@@ -92,7 +94,7 @@ export function CinematicWebHero({
 
       <div className="mw-cinematic-web-hero__content">
         <div className="mw-cinematic-web-hero__eyebrow"><i aria-hidden="true" />{eyebrow}</div>
-        <h1 id="mw-cinematic-web-hero-title">
+        <h1 id={titleId}>
           <span>{title[0]}</span>
           <span>{title[1]}</span>
         </h1>
