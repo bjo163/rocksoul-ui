@@ -45,3 +45,4 @@ export * from "./components/evidence-matrix"
 export * from "./components/observatory-section-nav"
 export * from "./components/provenance-rail"
 export * from "./components/event-intelligence"
+export * from "./components/textual-intelligence"\n
