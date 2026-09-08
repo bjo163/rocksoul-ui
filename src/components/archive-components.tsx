@@ -9,14 +9,32 @@ import type { RecordDomain, RecordStatus } from "./four-record-summary"
 import { AutoMenu, applicationResources } from "./application-shell"
 import { useApplicationActions, type CommunitySubmitPayload } from "../contracts/interactions"
 
+export interface MWHeaderNavItem {
+  label: string
+  href: string
+}
+
 export function MWHeader({
   caseId,
   surface = "web",
   variant = "auto",
+  brandLabel = "INDEPENDENT OBSERVATORY",
+  navItems = [
+    { label: "Observe", href: "#method" },
+    { label: "Records", href: "#method" },
+    { label: "Cases", href: "#case" },
+    { label: "Community", href: "#method" },
+  ],
+  searchHref = "#search",
+  liveLabel = "Live",
 }: {
   caseId?: string
   surface?: "web" | "community"
   variant?: "auto" | "transparent" | "solid" | "compact-mobile"
+  brandLabel?: string
+  navItems?: MWHeaderNavItem[]
+  searchHref?: string
+  liveLabel?: string
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -45,28 +63,28 @@ export function MWHeader({
       <div className="mw-shell-wide flex min-h-16 items-center justify-between gap-4">
         <a href="#top" className="mw-link flex-col items-start justify-center no-underline">
           <span className="text-sm font-bold">MOONWITNESS</span>
-          <span className="mw-meta text-muted-foreground">INDEPENDENT OBSERVATORY</span>
+          <span className="mw-meta text-muted-foreground">{brandLabel}</span>
         </a>
 
         <nav aria-label="Primary" className={cn("items-center", compact ? "hidden" : "hidden md:flex")}>
-          {["Observe", "Records", "Cases", "Community"].map((label) => (
+          {navItems.map((item) => (
             <a
-              key={label}
-              href={label === "Cases" ? "#case" : "#method"}
+              key={item.label}
+              href={item.href}
               className="mw-link px-3 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
             >
-              {label}
+              {item.label}
             </a>
           ))}
-          <a href="#search" className="mw-link px-3 font-mono text-[10px] font-bold uppercase tracking-[0.1em]">Search</a>
-          <span className="mw-meta ml-2 border border-success px-2 py-1 text-success">Live</span>
+          <a href={searchHref} className="mw-link px-3 font-mono text-[10px] font-bold uppercase tracking-[0.1em]">Search</a>
+          <span className="mw-meta ml-2 border border-success px-2 py-1 text-success">{liveLabel}</span>
           <ThemeToggle />
           <Avatar label={surface === "community" ? "Member" : "Guest"} size="sm" />
         </nav>
 
         <div className={cn("items-center gap-2", compact ? "flex" : "flex md:hidden")}>
           {caseId ? <span className="mw-meta hidden text-muted-foreground sm:inline">{caseId}</span> : null}
-          <a href="#search" className="mw-touch inline-flex items-center justify-center border border-border px-2 font-mono text-[9px] font-bold uppercase">Search</a>
+          <a href={searchHref} className="mw-touch inline-flex items-center justify-center border border-border px-2 font-mono text-[9px] font-bold uppercase">Search</a>
           <Avatar label={surface === "community" ? "Member" : "Guest"} size="sm" />
           <button
             className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase"
@@ -81,18 +99,18 @@ export function MWHeader({
       </div>
       <Drawer open={menuOpen} title="MoonWitness" onClose={() => setMenuOpen(false)} position="right">
         <nav id={mobileNavId} className="grid">
-          {["Observe", "Records", "Cases", "Community", "Search"].map((label) => (
+          {[...navItems, { label: "Search", href: searchHref }].map((item) => (
             <a
-              key={label}
-              href={label === "Cases" ? "#case" : "#method"}
+              key={item.label}
+              href={item.href}
               className="mw-link border-b border-border font-mono text-xs font-bold uppercase tracking-[0.1em]"
               onClick={() => setMenuOpen(false)}
             >
-              {label}
+              {item.label}
             </a>
           ))}
           <div className="mt-4 flex items-center justify-between">
-            <span className="mw-meta text-success">System live</span>
+            <span className="mw-meta text-success">{liveLabel}</span>
             <ThemeToggle />
           </div>
         </nav>
