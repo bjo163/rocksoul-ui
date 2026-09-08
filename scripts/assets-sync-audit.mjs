@@ -14,13 +14,13 @@ const [contracts,shell,screens,stories,theme,four,packRegistry]=await Promise.al
 ])
 
 const failures=[]
-const expectedSha="e2dd99735e9225d368f6c520c6ac1980219115ba"
+const expectedSha="82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05"
 if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
-if(!contracts.includes('assetRelease: "1.3.0"')) failures.push("assets release 1.3.0")
+if(!contracts.includes('assetRelease: "1.3.1"')) failures.push("assets release 1.3.1")
 if(!contracts.includes('repositoryAcceptance: "passed"')) failures.push("assets repository acceptance")
 if(!contracts.includes('livePenpotVerification: "manual-follow-up"')) failures.push("live Penpot verification boundary")
-if(!contracts.includes("assetPackCount: 41") || !contracts.includes("canonicalAssetCount: 591") || !contracts.includes("runtimeMotion: 12")) failures.push("asset pack v1.3 contract")
-for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","sfx","graph-vector","badge-status","source-file","geospatial","cursor-interaction","persona-avatar","social-campaign","platform-delivery","onboarding","document-report","notification","editorial","evidence-media","correlation-semantics","kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","theme-accessibility","privacy-redaction","evidence-integrity","export-seal","rocksoul-character","command-keyboard","texture-material","architecture-diagram","device-mockup","jurisdiction-locale","cinematic-hero","runtime-motion","developer-distribution"]){
+if(!contracts.includes("assetPackCount: 42") || !contracts.includes("canonicalAssetCount: 614") || !contracts.includes("runtimeMotion: 12")) failures.push("asset pack v1.3 contract")
+for(const pack of ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","application-screens","sfx","graph-vector","badge-status","source-file","geospatial","cursor-interaction","persona-avatar","social-campaign","platform-delivery","onboarding","document-report","notification","editorial","evidence-media","correlation-semantics","kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","theme-accessibility","privacy-redaction","evidence-integrity","export-seal","rocksoul-character","command-keyboard","texture-material","architecture-diagram","device-mockup","jurisdiction-locale","cinematic-hero","runtime-motion","developer-distribution"]){
   if(!packRegistry.includes(`"${pack}"`)) failures.push(`asset pack registry ${pack}`)
 }
 for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
