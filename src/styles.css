@@ -29,6 +29,10 @@
   --color-rgbl-green: var(--mw-rgbl-green);
   --color-rgbl-blue: var(--mw-rgbl-blue);
   --color-rgbl-light: var(--mw-rgbl-light);
+  --color-rgbl-red-fg: var(--mw-rgbl-red-fg);
+  --color-rgbl-green-fg: var(--mw-rgbl-green-fg);
+  --color-rgbl-blue-fg: var(--mw-rgbl-blue-fg);
+  --color-rgbl-light-fg: var(--mw-rgbl-light-fg);
   --color-legal-paper: var(--mw-aws-legal-paper);
   --color-legal-ink: var(--mw-aws-legal-ink);
 }
@@ -75,6 +79,10 @@
   --mw-rgbl-green: #10B981;
   --mw-rgbl-blue: #3B82F6;
   --mw-rgbl-light: #F4C542;
+  --mw-rgbl-red-fg: #FF5062;
+  --mw-rgbl-green-fg: #2CCB87;
+  --mw-rgbl-blue-fg: #70A5FF;
+  --mw-rgbl-light-fg: #F4C542;
 
   --mw-aws-boundary: #D1132A;
   --mw-aws-warning: #C46C17;
@@ -154,6 +162,10 @@
   --mw-status-restricted-fg: #7A3F00;
   --mw-status-prohibited-fg: #8A0B1C;
   --mw-status-info-fg: #1859B3;
+  --mw-rgbl-red-fg: #B20F23;
+  --mw-rgbl-green-fg: #077545;
+  --mw-rgbl-blue-fg: #1859B3;
+  --mw-rgbl-light-fg: #6C5400;
 }
 
 * {
@@ -281,6 +293,10 @@ a {
   --mw-status-restricted-fg: #7A3F00;
   --mw-status-prohibited-fg: #8A0B1C;
   --mw-status-info-fg: #1859B3;
+  --mw-rgbl-red-fg: #B20F23;
+  --mw-rgbl-green-fg: #077545;
+  --mw-rgbl-blue-fg: #1859B3;
+  --mw-rgbl-light-fg: #6C5400;
   color-scheme: light;
 }
 
