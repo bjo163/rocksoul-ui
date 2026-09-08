@@ -1,0 +1,72 @@
+name: Sync Canonical Brand Binary
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+    paths:
+      - "src/contracts/assets-v2.ts"
+      - ".github/workflows/sync-brand-binary.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-brand-binary-dev
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout UI dev
+        uses: actions/checkout@v5
+        with:
+          ref: dev
+
+      - name: Resolve immutable assets commit
+        id: source
+        shell: bash
+        run: |
+          sha="$(node - <<'NODE'
+          const fs = require("fs");
+          const source = fs.readFileSync("src/contracts/assets-v2.ts", "utf8");
+          const match = source.match(/commit:\s*"([0-9a-f]{40})"/);
+          if (!match) process.exit(1);
+          process.stdout.write(match[1]);
+          NODE
+          )"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Materialize canonical brand files
+        shell: bash
+        env:
+          ASSETS_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          git clone --filter=blob:none --no-checkout https://github.com/bjo163/rocksoul-assets.git /tmp/rocksoul-assets
+          git -C /tmp/rocksoul-assets sparse-checkout init --cone
+          git -C /tmp/rocksoul-assets sparse-checkout set moonwitness/brand
+          git -C /tmp/rocksoul-assets fetch --depth=1 origin "$ASSETS_SHA"
+          git -C /tmp/rocksoul-assets checkout --detach FETCH_HEAD
+
+          mkdir -p public/brand/generated
+          cp /tmp/rocksoul-assets/moonwitness/brand/og-card.svg public/brand/og-card.svg
+          cp /tmp/rocksoul-assets/moonwitness/brand/generated/og-card-1200x630.png public/brand/generated/og-card-1200x630.png
+
+          canonical="$(git -C /tmp/rocksoul-assets hash-object moonwitness/brand/generated/og-card-1200x630.png)"
+          mirrored="$(git hash-object public/brand/generated/og-card-1200x630.png)"
+          test "$canonical" = "$mirrored"
+          echo "Canonical OG card blob: $canonical"
+
+      - name: Commit synchronized binary
+        shell: bash
+        run: |
+          if git diff --quiet -- public/brand/og-card.svg public/brand/generated/og-card-1200x630.png; then
+            echo "Canonical brand mirror already synchronized."
+            exit 0
+          fi
+          git config user.name "rocksoul-asset-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/brand/og-card.svg public/brand/generated/og-card-1200x630.png
+          git commit -m "assets(ui): sync canonical OG card delivery"
+          git push origin HEAD:dev

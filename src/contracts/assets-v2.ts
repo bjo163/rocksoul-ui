@@ -11,20 +11,7 @@ export const ROCKSOUL_ASSETS_SYNC = {
   repositoryAcceptance: "passed",
   livePenpotVerification: "manual-follow-up",
   assetPackIndex: "moonwitness/asset-packs.json",
-  assetPackCount: 43,
-  canonicalAssetCount: 634,
   developerDistribution: ["dist/assets.json", "dist/assets.ts", "dist/assets.css", "dist/sprite.svg"],
-  mirroredRuntimeFiles: 202,
-  mirroredCorePacks: {
-    icons: 44,
-    dashboard: 20,
-    dataViz: 20,
-    heroBackgrounds: 8,
-    stateIllustrations: 12,
-    motion: 12,
-    sfx: 14,
-    runtimeMotion: 12,
-  },
 } as const
 
 export const moonWitnessBrandContract = {
