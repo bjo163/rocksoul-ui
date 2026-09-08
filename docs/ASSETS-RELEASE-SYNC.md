@@ -4,21 +4,21 @@ Current design source:
 
 ```text
 bjo163/rocksoul-assets
-main @ e2dd99735e9225d368f6c520c6ac1980219115ba
-release: 1.3.0
+main @ 82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05
+release: 1.3.1
 repository acceptance: passed
 ```
 
 Implemented consumer package:
 
 ```text
-@rocksoul/ui 0.11.0
+@rocksoul/ui 0.12.0
 ```
 
 ## Stable v1.3 contract
 
-- 41 indexed asset families;
-- 591 canonical assets in the generated registry;
+- 42 indexed asset families;
+- 614 canonical assets in the generated registry;
 - developer distribution: `dist/assets.json`, `dist/assets.ts`, `dist/assets.css`, `dist/sprite.svg`;
 - core + runtime delivery mirrored and byte-locked: 198 files;
 - Runtime Motion: SVG / APNG / WebM / Lottie;
@@ -48,3 +48,8 @@ Correlation owns reviewed cross-domain edges and explainability metadata only. I
 ## Verification boundary
 
 Repository/code parity is automated. Native Penpot reconstruction, live prototype/focus walkthrough, and final workspace contrast review remain explicit manual workspace gates.
+
+
+## Cinematic web delivery profile
+
+The public hero consumes the pinned delivery profile at `moonwitness/cinematic-web-hero/manifest.json`. Photographic masters remain in `cinematic-hero-pack/webp`; the profile only composes released sources for application consumption and does not create a new canonical pack family.
