@@ -150,6 +150,41 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Community submission is explicitly non-canonical.
 - [x] Moderation state is visible.
 
+## Application framework
+- [x] Shared responsive ApplicationShell.
+- [x] Compact/expanded responsive sidebar.
+- [x] Shared application topbar.
+- [x] Theme control.
+- [x] Breadcrumbs.
+- [x] Backend online/degraded/offline status.
+- [x] User menu.
+- [x] Command palette.
+- [x] Ctrl/Cmd+K command palette shortcut.
+- [x] Notifications drawer + unread count.
+- [x] Resource navigation is AutoMenu-driven from resource definitions.
+- [x] Permission-aware AutoMenu filtering.
+- [x] Dashboard surface.
+- [x] Kanban workspace.
+- [x] Calendar workspace.
+- [x] Chat workspace.
+- [x] AI Workspace.
+- [x] Profile / Settings.
+- [x] Authorization UX with allowed/denied/pending states.
+- [x] Error / Empty / Loading application states.
+- [x] Platform/Admin migrated to shared ApplicationShell.
+- [x] Application framework has dedicated Storybook coverage.
+- [x] Application framework contract is enforced by CI.
+
+## Consumer package handoff
+- [x] Vite library build.
+- [x] ES module artifact.
+- [x] Type declaration artifact.
+- [x] Exported CSS artifact.
+- [x] React / React DOM are peer dependencies.
+- [x] Package exports map is explicit.
+- [x] Package artifact audit is enforced by CI.
+- [x] Type declaration entry does not depend on CSS module resolution.
+
 ## Platform acceptance
 - [x] Canonical blockers visible.
 - [x] All five repositories shown.

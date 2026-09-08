@@ -21,6 +21,7 @@ for(const proof of shellProofs) if(!shell.includes(proof)) failures.push(`applic
 for(const proof of screenProofs) if(!screens.includes(`export function ${proof}`)) failures.push(`application screen: ${proof}`)
 for(const proof of resourceProofs) if(!shell.includes(`id: "${proof}"`)) failures.push(`AutoMenu resource: ${proof}`)
 if(!shell.includes("requiredPermission")) failures.push("authorization-aware AutoMenu")
+if(!shell.includes('event.key.toLowerCase() === "k"')) failures.push("Ctrl/Cmd+K command palette shortcut")
 if(!stories.includes("AuthorizationUX")||!stories.includes("ErrorEmptyLoading")) failures.push("application Storybook proof")
 if(!screens.includes("StatePanel state=\"empty\"")||!screens.includes("StatePanel state=\"loading\"")||!screens.includes("StatePanel state=\"error\"")) failures.push("empty/loading/error state proof")
 

@@ -1,5 +1,3 @@
-import "./styles.css"
-
 export * from "./tokens"
 export * from "./components/application-shell"
 export * from "./components/archive-components"

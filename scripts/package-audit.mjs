@@ -16,6 +16,10 @@ if(pkg.types!=="./dist/index.d.ts") failures.push("types export")
 if(pkg.exports?.["./styles.css"]!=="./dist/styles.css") failures.push("styles export")
 if(!pkg.peerDependencies?.react||!pkg.peerDependencies?.["react-dom"]) failures.push("React peer dependencies")
 if(!pkg.files?.includes("dist")) failures.push("dist package file allowlist")
+try {
+  const declarations = await readFile(path.join(root,"dist","index.d.ts"),"utf8")
+  if (declarations.includes("styles.css")) failures.push("type entry must not import CSS")
+} catch {}
 
 if(failures.length){
   console.error("Package contract audit failed:")

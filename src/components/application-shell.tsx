@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react"
+import { useEffect, useMemo, useState, type ReactNode } from "react"
 import { Badge } from "./badge"
 import { Button } from "./button"
 import { Input } from "./form-controls"
@@ -263,7 +263,7 @@ export function AppTopbar({
           <Breadcrumbs items={breadcrumbs} />
         </div>
         <div className="hidden sm:block"><BackendStatus state={backendState} /></div>
-        <IconButton label="Open command palette" onClick={onOpenCommands}>⌘</IconButton>
+        <IconButton label="Open command palette" aria-keyshortcuts="Control+K Meta+K" onClick={onOpenCommands}>⌘</IconButton>
         <button
           type="button"
           className="mw-touch relative inline-flex items-center justify-center border border-border bg-card px-3 font-mono text-[10px] font-bold uppercase"
@@ -304,6 +304,17 @@ export function ApplicationShell({
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [compact, setCompact] = useState(true)
   const unreadCount = notifications.filter((item) => item.state === "unread").length
+
+  useEffect(() => {
+    const openPalette = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault()
+        setCommandsOpen(true)
+      }
+    }
+    window.addEventListener("keydown", openPalette)
+    return () => window.removeEventListener("keydown", openPalette)
+  }, [])
 
   return (
     <div className="mw-platform min-h-screen bg-background text-foreground">
