@@ -237,3 +237,24 @@ These components keep live semantics in HTML and use Rocksoul assets as visual s
 `CinematicWebHero` implements the application-facing `moonwitness/cinematic-web-hero/manifest.json` delivery profile. It uses the photographic desktop/mobile masters from `rocksoul-assets` while keeping navigation, headline, CTA, evidence semantics, archive labels and accessibility as live HTML/SVG.
 
 The component is static under reduced-motion preferences, keeps correlation distinct from causation, and exposes its asset set as a replaceable typed prop for consumers.
+
+
+## PERSON consumer semantics
+
+Historical PERSON surfaces should consume the generic canonical person mark rather than assigning a modern application persona role:
+
+```tsx
+import { MoonWitnessPersonMark, MWHeader } from "@rocksoul/ui"
+
+<MWHeader
+  brandLabel="SUPERHERO / PERSON INTELLIGENCE"
+  navItems={[
+    { label: "People", href: "#people" },
+    { label: "Evidence", href: "#claims" },
+  ]}
+/>
+
+<MoonWitnessPersonMark alt="Canonical person" />
+```
+
+`MWHeader` exposes consumer navigation/label slots while preserving the shared responsive drawer, theme control, focus behavior and touch contracts. `MoonWitnessPersonMark` resolves the canonical `rocksoul-assets` product PERSON icon; persona avatars remain reserved for application/user roles.
