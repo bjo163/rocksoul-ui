@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process"
-import { readFile } from "node:fs/promises"
+import { mkdtemp, readFile, rm } from "node:fs/promises"
 import path from "node:path"
+import os from "node:os"
 
 const root = process.cwd()
 const contract = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
@@ -50,21 +51,17 @@ function allowedPostReleaseFile(file) {
 }
 
 try {
-  const [versionResponse, packsResponse, compareResponse] = await Promise.all([
+  const [versionResponse, packsResponse] = await Promise.all([
     fetch("https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/VERSION"),
     fetch("https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/moonwitness/asset-packs.json"),
-    fetch(`https://api.github.com/repos/bjo163/rocksoul-assets/compare/${acceptedMainCommit}...${current}`, {
-      headers: { Accept: "application/vnd.github+json", "User-Agent": "rocksoul-ui-assets-freshness" },
-    }),
   ])
 
-  if (!versionResponse.ok || !packsResponse.ok || !compareResponse.ok) {
-    throw new Error("upstream metadata unavailable")
+  if (!versionResponse.ok || !packsResponse.ok) {
+    throw new Error("upstream release metadata unavailable")
   }
 
   const version = (await versionResponse.text()).trim().replace(/^v/, "")
   const packs = await packsResponse.json()
-  const compare = await compareResponse.json()
   const packCount = Array.isArray(packs.packs) ? packs.packs.length : 0
 
   if (version !== expectedRelease || packs.version !== expectedRelease || packCount !== expectedPackCount) {
@@ -74,9 +71,24 @@ try {
     process.exit(1)
   }
 
-  const changedFiles = Array.isArray(compare.files)
-    ? compare.files.map((file) => file.filename).filter(Boolean)
-    : []
+  const worktree = await mkdtemp(path.join(os.tmpdir(), "rocksoul-assets-freshness-"))
+  let changedFiles = []
+  try {
+    execFileSync("git", ["init", "-q", worktree], { stdio: "ignore" })
+    execFileSync("git", ["-C", worktree, "remote", "add", "origin", "https://github.com/bjo163/rocksoul-assets.git"], { stdio: "ignore" })
+    execFileSync("git", ["-C", worktree, "fetch", "-q", "--no-tags", "--depth=64", "origin", "main"], { stdio: "ignore" })
+    const fetchedHead = execFileSync("git", ["-C", worktree, "rev-parse", "FETCH_HEAD"], { encoding: "utf8" }).trim()
+    if (fetchedHead !== current) throw new Error(`assets head moved during audit: ${current} -> ${fetchedHead}`)
+    execFileSync("git", ["-C", worktree, "cat-file", "-e", `${acceptedMainCommit}^{commit}`], { stdio: "ignore" })
+    changedFiles = execFileSync(
+      "git",
+      ["-C", worktree, "diff", "--name-only", acceptedMainCommit, current],
+      { encoding: "utf8" },
+    ).split(/\r?\n/).map((value) => value.trim()).filter(Boolean)
+  } finally {
+    await rm(worktree, { recursive: true, force: true })
+  }
+
   const contractChanges = changedFiles.filter((file) => !allowedPostReleaseFile(file))
 
   if (contractChanges.length) {
