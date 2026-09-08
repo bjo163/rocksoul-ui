@@ -4,52 +4,41 @@ Current design source:
 
 ```text
 bjo163/rocksoul-assets
-main @ 95a6912409f849029e18093658b1c0e8158a32f0
-release: 1.2.0
+main @ 7d924d5915364b222e1d1287e493f4b742e283a3
+release: 1.3.0
 repository acceptance: passed
 ```
 
 Implemented consumer package:
 
 ```text
-@rocksoul/ui
+@rocksoul/ui 0.10.0
 ```
 
-The package implements the MoonWitness brand system, v1 visual baseline, authenticated v2 application shell/screens 17–27, AutoMenu navigation, canonical resource descriptors, responsive shell geometry, and unified system states.
+The package implements the MoonWitness brand system, shared public/application visual grammar, authenticated v2 shell/screens, AutoMenu navigation, canonical resource descriptors, responsive shell geometry, unified system states, and typed access to the complete 41-family v1.3 asset registry.
 
 Canonical active repository map:
 
 ```text
-STORY   → rocksoul-mftl
-EVENT   → rocksoul-legend
-PERSON  → rocksoul-superhero
-TEXT    → rocksoul-rgbl
-LAW     → rocksoul-aws
+STORY       → rocksoul-mftl
+EVENT       → rocksoul-legend
+PERSON      → rocksoul-superhero
+TEXT        → rocksoul-rgbl
+LAW         → rocksoul-aws
+CORRELATION → rocksoul-correlation
 ```
 
-Release 1.1.0 also adds reusable product icon, dashboard, data-viz, hero-background, state-illustration, motion, and SFX packs. Those packs remain canonical in `rocksoul-assets`; UI consumers should integrate them deliberately rather than duplicating or editing their sources locally.
+## Stable v1.3 contract
+
+`rocksoul-assets/main` is now the production design source for v1.3.0. UI consumers use the stable 41-pack contract; core runtime packs may remain mirrored and byte-locked, while larger delivery families are staged by the consuming application or resolved from the canonical asset base.
+
+CI verifies:
+
+- the recorded `rocksoul-assets/main` commit is still current;
+- the v1.3 release and 41-pack registry are present;
+- core mirrored assets retain byte integrity;
+- TypeScript, library build, playground, Storybook, accessibility and application contracts remain valid.
 
 ## Verification boundary
 
-Repository/code parity is automated in CI.
-
-The following remain external live-Penpot verification and are intentionally not claimed by `@rocksoul/ui`:
-
-- final font availability/licensing inside Penpot;
-- native Penpot component reconstruction;
-- native state-matrix review;
-- interaction prototype wiring;
-- live keyboard/focus walkthrough;
-- final live contrast/accessibility review.
-
-These are workspace verification gates, not missing code contracts.
-
-
-## Asset packs v1.1
-
-The UI package mirrors 134 consumer-facing pack files from the canonical release: icons, dashboard widgets, data-viz, hero backgrounds, state illustrations, motion references, and SFX delivery. `scripts/assets-integrity-audit.mjs` verifies every mirrored file against its canonical Git blob SHA.
-
-
-## v1.2 consumption boundary
-
-The UI system implements all 19 pack contracts through a typed provider. Core runtime packs remain mirrored and byte-locked in this repository. Secondary PNG delivery for social, platform/store, email, report, and other raster-specific consumers is staged by each application from `rocksoul-assets` under `/assets/moonwitness`, matching the canonical consumption contract.
+Live native Penpot reconstruction/prototype/accessibility inspection remains a manual workspace gate and is not represented as repository CI.

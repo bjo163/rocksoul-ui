@@ -14,6 +14,8 @@ import {
 import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/form-controls"
 import { Dialog, Divider, Skeleton } from "../components/overlays"
 import { Tabs } from "../components/tabs"
+import { MoonWitnessCandidateAssetImage } from "../components/candidate-asset-provider"
+import { ROCKSOUL_ASSETS_CANDIDATE } from "../contracts/assets-candidate"
 
 const swatches = [
   ["Crimson", "bg-primary"],
@@ -115,6 +117,45 @@ export function DesignSystemScreen() {
           <Skeleton variant="text" />
           <Skeleton variant="table-row" />
         </div>
+      </div>
+
+
+      <div className="mw-section">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="mw-eyebrow text-warning">Visual language candidate / v1.3</p>
+            <h2 className="mt-2 text-2xl font-bold">41 packs / 591 canonical assets</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+              Release-candidate upstream branch. Stable v1.2 remains the default; this panel exists so the UI system can review the next visual grammar before promotion.
+            </p>
+          </div>
+          <Badge variant="partial">UNRELEASED · {ROCKSOUL_ASSETS_CANDIDATE.commit.slice(0, 8)}</Badge>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {([
+            ["Evidence media", "evidence-media", "evidence-focus"],
+            ["Correlation semantics", "correlation-semantics", "edge-supports"],
+            ["Kanban workflow", "kanban-workflow", "card-review"],
+            ["Calendar temporal", "calendar-temporal", "event-review"],
+            ["AI workspace", "ai-workspace", "ai-thinking"],
+            ["Authorization", "authorization-security", "permission-granted"],
+          ] as const).map(([label, pack, assetId]) => (
+            <article key={label} className="border border-border bg-card p-4">
+              <p className="mw-meta text-muted-foreground">{label}</p>
+              <div className="mt-4 flex min-h-40 items-center justify-center overflow-hidden bg-panel p-4">
+                <MoonWitnessCandidateAssetImage
+                  pack={pack}
+                  assetId={assetId}
+                  alt={label}
+                  className="max-h-44 max-w-full"
+                />
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="mw-meta mt-5 border-l-2 border-warning pl-4 text-muted-foreground">
+          PROMOTION RULE / Candidate assets never replace the stable channel until rocksoul-assets/main carries the release.
+        </p>
       </div>
 
       <div className="mw-section">

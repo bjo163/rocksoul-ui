@@ -159,19 +159,15 @@ npm run audit:assets-freshness
 
 A newer `rocksoul-assets` commit must be reviewed before UI CI is allowed to claim parity. Generated browser/app/social delivery files are mirrored read-only from canonical SVG-derived assets; edit the source in `rocksoul-assets`, then resynchronize.
 
-## Asset packs v1.2
+## Asset packs v1.3
 
-`@rocksoul/ui 0.9.0` implements the **MoonWitness Complete Asset Packs v1.2.0** contract from `rocksoul-assets@95a6912409f849029e18093658b1c0e8158a32f0`.
+`@rocksoul/ui 0.10.0` implements the stable **MoonWitness Complete Asset Packs v1.3.0** contract from `rocksoul-assets/main@7d924d5915364b222e1d1287e493f4b742e283a3`.
 
-- **19** typed asset packs;
-- Motion expanded to **12** animated SVG references;
-- SFX expanded to **14** deterministic WAV/OGG cues;
-- secondary Graph, Badge, Source/File, Geospatial, Cursor, Persona, Social, Platform Delivery, Onboarding, Document/Report, Notification, and Editorial packs;
-- `MoonWitnessAssetProvider` resolves canonical app-hosted assets at `/assets/moonwitness`;
-- `MoonWitnessAssetImage`, status/persona helpers, and opt-in `useMoonWitnessSfx`;
-- product UI prefers SVG; generated PNG remains derivative delivery for raster-only/external consumers.
-
-The UI package keeps the seven core runtime packs mirrored and byte-locked. Secondary delivery packs are **staged by the consuming application** under `/assets/moonwitness` rather than duplicating hundreds of social/store/email PNG derivatives inside the UI-system package.
+- **41** typed asset packs;
+- canonical MoonWitness brand, graph, source, geospatial, evidence, correlation, workflow, accessibility, integrity, export and cinematic families;
+- `MoonWitnessAssetProvider` resolves app-hosted assets or a canonical remote base;
+- product UI prefers SVG while raster/video derivatives remain delivery formats;
+- core runtime packs remain byte-locked and larger secondary families stay canonical in `rocksoul-assets`.
 
 Canonical resources remain:
 
@@ -185,6 +181,10 @@ CORRELATION → rocksoul-correlation
 ```
 
 Correlation owns reviewed cross-domain edges and explainability metadata, not verdicts or duplicate canonical records.
+
+## Visual language v1.3
+
+The former v1.3 candidate has been promoted upstream to `rocksoul-assets/main`. The UI stable contract now tracks the released 41-pack visual language rather than a feature-branch snapshot.
 
 ## Run
 

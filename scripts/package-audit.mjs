@@ -6,7 +6,7 @@ const root=process.cwd()
 const pkg=JSON.parse(await readFile(path.join(root,"package.json"),"utf8"))
 const failures=[]
 
-const requiredFiles=["dist/assets/icons/icons.json","dist/assets/dashboard-pack/dashboard-pack.json","dist/assets/data-viz/data-viz.json","dist/assets/hero-backgrounds/backgrounds.json","dist/assets/state-illustrations/states.json","dist/assets/motion/motion.json","dist/assets/sfx/sounds.json","dist/assets/sfx/generated/manifest.json",
+const requiredFiles=["dist/assets/candidate-v1.3/assets.json","dist/assets/candidate-v1.3/asset-packs.json","dist/assets/candidate-v1.3/sprite.svg","dist/assets/icons/icons.json","dist/assets/dashboard-pack/dashboard-pack.json","dist/assets/data-viz/data-viz.json","dist/assets/hero-backgrounds/backgrounds.json","dist/assets/state-illustrations/states.json","dist/assets/motion/motion.json","dist/assets/sfx/sounds.json","dist/assets/sfx/generated/manifest.json",
   "dist/index.js",
   "dist/index.d.ts",
   "dist/styles.css",
@@ -73,6 +73,8 @@ try {
     "AuthorizationScreen",
     "StatePanel",
     "MW0042Overview",
+    "MoonWitnessCandidateAssetImage",
+    "moonWitnessCandidateAssets",
   ]
   for(const name of requiredExports){
     if(!(name in library)) failures.push(`missing runtime export ${name}`)

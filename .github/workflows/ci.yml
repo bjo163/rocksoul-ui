@@ -40,6 +40,8 @@ jobs:
 
       - name: Rocksoul assets remote freshness
         run: npm run audit:assets-freshness
+      - name: Rocksoul assets v1.3 candidate
+        run: npm run audit:assets-candidate
       - name: Asset pack byte integrity
         run: npm run audit:assets-integrity
       - name: Application framework audit
