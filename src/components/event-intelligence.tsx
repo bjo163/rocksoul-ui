@@ -1,9 +1,9 @@
-import { useMemo } from "react"
+import { useId, useMemo } from "react"
 import { cn } from "../lib/cn"
 
 export type EventTopologyNodeKind =
   | "event" | "claim" | "evidence" | "source" | "place" | "artifact"
-  | "uncertainty" | "person" | "story" | "text" | "law" | "perspective" | "relationship"
+  | "uncertainty" | "alternative" | "person" | "story" | "text" | "law" | "perspective" | "relationship"
 
 export interface EventTopologyNode {
   id: string
@@ -39,6 +39,7 @@ const columnByKind: Record<EventTopologyNodeKind, number> = {
   artifact: 1,
   evidence: 2,
   uncertainty: 2,
+  alternative: 2,
   source: 3,
   person: 3,
   story: 3,
@@ -57,6 +58,8 @@ export function EventTopologyGraph({
   title = "Event intelligence topology",
   description = "Canonical event graph showing claims, evidence, sources, context and qualified external references.",
 }: EventTopologyGraphProps) {
+  const titleId = useId()
+  const descriptionId = useId()
   const layout = useMemo(() => {
     const groups = new Map<number, EventTopologyNode[]>()
     nodes.forEach((node) => {
@@ -81,10 +84,10 @@ export function EventTopologyGraph({
         viewBox={`0 0 760 ${layout.height}`}
         className="h-auto min-h-[300px] w-full"
         role="img"
-        aria-labelledby="event-topology-title event-topology-desc"
+        aria-labelledby={`${titleId} ${descriptionId}`}
       >
-        <title id="event-topology-title">{title}</title>
-        <desc id="event-topology-desc">{description}</desc>
+        <title id={titleId}>{title}</title>
+        <desc id={descriptionId}>{description}</desc>
         <g aria-hidden="true">
           {edges.map((edge) => {
             const from = layout.positions.get(edge.from)
