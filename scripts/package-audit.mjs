@@ -11,11 +11,13 @@ for(const file of requiredFiles){
 }
 
 if(pkg.name!=="@rocksoul/ui") failures.push("package name")
+if(pkg.main!=="./dist/index.js") failures.push("main export")
 if(pkg.module!=="./dist/index.js") failures.push("module export")
 if(pkg.types!=="./dist/index.d.ts") failures.push("types export")
 if(pkg.exports?.["./styles.css"]!=="./dist/styles.css") failures.push("styles export")
 if(!pkg.peerDependencies?.react||!pkg.peerDependencies?.["react-dom"]) failures.push("React peer dependencies")
 if(!pkg.files?.includes("dist")) failures.push("dist package file allowlist")
+if(pkg.scripts?.prepare!=="npm run build:lib") failures.push("Git dependency prepare build")
 try {
   const declarations = await readFile(path.join(root,"dist","index.d.ts"),"utf8")
   if (declarations.includes("styles.css")) failures.push("type entry must not import CSS")

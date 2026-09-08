@@ -1,6 +1,6 @@
 {
   "name": "@rocksoul/ui",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,7 +16,8 @@
     "audit:domains": "node scripts/domain-audit.mjs",
     "audit:application": "node scripts/application-audit.mjs",
     "audit:package": "node scripts/package-audit.mjs",
-    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run audit:application && npm run typecheck && npm run build:lib && npm run audit:package && npm run build:playground && npm run build-storybook"
+    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run audit:application && npm run typecheck && npm run build:lib && npm run audit:package && npm run build:playground && npm run build-storybook",
+    "prepare": "npm run build:lib"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
@@ -59,5 +60,6 @@
   "peerDependencies": {
     "react": ">=19",
     "react-dom": ">=19"
-  }
+  },
+  "main": "./dist/index.js"
 }

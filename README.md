@@ -157,3 +157,20 @@ dist/styles.css
 ```
 
 React and React DOM are peer dependencies so the consuming application owns the runtime instance.
+
+
+### Git dependency handoff
+
+For a separate application repository such as `rocksoul-web`, the internal package can be consumed from the stable branch:
+
+```bash
+npm install github:bjo163/rocksoul-ui#main
+```
+
+The package `prepare` lifecycle builds `dist/` automatically for Git-based installs. Consumers should still import the stylesheet explicitly:
+
+```ts
+import "@rocksoul/ui/styles.css"
+```
+
+Keep application-specific routing, API clients, authentication providers, persistence, and backend state in `rocksoul-web`; keep reusable visual/application contracts in `@rocksoul/ui`.
