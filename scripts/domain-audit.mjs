@@ -7,6 +7,7 @@ const screens = await readFile(path.join(root, "src", "screens", "domain-screens
 const ecosystem = await readFile(path.join(root, "src", "contracts", "ecosystem-domains.ts"), "utf8")
 const graph = await readFile(path.join(root, "src", "components", "evidence-graph.tsx"), "utf8")
 const summary = await readFile(path.join(root, "src", "components", "domain-record-summary.tsx"), "utf8")
+const assetsV2 = await readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8")
 
 const checks = [
   [fixture.includes('start: "02:14"') && fixture.includes('end: "02:37"') && fixture.includes('timezone: "LOCAL/FIXTURE"'), "EVENT temporal fixture"],
@@ -23,6 +24,7 @@ const checks = [
   [ecosystem.includes('RELATIONSHIP: { repository: "rocksoul-correlation", prefix: "correlation:" }'), "RELATIONSHIP canonical owner"],
   [graph.includes('PERSPECTIVE: "text-warning border-warning"'), "PERSPECTIVE graph-node support"],
   [summary.includes("ResearchDomain") && summary.includes("canonicalOwnerFor"), "generic domain-record summary"],
+  [assetsV2.includes('PERSPECTIVE / JIZZ') && assetsV2.includes('repo: "rocksoul-jizz"'), "PERSPECTIVE resource descriptor"],
 ]
 
 const failures = checks.filter(([ok]) => !ok).map(([, label]) => label)
