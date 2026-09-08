@@ -4,7 +4,7 @@ export const moonWitnessAssetPacks = {
   "data-viz": { id: "data-viz", count: 16, root: "data-viz", manifest: "data-viz/data-viz.json" },
   "hero-backgrounds": { id: "hero-backgrounds", count: 8, root: "hero-backgrounds", manifest: "hero-backgrounds/backgrounds.json" },
   "state-illustrations": { id: "state-illustrations", count: 12, root: "state-illustrations", manifest: "state-illustrations/states.json" },
-  "motion": { id: "motion", count: 12, root: "motion", manifest: "motion/motion.json" },
+  "motion": { id: "motion", count: 12, root: "motion", manifest: "motion/motion.json" },\n  "application-screens": { id: "application-screens", count: 12, root: "ui/v2", manifest: "ui/v2/manifest.json" },
   "sfx": { id: "sfx", count: 14, root: "sfx", manifest: "sfx/sounds.json" },
   "graph-vector": { id: "graph-vector", count: 10, root: "graph-pack", manifest: "graph-pack/manifest.json" },
   "badge-status": { id: "badge-status", count: 12, root: "badge-pack", manifest: "badge-pack/manifest.json" },
@@ -48,7 +48,7 @@ export type MoonWitnessSfxId =
   | "success" | "warning" | "error" | "evidence-linked" | "trace-found"
   | "ai-complete" | "upload-complete" | "case-open" | "case-resolved" | "ai-start"
 
-export const moonWitnessAssetPackVersion = "1.3.0" as const
+export const moonWitnessAssetPackVersion = "1.3.1" as const
 export const moonWitnessAssetPackIndexPath = "asset-packs.json" as const
 
 export function moonWitnessAssetRelativePath(pack: MoonWitnessAssetPackId, file: string) {
