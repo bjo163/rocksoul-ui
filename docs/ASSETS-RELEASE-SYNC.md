@@ -53,3 +53,5 @@ Repository/code parity is automated. Native Penpot reconstruction, live prototyp
 ## Cinematic web delivery profile
 
 The public hero consumes the pinned delivery profile at `moonwitness/cinematic-web-hero/manifest.json`. Photographic masters remain in `cinematic-hero-pack/webp`; the profile only composes released sources for application consumption and does not create a new canonical pack family.
+
+The cinematic web profile is independently pinned to `rocksoul-assets@e978695a3dd92d952faaa0ff356980e9ad6438a2`, which contains the generated 2880×1620 desktop master, dedicated 1440×1920 mobile master, and 1600×1600 transparent lunar master. This hero-specific pin can advance without changing the stable v1.3 mirrored core/runtime asset lock above.

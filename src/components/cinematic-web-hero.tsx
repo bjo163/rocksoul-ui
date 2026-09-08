@@ -77,7 +77,15 @@ export function CinematicWebHero({
     <section id={id} className={`mw-cinematic-web-hero ${className}`.trim()} style={overlayStyle} aria-labelledby="mw-cinematic-web-hero-title">
       <picture className="mw-cinematic-web-hero__master" aria-hidden="true">
         <source media="(max-width: 700px)" srcSet={assets.mobile} />
-        <img src={assets.desktop} alt="" fetchPriority="high" />
+        <img
+          src={assets.desktop}
+          alt=""
+          width={2880}
+          height={1620}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+        />
       </picture>
       <div className="mw-cinematic-web-hero__grid" aria-hidden="true" />
       <div className="mw-cinematic-web-hero__texture" aria-hidden="true" />

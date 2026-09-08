@@ -11,7 +11,7 @@ export interface CinematicWebHeroAssetSet {
 export const ROCKSOUL_CINEMATIC_WEB_HERO_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
-  commit: "82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05",
+  commit: "e978695a3dd92d952faaa0ff356980e9ad6438a2",
   manifest: "moonwitness/cinematic-web-hero/manifest.json",
   profileVersion: "1.0.0",
   sourceRelease: "1.3.1",
