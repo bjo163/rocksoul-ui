@@ -1,27 +1,29 @@
 # Rocksoul UI — Assets Release Sync
 
-Current design source:
+The synchronization source is intentionally machine-readable rather than duplicated in documentation.
 
-```text
-bjo163/rocksoul-assets
-main @ 82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05
-release: 1.3.1
-repository acceptance: passed
-```
+## Source of truth
 
-Implemented consumer package:
+| Concern | Canonical source |
+|---|---|
+| Upstream repository/ref | `ROCKSOUL_ASSETS_SYNC.repository` / `.ref` |
+| Immutable runtime asset commit | `ROCKSOUL_ASSETS_SYNC.commit` |
+| Accepted upstream head | `ROCKSOUL_ASSETS_SYNC.acceptedMainCommit` |
+| Asset release | `ROCKSOUL_ASSETS_SYNC.assetRelease` |
+| Pack inventory | `ROCKSOUL_ASSETS_REGISTRY.packCount` |
+| Canonical SVG inventory | `ROCKSOUL_ASSETS_REGISTRY.canonicalAssetCount` |
+| Delivery inventory | `ROCKSOUL_ASSETS_REGISTRY.deliveryFileCount` |
+| Mirrored runtime files | `public/assets/asset-lock.json` |
+| Generated developer registry | `public/assets/developer-v1.3/assets.json` |
 
-```text
-@rocksoul/ui 0.12.0
-```
+Do not copy commit SHAs or inventory counts into consumer code or prose as independent configuration. Immutable pins stay explicit only inside the synchronization/provenance contract.
 
-## Stable v1.3 contract
+## Stable consumption contract
 
-- 43 indexed asset families;
-- 634 canonical assets in the generated registry;
 - developer distribution: `dist/assets.json`, `dist/assets.ts`, `dist/assets.css`, `dist/sprite.svg`;
-- core + runtime delivery mirrored and byte-locked: 198 files;
-- Runtime Motion: SVG / APNG / WebM / Lottie;
+- core + runtime delivery is mirrored and byte-locked;
+- canonical OG-card SVG/PNG is synchronized byte-for-byte by `Sync Canonical Brand Binary`;
+- Runtime Motion supports SVG / APNG / WebM / Lottie;
 - SFX remains opt-in;
 - SVG remains preferred for product UI;
 - motion honors reduced-motion behavior;
@@ -35,23 +37,21 @@ The upstream static showcase is not copied into the UI package. Its useful inter
 ## Canonical repository map
 
 ```text
-STORY       → rocksoul-mftl
-EVENT       → rocksoul-legend
-PERSON      → rocksoul-superhero
-TEXT        → rocksoul-rgbl
-LAW         → rocksoul-aws
-CORRELATION → rocksoul-correlation
+STORY        → rocksoul-mftl
+EVENT        → rocksoul-legend
+PERSON       → rocksoul-superhero
+TEXT         → rocksoul-rgbl
+LAW          → rocksoul-aws
+PERSPECTIVE  → rocksoul-jizz
+RELATIONSHIP → rocksoul-correlation
 ```
 
-Correlation owns reviewed cross-domain edges and explainability metadata only. It is not a verdict layer.
+The reusable `ResearchDomainOwnershipMap` renders this ownership contract with an accessible text equivalent.
 
 ## Verification boundary
 
 Repository/code parity is automated. Native Penpot reconstruction, live prototype/focus walkthrough, and final workspace contrast review remain explicit manual workspace gates.
 
-
 ## Cinematic web delivery profile
 
-The public hero consumes the pinned delivery profile at `moonwitness/cinematic-web-hero/manifest.json`. Photographic masters remain in `cinematic-hero-pack/webp`; the profile only composes released sources for application consumption and does not create a new canonical pack family.
-
-The cinematic web profile is independently pinned to `rocksoul-assets@e978695a3dd92d952faaa0ff356980e9ad6438a2`, which contains the generated 2880×1620 desktop master, dedicated 1440×1920 mobile master, and 1600×1600 transparent lunar master. This hero-specific pin can advance without changing the stable v1.3 mirrored core/runtime asset lock above.
+The public hero consumes the delivery profile declared by `src/contracts/cinematic-web-hero.ts`. Photographic masters remain canonical in `rocksoul-assets`; consumer documentation does not duplicate the hero source commit.

@@ -28,7 +28,7 @@ if(!assetsRegistry.includes("Object.keys(assets.packs).length")) failures.push("
 if(!assetsRegistry.includes("assets.coverage.extensions.svg")) failures.push("derived canonical SVG inventory")
 if(!heroContract.includes('profileVersion: "1.0.0"')) failures.push("cinematic delivery profile 1.0.0")
 if(!heroContract.includes('sourceRelease: "1.3.1"')) failures.push("cinematic source release v1.3.1")
-if(!readme.includes("@rocksoul/ui 0.12.0")) failures.push("README version closure")
+if(!readme.includes("@rocksoul/ui")) failures.push("README package identity")
 if(!readme.includes("CinematicWebHero")) failures.push("README cinematic hero documentation")
 
 for(const file of ["dist/index.js","dist/index.d.ts","dist/styles.css"]){
@@ -41,4 +41,4 @@ if(failures.length){
   process.exit(1)
 }
 
-console.log("Release closure audit passed: @rocksoul/ui 0.12.0 / assets v1.3.1 / cinematic web hero 1.0.0.")
+console.log(`Release closure audit passed: ${pkg.name} ${pkg.version} / assets ${assetsContract.match(/assetRelease:\s*"([^"]+)"/)?.[1]} / cinematic web hero ${heroContract.match(/profileVersion:\s*"([^"]+)"/)?.[1]}.`)

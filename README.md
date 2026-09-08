@@ -161,30 +161,32 @@ A newer `rocksoul-assets` commit must be reviewed before UI CI is allowed to cla
 
 ## Asset packs v1.3
 
-`@rocksoul/ui 0.12.0` implements the stable **MoonWitness Complete Asset Packs v1.3.1** contract from `rocksoul-assets/main@82f20b8a361a19abdc6591fe2f4c67e3fb9d4b05`.
+`@rocksoul/ui` consumes the stable MoonWitness asset release through the typed registry and immutable provenance contract:
 
-- **43** typed asset packs;
-- canonical MoonWitness brand, graph, source, geospatial, evidence, correlation, workflow, accessibility, integrity, export and cinematic families;
-- `MoonWitnessAssetProvider` resolves app-hosted assets or a canonical remote base;
+- `ROCKSOUL_ASSETS_SYNC` records repository/ref plus runtime and accepted-head provenance;
+- `ROCKSOUL_ASSETS_REGISTRY` derives pack count, canonical SVG count, delivery-file count and coverage from the generated registry;
+- `MoonWitnessAssetProvider` resolves app-hosted assets or the canonical immutable remote base;
 - product UI prefers SVG while raster/video derivatives remain delivery formats;
-- core runtime packs remain byte-locked and larger secondary families stay canonical in `rocksoul-assets`.
+- core/runtime mirrors are byte-locked by `public/assets/asset-lock.json`;
+- canonical OG-card SVG/PNG delivery is synchronized automatically from the recorded asset commit.
 
 Canonical resources remain:
 
 ```text
-STORY       → rocksoul-mftl
-EVENT       → rocksoul-legend
-PERSON      → rocksoul-superhero
-TEXT        → rocksoul-rgbl
-LAW         → rocksoul-aws
-CORRELATION → rocksoul-correlation
+STORY        → rocksoul-mftl
+EVENT        → rocksoul-legend
+PERSON       → rocksoul-superhero
+TEXT         → rocksoul-rgbl
+LAW          → rocksoul-aws
+PERSPECTIVE  → rocksoul-jizz
+RELATIONSHIP → rocksoul-correlation
 ```
 
-Correlation owns reviewed cross-domain edges and explainability metadata, not verdicts or duplicate canonical records.
+`RELATIONSHIP` owns reviewed cross-domain edges and explainability metadata, not verdicts or duplicate canonical records. Inventory values are intentionally not duplicated in this README; inspect the generated registry or `AssetExplorer` for the current release.
 
 ## Visual language v1.3
 
-The former v1.3 candidate has been promoted upstream to `rocksoul-assets/main`. The UI stable contract now tracks the released 41-pack visual language rather than a feature-branch snapshot.
+The former v1.3 candidate has been promoted upstream to `rocksoul-assets/main`. UI inventory is resolved from the generated registry, while immutable commit pins remain explicit only where provenance requires them.
 
 ## Run
 
