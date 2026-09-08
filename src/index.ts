@@ -50,3 +50,5 @@ export * from "./contracts/status-semantics"
 export * from "./components/confidence-meter"
 export * from "./components/qualified-reference"
 export * from "./components/record-field-grid"
+
+export * from "./components/research-domain-ownership-map"
