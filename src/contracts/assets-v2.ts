@@ -51,6 +51,7 @@ export const v2ResourceDescriptors = [
   { resource: "person", label: "PERSON / People", path: "/people", repo: "rocksoul-superhero" },
   { resource: "rgbl", label: "TEXT / RGBL", path: "/sources", repo: "rocksoul-rgbl" },
   { resource: "aws", label: "LAW / AWS", path: "/aws", repo: "rocksoul-aws" },
+  { resource: "perspective", label: "PERSPECTIVE / JIZZ", path: "/perspectives", repo: "rocksoul-jizz" },
   { resource: "correlation", label: "CORRELATION / Evidence Graph", path: "/correlation", repo: "rocksoul-correlation" },
 ] as const
 
