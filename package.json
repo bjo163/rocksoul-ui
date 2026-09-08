@@ -5,20 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:lib",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc -p tsconfig.build.json",
+    "build:playground": "vite build",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "audit:tokens": "node scripts/token-audit.mjs",
-    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run typecheck && npm run build && npm run build-storybook",
     "audit:a11y": "node scripts/a11y-audit.mjs",
-    "audit:domains": "node scripts/domain-audit.mjs"
+    "audit:domains": "node scripts/domain-audit.mjs",
+    "audit:application": "node scripts/application-audit.mjs",
+    "audit:package": "node scripts/package-audit.mjs",
+    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:domains && npm run audit:application && npm run typecheck && npm run build:lib && npm run audit:package && npm run build:playground && npm run build-storybook"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
     "tailwind-merge": "3.6.0"
   },
   "devDependencies": {
@@ -31,9 +33,31 @@
     "storybook": "10.6.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
-    "vite": "8.2.2"
+    "vite": "8.2.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "engines": {
     "node": ">=22"
+  },
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./dist/styles.css"
+  ],
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
   }
 }

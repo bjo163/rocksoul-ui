@@ -37,11 +37,20 @@ jobs:
       - name: Domain contract audit
         run: npm run audit:domains
 
+      - name: Application framework audit
+        run: npm run audit:application
+
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Build consumable library
+        run: npm run build:lib
+
+      - name: Package artifact audit
+        run: npm run audit:package
+
       - name: Build playground
-        run: npm run build
+        run: npm run build:playground
 
       - name: Build Storybook
         run: npm run build-storybook
