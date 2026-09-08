@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { MoonWitnessAssetImage, MoonWitnessAssetProvider } from "../components/asset-provider"
 import { MOONWITNESS_STABLE_REPOSITORY_BASE, ROCKSOUL_ASSETS_REGISTRY } from "../contracts/assets-registry"
 

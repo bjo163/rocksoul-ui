@@ -23,7 +23,12 @@ export function ThemeToggle() {
   const [effective, setEffective] = useState<EffectiveTheme>("dark")
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("mw-theme")
+    // JSDOM and privacy-restricted browser contexts may expose no usable
+    // storage. Theme selection remains functional for the current session.
+    const stored = (() => {
+      try { return window.localStorage?.getItem("mw-theme") }
+      catch { return null }
+    })()
     const initial: ThemePreference =
       stored === "light" || stored === "dark" || stored === "system" ? stored : "system"
     setPreference(initial)
@@ -51,7 +56,8 @@ export function ThemeToggle() {
       title={`Theme: ${preference} · effective: ${effective}`}
       onClick={() => {
         setPreference(next)
-        window.localStorage.setItem("mw-theme", next)
+        try { window.localStorage?.setItem("mw-theme", next) }
+        catch { /* storage is optional; DOM state still reflects the choice */ }
       }}
     >
       {preference}

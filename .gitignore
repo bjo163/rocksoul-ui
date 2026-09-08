@@ -1,5 +1,9 @@
 node_modules
-dist
+# The Git dependency is a supported consumer distribution. Its export map
+# points at these release artifacts, so they must travel with an immutable
+# commit rather than being rebuilt in every consumer installation.
+!dist/
+!dist/**
 storybook-static
 .DS_Store
 *.log
