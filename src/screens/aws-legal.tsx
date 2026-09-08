@@ -1,5 +1,6 @@
 import { Citation, SourceBlock } from "../components/archive-components"
 import { LegalStatus } from "../components/legal-status"
+import { LegalApplicabilityMatrix } from "../components/legal-applicability-matrix"
 import { mw0042 } from "../fixtures/mw0042"
 
 export function AWSLegalScreen() {
@@ -14,6 +15,9 @@ export function AWSLegalScreen() {
       <p className="mw-reading mt-5 text-base leading-7 text-muted-foreground">
         Evidence asks what happened. Law asks what rule would apply. Those are different layers and must stay visually separate.
       </p>
+      <div className="mt-8">
+        <LegalApplicabilityMatrix />
+      </div>
       <div className="mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
         <LegalStatus {...mw0042.legal} />
         <div className="grid gap-4">

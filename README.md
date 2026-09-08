@@ -140,6 +140,21 @@ dist/assets/*
 
 React and React DOM remain peer dependencies so the consumer owns the runtime instance.
 
+## Browser and consumer QA
+
+Repository CI now verifies both code contracts and real-browser behavior:
+
+```bash
+npm run test:unit
+npm run build:lib
+npm run test:consumer
+npm run test:browser
+```
+
+The Playwright matrix covers desktop `1440×1024` and mobile `390×844`, rejects serious/critical WCAG violations and horizontal overflow, checks the application-shell skip link with keyboard navigation, and smoke-tests reduced-motion rendering. CI installs Chromium explicitly; local browser runs require a Playwright Chromium install.
+
+`test:consumer` imports the package through its own public `@rocksoul/ui` exports after build, so broken export maps cannot hide behind source-level tests.
+
 ## Git dependency handoff
 
 ```bash
@@ -260,3 +275,14 @@ import { MoonWitnessPersonMark, MWHeader } from "@rocksoul/ui"
 ```
 
 `MWHeader` exposes consumer navigation/label slots while preserving the shared responsive drawer, theme control, focus behavior and touch contracts. `MoonWitnessPersonMark` resolves the canonical `rocksoul-assets` product PERSON icon; persona avatars remain reserved for application/user roles.
+
+
+## LAW applicability semantics
+
+`@rocksoul/ui` mirrors `moonwitness/ui/v2/legal-intelligence.json` from the pinned `rocksoul-assets` revision and exposes:
+
+- `legalIntelligenceContract` — five reviewed result states, four applicability axes, review pipeline, and guardrails;
+- `LegalApplicabilityMatrix` — accessible, source-linked axis assessment UI;
+- `AWSLegalScreen` — reference surface that keeps evidence reconstruction and legal applicability visibly separate.
+
+Consumers should derive result vocabulary and applicability axes from the exported contract rather than maintaining local arrays. An axis assessment is not itself a legal verdict, and unassessed axes render explicitly as unresolved.

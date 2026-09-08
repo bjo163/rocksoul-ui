@@ -14,12 +14,28 @@ export const moonWitnessTokens = {
       restricted: "var(--mw-status-restricted)",
       prohibited: "var(--mw-status-prohibited)",
       info: "var(--mw-status-info)",
+      foreground: {
+        supported: "var(--mw-status-supported-fg)",
+        verified: "var(--mw-status-verified-fg)",
+        contested: "var(--mw-status-contested-fg)",
+        partial: "var(--mw-status-partial-fg)",
+        unresolved: "var(--mw-status-unresolved-fg)",
+        restricted: "var(--mw-status-restricted-fg)",
+        prohibited: "var(--mw-status-prohibited-fg)",
+        info: "var(--mw-status-info-fg)",
+      },
     },
     rgbl: {
       red: "var(--mw-rgbl-red)",
       green: "var(--mw-rgbl-green)",
       blue: "var(--mw-rgbl-blue)",
       light: "var(--mw-rgbl-light)",
+      foreground: {
+        red: "var(--mw-rgbl-red-fg)",
+        green: "var(--mw-rgbl-green-fg)",
+        blue: "var(--mw-rgbl-blue-fg)",
+        light: "var(--mw-rgbl-light-fg)",
+      },
     },
   },
   breakpoint: {

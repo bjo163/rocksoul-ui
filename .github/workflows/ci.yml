@@ -13,9 +13,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ui-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -46,6 +51,8 @@ jobs:
         run: npm run audit:assets-registry
       - name: Asset pack byte integrity
         run: npm run audit:assets-integrity
+      - name: Platform/Admin contract audit
+        run: npm run audit:platform-admin
       - name: Application framework audit
         run: npm run audit:application
       - name: Typecheck
@@ -56,9 +63,15 @@ jobs:
         run: npm run build:lib
       - name: Package artifact audit
         run: npm run audit:package
+      - name: Consumer package smoke
+        run: npm run test:consumer
       - name: Release closure audit
         run: npm run audit:release
       - name: Build playground
         run: npm run build:playground
       - name: Build Storybook
         run: npm run build-storybook
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser accessibility + responsive QA
+        run: npm run test:browser

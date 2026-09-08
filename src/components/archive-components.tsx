@@ -135,10 +135,10 @@ export interface EvidenceCardProps {
 }
 
 const domainTone: Record<EvidenceCardProps["domain"], string> = {
-  STORY: "text-rgbl-red",
-  EVENT: "text-rgbl-green",
+  STORY: "text-rgbl-red-fg",
+  EVENT: "text-rgbl-green-fg",
   PERSON: "text-warning",
-  RGBL: "text-rgbl-blue",
+  RGBL: "text-rgbl-blue-fg",
   AWS: "text-primary",
 }
 
@@ -748,7 +748,7 @@ export function GraphEdge({
         "inline-flex min-h-8 items-center border-l-2 pl-2 font-mono text-[10px] font-bold uppercase tracking-[0.08em]",
         className,
         highlighted ? "text-foreground" : "text-muted-foreground",
-        dimmed && "opacity-40",
+        dimmed && "opacity-80",
       )}
       aria-label={`${type} relationship${label ? `: ${label}` : ""}`}
     >

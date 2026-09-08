@@ -9,11 +9,11 @@ export type GraphNodeType = RecordDomain | ResearchDomain | "RELATIONSHIP" | "AW
 export type GraphNodeState = "default" | "selected" | "dimmed" | "unresolved"
 
 const nodeTone: Record<GraphNodeType, string> = {
-  STORY: "text-rgbl-red border-rgbl-red",
-  EVENT: "text-rgbl-green border-rgbl-green",
+  STORY: "text-rgbl-red-fg border-rgbl-red",
+  EVENT: "text-rgbl-green-fg border-rgbl-green",
   PERSON: "text-warning border-warning",
-  RGBL: "text-rgbl-blue border-rgbl-blue",
-  TEXT: "text-rgbl-blue border-rgbl-blue",
+  RGBL: "text-rgbl-blue-fg border-rgbl-blue",
+  TEXT: "text-rgbl-blue-fg border-rgbl-blue",
   AWS: "text-primary border-primary",
   LAW: "text-primary border-primary",
   PERSPECTIVE: "text-warning border-warning",
@@ -168,7 +168,7 @@ export function GraphNode({
         "flex min-h-11 min-w-11 flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity] hover:border-foreground hover:bg-panel",
         nodeTone[type],
         state === "selected" && "bg-panel ring-2 ring-foreground ring-offset-2 ring-offset-background",
-        state === "dimmed" && "opacity-40",
+        state === "dimmed" && "opacity-90",
         state === "unresolved" && "border-dashed",
         className?.includes("absolute") ? "" : "",
         className,
@@ -179,8 +179,8 @@ export function GraphNode({
       aria-label={`${type}: ${status}. ${relationCount} relationships. Select relationship node.`}
       onClick={onSelect}
     >
-      <span className="font-mono text-[9px] font-bold uppercase">{label}</span>
-      <span className="mt-1 font-mono text-[8px] uppercase text-muted-foreground">{status}</span>
+      <span className="font-mono text-[10px] font-bold uppercase">{label}</span>
+      <span className="mt-1 font-mono text-[10px] uppercase text-muted-foreground">{status}</span>
       <span className="sr-only">{relationCount} relationships</span>
     </button>
   )

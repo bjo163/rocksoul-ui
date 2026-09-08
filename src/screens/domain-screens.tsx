@@ -17,7 +17,7 @@ function DomainDetail({ domain }: { domain: RecordDomain }) {
     const temporal = mw0042.recordDetails.EVENT.temporal
     return (
       <section className="border border-rgbl-green bg-card p-5" aria-labelledby="event-window-heading">
-        <p className="mw-meta text-rgbl-green">Temporal window / fixture</p>
+        <p className="mw-meta text-rgbl-green-fg">Temporal window / fixture</p>
         <h3 id="event-window-heading" className="mt-3 text-lg font-bold">Movement sits inside a bounded interval.</h3>
         <dl className="mt-5 grid grid-cols-3 gap-3">
           <div className="border border-border p-3">
@@ -64,14 +64,14 @@ function DomainDetail({ domain }: { domain: RecordDomain }) {
   if (domain === "RGBL") {
     const channels = mw0042.recordDetails.RGBL.channels
     const rows = [
-      ["RED", channels.red, "border-rgbl-red text-rgbl-red"],
-      ["GREEN", channels.green, "border-rgbl-green text-rgbl-green"],
-      ["BLUE", channels.blue, "border-rgbl-blue text-rgbl-blue"],
-      ["LIGHT", channels.light, "border-rgbl-light text-rgbl-light"],
+      ["RED", channels.red, "border-rgbl-red text-rgbl-red-fg"],
+      ["GREEN", channels.green, "border-rgbl-green text-rgbl-green-fg"],
+      ["BLUE", channels.blue, "border-rgbl-blue text-rgbl-blue-fg"],
+      ["LIGHT", channels.light, "border-rgbl-light text-rgbl-light-fg"],
     ] as const
     return (
       <section className="border border-border bg-card p-5" aria-labelledby="rgbl-channel-heading">
-        <p className="mw-meta text-rgbl-blue">RGBL channels / semantic source reading</p>
+        <p className="mw-meta text-rgbl-blue-fg">RGBL channels / semantic source reading</p>
         <h3 id="rgbl-channel-heading" className="mt-3 text-lg font-bold">Four channels preserve different parts of the motif.</h3>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           {rows.map(([channel, value, tone]) => (
@@ -88,7 +88,7 @@ function DomainDetail({ domain }: { domain: RecordDomain }) {
 
   return (
     <section className="border border-border bg-card p-5">
-      <p className="mw-meta text-rgbl-red">Narrative provenance</p>
+      <p className="mw-meta text-rgbl-red-fg">Narrative provenance</p>
       <dl className="mt-4 grid gap-2 text-sm">
         <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Type</dt><dd>{mw0042.recordDetails.STORY.sourceType}</dd></div>
         <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Locator</dt><dd>{mw0042.recordDetails.STORY.locator}</dd></div>

@@ -20,9 +20,25 @@ const specs = [
     local: "src/generated/status-semantics.json",
     remote: "moonwitness/ui/v2/status-semantics.json",
   },
+  {
+    local: "src/generated/legal-intelligence.json",
+    remote: "moonwitness/ui/v2/legal-intelligence.json",
+  },
 ]
 
 const failures = []
+const legalComponent = await readFile(path.join(root, "src/components/legal-applicability-matrix.tsx"), "utf8")
+if (!legalComponent.includes("legalApplicabilityAxes") || !legalComponent.includes("legalResultVocabulary") || !legalComponent.includes("legalReviewPipeline")) {
+  failures.push("legal applicability component must consume the generated canonical contract")
+}
+for (const duplicatedQuestion of [
+  "Was the instrument or rule in force at the relevant time?",
+  "Did the rule extend to the relevant place, conduct, forum, or effects?",
+  "Was the actor, entity, State, organization, vessel, or protected class within scope?",
+  "Did the rule govern the type of conduct, object, offense, right, or obligation at issue?",
+]) {
+  if (legalComponent.includes(duplicatedQuestion)) failures.push("legal applicability component duplicates canonical axis text")
+}
 for (const spec of specs) {
   const local = JSON.parse(await readFile(path.join(root, spec.local), "utf8"))
   const url = `https://raw.githubusercontent.com/${repository}/${commit}/${spec.remote}`
