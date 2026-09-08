@@ -29,6 +29,9 @@ for(const id of ["17","18","19","20","21","22","23","24","25","26","27"]){
 for(const state of ['state="empty"','state="loading"','state="error"','state="offline"','state="forbidden"']){
   if(!screens.includes(state)) failures.push(`application state proof ${state}`)
 }
+for (const proof of ["MWHeaderNavigationItem", "homeHref", "searchHref", "navigation?: MWHeaderNavigationItem[]"]) {
+  if (!archive.includes(proof)) failures.push(`MWHeader navigation contract: ${proof}`)
+}
 
 if(failures.length){
   console.error("Application framework audit failed:")
@@ -36,8 +39,3 @@ if(failures.length){
   process.exit(1)
 }
 console.log("Application framework audit passed.")
-
-const archiveComponents = await readFile(path.join(src, "components", "archive-components.tsx"), "utf8")
-for (const proof of ["MWHeaderNavigationItem", "homeHref", "searchHref", "navigation?: MWHeaderNavigationItem[]"]) {
-  if (!archiveComponents.includes(proof)) failures.push(`MWHeader navigation contract: ${proof}`)
-}
