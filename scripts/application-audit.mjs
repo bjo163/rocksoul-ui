@@ -36,3 +36,8 @@ if(failures.length){
   process.exit(1)
 }
 console.log("Application framework audit passed.")
+
+const archiveComponents = await readFile(path.join(src, "components", "archive-components.tsx"), "utf8")
+for (const proof of ["MWHeaderNavigationItem", "homeHref", "searchHref", "navigation?: MWHeaderNavigationItem[]"]) {
+  if (!archiveComponents.includes(proof)) failures.push(`MWHeader navigation contract: ${proof}`)
+}
