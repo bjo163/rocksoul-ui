@@ -275,3 +275,14 @@ import { MoonWitnessPersonMark, MWHeader } from "@rocksoul/ui"
 ```
 
 `MWHeader` exposes consumer navigation/label slots while preserving the shared responsive drawer, theme control, focus behavior and touch contracts. `MoonWitnessPersonMark` resolves the canonical `rocksoul-assets` product PERSON icon; persona avatars remain reserved for application/user roles.
+
+
+## LAW applicability semantics
+
+`@rocksoul/ui` mirrors `moonwitness/ui/v2/legal-intelligence.json` from the pinned `rocksoul-assets` revision and exposes:
+
+- `legalIntelligenceContract` — five reviewed result states, four applicability axes, review pipeline, and guardrails;
+- `LegalApplicabilityMatrix` — accessible, source-linked axis assessment UI;
+- `AWSLegalScreen` — reference surface that keeps evidence reconstruction and legal applicability visibly separate.
+
+Consumers should derive result vocabulary and applicability axes from the exported contract rather than maintaining local arrays. An axis assessment is not itself a legal verdict, and unassessed axes render explicitly as unresolved.
