@@ -18,13 +18,13 @@
   --color-border-strong: var(--mw-border-strong);
   --color-primary: var(--mw-brand-crimson);
   --color-primary-foreground: var(--mw-text-inverse);
-  --color-success: var(--mw-status-supported);
-  --color-verified: var(--mw-status-verified);
-  --color-warning: var(--mw-status-partial);
-  --color-info: var(--mw-status-info);
-  --color-unresolved: var(--mw-status-unresolved);
-  --color-restricted: var(--mw-status-restricted);
-  --color-prohibited: var(--mw-status-prohibited);
+  --color-success: var(--mw-status-supported-fg);
+  --color-verified: var(--mw-status-verified-fg);
+  --color-warning: var(--mw-status-partial-fg);
+  --color-info: var(--mw-status-info-fg);
+  --color-unresolved: var(--mw-status-unresolved-fg);
+  --color-restricted: var(--mw-status-restricted-fg);
+  --color-prohibited: var(--mw-status-prohibited-fg);
   --color-rgbl-red: var(--mw-rgbl-red);
   --color-rgbl-green: var(--mw-rgbl-green);
   --color-rgbl-blue: var(--mw-rgbl-blue);
@@ -60,6 +60,16 @@
   --mw-status-restricted: #C46C17;
   --mw-status-prohibited: #B20F23;
   --mw-status-info: #3B82F6;
+
+  /* Presentation-safe semantic foregrounds. Canonical status swatches above remain unchanged. */
+  --mw-status-supported-fg: #2CCB87;
+  --mw-status-verified-fg: #32D099;
+  --mw-status-contested-fg: #FF5A6D;
+  --mw-status-partial-fg: #F4C542;
+  --mw-status-unresolved-fg: #A3A3A3;
+  --mw-status-restricted-fg: #F0A34A;
+  --mw-status-prohibited-fg: #FF5062;
+  --mw-status-info-fg: #70A5FF;
 
   --mw-rgbl-red: #E51735;
   --mw-rgbl-green: #10B981;
@@ -136,6 +146,14 @@
   --mw-border-default: #D9D6CE;
   --mw-border-strong: #A6A197;
   --mw-focus: #0B0B0B;
+  --mw-status-supported-fg: #077545;
+  --mw-status-verified-fg: #077348;
+  --mw-status-contested-fg: #9F1022;
+  --mw-status-partial-fg: #7A5200;
+  --mw-status-unresolved-fg: #555555;
+  --mw-status-restricted-fg: #7A3F00;
+  --mw-status-prohibited-fg: #8A0B1C;
+  --mw-status-info-fg: #1859B3;
 }
 
 * {
@@ -255,6 +273,14 @@ a {
   --mw-border-default: #D9D6CE;
   --mw-border-strong: #A6A197;
   --mw-focus: #0B0B0B;
+  --mw-status-supported-fg: #077545;
+  --mw-status-verified-fg: #077348;
+  --mw-status-contested-fg: #9F1022;
+  --mw-status-partial-fg: #7A5200;
+  --mw-status-unresolved-fg: #555555;
+  --mw-status-restricted-fg: #7A3F00;
+  --mw-status-prohibited-fg: #8A0B1C;
+  --mw-status-info-fg: #1859B3;
   color-scheme: light;
 }
 
