@@ -194,7 +194,7 @@ Candidate snapshot:
 
 ```text
 assets branch : feat/complete-visual-language-v1.3
-assets commit : f78a4d33b23542f252f3cebb14938f28a3ca0ad5
+assets commit : 7c5c17ea9748499523bc2f4d9c759963f902fc4a
 registry      : 1.3.0
 packs         : 41
 canonical SVG : 591
@@ -204,6 +204,8 @@ stable main   : v1.2.0 @ 95a6912409f849029e18093658b1c0e8158a32f0
 The candidate adds Evidence Media, Correlation Semantics, Kanban, Calendar/Temporal, Chat, AI Workspace, Security, Data Grid, Form Controls, Theme/A11y, Privacy/Redaction, Integrity, Export/Seal, Rocksoul Character, Command/Keyboard, Texture, Architecture Diagram, Device Mockup, Jurisdiction/Locale, Cinematic Hero, and Runtime Motion packs.
 
 `@rocksoul/ui` consumes the upstream generated developer registry instead of recreating those mappings. Candidate APIs and Storybook previews are available on `dev`; stable application defaults remain v1.2 until the upstream branch is promoted to `rocksoul-assets/main`.
+
+**Candidate snapshot policy:** generated branch movement is advisory. The UI pins an immutable reviewed SHA; only a stable `rocksoul-assets/main` release can replace the production sync lock.
 
 ## Run
 

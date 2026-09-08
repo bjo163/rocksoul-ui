@@ -57,9 +57,14 @@ The UI system implements all 19 pack contracts through a typed provider. Core ru
 
 ## v1.3 candidate
 
-UI dev tracks a separate release candidate at `feat/complete-visual-language-v1.3@f78a4d33b23542f252f3cebb14938f28a3ca0ad5`.
+UI dev tracks a separate release candidate at `feat/complete-visual-language-v1.3@7c5c17ea9748499523bc2f4d9c759963f902fc4a`.
 
 - Stable release lock remains `rocksoul-assets/main@95a6912409f849029e18093658b1c0e8158a32f0` / v1.2.0.
 - Candidate developer registry reports 40 packs and 591 canonical assets.
 - Candidate CI is SHA-locked independently; if the feature branch moves, the UI candidate audit fails until re-reviewed.
 - Promotion to the stable asset channel is forbidden until v1.3 is released on assets/main.
+
+
+### Generator-only drift
+
+The v1.3 feature branch may move as deterministic PNG/runtime-motion/developer-dist workflows commit derivatives. UI candidate review pins an immutable SHA. Branch movement is logged as advisory; stable promotion still requires v1.3 on `rocksoul-assets/main` with repository acceptance passed.

@@ -3,7 +3,7 @@ import { assets as candidateAssets } from "../generated/assets-v1.3"
 export const ROCKSOUL_ASSETS_CANDIDATE = {
   repository: "bjo163/rocksoul-assets",
   ref: "feat/complete-visual-language-v1.3",
-  commit: "f78a4d33b23542f252f3cebb14938f28a3ca0ad5",
+  commit: "7c5c17ea9748499523bc2f4d9c759963f902fc4a",
   registryVersion: "1.3.0",
   status: "release-candidate-pending-ci",
   upstreamStableRelease: "1.2.0",
@@ -14,6 +14,7 @@ export const ROCKSOUL_ASSETS_CANDIDATE = {
   canonicalAssetCount: 591,
   developerDist: ["dist/assets.ts", "dist/assets.json", "dist/assets.css", "dist/sprite.svg"],
   promotionRule: "Do not replace stable assets sync until rocksoul-assets/main contains v1.3.0 with repository acceptance passed.",
+  candidateDriftPolicy: "Pinned snapshot is immutable; feature-branch generator drift is advisory until stable promotion.",
 } as const
 
 export type MoonWitnessCandidatePackId = keyof typeof candidateAssets.packs
