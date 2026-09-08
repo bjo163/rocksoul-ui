@@ -53,3 +53,13 @@ The UI package mirrors 134 consumer-facing pack files from the canonical release
 ## v1.2 consumption boundary
 
 The UI system implements all 19 pack contracts through a typed provider. Core runtime packs remain mirrored and byte-locked in this repository. Secondary PNG delivery for social, platform/store, email, report, and other raster-specific consumers is staged by each application from `rocksoul-assets` under `/assets/moonwitness`, matching the canonical consumption contract.
+
+
+## v1.3 candidate
+
+UI dev tracks a separate unreleased candidate at `feat/complete-visual-language-v1.3@8c88abef8f531f7c5134d8d1e94c706bd9851560`.
+
+- Stable release lock remains `rocksoul-assets/main@95a6912409f849029e18093658b1c0e8158a32f0` / v1.2.0.
+- Candidate developer registry reports 40 packs and 591 canonical assets.
+- Candidate CI is SHA-locked independently; if the feature branch moves, the UI candidate audit fails until re-reviewed.
+- Promotion to the stable asset channel is forbidden until v1.3 is released on assets/main.

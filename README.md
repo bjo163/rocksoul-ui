@@ -186,6 +186,25 @@ CORRELATION → rocksoul-correlation
 
 Correlation owns reviewed cross-domain edges and explainability metadata, not verdicts or duplicate canonical records.
 
+## Visual language candidate v1.3
+
+The active `dev` line can review the unreleased `rocksoul-assets/feat/complete-visual-language-v1.3` candidate without pretending it is a stable release.
+
+Candidate snapshot:
+
+```text
+assets branch : feat/complete-visual-language-v1.3
+assets commit : 8c88abef8f531f7c5134d8d1e94c706bd9851560
+registry      : 1.3.0
+packs         : 40
+canonical SVG : 591
+stable main   : v1.2.0 @ 95a6912409f849029e18093658b1c0e8158a32f0
+```
+
+The candidate adds Evidence Media, Correlation Semantics, Kanban, Calendar/Temporal, Chat, AI Workspace, Security, Data Grid, Form Controls, Theme/A11y, Privacy/Redaction, Integrity, Export/Seal, Rocksoul Character, Command/Keyboard, Texture, Architecture Diagram, Device Mockup, Jurisdiction/Locale, Cinematic Hero, and Runtime Motion packs.
+
+`@rocksoul/ui` consumes the upstream generated developer registry instead of recreating those mappings. Candidate APIs and Storybook previews are available on `dev`; stable application defaults remain v1.2 until the upstream branch is promoted to `rocksoul-assets/main`.
+
 ## Run
 
 ```bash
