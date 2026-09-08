@@ -19,38 +19,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
           node-version: "22"
-
       - name: Install
         run: npm install --no-audit --no-fund
-
       - name: Design contract audit
         run: npm run audit:tokens
-
       - name: Accessibility contract audit
         run: npm run audit:a11y
-
       - name: Domain contract audit
         run: npm run audit:domains
-
+      - name: Rocksoul assets v2 sync audit
+        run: npm run audit:assets-sync
       - name: Application framework audit
         run: npm run audit:application
-
       - name: Typecheck
         run: npm run typecheck
-
       - name: Build consumable library
         run: npm run build:lib
-
       - name: Package artifact audit
         run: npm run audit:package
-
       - name: Build playground
         run: npm run build:playground
-
       - name: Build Storybook
         run: npm run build-storybook

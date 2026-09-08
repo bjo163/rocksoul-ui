@@ -150,6 +150,27 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Community submission is explicitly non-canonical.
 - [x] Moderation state is visible.
 
+## Rocksoul Assets v2 sync
+- [x] Synced against `rocksoul-assets/main@d293b0f1190fee3d0079aada222bcb2a255dcde6`.
+- [x] Manifest schema v3 recognized.
+- [x] Canonical MoonWitness brand vector family packaged for consumers.
+- [x] Brand tagline: Truth leaves a trace.
+- [x] Application shell desktop sidebar = 220px.
+- [x] Application shell tablet rail = 72px.
+- [x] Mobile navigation = focus-trapped drawer.
+- [x] Skip link + banner/navigation/main landmarks.
+- [x] Theme preference = light / dark / system.
+- [x] Canonical AutoMenu item set: Dashboard, Cases, Kanban, Calendar, Chat, AI Workspace, Resources, Profile, Settings.
+- [x] Canonical resource descriptors: case / event / person / rgbl / aws.
+- [x] Screens 17–27 implemented and individually represented in Storybook.
+- [x] Screen 24 Resources implemented.
+- [x] Authorization uses Settings as its active navigation parent.
+- [x] Error / Empty / Loading / Offline / Forbidden state contracts.
+- [x] Command palette quick actions.
+- [x] Notifications mark-all-read + system synchronization state.
+- [x] Mobile MW-0042 compact records aligned to 390 reference rhythm.
+- [x] Assets v2 sync audit is enforced by CI.
+
 ## Application framework
 - [x] Shared responsive ApplicationShell.
 - [x] Compact/expanded responsive sidebar.
@@ -170,7 +191,7 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] AI Workspace.
 - [x] Profile / Settings.
 - [x] Authorization UX with allowed/denied/pending states.
-- [x] Error / Empty / Loading application states.
+- [x] Error / Empty / Loading / Offline / Forbidden application states.
 - [x] Platform/Admin migrated to shared ApplicationShell.
 - [x] Application framework has dedicated Storybook coverage.
 - [x] Application framework contract is enforced by CI.

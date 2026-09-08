@@ -174,3 +174,28 @@ import "@rocksoul/ui/styles.css"
 ```
 
 Keep application-specific routing, API clients, authentication providers, persistence, and backend state in `rocksoul-web`; keep reusable visual/application contracts in `@rocksoul/ui`.
+
+
+## Assets v2 synchronization
+
+Current UI sync point:
+
+```text
+rocksoul-assets/main
+d293b0f1190fee3d0079aada222bcb2a255dcde6
+        ↓
+@rocksoul/ui 0.6.0
+```
+
+The v2 application contract is mirrored from the asset source:
+
+- canonical 9-item AutoMenu navigation;
+- 5 resource descriptors;
+- application screens 17–27;
+- 220px desktop / 72px tablet / mobile drawer shell;
+- light / dark / system theme preference;
+- loading / empty / error / offline / forbidden semantics;
+- canonical MoonWitness editable-vector brand source family;
+- compact mobile MW-0042 record treatment.
+
+`npm run audit:assets-sync` prevents undocumented drift from the recorded asset sync point.

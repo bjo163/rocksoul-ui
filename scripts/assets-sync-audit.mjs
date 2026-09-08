@@ -1,0 +1,58 @@
+import { access, readFile } from "node:fs/promises"
+import path from "node:path"
+
+const root=process.cwd()
+const read=(file)=>readFile(path.join(root,file),"utf8")
+const [contracts,shell,screens,stories,theme,four]=await Promise.all([
+  read("src/contracts/assets-v2.ts"),
+  read("src/components/application-shell.tsx"),
+  read("src/screens/application-screens.tsx"),
+  read("src/stories/V2Screens.stories.tsx"),
+  read("src/components/theme-toggle.tsx"),
+  read("src/components/four-record-summary.tsx"),
+])
+
+const failures=[]
+const expectedSha="d293b0f1190fee3d0079aada222bcb2a255dcde6"
+if(!contracts.includes(expectedSha)) failures.push("rocksoul-assets sync SHA")
+for(const id of ["dashboard","cases","kanban","calendar","chat","ai","resources","profile","settings"]){
+  if(!contracts.includes(`id: "${id}"`)) failures.push(`v2 navigation item ${id}`)
+}
+for(const resource of ["case","event","person","rgbl","aws"]){
+  if(!contracts.includes(`resource: "${resource}"`)) failures.push(`resource descriptor ${resource}`)
+}
+for(let id=17;id<=27;id++){
+  if(!stories.includes(`export const S${id}`)) failures.push(`v2 Storybook screen ${id}`)
+}
+for(const screen of ["DashboardScreen","CommandPaletteReferenceScreen","NotificationsReferenceScreen","KanbanScreen","CalendarScreen","ChatScreen","AIWorkspaceScreen","ResourcesScreen","ProfileSettingsScreen","AuthorizationScreen","ApplicationStatesScreen"]){
+  if(!screens.includes(`export function ${screen}`)) failures.push(`v2 application screen ${screen}`)
+}
+for(const state of ["empty","loading","error","offline","forbidden"]){
+  if(!contracts.includes(`${state}:`)) failures.push(`system state ${state}`)
+}
+if(!shell.includes('w-[72px]')||!shell.includes('lg:w-[220px]')) failures.push("canonical 72/220 sidebar geometry")
+if(!shell.includes('Skip to main content')) failures.push("skip link")
+if(!shell.includes('data-mode="AutoMenu"')) failures.push("AutoMenu mode")
+if(!theme.includes('"system"')||!theme.includes('"light"')||!theme.includes('"dark"')) failures.push("light/dark/system theme")
+if(!four.includes('min-h-[92px]')) failures.push("mobile compact record geometry")
+if(!screens.includes("ResourcesScreen")) failures.push("resources screen")
+if(!screens.includes('activeResource="settings"')) failures.push("settings active navigation")
+for(const file of [
+  "public/brand/brand-assets.json","public/brand/logo-mark.svg","public/brand/logo-horizontal.svg",
+  "public/brand/logo-stacked.svg","public/brand/wordmark.svg","public/brand/logo-monochrome.svg",
+  "public/brand/rocksoul-lockup.svg","public/brand/favicon.svg","public/brand/apple-touch-icon.svg",
+  "public/brand/app-icon-maskable.svg","public/brand/app-icon.svg","public/brand/social-avatar.svg",
+  "public/brand/og-card.svg","public/brand/safari-pinned-tab.svg","public/brand/site.webmanifest"
+]){
+  try{await access(path.join(root,file))}catch{failures.push(`brand asset ${file}`)}
+}
+const brandManifest=JSON.parse(await read("public/brand/brand-assets.json"))
+if(brandManifest.tagline!=="Truth leaves a trace.") failures.push("brand tagline")
+if(brandManifest.assets?.length!==13) failures.push("brand source asset inventory")
+
+if(failures.length){
+  console.error("Assets v2 sync audit failed:")
+  failures.forEach((failure)=>console.error(`- ${failure}`))
+  process.exit(1)
+}
+console.log(`Assets v2 sync audit passed against ${expectedSha}.`)

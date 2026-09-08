@@ -1,4 +1,6 @@
 export * from "./tokens"
+export * from "./contracts/assets-v2"
+export * from "./components/brand"
 export * from "./components/application-shell"
 export * from "./components/archive-components"
 export * from "./components/badge"
