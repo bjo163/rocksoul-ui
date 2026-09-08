@@ -90,8 +90,7 @@ try {
       "git",
       ["-C", worktree, "diff", "--name-only", acceptedMainCommit, current],
       { encoding: "utf8" },
-    ).split(/\r?
-/).map((value) => value.trim()).filter(Boolean)
+    ).split(/\r?\n/).map((value) => value.trim()).filter(Boolean)
   } finally {
     await rm(worktree, { recursive: true, force: true })
   }
