@@ -11,16 +11,19 @@ const assetsV2 = await readFile(path.join(root, "src", "contracts", "assets-v2.t
 const researchDomainMap = await readFile(path.join(root, "src", "components", "research-domain-ownership-map.tsx"), "utf8")
 
 function ownerBlock(domain) {
-  const marker = "  " + domain + ": {"
-  const start = ecosystem.indexOf(marker)
-  if (start < 0) return ""
-  const end = ecosystem.indexOf("\n  },", start)
-  return ecosystem.slice(start, end < 0 ? ecosystem.length : end)
+  const startPattern = new RegExp(`\\b${domain}\\s*:\\s*\\{`)
+  const match = startPattern.exec(ecosystem)
+  if (!match) return ""
+  const start = match.index
+  const nextDomain = /\n\s{2}[A-Z_]+\s*:\s*\{/g
+  nextDomain.lastIndex = start + match[0].length
+  const next = nextDomain.exec(ecosystem)
+  return ecosystem.slice(start, next?.index ?? ecosystem.length)
 }
 
 function hasOwner(domain, repository, prefix) {
   const block = ownerBlock(domain)
-  return block.includes('repository: "' + repository + '"') && block.includes('prefix: "' + prefix + '"')
+  return block.includes(`repository: "${repository}"`) && block.includes(`prefix: "${prefix}"`)
 }
 
 const checks = [
