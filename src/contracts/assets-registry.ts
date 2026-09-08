@@ -8,7 +8,9 @@ export const ROCKSOUL_ASSETS_REGISTRY = {
   commit: ROCKSOUL_ASSETS_SYNC.commit,
   version: assets.version,
   packCount: Object.keys(assets.packs).length,
-  canonicalAssetCount: ROCKSOUL_ASSETS_SYNC.canonicalAssetCount,
+  canonicalAssetCount: assets.coverage.extensions.svg,
+  deliveryFileCount: assets.coverage.deliveryFiles,
+  coveragePercent: assets.coverage.coveragePercent,
   canonicalFormat: assets.canonicalFormat,
   developerDistribution: ROCKSOUL_ASSETS_SYNC.developerDistribution,
 } as const
