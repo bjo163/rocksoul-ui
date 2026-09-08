@@ -17,8 +17,8 @@ Implemented consumer package:
 
 ## Stable v1.3 contract
 
-- 42 indexed asset families;
-- 614 canonical assets in the generated registry;
+- 43 indexed asset families;
+- 634 canonical assets in the generated registry;
 - developer distribution: `dist/assets.json`, `dist/assets.ts`, `dist/assets.css`, `dist/sprite.svg`;
 - core + runtime delivery mirrored and byte-locked: 198 files;
 - Runtime Motion: SVG / APNG / WebM / Lottie;
