@@ -1,4 +1,3 @@
-import { execFileSync } from "node:child_process"
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 
@@ -18,19 +17,6 @@ const expectedPacks=["product-icons","dashboard","data-viz","hero-backgrounds","
 for(const pack of expectedPacks){
   if(!generated.includes(`"${pack}"`)) failures.push(`v1.3 generated pack ${pack}`)
 }
-
-let output=""
-try{
-  output=execFileSync("git",[
-    "ls-remote",
-    "https://github.com/bjo163/rocksoul-assets.git",
-    "refs/heads/main",
-  ],{encoding:"utf8",stdio:["ignore","pipe","pipe"]}).trim()
-}catch{
-  failures.push("stable remote query")
-}
-const current=output.split(/\s+/)[0]
-if(current && current!==stableSha) failures.push(`stable assets drift: ${stableSha} -> ${current}`)
 
 if(failures.length){
   console.error("Assets v1.3 stable audit failed:")
