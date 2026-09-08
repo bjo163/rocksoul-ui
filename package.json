@@ -81,6 +81,5 @@
     "react-dom": ">=19"
   },
   "main": "./dist/index.js",
-  "style": "./dist/styles.css",
-  "packageManager": "npm@11.6.0"
+  "style": "./dist/styles.css"
 }
