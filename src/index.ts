@@ -56,3 +56,5 @@ export * from "./components/qualified-reference"
 export * from "./components/record-field-grid"
 
 export * from "./components/research-domain-ownership-map"
+export * from "./contracts/legal-intelligence"
+export * from "./components/legal-applicability-matrix"
