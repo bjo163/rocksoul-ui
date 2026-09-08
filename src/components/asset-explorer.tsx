@@ -3,6 +3,7 @@ import { Button } from "./button"
 import { Dialog } from "./overlays"
 import {
   MOONWITNESS_STABLE_REPOSITORY_BASE,
+  ROCKSOUL_ASSETS_REGISTRY,
   moonWitnessAssets,
   resolveMoonWitnessRegistryAssetUrl,
   type MoonWitnessAssetRegistryPackId,
@@ -11,7 +12,7 @@ import {
 const categories = {
   Core: ["product-icons","dashboard","data-viz","hero-backgrounds","state-illustrations","motion","sfx","graph-vector","badge-status","source-file"],
   Investigation: ["geospatial","evidence-media","correlation-semantics","privacy-redaction","evidence-integrity","export-seal","jurisdiction-locale"],
-  Workflow: ["kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","command-keyboard"],
+  Workflow: ["kanban-workflow","calendar-temporal","chat-collaboration","ai-workspace","authorization-security","data-grid","form-controls","command-keyboard","community-participation"],
   Identity: ["persona-avatar","rocksoul-character","theme-accessibility","cursor-interaction"],
   Media: ["social-campaign","platform-delivery","onboarding","document-report","notification","editorial","cinematic-hero","texture-material","device-mockup"],
   System: ["architecture-diagram","runtime-motion","developer-distribution"],
@@ -65,7 +66,7 @@ export function AssetExplorer({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="mw-eyebrow text-primary">Asset explorer / v{moonWitnessAssets.version}</p>
-          <h2 className="mt-2 text-2xl font-bold">42 packs / 614 canonical assets</h2>
+          <h2 className="mt-2 text-2xl font-bold">{ROCKSOUL_ASSETS_REGISTRY.packCount} packs / {ROCKSOUL_ASSETS_REGISTRY.canonicalAssetCount} canonical assets</h2>
         </div>
         <div className="flex gap-2" aria-label="Asset explorer view">
           <Button variant={view==="grid"?"primary":"secondary"} onClick={()=>setView("grid")}>Grid</Button>
