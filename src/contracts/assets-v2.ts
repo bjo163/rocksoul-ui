@@ -1,11 +1,11 @@
 export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
-  commit: "5abae50b6b994d2cd4fcb12360db620acbac37bd",
+  commit: "61170933b759fc90134b3659c1a2574de7ce580c",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
-  assetRelease: "1.0.0",
+  assetRelease: "1.1.0",
   assetReleaseStatus: "released",
   repositoryAcceptance: "passed",
   livePenpotVerification: "manual-follow-up",
@@ -31,11 +31,11 @@ export const v2NavigationItems = [
 ] as const
 
 export const v2ResourceDescriptors = [
-  { resource: "case", label: "Cases", path: "/cases", repo: "moonwitness" },
-  { resource: "event", label: "Events", path: "/events", repo: "rocksoul-event" },
-  { resource: "person", label: "People", path: "/people", repo: "rocksoul-superhero" },
-  { resource: "rgbl", label: "RGBL Sources", path: "/sources", repo: "rocksoul-rgbl" },
-  { resource: "aws", label: "AWS Legal", path: "/aws", repo: "rocksoul-aws" },
+  { resource: "case", label: "STORY / Cases", path: "/cases", repo: "rocksoul-mftl" },
+  { resource: "event", label: "EVENT / Events", path: "/events", repo: "rocksoul-legend" },
+  { resource: "person", label: "PERSON / People", path: "/people", repo: "rocksoul-superhero" },
+  { resource: "rgbl", label: "TEXT / RGBL", path: "/sources", repo: "rocksoul-rgbl" },
+  { resource: "aws", label: "LAW / AWS", path: "/aws", repo: "rocksoul-aws" },
 ] as const
 
 export const v2ScreenContract = [
