@@ -160,9 +160,21 @@ export interface AppNotification {
   variant: "case-update" | "reply" | "review" | "system"
 }
 
-export function NotificationsPanel({ open, onClose, notifications }: { open: boolean; onClose: () => void; notifications: AppNotification[] }) {
+export function NotificationsPanel({
+  open,
+  onClose,
+  notifications,
+}: {
+  open: boolean
+  onClose: () => void
+  notifications: AppNotification[]
+}) {
   return (
     <Drawer open={open} title="Notifications" onClose={onClose} position="right" footer={<Button variant="secondary" onClick={onClose}>Close</Button>}>
+      <div className="flex items-center justify-between border-b border-border px-4 py-3">
+        <p className="mw-meta text-muted-foreground">{notifications.filter((item) => item.state === "unread").length} unread</p>
+        <button type="button" className="mw-link min-h-0 font-mono text-[10px] font-bold uppercase text-primary">Mark all read</button>
+      </div>
       <div className="grid" data-state={notifications.length ? "unread" : "empty"}>
         {notifications.length ? notifications.map((item) => (
           <article key={item.id} className={cn("border-b border-border p-4", item.state === "unread" && "bg-panel")}>
@@ -179,6 +191,12 @@ export function NotificationsPanel({ open, onClose, notifications }: { open: boo
             <p className="mt-3 text-sm">Nothing needs your attention.</p>
           </div>
         )}
+        {notifications.length ? (
+          <article className="border-b border-border p-4">
+            <p className="mw-meta text-success">System</p>
+            <p className="mt-2 text-xs leading-5">All repositories synchronized.</p>
+          </article>
+        ) : null}
       </div>
     </Drawer>
   )
@@ -220,11 +238,28 @@ export function CommandPalette({
     return resources.filter((item) => canSee(item, permissions) && (!needle || `${item.label} ${item.description}`.toLowerCase().includes(needle)))
   }, [permissions, query, resources])
 
+  const quickActions = [
+    { label: "Open case by ID", shortcut: "C", href: "/cases" },
+    { label: "Create review task", shortcut: "R", href: "/work/kanban" },
+    { label: "Ask AI Workspace", shortcut: "A", href: "/ai" },
+  ]
+
   return (
     <Dialog open={open} title="Command palette / ⌘K" onClose={onClose} size="lg">
       <Input label="Search actions, resources, cases" variant="search" size="lg" value={query} onChange={(event) => setQuery(event.currentTarget.value)} placeholder="Search actions, resources, cases…" autoFocus />
+
       <p className="mw-meta mt-5 text-muted-foreground">Quick actions</p>
-      <div className="mt-3 grid max-h-[55vh] overflow-y-auto border border-border">
+      <div className="mt-3 grid border border-border">
+        {quickActions.map((item) => (
+          <a key={item.label} href={item.href} className="grid min-h-13 grid-cols-[1fr_auto] items-center border-b border-border px-4 no-underline hover:bg-panel" onClick={onClose}>
+            <span className="text-sm font-bold">{item.label}</span>
+            <span className="mw-meta text-muted-foreground">{item.shortcut}</span>
+          </a>
+        ))}
+      </div>
+
+      <p className="mw-meta mt-5 text-muted-foreground">Resources / Auto Menu</p>
+      <div className="mt-3 grid max-h-[40vh] overflow-y-auto border border-border">
         {results.map((item) => (
           <a key={item.id} href={item.href} className="grid min-h-14 grid-cols-[1fr_auto] gap-4 border-b border-border p-3 no-underline hover:bg-panel" onClick={onClose}>
             <span>
@@ -236,6 +271,7 @@ export function CommandPalette({
         ))}
         {!results.length ? <p className="p-5 text-sm text-muted-foreground">No matching command.</p> : null}
       </div>
+      <p className="mw-meta mt-4 text-muted-foreground">↑↓ Navigate / Enter open / Esc close</p>
     </Dialog>
   )
 }
@@ -317,7 +353,7 @@ export function ApplicationShell({
       <div className="flex min-h-screen">
         <aside className={cn("relative hidden shrink-0 border-r border-border bg-panel md:block", compact ? "w-[72px]" : "w-[72px] lg:w-[220px]")} data-state={compact ? "compact" : "expanded"}>
           <div className="flex min-h-[112px] items-center justify-between border-b border-border px-3">
-            <MoonWitnessBrand compact={compact} className={cn(!compact && "hidden lg:inline-flex")} />
+            <MoonWitnessBrand compact={compact} subtitle="APPLICATION" className={cn(!compact && "hidden lg:inline-flex")} />
             {!compact ? <MoonWitnessBrand compact className="lg:hidden" /> : null}
             <IconButton label={compact ? "Expand sidebar" : "Compact sidebar"} size="sm" variant="ghost" className="hidden lg:inline-flex" onClick={() => setCompact((value) => !value)}>{compact ? "›" : "‹"}</IconButton>
           </div>
@@ -335,7 +371,7 @@ export function ApplicationShell({
       </div>
 
       <Drawer open={navOpen} title="Navigation" onClose={() => setNavOpen(false)} position="left">
-        <MoonWitnessBrand className="mb-5" />
+        <MoonWitnessBrand subtitle="APPLICATION" className="mb-5" />
         <div className="mb-4"><BackendStatus state={backendState} /></div>
         <AutoMenu resources={resources} activeId={activeResource} permissions={permissions} onNavigate={() => setNavOpen(false)} />
       </Drawer>

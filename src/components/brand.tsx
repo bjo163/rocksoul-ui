@@ -41,10 +41,12 @@ export function MoonWitnessMark({
 export function MoonWitnessBrand({
   compact = false,
   ecosystem = false,
+  subtitle = moonWitnessBrandContract.tagline,
   className,
 }: {
   compact?: boolean
   ecosystem?: boolean
+  subtitle?: string
   className?: string
 }) {
   return (
@@ -56,7 +58,7 @@ export function MoonWitnessBrand({
             MOON<span className="text-primary">WITNESS</span>
             {ecosystem ? <span className="ml-2 text-muted-foreground">× ROCKSOUL</span> : null}
           </span>
-          <span className="mw-meta block truncate text-muted-foreground">{moonWitnessBrandContract.tagline}</span>
+          <span className="mw-meta block truncate text-muted-foreground">{subtitle}</span>
         </span>
       ) : null}
     </span>
