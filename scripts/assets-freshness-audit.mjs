@@ -3,7 +3,8 @@ import { mkdtemp, readFile, rm } from "node:fs/promises"
 import path from "node:path"
 import os from "node:os"
 
-const FETCH_TIMEOUT_MS = 20_000
+const FETCH_TIMEOUT_MS = 60_000
+const gitOptions = { timeout: FETCH_TIMEOUT_MS, killSignal: "SIGTERM" }
 function fetchWithTimeout(url) {
   return fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) })
 }
@@ -41,7 +42,7 @@ if(localIndex.version!==expectedRelease||expectedPackCount<1||expectedSvgCount<1
 
 let current=""
 try{
-  current=execFileSync("git",["ls-remote",gitRemote,`refs/heads/${sourceRef}`],{encoding:"utf8",stdio:["ignore","pipe","pipe"]}).trim().split(/\s+/)[0]
+  current=execFileSync("git",["ls-remote",gitRemote,`refs/heads/${sourceRef}`],{...gitOptions,encoding:"utf8",stdio:["ignore","pipe","pipe"]}).trim().split(/\s+/)[0]
 }catch{
   console.error(`Assets freshness audit failed: unable to query ${sourceRepository}/${sourceRef}.`)
   process.exit(1)
@@ -82,16 +83,16 @@ try{
   const worktree=await mkdtemp(path.join(os.tmpdir(),"rocksoul-assets-freshness-"))
   let changedFiles=[]
   try{
-    execFileSync("git",["init","-q",worktree],{stdio:"ignore"})
-    execFileSync("git",["-C",worktree,"remote","add","origin",gitRemote],{stdio:"ignore"})
-    execFileSync("git",["-C",worktree,"fetch","-q","--no-tags","--depth=96","origin",sourceRef],{stdio:"ignore"})
-    const fetchedHead=execFileSync("git",["-C",worktree,"rev-parse","FETCH_HEAD"],{encoding:"utf8"}).trim()
+    execFileSync("git",["init","-q",worktree],gitOptions)
+    execFileSync("git",["-C",worktree,"remote","add","origin",gitRemote],gitOptions)
+    execFileSync("git",["-C",worktree,"fetch","-q","--no-tags","--depth=96","origin",sourceRef],gitOptions)
+    const fetchedHead=execFileSync("git",["-C",worktree,"rev-parse","FETCH_HEAD"],{...gitOptions,encoding:"utf8"}).trim()
     if(fetchedHead!==current) throw new Error(`assets head moved during audit: ${current} -> ${fetchedHead}`)
-    execFileSync("git",["-C",worktree,"cat-file","-e",`${acceptedMainCommit}^{commit}`],{stdio:"ignore"})
-    changedFiles=execFileSync("git",["-C",worktree,"diff","--name-only",acceptedMainCommit,current],{encoding:"utf8"})
+    execFileSync("git",["-C",worktree,"cat-file","-e",`${acceptedMainCommit}^{commit}`],gitOptions)
+    changedFiles=execFileSync("git",["-C",worktree,"diff","--name-only",acceptedMainCommit,current],{...gitOptions,encoding:"utf8"})
       .split(/\r?\n/).map((value)=>value.trim()).filter(Boolean)
   }finally{
-    await rm(worktree,{recursive:true,force:true})
+    await rm(worktree,{recursive:true,force:true}).catch(() => undefined)
   }
 
   const contractChanges=changedFiles.filter((file)=>!allowedPostReleaseFile(file))
