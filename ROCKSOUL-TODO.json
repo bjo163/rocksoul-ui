@@ -73,7 +73,7 @@
       "priority": "CRITICAL",
       "risk": "Full specimen artwork is currently scaled into icon slots and image-based labels can diverge from runtime semantics and accessibility text.",
       "scope": "repository",
-      "status": "NOT_STARTED",
+      "status": "IN_PROGRESS",
       "title": "Migrate specimen-based consumers to semantic primitives and define screen asset mapping"
     },
     {

@@ -1,4 +1,5 @@
-import { MoonWitnessAssetImage } from "./asset-provider"
+import { MoonWitnessResilientImage } from "./asset-provider"
+import { semanticPrimitiveByNodeKind, semanticPrimitiveUrl } from "../contracts/semantic-asset-map"
 import { cn } from "../lib/cn"
 
 export type ProvenanceNodeKind = "story" | "claim" | "evidence" | "source" | "text" | "event" | "person" | "law" | "case" | "location"
@@ -46,7 +47,7 @@ export function ProvenanceRail({
                 node.external && "shadow-[inset_0_-2px_var(--mw-status-info)]",
               )}
             >
-              <MoonWitnessAssetImage pack="correlation-semantics" file={`svg/node-${node.kind}.svg`} alt="" aria-hidden="true" className="h-8 w-8" />
+              <MoonWitnessResilientImage src={semanticPrimitiveUrl(semanticPrimitiveByNodeKind[node.kind])} alt="" aria-hidden="true" className="h-8 w-8" />
               <span>
                 <span className="mw-meta block text-primary">{node.kind}</span>
                 <strong className="mt-1 block text-sm text-foreground">{node.label}</strong>
