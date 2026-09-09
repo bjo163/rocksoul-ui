@@ -36,5 +36,9 @@ export default defineConfig({
         isMobile: true,
       },
     },
+    {
+      name: "tablet-chromium",
+      use: { browserName: "chromium", viewport: { width: 768, height: 1024 } },
+    },
   ],
 })
