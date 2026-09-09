@@ -95,6 +95,9 @@
         "UI-002",
         "UI-003"
       ],
+      "evidence": [
+        "commit cd3ec9f pushed to origin/main; Playwright visual baselines cover dashboard, MW-0042 case, platform, and authorization in light/dark (8 committed PNG snapshots); responsive overflow matrix covers 390/640/768/1024/1440, tablet project added; 200% zoom, reduced motion, forced-colors, long-content and broken-image checks pass (15/15 desktop tests)."
+      ],
       "evidence_required": [
         "Playwright screenshot baseline inventory",
         "passing desktop/mobile/tablet browser matrix",
@@ -107,7 +110,7 @@
       "priority": "HIGH",
       "risk": "Current browser QA covers only landing and dashboard at 390 and 1440 pixels and has no stable visual snapshots.",
       "scope": "repository",
-      "status": "NOT_STARTED",
+      "status": "VERIFIED",
       "title": "Establish full visual regression, breakpoint, theme, and zoom coverage"
     }
   ]
