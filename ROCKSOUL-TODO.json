@@ -12,6 +12,91 @@
         "node scripts/validate-rocksoul-contract.mjs => PASS: rocksoul-ui contract; tasks=1",
         "ROCKSOUL-REPO.json and ROCKSOUL-TODO.json repository_id values match; .github/workflows/rocksoul-contract.yml runs the same validator"
       ]
+    },
+    {
+      "id": "UI-002",
+      "title": "Separate global theme from operator surface personality",
+      "status": "NOT_STARTED",
+      "scope": "repository",
+      "owner": "rocksoul-ui",
+      "phase": "VISUAL-SYSTEM",
+      "priority": "CRITICAL",
+      "risk": "The application reports dark theme while mw-platform overrides its tokens and remains visually light.",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Theme light, dark, and system apply coherently to every application surface.",
+        "Operator/editorial surface personality is represented independently from color theme.",
+        "Sidebar, header, cards, controls, semantic statuses, overlays, and focus states change consistently without theme leakage."
+      ],
+      "evidence_required": [
+        "computed-token assertions",
+        "light and dark screenshots for dashboard, case, and platform",
+        "theme persistence and system-mode tests",
+        "WCAG contrast audit"
+      ],
+      "affected_paths": [
+        "src/styles.css",
+        "src/components/theme-toggle.tsx",
+        "src/components/application-shell.tsx"
+      ]
+    },
+    {
+      "id": "UI-003",
+      "title": "Migrate specimen-based consumers to semantic primitives and define screen asset mapping",
+      "status": "NOT_STARTED",
+      "scope": "repository",
+      "owner": "rocksoul-ui",
+      "phase": "VISUAL-SYSTEM",
+      "priority": "CRITICAL",
+      "risk": "Full specimen artwork is currently scaled into icon slots and image-based labels can diverge from runtime semantics and accessibility text.",
+      "dependencies": ["UI-002", "rocksoul-assets:ASSETS-003"],
+      "acceptance_criteria": [
+        "ProvenanceRail, status, graph, evidence, and legal consumers use atomic primitives or semantic HTML rather than specimen cards.",
+        "Status labels are data-driven HTML and remain synchronized with accessible names.",
+        "Every production screen declares allowed and required asset families by semantic purpose.",
+        "Dashboard includes bounded evidence-specific visualizations that improve decision making without decorative noise."
+      ],
+      "evidence_required": [
+        "consumer usage inventory",
+        "component tests for label and state synchronization",
+        "rendered provenance/status/dashboard screenshots",
+        "asset mapping contract audit"
+      ],
+      "affected_paths": [
+        "src/components/asset-provider.tsx",
+        "src/components/provenance-rail.tsx",
+        "src/components",
+        "src/screens",
+        "src/contracts"
+      ]
+    },
+    {
+      "id": "UI-004",
+      "title": "Establish full visual regression, breakpoint, theme, and zoom coverage",
+      "status": "NOT_STARTED",
+      "scope": "repository",
+      "owner": "rocksoul-ui",
+      "phase": "VISUAL-VERIFICATION",
+      "priority": "HIGH",
+      "risk": "Current browser QA covers only landing and dashboard at 390 and 1440 pixels and has no stable visual snapshots.",
+      "dependencies": ["UI-002", "UI-003"],
+      "acceptance_criteria": [
+        "Visual baselines cover landing, dashboard, case, correlation, auth, and platform in light and dark modes.",
+        "Responsive tests cover 390, 640, 768, 1024, and 1440 pixels plus relevant breakpoint boundaries.",
+        "Tests cover 200 percent zoom, reduced motion, high contrast, long content, asset fallback, and horizontal overflow.",
+        "CI publishes diffs on failure without accepting new baselines automatically."
+      ],
+      "evidence_required": [
+        "Playwright screenshot baseline inventory",
+        "passing desktop/mobile/tablet browser matrix",
+        "intentional visual-diff demonstration",
+        "CI artifact evidence"
+      ],
+      "affected_paths": [
+        "playwright.config.ts",
+        "tests",
+        ".github/workflows"
+      ]
     }
   ]
 }
