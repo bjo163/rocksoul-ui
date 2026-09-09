@@ -5,10 +5,13 @@
     {
       "id": "UI-001",
       "title": "Maintain repository control contract and local TODO",
-      "status": "NOT_STARTED",
+      "status": "VERIFIED",
       "scope": "repository",
       "github_issue": "https://github.com/bjo163/rocksoul-ui/issues/20",
-      "evidence": []
+      "evidence": [
+        "node scripts/validate-rocksoul-contract.mjs => PASS: rocksoul-ui contract; tasks=1",
+        "ROCKSOUL-REPO.json and ROCKSOUL-TODO.json repository_id values match; .github/workflows/rocksoul-contract.yml runs the same validator"
+      ]
     }
   ]
 }

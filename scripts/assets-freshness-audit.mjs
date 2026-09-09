@@ -3,6 +3,11 @@ import { mkdtemp, readFile, rm } from "node:fs/promises"
 import path from "node:path"
 import os from "node:os"
 
+const FETCH_TIMEOUT_MS = 20_000
+function fetchWithTimeout(url) {
+  return fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) })
+}
+
 const root=process.cwd()
 const [contract,localIndex]=await Promise.all([
   readFile(path.join(root,"src","contracts","assets-v2.ts"),"utf8"),
@@ -57,8 +62,8 @@ function allowedPostReleaseFile(file){
 
 try{
   const [versionResponse,packsResponse]=await Promise.all([
-    fetch(`${rawBase}/VERSION`),
-    fetch(`${rawBase}/moonwitness/asset-packs.json`),
+    fetchWithTimeout(`${rawBase}/VERSION`),
+    fetchWithTimeout(`${rawBase}/moonwitness/asset-packs.json`),
   ])
   if(!versionResponse.ok||!packsResponse.ok) throw new Error("upstream release metadata unavailable")
 

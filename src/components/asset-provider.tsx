@@ -2,6 +2,8 @@ import {
   createContext,
   useCallback,
   useContext,
+  useState,
+  useEffect,
   type ImgHTMLAttributes,
   type ReactNode,
 } from "react"
@@ -71,9 +73,29 @@ export function MoonWitnessRegistryAssetImage({
   rootMode?: MoonWitnessAssetRootMode
   alt: string
 }) {
-  const src = resolveMoonWitnessRegistryAssetUrl(pack, assetId, { format, size, baseUrl, rootMode })
+  const remoteSrc = resolveMoonWitnessRegistryAssetUrl(pack, assetId, { format, size, baseUrl, rootMode })
+  const localSrc = resolveMoonWitnessRegistryAssetUrl(pack, assetId, {
+    format,
+    size,
+    baseUrl: DEFAULT_ASSET_BASE,
+    rootMode,
+  })
+  const [src, setSrc] = useState(remoteSrc)
+  useEffect(() => setSrc(remoteSrc), [remoteSrc])
   if (!src) return null
-  return <img src={src} alt={alt} {...props} />
+  return (
+    <img
+      src={src}
+      alt={alt}
+      {...props}
+      onError={(event) => {
+        if (src !== localSrc && localSrc) {
+          setSrc(localSrc)
+        }
+        props.onError?.(event)
+      }}
+    />
+  )
 }
 
 export function MoonWitnessStatusAsset({
