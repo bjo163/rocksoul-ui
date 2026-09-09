@@ -112,6 +112,34 @@
       "scope": "repository",
       "status": "VERIFIED",
       "title": "Establish full visual regression, breakpoint, theme, and zoom coverage"
+    },
+    {
+      "acceptance_criteria": ["Native Penpot components, variants, focus states, typography, contrast, and responsive behavior are reviewed in the live workspace.", "Any deviations are recorded with owner and remediation."],
+      "affected_paths": ["../rocksoul-assets/penpot", "docs/PENPOT-LIVE-VERIFICATION.md"],
+      "dependencies": ["UI-004"],
+      "evidence_required": ["Penpot export/screenshots", "keyboard and focus walkthrough", "contrast review"],
+      "id": "UI-NEXT-001", "owner": "rocksoul-assets", "phase": "DESIGN-VERIFICATION", "priority": "HIGH", "risk": "Manual workspace gaps can hide component, font, or accessibility drift.", "scope": "cross-repository", "status": "NOT_STARTED", "title": "Complete live Penpot component and accessibility verification"
+    },
+    {
+      "acceptance_criteria": ["Mobile and tablet browser projects cover all production surfaces in light and dark themes.", "Baselines and diffs are retained in CI artifacts."],
+      "affected_paths": ["playwright.config.ts", "tests", ".github/workflows"],
+      "dependencies": ["UI-004"],
+      "evidence_required": ["Playwright mobile/tablet matrix", "committed snapshots", "CI artifact report"],
+      "id": "UI-NEXT-002", "owner": "rocksoul-ui", "phase": "VISUAL-VERIFICATION", "priority": "HIGH", "risk": "Desktop-only evidence can miss responsive regressions.", "scope": "repository", "status": "NOT_STARTED", "title": "Expand browser evidence across mobile and tablet surfaces"
+    },
+    {
+      "acceptance_criteria": ["Runtime font loading matches Penpot families and fallbacks.", "Long-content wrapping and overflow are equivalent under primary and fallback fonts."],
+      "affected_paths": ["src/styles.css", "src/contracts", "tests"],
+      "dependencies": ["UI-NEXT-001"],
+      "evidence_required": ["font loading inspection", "fallback screenshot comparison", "overflow test"],
+      "id": "UI-NEXT-003", "owner": "rocksoul-ui", "phase": "TYPOGRAPHY-VERIFICATION", "priority": "MEDIUM", "risk": "Font substitution can change hierarchy and layout.", "scope": "cross-repository", "status": "NOT_STARTED", "title": "Verify typography parity between Penpot and runtime"
+    },
+    {
+      "acceptance_criteria": ["Generated test output is ignored or removed by documented cleanup policy.", "Working tree remains clean after browser verification."],
+      "affected_paths": [".gitignore", "package.json"],
+      "dependencies": [],
+      "evidence_required": ["clean git status", "browser test rerun"],
+      "id": "DEV-NEXT-001", "owner": "rocksoul-ui", "phase": "DEVELOPER-EXPERIENCE", "priority": "LOW", "risk": "Temporary artifacts obscure real source changes.", "scope": "repository", "status": "NOT_STARTED", "title": "Define cleanup policy for browser test artifacts"
     }
   ]
 }
