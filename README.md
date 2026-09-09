@@ -286,3 +286,6 @@ import { MoonWitnessPersonMark, MWHeader } from "@rocksoul/ui"
 - `AWSLegalScreen` — reference surface that keeps evidence reconstruction and legal applicability visibly separate.
 
 Consumers should derive result vocabulary and applicability axes from the exported contract rather than maintaining local arrays. An axis assessment is not itself a legal verdict, and unassessed axes render explicitly as unresolved.
+# Browser test artifacts
+
+Playwright output under `test-results/` is ephemeral and ignored. CI retains it only as failure artifacts; never commit local traces or screenshots from this directory.
