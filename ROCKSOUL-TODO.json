@@ -206,6 +206,9 @@
         "package.json"
       ],
       "dependencies": [],
+      "evidence": [
+        "commit bba1383 pushed; .gitignore excludes Playwright test-results and README documents ephemeral local traces with CI-only retention; clean source status after artifact generation."
+      ],
       "evidence_required": [
         "clean git status",
         "browser test rerun"
@@ -216,7 +219,7 @@
       "priority": "LOW",
       "risk": "Temporary artifacts obscure real source changes.",
       "scope": "repository",
-      "status": "NOT_STARTED",
+      "status": "VERIFIED",
       "title": "Define cleanup policy for browser test artifacts"
     }
   ]
