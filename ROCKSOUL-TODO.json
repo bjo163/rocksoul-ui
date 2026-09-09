@@ -125,6 +125,9 @@
       "dependencies": [
         "UI-004"
       ],
+      "evidence": [
+        "Deferred by operator: no live Penpot workspace/session or native export with component, font, and interaction metadata is available; repository export is reference-only and cannot prove live acceptance criteria."
+      ],
       "evidence_required": [
         "Penpot export/screenshots",
         "keyboard and focus walkthrough",
@@ -136,7 +139,7 @@
       "priority": "HIGH",
       "risk": "Manual workspace gaps can hide component, font, or accessibility drift.",
       "scope": "cross-repository",
-      "status": "IN_PROGRESS",
+      "status": "DEFERRED",
       "title": "Complete live Penpot component and accessibility verification"
     },
     {
@@ -182,6 +185,9 @@
       "dependencies": [
         "UI-NEXT-001"
       ],
+      "evidence": [
+        "Deferred by dependency: typography parity requires the live Penpot source from UI-NEXT-001, which is deferred because no live workspace/session is available."
+      ],
       "evidence_required": [
         "font loading inspection",
         "fallback screenshot comparison",
@@ -193,7 +199,7 @@
       "priority": "MEDIUM",
       "risk": "Font substitution can change hierarchy and layout.",
       "scope": "cross-repository",
-      "status": "NOT_STARTED",
+      "status": "DEFERRED",
       "title": "Verify typography parity between Penpot and runtime"
     },
     {
