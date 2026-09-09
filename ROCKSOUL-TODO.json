@@ -25,6 +25,9 @@
         "src/components/application-shell.tsx"
       ],
       "dependencies": [],
+      "evidence": [
+        "commit 0e66c29 pushed to origin/main; removed mw-platform fixed-light token overrides and added independent operator/editorial personality contract; 8 Playwright theme-contract tests PASS across dashboard/case/platform light+dark, system preference persistence, chrome/content/status/overlay/focus inheritance; Axe WCAG 2A/AA serious+critical violations zero on all six surface/theme combinations; 2 ThemeToggle unit tests PASS; full npm run ci PASS (15 files/39 unit tests, audits, typecheck, package/consumer/release, playground and Storybook builds); final build:lib PASS."
+      ],
       "evidence_required": [
         "computed-token assertions",
         "light and dark screenshots for dashboard, case, and platform",
@@ -37,7 +40,7 @@
       "priority": "CRITICAL",
       "risk": "The application reports dark theme while mw-platform overrides its tokens and remains visually light.",
       "scope": "repository",
-      "status": "IN_PROGRESS",
+      "status": "VERIFIED",
       "title": "Separate global theme from operator surface personality"
     },
     {
