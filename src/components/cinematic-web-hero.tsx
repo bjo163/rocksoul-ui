@@ -1,5 +1,6 @@
 import { useId, type CSSProperties, type ReactNode } from "react"
 import { cinematicWebHeroAssets, type CinematicWebHeroAssetSet } from "../contracts/cinematic-web-hero"
+import { MoonWitnessResilientImage } from "./asset-provider"
 
 export interface CinematicWebHeroEvidenceItem {
   id: "STORY" | "EVENT" | "PERSON" | "RGBL"
@@ -37,6 +38,12 @@ const defaultEvidence: readonly CinematicWebHeroEvidenceItem[] = [
   { id: "PERSON", marker: "♙" },
   { id: "RGBL", marker: "↗" },
 ]
+
+function localMirrorUrl(source: string) {
+  const marker = "/moonwitness/"
+  const index = source.indexOf(marker)
+  return index >= 0 ? `/assets${source.slice(index)}` : undefined
+}
 
 export function CinematicWebHero({
   assets = cinematicWebHeroAssets,
@@ -79,8 +86,9 @@ export function CinematicWebHero({
     <section id={id} className={`mw-cinematic-web-hero ${className}`.trim()} style={overlayStyle} aria-labelledby={titleId}>
       <picture className="mw-cinematic-web-hero__master" aria-hidden="true">
         <source media="(max-width: 700px)" srcSet={assets.mobile} />
-        <img
+        <MoonWitnessResilientImage
           src={assets.desktop}
+          fallbackSrc={localMirrorUrl(assets.desktop)}
           alt=""
           width={2880}
           height={1620}
@@ -138,7 +146,7 @@ export function CinematicWebHero({
       <div id={archiveId} className="mw-cinematic-web-hero__archive" aria-label="Archive contact sheet" tabIndex={0}>
         {archiveItems.map((item) => (
           <figure key={item.code}>
-            <img src={item.src} alt="" aria-hidden="true" loading="lazy" />
+            <MoonWitnessResilientImage src={item.src} fallbackSrc={localMirrorUrl(item.src)} alt="" aria-hidden="true" loading="lazy" />
             <figcaption>{item.label}</figcaption>
             <small>{item.code}</small>
           </figure>
