@@ -61,6 +61,9 @@
         "UI-002",
         "rocksoul-assets:ASSETS-003"
       ],
+      "evidence": [
+        "commit 6ce5a66 pushed to origin/main; ProvenanceRail now consumes label-free semantic-primitives URLs instead of correlation specimen cards; added productionScreenAssetMap contract for dashboard/cases/platform/auth and semantic mapping audit; unit tests 16 files/41 tests PASS, typecheck PASS, semantic map audit PASS, browser QA 4 desktop tests PASS with Axe serious/critical zero and no overflow; asset source accepted at rocksoul-assets d577fbd."
+      ],
       "evidence_required": [
         "consumer usage inventory",
         "component tests for label and state synchronization",
@@ -73,7 +76,7 @@
       "priority": "CRITICAL",
       "risk": "Full specimen artwork is currently scaled into icon slots and image-based labels can diverge from runtime semantics and accessibility text.",
       "scope": "repository",
-      "status": "IN_PROGRESS",
+      "status": "VERIFIED",
       "title": "Migrate specimen-based consumers to semantic primitives and define screen asset mapping"
     },
     {
