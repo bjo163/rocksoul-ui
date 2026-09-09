@@ -239,7 +239,7 @@ dev  ── verified promotion ──> main
 
 ## Research observatory components
 
-Reusable research surfaces available in v0.12.1:
+Reusable research surfaces available in v0.12.2:
 
 - `DossierHeader` — editorial/cinematic record header backed by canonical Rocksoul assets;
 - `EvidenceMatrix` — sticky, keyboard-accessible claim × evidence inspection;

@@ -14,7 +14,7 @@ const [indexSource, assetsContract, assetsRegistry, heroContract, readme] = awai
 const failures=[]
 
 if(pkg.name!=="@rocksoul/ui") failures.push("package name")
-if(pkg.version!=="0.12.1") failures.push(`package version ${pkg.version} != 0.12.1`)
+if(pkg.version!=="0.12.2") failures.push(`package version ${pkg.version} != 0.12.2`)
 if(pkg.private!==true) failures.push("GitHub-distributed package must remain private/non-npm")
 if(pkg.scripts?.prepare!=="npm run build:lib") failures.push("Git dependency prepare hook")
 if(pkg.scripts?.["audit:release"]!=="node scripts/release-audit.mjs") failures.push("release audit script")

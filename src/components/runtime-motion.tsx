@@ -1,4 +1,5 @@
 import { useEffect, useState, type HTMLAttributes } from "react"
+import { MoonWitnessResilientImage } from "./asset-provider"
 
 export const moonWitnessRuntimeMotionIds = [
   "pulse-alert","evidence-linked","case-resolved","ai-orbit","loading-trace","notification-in",
@@ -50,6 +51,7 @@ export function MoonWitnessRuntimeMotion({
   reducedMotionFallback?: React.ReactNode
 }) {
   const reduced=usePrefersReducedMotion()
+  const [videoFailed, setVideoFailed] = useState(false)
   if(reduced){
     return (
       <span className={className} role="img" aria-label={alt} data-reduced-motion="true" {...props}>
@@ -58,8 +60,22 @@ export function MoonWitnessRuntimeMotion({
     )
   }
   const src=resolveMoonWitnessRuntimeMotion(id,format,baseUrl)
+  const fallbackSrc=resolveMoonWitnessRuntimeMotion(id,"svg",DEFAULT_RUNTIME_BASE)
   if(format==="webm"){
-    return <video className={className} src={src} aria-label={alt} autoPlay loop muted playsInline {...(props as React.VideoHTMLAttributes<HTMLVideoElement>)} />
+    if (videoFailed) return <MoonWitnessResilientImage className={className} src={fallbackSrc} alt={alt} {...(props as React.ImgHTMLAttributes<HTMLImageElement>)} />
+    return (
+      <video
+        className={className}
+        src={src}
+        aria-label={alt}
+        autoPlay
+        loop
+        muted
+        playsInline
+        onError={() => setVideoFailed(true)}
+        {...(props as React.VideoHTMLAttributes<HTMLVideoElement>)}
+      />
+    )
   }
-  return <img className={className} src={src} alt={alt} {...(props as React.ImgHTMLAttributes<HTMLImageElement>)} />
+  return <MoonWitnessResilientImage className={className} src={src} fallbackSrc={fallbackSrc} alt={alt} {...(props as React.ImgHTMLAttributes<HTMLImageElement>)} />
 }

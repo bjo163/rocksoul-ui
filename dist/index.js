@@ -200,7 +200,7 @@ var y = {
 	repository: "bjo163/rocksoul-assets",
 	ref: "main",
 	commit: "5b035d0d83612f847ccd8b35f2c1b04022500110",
-	acceptedMainCommit: "d635642cf3fb8c4e116ad89e7b3529a98f1fd01f",
+	acceptedMainCommit: "9457360699375a7a036aa7322e9b5eb007bc2a0c",
 	manifestSchemaVersion: 3,
 	applicationVersion: "v2",
 	syncedAt: "2026-09-08",
@@ -5810,7 +5810,8 @@ function vn() {
 	}, []), e;
 }
 function yn({ id: e, format: t = "webm", alt: n, baseUrl: r = gn, className: i, reducedMotionFallback: a, ...o }) {
-	if (vn()) return /* @__PURE__ */ l("span", {
+	let c = vn(), [u, d] = s(!1);
+	if (c) return /* @__PURE__ */ l("span", {
 		className: i,
 		role: "img",
 		"aria-label": n,
@@ -5821,19 +5822,26 @@ function yn({ id: e, format: t = "webm", alt: n, baseUrl: r = gn, className: i, 
 			children: n
 		})
 	});
-	let s = _n(e, t, r);
-	return t === "webm" ? /* @__PURE__ */ l("video", {
+	let f = _n(e, t, r), p = _n(e, "svg", gn);
+	return t === "webm" ? u ? /* @__PURE__ */ l(on, {
 		className: i,
-		src: s,
+		src: p,
+		alt: n,
+		...o
+	}) : /* @__PURE__ */ l("video", {
+		className: i,
+		src: f,
 		"aria-label": n,
 		autoPlay: !0,
 		loop: !0,
 		muted: !0,
 		playsInline: !0,
+		onError: () => d(!0),
 		...o
-	}) : /* @__PURE__ */ l("img", {
+	}) : /* @__PURE__ */ l(on, {
 		className: i,
-		src: s,
+		src: f,
+		fallbackSrc: p,
 		alt: n,
 		...o
 	});
