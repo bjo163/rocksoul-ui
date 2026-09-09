@@ -714,6 +714,13 @@ a {
   .mw-cinematic-web-hero__archive figure { scroll-snap-align: start; }
   .mw-cinematic-web-hero__footer { padding: 0 16px; }
   .mw-cinematic-web-hero__footer span:last-child { display: none; }
+  /* Keep the photographic master from competing with the reading order on phones. */
+  .mw-cinematic-web-hero__master img { object-position: 68% center; filter: grayscale(1) contrast(1.05) brightness(.42); }
+  .mw-cinematic-web-hero__master::after { background:
+    linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.72) 58%, rgba(0,0,0,.5) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.18) 58%, rgba(0,0,0,.82) 100%); }
+  .mw-cinematic-web-hero__grid { opacity: .1; }
+  .mw-cinematic-web-hero__texture { opacity: .07; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mw-cinematic-web-hero__texture { opacity: .08; }
