@@ -16,7 +16,7 @@
   --color-subtle: var(--mw-text-muted);
   --color-border: var(--mw-border-default);
   --color-border-strong: var(--mw-border-strong);
-  --color-primary: var(--mw-brand-crimson);
+  --color-primary: var(--mw-brand-crimson-ui);
   --color-primary-foreground: var(--mw-text-inverse);
   --color-success: var(--mw-status-supported-fg);
   --color-verified: var(--mw-status-verified-fg);
@@ -55,6 +55,7 @@
   --mw-brand-crimson: #D1132A;
   --mw-brand-crimson-dark: #9F1022;
   --mw-brand-crimson-soft: #F7DDE2;
+  --mw-brand-crimson-ui: #FF5A6D;
 
   --mw-status-supported: #16A36A;
   --mw-status-verified: #17A673;
@@ -154,6 +155,7 @@
   --mw-border-default: #D9D6CE;
   --mw-border-strong: #A6A197;
   --mw-focus: #0B0B0B;
+  --mw-brand-crimson-ui: #B20F23;
   --mw-status-supported-fg: #077545;
   --mw-status-verified-fg: #077348;
   --mw-status-contested-fg: #9F1022;
@@ -274,30 +276,21 @@ a {
 }
 
 .mw-platform {
-  --mw-surface-page: #F7F4EC;
-  --mw-surface-raised: #FFFFFF;
-  --mw-surface-panel: #EEEAE0;
-  --mw-surface-overlay: #FFFFFF;
-  --mw-text-primary: #0B0B0B;
-  --mw-text-secondary: #4A4A4A;
-  --mw-text-muted: #666666;
-  --mw-text-inverse: #FFFFFF;
-  --mw-border-default: #D9D6CE;
-  --mw-border-strong: #A6A197;
-  --mw-focus: #0B0B0B;
-  --mw-status-supported-fg: #077545;
-  --mw-status-verified-fg: #077348;
-  --mw-status-contested-fg: #9F1022;
-  --mw-status-partial-fg: #7A5200;
-  --mw-status-unresolved-fg: #555555;
-  --mw-status-restricted-fg: #7A3F00;
-  --mw-status-prohibited-fg: #8A0B1C;
-  --mw-status-info-fg: #1859B3;
-  --mw-rgbl-red-fg: #B20F23;
-  --mw-rgbl-green-fg: #077545;
-  --mw-rgbl-blue-fg: #1859B3;
-  --mw-rgbl-light-fg: #6C5400;
-  color-scheme: light;
+  /* Surface personality controls composition; global data-theme owns color. */
+  --mw-shell-density: 1;
+  --mw-shell-heading-tracking: -0.02em;
+}
+
+[data-surface-personality="operator"] {
+  --mw-radius-lg: 8px;
+  --mw-shell-density: .9;
+  --mw-shell-heading-tracking: -0.015em;
+}
+
+[data-surface-personality="editorial"] {
+  --mw-radius-lg: 12px;
+  --mw-shell-density: 1.08;
+  --mw-shell-heading-tracking: -0.035em;
 }
 
 .rs-record-grid {

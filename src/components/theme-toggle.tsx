@@ -5,34 +5,32 @@ type EffectiveTheme = "light" | "dark"
 
 const preferenceOrder: ThemePreference[] = ["system", "dark", "light"]
 
-function resolveTheme(preference: ThemePreference): EffectiveTheme {
+export function resolveTheme(preference: ThemePreference): EffectiveTheme {
   if (preference === "light" || preference === "dark") return preference
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
 }
 
-function applyTheme(preference: ThemePreference) {
+export function applyTheme(preference: ThemePreference) {
   const effective = resolveTheme(preference)
   const root = document.documentElement
   root.dataset.themePreference = preference
   root.dataset.theme = effective
+  root.dataset.effectiveTheme = effective
   root.classList.toggle("light", effective === "light")
 }
 
-export function ThemeToggle() {
-  const [preference, setPreference] = useState<ThemePreference>("system")
-  const [effective, setEffective] = useState<EffectiveTheme>("dark")
+function storedPreference(): ThemePreference {
+  try {
+    const stored = window.localStorage?.getItem("mw-theme")
+    return stored === "light" || stored === "dark" || stored === "system" ? stored : "system"
+  } catch {
+    return "system"
+  }
+}
 
-  useEffect(() => {
-    // JSDOM and privacy-restricted browser contexts may expose no usable
-    // storage. Theme selection remains functional for the current session.
-    const stored = (() => {
-      try { return window.localStorage?.getItem("mw-theme") }
-      catch { return null }
-    })()
-    const initial: ThemePreference =
-      stored === "light" || stored === "dark" || stored === "system" ? stored : "system"
-    setPreference(initial)
-  }, [])
+export function ThemeToggle() {
+  const [preference, setPreference] = useState<ThemePreference>(storedPreference)
+  const [effective, setEffective] = useState<EffectiveTheme>(() => resolveTheme(storedPreference()))
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: light)")

@@ -254,7 +254,7 @@ export function ProfileSettingsScreen({ actions }: { actions?: ApplicationAction
       <div className="mt-8 grid gap-5 lg:grid-cols-[330px_1fr]">
         <aside className="border border-border bg-card p-6">
           <div className="flex items-center gap-4 border-b border-border pb-6">
-            <span className="flex size-16 items-center justify-center rounded-full bg-primary text-lg font-bold text-white">RS</span>
+            <span className="flex size-16 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">RS</span>
             <div><strong>Rocksoul</strong><p className="mw-meta mt-1 text-muted-foreground">researcher</p></div>
           </div>
           <nav className="mt-5 grid">

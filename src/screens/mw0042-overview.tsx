@@ -91,7 +91,7 @@ export function MW0042Overview() {
   )
 
   return (
-    <article id="case" className="scroll-mt-16 bg-background text-foreground">
+    <article id="case" className="scroll-mt-16 bg-background text-foreground" data-surface-personality="editorial">
       <MWHeader caseId={mw0042.caseId} />
       <div className="mw-shell-wide py-10 sm:py-14">
         <nav aria-label="MW-0042 sections" className="mb-7 flex flex-wrap border-b border-border pb-3">

@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 export type BackendState = "online" | "degraded" | "offline";
 export type ResourceGroup = "System" | "Resource" | "Workspace" | "Account";
+export type SurfacePersonality = "operator" | "editorial";
 export interface AppResource {
     id: string;
     label: string;
@@ -110,7 +111,7 @@ export declare function AppTopbar({ breadcrumbs, backendState, user, unreadCount
     onOpenCommands: () => void;
     onOpenNotifications: () => void;
 }): import("react").JSX.Element;
-export declare function ApplicationShell({ activeResource, breadcrumbs, children, backendState, user, permissions, resources, notifications, commandActions, }: {
+export declare function ApplicationShell({ activeResource, breadcrumbs, children, backendState, user, permissions, resources, notifications, commandActions, surfacePersonality, }: {
     activeResource: string;
     breadcrumbs: Array<{
         label: string;
@@ -126,4 +127,5 @@ export declare function ApplicationShell({ activeResource, breadcrumbs, children
     resources?: AppResource[];
     notifications?: AppNotification[];
     commandActions?: AppCommandAction[];
+    surfacePersonality?: SurfacePersonality;
 }): import("react").JSX.Element;

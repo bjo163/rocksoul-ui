@@ -154,7 +154,7 @@ This checklist distinguishes **implemented/CI-verifiable** work from **external 
 - [x] Asset repository release v1.3.1 recognized.
 - [x] Asset repository acceptance = passed.
 - [x] Live Penpot verification remains manual-follow-up, not falsely claimed.
-- [x] Accepted upstream head is `rocksoul-assets/main@96df558c0cd2922715d73eced735234b2c73b333`; runtime delivery remains pinned separately by `ROCKSOUL_ASSETS_SYNC.commit`.
+- [x] Accepted upstream head is `rocksoul-assets/main@429b2d5adf50b1d67494e60d96ab274735fc6ce9`; runtime delivery remains pinned separately by `ROCKSOUL_ASSETS_SYNC.commit`.
 - [x] Manifest schema v3 recognized.
 - [x] Canonical MoonWitness brand vector family packaged for consumers.
 - [x] Generated brand delivery assets mirrored: PNG / ICO / social / OG / app / maskable.

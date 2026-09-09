@@ -12,6 +12,7 @@ import { NavigationLink } from "./navigation"
 
 export type BackendState = "online" | "degraded" | "offline"
 export type ResourceGroup = "System" | "Resource" | "Workspace" | "Account"
+export type SurfacePersonality = "operator" | "editorial"
 
 export interface AppResource {
   id: string
@@ -323,6 +324,7 @@ export function ApplicationShell({
   resources = applicationResources,
   notifications = [],
   commandActions,
+  surfacePersonality = "operator",
 }: {
   activeResource: string
   breadcrumbs: Array<{ label: string; href?: string }>
@@ -333,6 +335,7 @@ export function ApplicationShell({
   resources?: AppResource[]
   notifications?: AppNotification[]
   commandActions?: AppCommandAction[]
+  surfacePersonality?: SurfacePersonality
 }) {
   const [navOpen, setNavOpen] = useState(false)
   const [commandsOpen, setCommandsOpen] = useState(false)
@@ -352,8 +355,8 @@ export function ApplicationShell({
   }, [])
 
   return (
-    <div className="mw-platform min-h-screen bg-background text-foreground">
-      <a href="#mw-main-content" className="fixed left-3 top-3 z-50 -translate-y-20 bg-primary px-4 py-3 text-sm font-bold text-white focus:translate-y-0">Skip to main content</a>
+    <div className="mw-platform min-h-screen bg-background text-foreground" data-surface-personality={surfacePersonality}>
+      <a href="#mw-main-content" className="fixed left-3 top-3 z-50 -translate-y-20 bg-primary px-4 py-3 text-sm font-bold text-primary-foreground focus:translate-y-0">Skip to main content</a>
 
       <div className="flex min-h-screen">
         <aside className={cn("relative hidden shrink-0 border-r border-border bg-panel md:block", compact ? "w-[72px]" : "w-[72px] lg:w-[220px]")} data-state={compact ? "compact" : "expanded"}>
