@@ -1,6 +1,6 @@
 import type { ImgHTMLAttributes } from "react"
 import { Badge } from "./badge"
-import { useMoonWitnessAssetBaseUrl } from "./asset-provider"
+import { MoonWitnessResilientImage, useMoonWitnessAssetBaseUrl } from "./asset-provider"
 import type { AppCommandAction, AppResource } from "./application-shell"
 import {
   platformAdminContract,
@@ -153,5 +153,6 @@ export function PlatformAdminVisual({
 }) {
   const baseUrl = useMoonWitnessAssetBaseUrl()
   const src = baseUrl.replace(/\/+$/, "") + "/ui/v2/" + platformAdminVisuals[screen]
-  return <img src={src} alt={alt} {...props} />
+  const fallbackSrc = "/assets/ui/v2/" + platformAdminVisuals[screen]
+  return <MoonWitnessResilientImage src={src} fallbackSrc={fallbackSrc} alt={alt} {...props} />
 }

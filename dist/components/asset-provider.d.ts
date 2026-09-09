@@ -21,6 +21,11 @@ export declare function MoonWitnessRegistryAssetImage({ pack, assetId, format, s
     rootMode?: MoonWitnessAssetRootMode;
     alt: string;
 }): import("react").JSX.Element | null;
+export declare function MoonWitnessResilientImage({ src, fallbackSrc, alt, ...props }: ImgHTMLAttributes<HTMLImageElement> & {
+    src: string;
+    fallbackSrc?: string;
+    alt: string;
+}): import("react").JSX.Element;
 export declare function MoonWitnessStatusAsset({ status, label, className, }: {
     status: "supported" | "verified" | "partial" | "unresolved" | "blocked" | "disputed" | "degraded" | "offline" | "needs-context" | "source-linked" | "legal-review" | "archived";
     label?: string;

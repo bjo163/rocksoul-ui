@@ -32,8 +32,8 @@ jobs:
       - name: Upgrade npm
         run: npm install --global npm@11.6.0
 
-      - name: Install
-        run: npm install --no-audit --no-fund
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
       - name: Design contract audit
         run: npm run audit:tokens
       - name: Accessibility contract audit

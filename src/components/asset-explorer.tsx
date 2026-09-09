@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { Button } from "./button"
 import { Dialog } from "./overlays"
+import { MoonWitnessResilientImage } from "./asset-provider"
 import {
   MOONWITNESS_STABLE_REPOSITORY_BASE,
   ROCKSOUL_ASSETS_REGISTRY,
@@ -113,7 +114,8 @@ export function AssetExplorer({
               <span className={`flex items-center justify-center overflow-hidden bg-panel ${view==="grid"?"min-h-36":"h-14"}`}>
                 {previews.length ? previews.map(([assetId])=>{
                   const src=resolveMoonWitnessRegistryAssetUrl(id,assetId,{baseUrl})
-                  return src?<img key={assetId} src={src} alt="" loading="lazy" className="max-h-24 max-w-[30%] object-contain" />:null
+                  const localSrc=resolveMoonWitnessRegistryAssetUrl(id,assetId,{baseUrl:"/assets"})
+                  return src?<MoonWitnessResilientImage key={assetId} src={src} fallbackSrc={localSrc} alt="" loading="lazy" className="max-h-24 max-w-[30%] object-contain" />:null
                 }) : <span className="mw-meta text-muted-foreground">{id==="sfx"?"∿":"{ }"}</span>}
               </span>
               <span className={view==="grid"?"mt-4 block":""}>
@@ -167,10 +169,11 @@ export function AssetExplorer({
             <div className="mt-4 max-h-[55vh] overflow-auto border border-border">
               {selectedAssets.map(([assetId,path])=>{
                 const src=resolveMoonWitnessRegistryAssetUrl(selected,assetId,{baseUrl})
+                const localSrc=resolveMoonWitnessRegistryAssetUrl(selected,assetId,{baseUrl:"/assets"})
                 return (
                   <div key={assetId} className="grid grid-cols-[64px_minmax(0,1fr)_auto] items-center gap-3 border-b border-border p-3 last:border-b-0">
                     <span className="flex h-12 items-center justify-center bg-panel">
-                      {src?<img src={src} alt="" loading="lazy" className="max-h-10 max-w-10" />:null}
+                      {src?<MoonWitnessResilientImage src={src} fallbackSrc={localSrc} alt="" loading="lazy" className="max-h-10 max-w-10" />:null}
                     </span>
                     <span className="min-w-0">
                       <strong className="block text-sm">{prettify(assetId)}</strong>

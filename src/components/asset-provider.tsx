@@ -98,6 +98,27 @@ export function MoonWitnessRegistryAssetImage({
   )
 }
 
+export function MoonWitnessResilientImage({
+  src,
+  fallbackSrc,
+  alt,
+  ...props
+}: ImgHTMLAttributes<HTMLImageElement> & { src: string; fallbackSrc?: string; alt: string }) {
+  const [currentSrc, setCurrentSrc] = useState(src)
+  useEffect(() => setCurrentSrc(src), [src])
+  return (
+    <img
+      src={currentSrc}
+      alt={alt}
+      {...props}
+      onError={(event) => {
+        if (fallbackSrc && currentSrc !== fallbackSrc) setCurrentSrc(fallbackSrc)
+        props.onError?.(event)
+      }}
+    />
+  )
+}
+
 export function MoonWitnessStatusAsset({
   status,
   label = status,
