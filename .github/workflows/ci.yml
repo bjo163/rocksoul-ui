@@ -93,4 +93,35 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      # Canonical trigger after automated tracked-dist synchronization.
+  visual-regression:
+    needs: verify
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Enforce tracked dist reproducibility
+        run: git diff --exit-code -- dist
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+      - name: Visual snapshot gate
+        run: npm run test:visual
+      - name: Upload visual evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: visual-regression-${{ github.run_id }}
+          path: |
+            test-results/**
+            playwright-report/**
+          if-no-files-found: warn
+          retention-days: 14
