@@ -176,7 +176,7 @@ export function CalendarScreen({ actions }: { actions?: ApplicationActions } = {
               <span className="mw-meta text-muted-foreground">{day <= 30 ? day : ""}</span>
               {day === 8 ? (
                 <div className="mt-2 grid gap-1">
-                  <button type="button" className="border-l-2 border-primary bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "mw-0042-review", title: "MW-0042 REVIEW", date: "2026-09-08" })}>MW-0042 REVIEW</button><button type="button" className="border-l-2 border-success bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "source-sync", title: "SOURCE SYNC", date: "2026-09-08" })}>SOURCE SYNC</button><button type="button" className="border-l-2 border-info bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "release-gate", title: "RELEASE GATE", date: "2026-09-08" })}>RELEASE GATE</button>
+                  <Button type="button" className="border-l-2 border-primary bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "mw-0042-review", title: "MW-0042 REVIEW", date: "2026-09-08" })}>MW-0042 REVIEW</Button><Button type="button" className="border-l-2 border-success bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "source-sync", title: "SOURCE SYNC", date: "2026-09-08" })}>SOURCE SYNC</Button><Button type="button" className="border-l-2 border-info bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "release-gate", title: "RELEASE GATE", date: "2026-09-08" })}>RELEASE GATE</Button>
                 </div>
               ) : null}
             </div>
@@ -197,9 +197,9 @@ export function ChatScreen({ actions }: { actions?: ApplicationActions } = {}) {
         <aside className="border border-border bg-panel p-4">
           <p className="mw-meta text-muted-foreground">Channels</p>
           {["# mw-0042", "# research", "# legal-review"].map((item, index) => (
-            <button key={item} type="button" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
+            <Button key={item} type="button" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
               {item}{index === 0 ? <StatusBadge variant="info">3</StatusBadge> : null}
-            </button>
+            </Button>
           ))}
         </aside>
         <section className="flex flex-col border border-border bg-card">
@@ -297,7 +297,7 @@ export function ProfileSettingsScreen({ actions }: { actions?: ApplicationAction
             <div><strong>Rocksoul</strong><p className="mw-meta mt-1 text-muted-foreground">researcher</p></div>
           </div>
           <nav className="mt-5 grid">
-            {sections.map((item) => <button key={item} type="button" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</button>)}
+            {sections.map((item) => <Button key={item} type="button" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</Button>)}
           </nav>
         </aside>
 

@@ -86,7 +86,7 @@ export function MWHeader({
           {caseId ? <span className="mw-meta hidden text-muted-foreground sm:inline">{caseId}</span> : null}
           <a href={searchHref} className="mw-touch inline-flex items-center justify-center border border-border px-2 font-mono text-[9px] font-bold uppercase">Search</a>
           <Avatar label={surface === "community" ? "Member" : "Guest"} size="sm" />
-          <button
+          <Button
             className="mw-touch border border-border px-3 font-mono text-[10px] font-bold uppercase"
             type="button"
             aria-expanded={menuOpen}
@@ -94,7 +94,7 @@ export function MWHeader({
             onClick={() => setMenuOpen(true)}
           >
             Menu
-          </button>
+          </Button>
         </div>
       </div>
       <Drawer open={menuOpen} title="MoonWitness" onClose={() => setMenuOpen(false)} position="right">
@@ -270,7 +270,7 @@ export function Citation({
   const label = `${code} · ${source} · ${locator}`
   if (variant === "inline") {
     return (
-      <button
+      <Button
         type="button"
         className="mw-touch inline-flex items-center border-b border-border font-mono text-[10px] uppercase tracking-[0.08em] hover:border-foreground"
         onClick={() => {
@@ -279,7 +279,7 @@ export function Citation({
         }}
       >
         {copied ? "Copied" : code}
-      </button>
+      </Button>
     )
   }
   return (

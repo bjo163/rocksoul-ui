@@ -1,6 +1,7 @@
 import { MoonWitnessResilientImage } from "./asset-provider"
 import { semanticPrimitiveByNodeKind, semanticPrimitiveUrl } from "../contracts/semantic-asset-map"
 import { cn } from "../lib/cn"
+import { Button } from "./ui/button"
 
 export type ProvenanceNodeKind = "story" | "claim" | "evidence" | "source" | "text" | "event" | "person" | "law" | "case" | "location"
 
@@ -37,7 +38,7 @@ export function ProvenanceRail({
       <div className={cn("flex gap-3", horizontal ? "items-stretch overflow-x-auto" : "flex-col")}>
         {nodes.map((node, index) => (
           <div key={node.id} className={cn("flex", horizontal ? "items-center" : "flex-col")}>
-            <button
+            <Button
               type="button"
               onClick={() => onActivate?.(node)}
               className={cn(
@@ -53,7 +54,7 @@ export function ProvenanceRail({
                 <strong className="mt-1 block text-sm text-foreground">{node.label}</strong>
                 {node.detail ? <small className="mt-1 block text-[10px] leading-4 text-muted-foreground">{node.detail}</small> : null}
               </span>
-            </button>
+            </Button>
             {index < nodes.length - 1 ? (
               <span aria-hidden="true" className={cn("shrink-0 text-primary", horizontal ? "px-2 text-xl" : "self-center py-2")}>→</span>
             ) : null}

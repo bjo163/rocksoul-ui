@@ -11,6 +11,7 @@ async function walk(dir) {
       const source = await readFile(file, "utf8")
       for (const match of source.matchAll(/<button\b([^>]*)>/g)) {
         const attrs = match[1]
+        if (!file.endsWith(`${path.sep}ui${path.sep}sidebar.tsx`)) failures.push(`${path.relative(process.cwd(), file)}: use canonical Button/IconButton instead of raw button`)
         const iconLike = /(?:size-|icon|rounded-full)/.test(attrs)
         if (iconLike && !/aria-label=/.test(attrs)) failures.push(`${path.relative(process.cwd(), file)}: icon-like button requires aria-label or IconButton`)
       }

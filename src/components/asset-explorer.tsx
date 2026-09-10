@@ -88,7 +88,7 @@ export function AssetExplorer({
         </label>
         <div className="flex flex-wrap gap-2" aria-label="Asset categories">
           {(["All",...Object.keys(categories)] as Category[]).map((item)=>(
-            <button
+            <Button
               key={item}
               type="button"
               onClick={()=>setCategory(item)}
@@ -96,7 +96,7 @@ export function AssetExplorer({
               className={`min-h-11 border px-3 text-xs font-bold uppercase tracking-wide ${category===item?"border-primary bg-primary/10 text-primary":"border-border bg-card text-muted-foreground hover:text-foreground"}`}
             >
               {item}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -106,7 +106,7 @@ export function AssetExplorer({
         {entries.map(([id,pack])=>{
           const previews=Object.entries(pack.svg ?? {}).slice(0,view==="grid"?3:1)
           return (
-            <button
+            <Button
               key={id}
               type="button"
               onClick={()=>{setSelected(id);setAssetQuery("")}}
@@ -124,7 +124,7 @@ export function AssetExplorer({
                 <strong className="mt-1 block text-base">{prettify(id)}</strong>
               </span>
               <span className="mw-meta text-muted-foreground">{pack.count}</span>
-            </button>
+            </Button>
           )
         })}
       </div>
@@ -179,13 +179,13 @@ export function AssetExplorer({
                       <span className="block truncate font-mono text-[10px] text-muted-foreground">{path}</span>
                     </span>
                     <div className="flex gap-2">
-                      <button
+                      <Button
                         type="button"
                         className="min-h-11 border border-border px-3 text-xs font-bold"
                         onClick={()=>void navigator.clipboard?.writeText(path)}
                       >
                         Copy
-                      </button>
+                      </Button>
                       {src?<a className="grid min-h-11 place-items-center border border-border px-3 text-xs font-bold" href={src} target="_blank" rel="noreferrer">Open ↗</a>:null}
                     </div>
                   </div>

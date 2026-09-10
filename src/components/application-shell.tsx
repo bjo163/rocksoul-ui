@@ -186,10 +186,10 @@ export function NotificationsPanel({
   const actions = useApplicationActions()
   const markAllRead = onMarkAllRead ?? actions.onMarkAllNotificationsRead
   return (
-    <Drawer open={open} title="Notifications" onClose={onClose} position="right" footer={<Button variant="secondary" onClick={onClose}>Close</Button>}>
+    <Drawer open={open} title="Notifications" onClose={onClose} position="right" footer={<PrimitiveButton variant="secondary" onClick={onClose}>Close</PrimitiveButton>}>
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <p className="mw-meta text-muted-foreground">{notifications.filter((item) => item.state === "unread").length} unread</p>
-        <button type="button" className="mw-link min-h-0 font-mono text-[10px] font-bold uppercase text-primary" onClick={() => void markAllRead?.()}>Mark all read</button>
+        <PrimitiveButton type="button" className="mw-link min-h-0 font-mono text-[10px] font-bold uppercase text-primary" onClick={() => void markAllRead?.()}>Mark all read</PrimitiveButton>
       </div>
       <div className="grid" data-state={notifications.length ? "unread" : "empty"}>
         {notifications.length ? notifications.map((item) => (
@@ -221,7 +221,7 @@ export function UserMenu({ name, role }: { name: string; role: string }) {
       <div className="absolute right-0 top-[calc(100%+8px)] z-40 w-56 border border-border bg-card p-2 shadow-lg">
         <NavigationLink href="/profile" className="mw-link w-full px-3 text-sm">Profile</NavigationLink>
         <NavigationLink href="/settings" className="mw-link w-full px-3 text-sm">Settings</NavigationLink>
-        <button type="button" className="mw-link w-full px-3 text-left text-sm text-primary" onClick={() => void actions.onSignOut?.()}>Sign out</button>
+        <PrimitiveButton type="button" className="mw-link w-full px-3 text-left text-sm text-primary" onClick={() => void actions.onSignOut?.()}>Sign out</PrimitiveButton>
       </div>
     </details>
   )
@@ -308,9 +308,9 @@ export function AppTopbar({
         <div className="min-w-0 flex-1"><Breadcrumbs items={breadcrumbs} /></div>
         <div className="hidden sm:block"><BackendStatus state={backendState} /></div>
         <IconButton label="Open command palette" aria-keyshortcuts="Control+K Meta+K" onClick={onOpenCommands}>⌘</IconButton>
-        <button type="button" className="mw-touch relative inline-flex items-center justify-center rounded-full border border-border bg-background px-3 font-mono text-[10px] font-bold uppercase" onClick={onOpenNotifications} aria-label={`Notifications, ${unreadCount} unread`}>
+        <PrimitiveButton type="button" className="mw-touch relative inline-flex items-center justify-center rounded-full border border-border bg-background px-3 font-mono text-[10px] font-bold uppercase" onClick={onOpenNotifications} aria-label={`Notifications, ${unreadCount} unread`}>
           {unreadCount || 0}
-        </button>
+        </PrimitiveButton>
         <ThemeToggle />
         <UserMenu name={user.name} role={user.role} />
       </div>

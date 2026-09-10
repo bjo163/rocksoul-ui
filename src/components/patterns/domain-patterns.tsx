@@ -7,7 +7,7 @@ import { Button } from "../ui/button"
 import { Field, FieldContent, FieldDescription, FieldLabel } from "../ui/field"
 import { SimplePagination } from "../molecules/pagination"
 
-/** @deprecated Product patterns are kept for existing screens; compose primitives for new screens. */
+/** Product patterns compose canonical primitives for existing product screens. */
 import { CorrelationScore, type CorrelationScoreProps } from "../correlation-score"
 import { EvidenceGraph } from "../evidence-graph"
 import type { RecordSummary } from "../four-record-summary"
@@ -358,7 +358,7 @@ export function AuthFormPattern({
         <Field orientation="horizontal"><Checkbox id="auth-keep-signed-in" checked={keepSignedIn} onCheckedChange={(checked) => setKeepSignedIn(checked === true)} /><FieldContent><FieldLabel htmlFor="auth-keep-signed-in">Keep me signed in</FieldLabel><FieldDescription>Use only on a device you control.</FieldDescription></FieldContent></Field>
         <Button type="submit" disabled={state === "loading"}>{state === "loading" ? "Continuing…" : "Continue"}</Button>
         <Button type="button" variant="secondary" onClick={() => void provider?.()}>Continue with provider</Button>
-        <button type="button" className="mw-link justify-start text-xs underline" onClick={() => setState("error")}>Preview error state</button>
+        <Button type="button" className="mw-link justify-start text-xs underline" onClick={() => setState("error")}>Preview error state</Button>
       </div>
       <p className="mw-meta mt-8 border-t border-border pt-4 text-muted-foreground">By continuing you accept the community rules and evidence-integrity contract.</p>
     </form>
