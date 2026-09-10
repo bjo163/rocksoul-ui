@@ -51,7 +51,7 @@ The release gate machine-checks this table against the installed package metadat
 | tw-animate-css | MIT |
 | vaul | MIT |
 | zod | MIT |
-| @axe-core/playwright | MIT |
+| @axe-core/playwright | MPL-2.0 |
 | @playwright/test | Apache-2.0 |
 | @storybook/addon-a11y | MIT |
 | @storybook/react-vite | MIT |
