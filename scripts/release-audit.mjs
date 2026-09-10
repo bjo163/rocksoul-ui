@@ -37,7 +37,8 @@ for (const file of ["dist/index.js", "dist/index.d.ts", "dist/styles.css"]) {
 }
 
 const auditSource = await readFile(new URL(import.meta.url), "utf8")
-if (auditSource.includes("0.12.5")) failures.push("release audit must not hard-code current version")
+const semverLiteral = /["'`]v?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?["'`]/
+if (semverLiteral.test(auditSource)) failures.push("release audit must not hard-code a semantic version")
 
 if (failures.length) {
   console.error("Release closure audit failed:")
