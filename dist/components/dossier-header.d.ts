@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { type BadgeProps } from "./feedback/status-badge";
+import { type StatusBadgeProps } from "./feedback/status-badge";
 export interface DossierHeaderProps {
     eyebrow: string;
     title: string;
@@ -7,7 +7,7 @@ export interface DossierHeaderProps {
     recordId?: string;
     status?: {
         label: string;
-        variant?: BadgeProps["variant"];
+        variant?: StatusBadgeProps["variant"];
     };
     metadata?: Array<{
         label: string;

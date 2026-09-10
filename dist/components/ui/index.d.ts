@@ -27,6 +27,7 @@ export * from "./input";
 export * from "./input-group";
 export * from "./input-otp";
 export * from "./icon-button";
+export * from "./icons";
 export * from "./item";
 export * from "./label";
 export * from "./menubar";

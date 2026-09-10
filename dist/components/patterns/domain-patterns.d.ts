@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { type AuthSubmitPayload } from "../../contracts/interactions";
-/** @deprecated Product patterns are kept for existing screens; compose primitives for new screens. */
+/** Product patterns compose canonical primitives for existing product screens. */
 import { type CorrelationScoreProps } from "../correlation-score";
 import type { RecordSummary } from "../four-record-summary";
 import { type LegalStatusProps } from "../legal-status";
