@@ -1,8 +1,10 @@
 import { useState, type FormEvent, type ReactNode } from "react"
 import { useApplicationActions, type AuthSubmitPayload } from "../../contracts/interactions"
-import { Badge } from "./badge"
-import { Checkbox, Input } from "./form-controls"
-import { Button } from "./button"
+import { Badge } from "../feedback/status-badge"
+import { Checkbox } from "../ui/checkbox"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../ui/field"
 import { SimplePagination } from "../molecules/pagination"
 
 /** @deprecated Product patterns are kept for existing screens; compose primitives for new screens. */
@@ -243,7 +245,7 @@ export function ModerationQueue({
       </div>
       <div className="mt-4">
         <SubmissionCard {...submission} canonicalEvidence={false} source="provenance incomplete" reviewer="unassigned"
-          reviewActions={<><Button variant="danger" size="sm" onClick={() => void (onRequestContext ?? actions.onModerationRequestContext)?.(submission.id)}>Request context</Button><Button variant="secondary" size="sm" onClick={() => void (onReject ?? actions.onModerationReject)?.(submission.id)}>Reject</Button></>} />
+          reviewActions={<><Button variant="destructive" size="sm" onClick={() => void (onRequestContext ?? actions.onModerationRequestContext)?.(submission.id)}>Request context</Button><Button variant="secondary" size="sm" onClick={() => void (onReject ?? actions.onModerationReject)?.(submission.id)}>Reject</Button></>} />
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         <Button variant="secondary" size="sm" onClick={() => void (onBulkRequestContext ?? actions.onModerationBulkRequestContext)?.()}>Bulk request context</Button>
@@ -319,6 +321,7 @@ export function AuthFormPattern({
   onProvider?: () => void | Promise<void>
 } = {}) {
   const [state, setState] = useState<"default" | "error" | "loading">("default")
+  const [keepSignedIn, setKeepSignedIn] = useState(false)
   const actions = useApplicationActions()
   const submit = onSubmit ?? actions.onAuthSubmit
   const provider = onProvider ?? actions.onAuthProvider
@@ -329,7 +332,7 @@ export function AuthFormPattern({
     const payload: AuthSubmitPayload = {
       email: String(data.get("email") ?? ""),
       password: String(data.get("password") ?? ""),
-      keepSignedIn: data.get("keepSignedIn") === "on",
+      keepSignedIn,
     }
     if (!submit) {
       setState("loading")
@@ -350,10 +353,10 @@ export function AuthFormPattern({
       <h2 className="mt-3 text-2xl font-bold">Your account, not your conclusion.</h2>
       <p className="mt-2 text-sm leading-6 text-muted-foreground">Identity controls access. It never changes evidence status by itself.</p>
       <div className="mt-8 grid gap-5">
-        <Input name="email" label="Email" type="email" autoComplete="email" placeholder="you@example.com" required />
-        <Input name="password" label="Password" type="password" autoComplete="current-password" error={state === "error" ? "That credential pair was not accepted." : undefined} required />
-        <Checkbox name="keepSignedIn" label="Keep me signed in" description="Use only on a device you control." />
-        <Button type="submit" loading={state === "loading"}>Continue</Button>
+        <Field><FieldLabel htmlFor="auth-email">Email</FieldLabel><Input id="auth-email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required /></Field>
+        <Field data-invalid={state === "error"}><FieldLabel htmlFor="auth-password">Password</FieldLabel><Input id="auth-password" name="password" type="password" autoComplete="current-password" aria-invalid={state === "error"} required />{state === "error" ? <FieldDescription role="alert">That credential pair was not accepted.</FieldDescription> : null}</Field>
+        <Field orientation="horizontal"><Checkbox id="auth-keep-signed-in" checked={keepSignedIn} onCheckedChange={(checked) => setKeepSignedIn(checked === true)} /><FieldContent><FieldLabel htmlFor="auth-keep-signed-in">Keep me signed in</FieldLabel><FieldDescription>Use only on a device you control.</FieldDescription></FieldContent></Field>
+        <Button type="submit" disabled={state === "loading"}>{state === "loading" ? "Continuing…" : "Continue"}</Button>
         <Button type="button" variant="secondary" onClick={() => void provider?.()}>Continue with provider</Button>
         <button type="button" className="mw-link justify-start text-xs underline" onClick={() => setState("error")}>Preview error state</button>
       </div>

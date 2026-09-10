@@ -1,7 +1,7 @@
 import { Button } from "../components/ui/button"
 import { MetricTile, MWHeader } from "../components/archive-components"
 import { CaseHeader } from "../components/case-header"
-import { CommunityCaseThreadPattern } from "../components/compat/patterns"
+import { CommunityCaseThreadPattern } from "../components/patterns/domain-patterns"
 import { mw0042 } from "../fixtures/mw0042"
 
 export function CommunityScreen() {

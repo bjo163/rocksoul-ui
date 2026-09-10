@@ -15,7 +15,7 @@ export declare const moonWitnessCandidateConsumption: {
     readonly channel: "deprecated-stable-alias";
     readonly registryVersion: "1.3.1";
     readonly packCount: number;
-    readonly canonicalAssetCount: 634;
+    readonly canonicalAssetCount: 650;
     readonly defaultBaseUrl: string;
     readonly stableByDefault: true;
 };

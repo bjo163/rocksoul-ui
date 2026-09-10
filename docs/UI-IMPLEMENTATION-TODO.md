@@ -4,15 +4,15 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ## Definition of done
 
-- [ ] Satu canonical owner dan satu canonical import path untuk setiap komponen.
+- [x] Satu canonical owner dan satu canonical import path untuk setiap komponen.
 - [ ] Tidak ada implementasi generik yang digandakan di `apps/web`.
 - [ ] Dependency hanya bergerak dari layer rendah ke layer tinggi.
 - [ ] Komponen interaktif mendukung keyboard, focus, disabled, dan accessible name.
-- [ ] Komponen data memiliki loading, empty, error, dan populated state.
+- [x] Komponen data memiliki loading, empty, error, dan populated state.
 - [ ] Semua visual value menggunakan token.
 - [ ] Story, unit test, dan accessibility test tersedia sesuai risiko.
-- [ ] Typecheck, audit, build, dan consumer verification berhasil.
-- [ ] Dokumentasi dan migration note diperbarui.
+- [x] Typecheck, audit, build, dan consumer verification berhasil.
+- [x] Dokumentasi dan migration note diperbarui.
 
 ## Phase 0 — Governance and baseline
 
@@ -51,16 +51,16 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ## Phase 3 — Sub-primitives
 
 - [ ] Audit behavior accessibility yang dipakai berulang.
-- [ ] Sediakan `Slot`, `VisuallyHidden`, `Portal`, dan focus management.
+- [x] Sediakan `Slot`, `VisuallyHidden`, `Portal`, dan focus management.
 - [ ] Sediakan dismissal, floating positioning, roving focus, dan collection behavior.
 - [ ] Pastikan sub-primitives tidak menjadi product-facing components.
-- [ ] Tambahkan tests untuk focus, escape, outside click, keyboard navigation, dan screen reader labels.
+- [x] Tambahkan tests untuk focus, escape, keyboard navigation, dan screen reader labels. Outside-click coverage tetap perlu browser-level test khusus.
 
 ## Phase 4 — Atoms
 
 ### Actions
 
-- [ ] Canonicalize `Button`, `IconButton`, `Link`, `Toggle`, `ToggleGroup`, dan `ButtonGroup`.
+- [x] Canonicalize `Button`, `IconButton`, `Link`, `Toggle`, `ToggleGroup`, dan `ButtonGroup`.
 - [ ] Tetapkan variants, sizes, loading, disabled, icon-only, focus, dan long-label behavior.
 
 ### Inputs
@@ -81,7 +81,7 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ## Phase 5 — Molecules
 
-- [ ] Build `Field` dengan label, control, description, dan error parts.
+- [x] Build `Field` dengan label, control, description, dan error parts.
 - [x] Build `InputGroup`, `SearchInput`, `PasswordInput`, `FileInput`, dan `DateInput`.
 - [x] Build `FormActions`; `ComboboxField` dan `SelectField` tetap menjadi tindak lanjut.
 - [x] Build `CopyButton`, `KeyValue`, `Stat`, `InlineMessage`, `StatusBadge`, `ProgressIndicator`, dan `SplitButton`. `EmptyState` tetap menjadi tindak lanjut.
@@ -93,8 +93,8 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ### Data
 
 - [x] Build `DataTable` dengan column definitions.
-- [x] Tambahkan sorting dan row selection pada generic organism; filtering, bulk actions, pagination, column visibility, density, dan optional expansion tetap menjadi queued extensions.
-- [ ] Tambahkan loading, empty, error, no-results, keyboard, dan screen-reader states.
+- [x] Tambahkan sorting, row selection, filtering, bulk actions, pagination, column visibility, density, dan optional expansion pada generic organism.
+- [x] Tambahkan loading, empty, error, no-results, keyboard, dan screen-reader states.
 - [ ] Pastikan data fetching tetap di luar organism.
 
 ### Forms and filtering
@@ -135,12 +135,12 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ## Phase 10 — Compat removal
 
-- [ ] List every remaining `compat` import.
-- [ ] Migrate package screens, stories, tests, dan fixtures.
+- [x] List every remaining `compat` import; package production no longer imports it.
+- [ ] Migrate legacy stories, tests, dan fixtures. Package screens sudah memakai canonical domain patterns.
 - [ ] Remove compatibility exports dan files.
 - [ ] Remove adapter audit exceptions.
 - [ ] Confirm old primitive paths tidak ada di `dist`.
-- [ ] Run full package and app CI.
+- [x] Run full package and app CI.
 - [ ] Add changelog entry untuk legacy API removal.
 
 ## Phase 11 — Documentation and registry

@@ -31,7 +31,7 @@ export * from "./components/four-record-summary";
 export * from "./components/legal-status";
 export * from "./components/platform-admin";
 export * from "./components/feedback";
-export * from "./components/compat/patterns";
+export * from "./components/patterns/domain-patterns";
 export * from "./components/theme-toggle";
 export * from "./contracts/semantic-asset-map";
 export * from "./components/workflow-strip";

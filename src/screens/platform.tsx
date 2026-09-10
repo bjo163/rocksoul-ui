@@ -2,7 +2,7 @@ import { ApplicationShell, type AppNotification } from "../components/applicatio
 import { Button } from "../components/ui/button"
 import { AuditEventRow, MetricTile } from "../components/archive-components"
 import { CaseHeader } from "../components/case-header"
-import { AWSLegalSummaryPattern, ModerationQueue, RepositoryMonitor } from "../components/compat/patterns"
+import { AWSLegalSummaryPattern, ModerationQueue, RepositoryMonitor } from "../components/patterns/domain-patterns"
 import { mw0042 } from "../fixtures/mw0042"
 import type { ApplicationActions } from "../contracts/interactions"
 

@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+export { SurfaceButton as Button, SurfaceInput as Input, SurfaceSelect as Select, SurfaceTextarea as Textarea, SurfaceAvatar as Avatar, SurfaceDrawer as Drawer } from "./patterns/surface-primitives";
 import type { RecordDomain } from "./four-record-summary";
 import type { SemanticBadgeVariant } from "../contracts/status-semantics";
 import { type CommunitySubmitPayload } from "../contracts/interactions";

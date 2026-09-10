@@ -11,8 +11,9 @@ export function SurfaceSelect({ label, options, ...props }: React.SelectHTMLAttr
   return <label className="grid gap-2 text-sm font-medium">{label ? <span>{label}</span> : null}<select className="h-9 w-full border border-input bg-transparent px-3 text-sm" {...props}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
 }
 
-export function SurfaceButton({ variant = "default", ...props }: Omit<React.ComponentProps<typeof PrimitiveButton>, "variant"> & { variant?: "default" | "secondary" | "danger" | "destructive" | "outline" | "ghost" | "link" }) {
-  return <PrimitiveButton variant={variant === "danger" ? "destructive" : variant} {...props} />
+export function SurfaceButton({ variant = "default", ...props }: Omit<React.ComponentProps<typeof PrimitiveButton>, "variant"> & { variant?: "default" | "primary" | "secondary" | "danger" | "destructive" | "outline" | "ghost" | "link" }) {
+  const resolved = variant === "danger" ? "destructive" : variant === "primary" ? "default" : variant
+  return <PrimitiveButton variant={resolved} {...props} />
 }
 
 export function SurfaceInput({ label, variant: _variant, size: _size, ...props }: Omit<React.ComponentProps<typeof PrimitiveInput>, "size"> & { label?: string; variant?: string; size?: "sm" | "md" | "lg" }) {

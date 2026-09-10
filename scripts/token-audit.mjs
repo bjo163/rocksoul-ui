@@ -121,7 +121,7 @@ for (const component of requiredComponents) {
 }
 
 
-const patternSource = await readFile(path.join(src, "components", "compat", "patterns.tsx"), "utf8")
+const patternSource = await readFile(path.join(src, "components", "patterns", "domain-patterns.tsx"), "utf8")
 const requiredPatterns = [
   "PublicCasePattern",
   "EvidenceGridPattern",

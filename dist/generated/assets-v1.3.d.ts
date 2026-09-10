@@ -2176,6 +2176,54 @@ export declare const assets: {
             readonly artifacts: {};
             readonly files: readonly ["moonwitness/runtime-motion-pack/lottie/ai-orbit.json", "moonwitness/runtime-motion-pack/lottie/backend-reconnect.json", "moonwitness/runtime-motion-pack/lottie/case-resolved.json", "moonwitness/runtime-motion-pack/lottie/drawer-open.json", "moonwitness/runtime-motion-pack/lottie/evidence-linked.json", "moonwitness/runtime-motion-pack/lottie/focus-ring.json", "moonwitness/runtime-motion-pack/lottie/graph-connect.json", "moonwitness/runtime-motion-pack/lottie/loading-trace.json", "moonwitness/runtime-motion-pack/lottie/notification-in.json", "moonwitness/runtime-motion-pack/lottie/pulse-alert.json", "moonwitness/runtime-motion-pack/lottie/sync-spin.json", "moonwitness/runtime-motion-pack/lottie/upload-rise.json", "moonwitness/runtime-motion-pack/png/ai-orbit.png", "moonwitness/runtime-motion-pack/png/backend-reconnect.png", "moonwitness/runtime-motion-pack/png/case-resolved.png", "moonwitness/runtime-motion-pack/png/drawer-open.png", "moonwitness/runtime-motion-pack/png/evidence-linked.png", "moonwitness/runtime-motion-pack/png/focus-ring.png", "moonwitness/runtime-motion-pack/png/graph-connect.png", "moonwitness/runtime-motion-pack/png/loading-trace.png", "moonwitness/runtime-motion-pack/png/notification-in.png", "moonwitness/runtime-motion-pack/png/pulse-alert.png", "moonwitness/runtime-motion-pack/png/sync-spin.png", "moonwitness/runtime-motion-pack/png/upload-rise.png", "moonwitness/runtime-motion-pack/svg/ai-orbit.svg", "moonwitness/runtime-motion-pack/svg/backend-reconnect.svg", "moonwitness/runtime-motion-pack/svg/case-resolved.svg", "moonwitness/runtime-motion-pack/svg/drawer-open.svg", "moonwitness/runtime-motion-pack/svg/evidence-linked.svg", "moonwitness/runtime-motion-pack/svg/focus-ring.svg", "moonwitness/runtime-motion-pack/svg/graph-connect.svg", "moonwitness/runtime-motion-pack/svg/loading-trace.svg", "moonwitness/runtime-motion-pack/svg/notification-in.svg", "moonwitness/runtime-motion-pack/svg/pulse-alert.svg", "moonwitness/runtime-motion-pack/svg/sync-spin.svg", "moonwitness/runtime-motion-pack/svg/upload-rise.svg", "moonwitness/runtime-motion-pack/webm/ai-orbit.webm", "moonwitness/runtime-motion-pack/webm/backend-reconnect.webm", "moonwitness/runtime-motion-pack/webm/case-resolved.webm", "moonwitness/runtime-motion-pack/webm/drawer-open.webm", "moonwitness/runtime-motion-pack/webm/evidence-linked.webm", "moonwitness/runtime-motion-pack/webm/focus-ring.webm", "moonwitness/runtime-motion-pack/webm/graph-connect.webm", "moonwitness/runtime-motion-pack/webm/loading-trace.webm", "moonwitness/runtime-motion-pack/webm/notification-in.webm", "moonwitness/runtime-motion-pack/webm/pulse-alert.webm", "moonwitness/runtime-motion-pack/webm/sync-spin.webm", "moonwitness/runtime-motion-pack/webm/upload-rise.webm"];
         };
+        readonly "semantic-primitives": {
+            readonly manifest: "moonwitness/semantic-primitives-pack/manifest.json";
+            readonly count: 16;
+            readonly canonicalFormat: "svg";
+            readonly svg: {
+                readonly "edge-contradicts": "moonwitness/semantic-primitives-pack/svg/edge-contradicts.svg";
+                readonly "edge-supports": "moonwitness/semantic-primitives-pack/svg/edge-supports.svg";
+                readonly "event-node": "moonwitness/semantic-primitives-pack/svg/event-node.svg";
+                readonly "evidence-bounds": "moonwitness/semantic-primitives-pack/svg/evidence-bounds.svg";
+                readonly "evidence-source": "moonwitness/semantic-primitives-pack/svg/evidence-source.svg";
+                readonly "graph-node": "moonwitness/semantic-primitives-pack/svg/graph-node.svg";
+                readonly "integrity-hash": "moonwitness/semantic-primitives-pack/svg/integrity-hash.svg";
+                readonly "jurisdiction-zone": "moonwitness/semantic-primitives-pack/svg/jurisdiction-zone.svg";
+                readonly "law-node": "moonwitness/semantic-primitives-pack/svg/law-node.svg";
+                readonly "legal-basis": "moonwitness/semantic-primitives-pack/svg/legal-basis.svg";
+                readonly "person-node": "moonwitness/semantic-primitives-pack/svg/person-node.svg";
+                readonly "privacy-confidential": "moonwitness/semantic-primitives-pack/svg/privacy-confidential.svg";
+                readonly "privacy-redacted": "moonwitness/semantic-primitives-pack/svg/privacy-redacted.svg";
+                readonly "provenance-chain": "moonwitness/semantic-primitives-pack/svg/provenance-chain.svg";
+                readonly "status-contested": "moonwitness/semantic-primitives-pack/svg/status-contested.svg";
+                readonly "status-verified": "moonwitness/semantic-primitives-pack/svg/status-verified.svg";
+            };
+            readonly png: {
+                readonly "edge-contradicts": "moonwitness/semantic-primitives-pack/png/24/edge-contradicts.png";
+                readonly "edge-supports": "moonwitness/semantic-primitives-pack/png/24/edge-supports.png";
+                readonly "event-node": "moonwitness/semantic-primitives-pack/png/24/event-node.png";
+                readonly "evidence-bounds": "moonwitness/semantic-primitives-pack/png/24/evidence-bounds.png";
+                readonly "evidence-source": "moonwitness/semantic-primitives-pack/png/24/evidence-source.png";
+                readonly "graph-node": "moonwitness/semantic-primitives-pack/png/24/graph-node.png";
+                readonly "integrity-hash": "moonwitness/semantic-primitives-pack/png/24/integrity-hash.png";
+                readonly "jurisdiction-zone": "moonwitness/semantic-primitives-pack/png/24/jurisdiction-zone.png";
+                readonly "law-node": "moonwitness/semantic-primitives-pack/png/24/law-node.png";
+                readonly "legal-basis": "moonwitness/semantic-primitives-pack/png/24/legal-basis.png";
+                readonly "person-node": "moonwitness/semantic-primitives-pack/png/24/person-node.png";
+                readonly "privacy-confidential": "moonwitness/semantic-primitives-pack/png/24/privacy-confidential.png";
+                readonly "privacy-redacted": "moonwitness/semantic-primitives-pack/png/24/privacy-redacted.png";
+                readonly "provenance-chain": "moonwitness/semantic-primitives-pack/png/24/provenance-chain.png";
+                readonly "status-contested": "moonwitness/semantic-primitives-pack/png/24/status-contested.png";
+                readonly "status-verified": "moonwitness/semantic-primitives-pack/png/24/status-verified.png";
+            };
+            readonly webm: {};
+            readonly lottie: {};
+            readonly wav: {};
+            readonly ogg: {};
+            readonly ico: {};
+            readonly artifacts: {};
+            readonly files: readonly ["moonwitness/semantic-primitives-pack/png/24/edge-contradicts.png", "moonwitness/semantic-primitives-pack/svg/edge-contradicts.svg", "moonwitness/semantic-primitives-pack/png/24/edge-supports.png", "moonwitness/semantic-primitives-pack/svg/edge-supports.svg", "moonwitness/semantic-primitives-pack/png/24/event-node.png", "moonwitness/semantic-primitives-pack/svg/event-node.svg", "moonwitness/semantic-primitives-pack/png/24/evidence-bounds.png", "moonwitness/semantic-primitives-pack/svg/evidence-bounds.svg", "moonwitness/semantic-primitives-pack/png/24/evidence-source.png", "moonwitness/semantic-primitives-pack/svg/evidence-source.svg", "moonwitness/semantic-primitives-pack/png/24/graph-node.png", "moonwitness/semantic-primitives-pack/svg/graph-node.svg", "moonwitness/semantic-primitives-pack/png/24/integrity-hash.png", "moonwitness/semantic-primitives-pack/svg/integrity-hash.svg", "moonwitness/semantic-primitives-pack/png/24/jurisdiction-zone.png", "moonwitness/semantic-primitives-pack/svg/jurisdiction-zone.svg", "moonwitness/semantic-primitives-pack/png/24/law-node.png", "moonwitness/semantic-primitives-pack/svg/law-node.svg", "moonwitness/semantic-primitives-pack/png/24/legal-basis.png", "moonwitness/semantic-primitives-pack/svg/legal-basis.svg", "moonwitness/semantic-primitives-pack/png/24/person-node.png", "moonwitness/semantic-primitives-pack/svg/person-node.svg", "moonwitness/semantic-primitives-pack/png/24/privacy-confidential.png", "moonwitness/semantic-primitives-pack/svg/privacy-confidential.svg", "moonwitness/semantic-primitives-pack/png/24/privacy-redacted.png", "moonwitness/semantic-primitives-pack/svg/privacy-redacted.svg", "moonwitness/semantic-primitives-pack/png/24/provenance-chain.png", "moonwitness/semantic-primitives-pack/svg/provenance-chain.svg", "moonwitness/semantic-primitives-pack/png/24/status-contested.png", "moonwitness/semantic-primitives-pack/svg/status-contested.svg", "moonwitness/semantic-primitives-pack/png/24/status-verified.png", "moonwitness/semantic-primitives-pack/svg/status-verified.svg"];
+        };
         readonly "developer-distribution": {
             readonly manifest: "moonwitness/developer-pack/manifest.json";
             readonly count: 4;
@@ -2327,16 +2375,16 @@ export declare const assets: {
         };
     };
     readonly coverage: {
-        readonly packFamilies: 43;
+        readonly packFamilies: 44;
         readonly foundationCollections: 2;
-        readonly showcaseCollections: 45;
-        readonly deliveryFiles: 1464;
-        readonly indexedDeliveryFiles: 1464;
+        readonly showcaseCollections: 46;
+        readonly deliveryFiles: 1496;
+        readonly indexedDeliveryFiles: 1496;
         readonly missingDeliveryFiles: 0;
         readonly coveragePercent: 100;
         readonly extensions: {
-            readonly svg: 634;
-            readonly png: 777;
+            readonly svg: 650;
+            readonly png: 793;
             readonly ico: 1;
             readonly webm: 12;
             readonly wav: 14;

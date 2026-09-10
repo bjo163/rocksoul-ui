@@ -11,7 +11,7 @@ import {
   RelatedCases,
   RepositoryMonitor,
   SearchFiltersPattern,
-} from "../components/compat/patterns"
+} from "../components/patterns/domain-patterns"
 import { StatePanel } from "../components/archive-components"
 import { MW0042Overview } from "../screens/mw0042-overview"
 import { mw0042 } from "../fixtures/mw0042"

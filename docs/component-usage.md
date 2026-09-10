@@ -16,16 +16,18 @@ The complete implementation checklist is in [UI implementation TODO](./UI-IMPLEM
 | Navigation | Tabs, Breadcrumb, Pagination, NavigationMenu, Sidebar, Command |
 | Overlays | Dialog, AlertDialog, Sheet, Drawer, Popover, Tooltip, HoverCard |
 | Feedback | Alert, Badge, Progress, Spinner, Skeleton, Empty, Toaster |
-| Data and media | Table, Calendar, Chart, Carousel, Avatar, Asset |
+| Data and media | Table, Calendar, Chart, Carousel, Avatar, Asset, RegistryAsset |
 | Domain UI | StatusBadge, LegalStatus, SourceBlock, ResearchDomainOwnershipMap, ApplicationShell |
 
 All primitive modules have built exports and TypeScript declarations. Keyboard/focus tests cover key controls and compatibility adapters; they are not exhaustive browser certification of every component. `apps/web` uses Button, Input, Field, FieldLabel, FieldDescription, Spinner, and StatusBadge. Browser verification covers the public search, theme switching, case selection, and the AWS case form.
 
-DatePicker and DataTable remain composition recipes (Calendar + Popover, and Table + application data behavior). No parallel date-picker or data-table implementation is added until a consumer needs one.
+DatePicker remains a composition recipe (Calendar + Popover). `DataTable` is the reusable organism for client-side data views; its filtering, pagination, selection, expansion, density and column controls are controlled or uncontrolled through its public props. Server query state remains in the consumer.
+
+Use `Asset` when a feature owns an explicit file from a local pack. Use `RegistryAsset` for canonical SVG/PNG entries from the version-pinned registry, including `semantic-primitives`, `evidence-integrity`, `authorization-security`, `data-grid`, `form-controls`, and the other 39 asset packs. Decorative assets use `alt=""`; meaningful images need a concise description.
 
 ## Ownership and compatibility
 
-The root package no longer exports the historical primitive adapters. Compatibility files live under `src/components/compat` and are imported only by legacy package screens and stories. They are not part of the public package contract and are not available to consumers.
+The root package no longer exports the historical primitive adapters. Compatibility files live under `src/components/compat` and are now limited to legacy stories and regression tests. Domain patterns live under `src/components/patterns`. Compatibility files are not part of the public package contract and are not available to consumers.
 
 | Compatibility API | Owner / replacement | Why it remains temporarily |
 | --- | --- | --- |

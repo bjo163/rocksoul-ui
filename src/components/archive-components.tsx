@@ -1,13 +1,13 @@
 import { useEffect, useId, useState, type ReactNode } from "react"
 import { Badge } from "./feedback/status-badge"
 import { SurfaceButton as Button, SurfaceInput as Input, SurfaceSelect as Select, SurfaceTextarea as Textarea, SurfaceAvatar as Avatar, SurfaceDrawer as Drawer } from "./patterns/surface-primitives"
+export { SurfaceButton as Button, SurfaceInput as Input, SurfaceSelect as Select, SurfaceTextarea as Textarea, SurfaceAvatar as Avatar, SurfaceDrawer as Drawer } from "./patterns/surface-primitives"
 import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
 import type { RecordDomain } from "./four-record-summary"
 import type { SemanticBadgeVariant } from "../contracts/status-semantics"
 import { AutoMenu, applicationResources } from "./application-shell"
 import { useApplicationActions, type CommunitySubmitPayload } from "../contracts/interactions"
-
 export interface MWHeaderNavItem {
   label: string
   href: string

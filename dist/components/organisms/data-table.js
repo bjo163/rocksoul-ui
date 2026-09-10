@@ -5,24 +5,25 @@ import { Button as o } from "../ui/button.js";
 import { Checkbox as s } from "../ui/checkbox.js";
 import { Input as ee } from "../ui/input.js";
 import { Table as te, TableBody as ne, TableCell as c, TableHead as l, TableHeader as re, TableRow as u } from "../ui/table.js";
+import { NativeSelect as ie } from "../ui/native-select.js";
 import { jsx as d, jsxs as f } from "react/jsx-runtime";
 import * as p from "react";
 //#region src/components/organisms/data-table.tsx
 function m(m) {
-	let { data: h, columns: g, getRowId: _ = (e, t) => String(t), selectable: v = !1, selectedRowIds: y, onSelectedRowIdsChange: ie, emptyState: ae = "No results.", noResultsState: oe = "No matching results.", loading: se = !1, loadingState: ce = "Loading…", error: b, caption: x, className: le, toolbar: S, filter: C, onFilterChange: w, filterPlaceholder: ue = "Filter results…", bulkActions: T, page: E, defaultPage: de = 1, pageSize: D, defaultPageSize: fe = 10, pageCount: O, onPageChange: pe, onPageSizeChange: k, pageSizeOptions: me = [
+	let { data: h, columns: g, getRowId: _ = (e, t) => String(t), selectable: v = !1, selectedRowIds: y, onSelectedRowIdsChange: ae, emptyState: oe = "No results.", noResultsState: se = "No matching results.", loading: ce = !1, loadingState: le = "Loading…", error: b, caption: x, className: ue, toolbar: S, filter: C, onFilterChange: w, filterPlaceholder: de = "Filter results…", bulkActions: T, page: E, defaultPage: fe = 1, pageSize: D, defaultPageSize: pe = 10, pageCount: O, onPageChange: me, onPageSizeChange: k, pageSizeOptions: he = [
 		10,
 		25,
 		50
-	], density: A = "comfortable", onDensityChange: j, visibleColumnIds: M, onVisibleColumnIdsChange: N, renderExpanded: P, expandedRowIds: F, onExpandedRowIdsChange: he } = m, [I, ge] = p.useState(null), [_e, ve] = p.useState([]), [ye, be] = p.useState(""), [xe, L] = p.useState(de), [Se, Ce] = p.useState(fe), [we, Te] = p.useState(() => g.filter((e) => e.visible !== !1).map((e) => e.id)), [Ee, De] = p.useState([]), R = y ?? _e, z = C ?? ye, B = E ?? xe, V = D ?? Se, H = M ?? we, U = F ?? Ee, W = (e) => {
-		y === void 0 && ve(e), ie?.(e);
-	}, Oe = (e) => {
-		C === void 0 && be(e), w?.(e), E === void 0 && L(1);
-	}, G = (e) => {
-		E === void 0 && L(e), pe?.(e);
+	], density: A = "comfortable", onDensityChange: j, visibleColumnIds: M, onVisibleColumnIdsChange: N, renderExpanded: P, expandedRowIds: F, onExpandedRowIdsChange: ge } = m, [I, _e] = p.useState(null), [ve, ye] = p.useState([]), [be, xe] = p.useState(""), [Se, L] = p.useState(fe), [Ce, we] = p.useState(pe), [Te, Ee] = p.useState(() => g.filter((e) => e.visible !== !1).map((e) => e.id)), [De, Oe] = p.useState([]), R = y ?? ve, z = C ?? be, B = E ?? Se, V = D ?? Ce, H = M ?? Te, U = F ?? De, W = (e) => {
+		y === void 0 && ye(e), ae?.(e);
 	}, ke = (e) => {
-		D === void 0 && Ce(e), k?.(e), G(1);
+		C === void 0 && xe(e), w?.(e), E === void 0 && L(1);
+	}, G = (e) => {
+		E === void 0 && L(e), me?.(e);
 	}, Ae = (e) => {
-		F === void 0 && De(e), he?.(e);
+		D === void 0 && we(e), k?.(e), G(1);
+	}, je = (e) => {
+		F === void 0 && Oe(e), ge?.(e);
 	}, K = g.filter((e) => H.includes(e.id)), q = p.useMemo(() => {
 		let e = z.trim().toLowerCase();
 		return e ? h.filter((t) => K.some((n) => {
@@ -49,8 +50,8 @@ function m(m) {
 		g,
 		q,
 		I
-	]), Y = Math.max(1, O ?? Math.ceil(J.length / V)), X = O === void 0 ? J.slice((B - 1) * V, B * V) : J, Z = X.map(_), je = Z.length > 0 && Z.every((e) => R.includes(e)), Me = (e) => {
-		e.sortable && e.sortValue && ge((t) => t?.id === e.id ? t.direction === "asc" ? {
+	]), Y = Math.max(1, O ?? Math.ceil(J.length / V)), X = O === void 0 ? J.slice((B - 1) * V, B * V) : J, Z = X.map(_), Q = Z.length > 0 && Z.every((e) => R.includes(e)), Me = (e) => {
+		e.sortable && e.sortValue && _e((t) => t?.id === e.id ? t.direction === "asc" ? {
 			id: e.id,
 			direction: "desc"
 		} : null : {
@@ -59,11 +60,11 @@ function m(m) {
 		});
 	}, Ne = (e) => {
 		let t = H.includes(e) ? H.filter((t) => t !== e) : [...H, e];
-		t.length && (M === void 0 && Te(t), N?.(t));
-	}, Pe = (e) => Ae(U.includes(e) ? U.filter((t) => t !== e) : [...U, e]), Q = K.length + +!!v + +!!P, $ = A === "compact" ? "[&_td]:py-1 [&_th]:h-8" : A === "spacious" ? "[&_td]:py-4 [&_th]:h-12" : "";
+		t.length && (M === void 0 && Ee(t), N?.(t));
+	}, Pe = (e) => je(U.includes(e) ? U.filter((t) => t !== e) : [...U, e]), $ = K.length + +!!v + +!!P, Fe = A === "compact" ? "[&_td]:py-1 [&_th]:h-8" : A === "spacious" ? "[&_td]:py-4 [&_th]:h-12" : "";
 	return /* @__PURE__ */ f("div", {
 		"data-slot": "data-table",
-		className: e("w-full space-y-3", le),
+		className: e("w-full space-y-3", ue),
 		children: [
 			S || w || T?.length || j || N ? /* @__PURE__ */ f("div", {
 				className: "flex flex-wrap items-center gap-2",
@@ -71,8 +72,8 @@ function m(m) {
 				children: [
 					w ? /* @__PURE__ */ d(ee, {
 						value: z,
-						onChange: (e) => Oe(e.target.value),
-						placeholder: ue,
+						onChange: (e) => ke(e.target.value),
+						placeholder: de,
 						"aria-label": "Filter table",
 						className: "max-w-xs"
 					}) : null,
@@ -119,14 +120,14 @@ function m(m) {
 					children: x
 				}) : null,
 				/* @__PURE__ */ d(re, { children: /* @__PURE__ */ f(u, {
-					className: $,
+					className: Fe,
 					children: [
 						v ? /* @__PURE__ */ d(l, {
 							className: "w-10",
 							children: /* @__PURE__ */ d(s, {
 								"aria-label": "Select all rows",
-								checked: je ? !0 : Z.some((e) => R.includes(e)) ? "indeterminate" : !1,
-								onCheckedChange: () => W(je ? R.filter((e) => !Z.includes(e)) : [.../* @__PURE__ */ new Set([...R, ...Z])])
+								checked: Q ? !0 : Z.some((e) => R.includes(e)) ? "indeterminate" : !1,
+								onCheckedChange: () => W(Q ? R.filter((e) => !Z.includes(e)) : [.../* @__PURE__ */ new Set([...R, ...Z])])
 							})
 						}) : null,
 						P ? /* @__PURE__ */ d(l, {
@@ -157,21 +158,21 @@ function m(m) {
 					]
 				}) }),
 				/* @__PURE__ */ d(ne, {
-					className: $,
-					children: se ? /* @__PURE__ */ d(u, { children: /* @__PURE__ */ d(c, {
-						colSpan: Q,
+					className: Fe,
+					children: ce ? /* @__PURE__ */ d(u, { children: /* @__PURE__ */ d(c, {
+						colSpan: $,
 						className: "h-24 text-center",
 						"aria-live": "polite",
-						children: ce
+						children: le
 					}) }) : b ? /* @__PURE__ */ d(u, { children: /* @__PURE__ */ d(c, {
-						colSpan: Q,
+						colSpan: $,
 						className: "h-24 text-center text-destructive",
 						role: "alert",
 						children: b
 					}) }) : X.length === 0 ? /* @__PURE__ */ d(u, { children: /* @__PURE__ */ d(c, {
-						colSpan: Q,
+						colSpan: $,
 						className: "h-24 text-center",
-						children: z ? oe : ae
+						children: z ? se : oe
 					}) }) : X.map((e, t) => {
 						let r = _(e, t), i = U.includes(r);
 						return /* @__PURE__ */ f(p.Fragment, { children: [/* @__PURE__ */ f(u, {
@@ -197,7 +198,7 @@ function m(m) {
 								}, t.id))
 							]
 						}), P && i ? /* @__PURE__ */ d(u, { children: /* @__PURE__ */ d(c, {
-							colSpan: Q,
+							colSpan: $,
 							children: P(e)
 						}) }) : null] }, r);
 					})
@@ -231,12 +232,11 @@ function m(m) {
 							onClick: () => G(Math.min(Y, B + 1)),
 							children: /* @__PURE__ */ d(i, {})
 						}),
-						k ? /* @__PURE__ */ d("select", {
+						k ? /* @__PURE__ */ d(ie, {
 							"aria-label": "Rows per page",
 							value: V,
-							onChange: (e) => ke(Number(e.target.value)),
-							className: "h-9 border bg-transparent px-2",
-							children: me.map((e) => /* @__PURE__ */ f("option", {
+							onChange: (e) => Ae(Number(e.target.value)),
+							children: he.map((e) => /* @__PURE__ */ f("option", {
 								value: e,
 								children: [e, " / page"]
 							}, e))

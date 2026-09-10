@@ -2,7 +2,7 @@ import { readFile, readdir } from "node:fs/promises"
 import path from "node:path"
 
 const root = process.cwd()
-const adapters = ["button.tsx", "badge.tsx", "form-controls.tsx", "overlays.tsx", "patterns.tsx", "tabs.tsx"]
+const adapters = ["button.tsx", "badge.tsx", "form-controls.tsx", "overlays.tsx", "tabs.tsx"]
 const failures = []
 const productionCompat = []
 for (const name of adapters) {
@@ -47,4 +47,4 @@ if (productionCompat.length) {
   console.warn("Remaining production compatibility imports (migration inventory):")
   productionCompat.forEach((item) => console.warn(`- ${item}`))
 }
-console.log("Adapter audit passed: compatibility adapters remain internal; apps/web uses standard public primitives.")
+console.log("Adapter audit passed: compatibility adapters remain internal; all audited consumers use standard public primitives.")

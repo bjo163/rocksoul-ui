@@ -3047,6 +3047,54 @@ var y = {
 			artifacts: {},
 			files: /* @__PURE__ */ "moonwitness/runtime-motion-pack/lottie/ai-orbit.json,moonwitness/runtime-motion-pack/lottie/backend-reconnect.json,moonwitness/runtime-motion-pack/lottie/case-resolved.json,moonwitness/runtime-motion-pack/lottie/drawer-open.json,moonwitness/runtime-motion-pack/lottie/evidence-linked.json,moonwitness/runtime-motion-pack/lottie/focus-ring.json,moonwitness/runtime-motion-pack/lottie/graph-connect.json,moonwitness/runtime-motion-pack/lottie/loading-trace.json,moonwitness/runtime-motion-pack/lottie/notification-in.json,moonwitness/runtime-motion-pack/lottie/pulse-alert.json,moonwitness/runtime-motion-pack/lottie/sync-spin.json,moonwitness/runtime-motion-pack/lottie/upload-rise.json,moonwitness/runtime-motion-pack/png/ai-orbit.png,moonwitness/runtime-motion-pack/png/backend-reconnect.png,moonwitness/runtime-motion-pack/png/case-resolved.png,moonwitness/runtime-motion-pack/png/drawer-open.png,moonwitness/runtime-motion-pack/png/evidence-linked.png,moonwitness/runtime-motion-pack/png/focus-ring.png,moonwitness/runtime-motion-pack/png/graph-connect.png,moonwitness/runtime-motion-pack/png/loading-trace.png,moonwitness/runtime-motion-pack/png/notification-in.png,moonwitness/runtime-motion-pack/png/pulse-alert.png,moonwitness/runtime-motion-pack/png/sync-spin.png,moonwitness/runtime-motion-pack/png/upload-rise.png,moonwitness/runtime-motion-pack/svg/ai-orbit.svg,moonwitness/runtime-motion-pack/svg/backend-reconnect.svg,moonwitness/runtime-motion-pack/svg/case-resolved.svg,moonwitness/runtime-motion-pack/svg/drawer-open.svg,moonwitness/runtime-motion-pack/svg/evidence-linked.svg,moonwitness/runtime-motion-pack/svg/focus-ring.svg,moonwitness/runtime-motion-pack/svg/graph-connect.svg,moonwitness/runtime-motion-pack/svg/loading-trace.svg,moonwitness/runtime-motion-pack/svg/notification-in.svg,moonwitness/runtime-motion-pack/svg/pulse-alert.svg,moonwitness/runtime-motion-pack/svg/sync-spin.svg,moonwitness/runtime-motion-pack/svg/upload-rise.svg,moonwitness/runtime-motion-pack/webm/ai-orbit.webm,moonwitness/runtime-motion-pack/webm/backend-reconnect.webm,moonwitness/runtime-motion-pack/webm/case-resolved.webm,moonwitness/runtime-motion-pack/webm/drawer-open.webm,moonwitness/runtime-motion-pack/webm/evidence-linked.webm,moonwitness/runtime-motion-pack/webm/focus-ring.webm,moonwitness/runtime-motion-pack/webm/graph-connect.webm,moonwitness/runtime-motion-pack/webm/loading-trace.webm,moonwitness/runtime-motion-pack/webm/notification-in.webm,moonwitness/runtime-motion-pack/webm/pulse-alert.webm,moonwitness/runtime-motion-pack/webm/sync-spin.webm,moonwitness/runtime-motion-pack/webm/upload-rise.webm".split(",")
 		},
+		"semantic-primitives": {
+			manifest: "moonwitness/semantic-primitives-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"edge-contradicts": "moonwitness/semantic-primitives-pack/svg/edge-contradicts.svg",
+				"edge-supports": "moonwitness/semantic-primitives-pack/svg/edge-supports.svg",
+				"event-node": "moonwitness/semantic-primitives-pack/svg/event-node.svg",
+				"evidence-bounds": "moonwitness/semantic-primitives-pack/svg/evidence-bounds.svg",
+				"evidence-source": "moonwitness/semantic-primitives-pack/svg/evidence-source.svg",
+				"graph-node": "moonwitness/semantic-primitives-pack/svg/graph-node.svg",
+				"integrity-hash": "moonwitness/semantic-primitives-pack/svg/integrity-hash.svg",
+				"jurisdiction-zone": "moonwitness/semantic-primitives-pack/svg/jurisdiction-zone.svg",
+				"law-node": "moonwitness/semantic-primitives-pack/svg/law-node.svg",
+				"legal-basis": "moonwitness/semantic-primitives-pack/svg/legal-basis.svg",
+				"person-node": "moonwitness/semantic-primitives-pack/svg/person-node.svg",
+				"privacy-confidential": "moonwitness/semantic-primitives-pack/svg/privacy-confidential.svg",
+				"privacy-redacted": "moonwitness/semantic-primitives-pack/svg/privacy-redacted.svg",
+				"provenance-chain": "moonwitness/semantic-primitives-pack/svg/provenance-chain.svg",
+				"status-contested": "moonwitness/semantic-primitives-pack/svg/status-contested.svg",
+				"status-verified": "moonwitness/semantic-primitives-pack/svg/status-verified.svg"
+			},
+			png: {
+				"edge-contradicts": "moonwitness/semantic-primitives-pack/png/24/edge-contradicts.png",
+				"edge-supports": "moonwitness/semantic-primitives-pack/png/24/edge-supports.png",
+				"event-node": "moonwitness/semantic-primitives-pack/png/24/event-node.png",
+				"evidence-bounds": "moonwitness/semantic-primitives-pack/png/24/evidence-bounds.png",
+				"evidence-source": "moonwitness/semantic-primitives-pack/png/24/evidence-source.png",
+				"graph-node": "moonwitness/semantic-primitives-pack/png/24/graph-node.png",
+				"integrity-hash": "moonwitness/semantic-primitives-pack/png/24/integrity-hash.png",
+				"jurisdiction-zone": "moonwitness/semantic-primitives-pack/png/24/jurisdiction-zone.png",
+				"law-node": "moonwitness/semantic-primitives-pack/png/24/law-node.png",
+				"legal-basis": "moonwitness/semantic-primitives-pack/png/24/legal-basis.png",
+				"person-node": "moonwitness/semantic-primitives-pack/png/24/person-node.png",
+				"privacy-confidential": "moonwitness/semantic-primitives-pack/png/24/privacy-confidential.png",
+				"privacy-redacted": "moonwitness/semantic-primitives-pack/png/24/privacy-redacted.png",
+				"provenance-chain": "moonwitness/semantic-primitives-pack/png/24/provenance-chain.png",
+				"status-contested": "moonwitness/semantic-primitives-pack/png/24/status-contested.png",
+				"status-verified": "moonwitness/semantic-primitives-pack/png/24/status-verified.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/semantic-primitives-pack/png/24/edge-contradicts.png,moonwitness/semantic-primitives-pack/svg/edge-contradicts.svg,moonwitness/semantic-primitives-pack/png/24/edge-supports.png,moonwitness/semantic-primitives-pack/svg/edge-supports.svg,moonwitness/semantic-primitives-pack/png/24/event-node.png,moonwitness/semantic-primitives-pack/svg/event-node.svg,moonwitness/semantic-primitives-pack/png/24/evidence-bounds.png,moonwitness/semantic-primitives-pack/svg/evidence-bounds.svg,moonwitness/semantic-primitives-pack/png/24/evidence-source.png,moonwitness/semantic-primitives-pack/svg/evidence-source.svg,moonwitness/semantic-primitives-pack/png/24/graph-node.png,moonwitness/semantic-primitives-pack/svg/graph-node.svg,moonwitness/semantic-primitives-pack/png/24/integrity-hash.png,moonwitness/semantic-primitives-pack/svg/integrity-hash.svg,moonwitness/semantic-primitives-pack/png/24/jurisdiction-zone.png,moonwitness/semantic-primitives-pack/svg/jurisdiction-zone.svg,moonwitness/semantic-primitives-pack/png/24/law-node.png,moonwitness/semantic-primitives-pack/svg/law-node.svg,moonwitness/semantic-primitives-pack/png/24/legal-basis.png,moonwitness/semantic-primitives-pack/svg/legal-basis.svg,moonwitness/semantic-primitives-pack/png/24/person-node.png,moonwitness/semantic-primitives-pack/svg/person-node.svg,moonwitness/semantic-primitives-pack/png/24/privacy-confidential.png,moonwitness/semantic-primitives-pack/svg/privacy-confidential.svg,moonwitness/semantic-primitives-pack/png/24/privacy-redacted.png,moonwitness/semantic-primitives-pack/svg/privacy-redacted.svg,moonwitness/semantic-primitives-pack/png/24/provenance-chain.png,moonwitness/semantic-primitives-pack/svg/provenance-chain.svg,moonwitness/semantic-primitives-pack/png/24/status-contested.png,moonwitness/semantic-primitives-pack/svg/status-contested.svg,moonwitness/semantic-primitives-pack/png/24/status-verified.png,moonwitness/semantic-primitives-pack/svg/status-verified.svg".split(",")
+		},
 		"developer-distribution": {
 			manifest: "moonwitness/developer-pack/manifest.json",
 			count: 4,
@@ -3213,16 +3261,16 @@ var y = {
 		}
 	},
 	coverage: {
-		packFamilies: 43,
+		packFamilies: 44,
 		foundationCollections: 2,
-		showcaseCollections: 45,
-		deliveryFiles: 1464,
-		indexedDeliveryFiles: 1464,
+		showcaseCollections: 46,
+		deliveryFiles: 1496,
+		indexedDeliveryFiles: 1496,
 		missingDeliveryFiles: 0,
 		coveragePercent: 100,
 		extensions: {
-			svg: 634,
-			png: 777,
+			svg: 650,
+			png: 793,
 			ico: 1,
 			webm: 12,
 			wav: 14,
@@ -3389,5 +3437,19 @@ function U({ className: n, pack: r, file: i, alt: a, ...o }) {
 		...o
 	});
 }
+function W({ className: n, pack: r, assetId: i, format: a, size: o, baseUrl: s, rootMode: c, alt: l, ...u }) {
+	return /* @__PURE__ */ t(I, {
+		"data-slot": "registry-asset",
+		pack: r,
+		assetId: i,
+		format: a,
+		size: o,
+		baseUrl: s,
+		rootMode: c,
+		alt: l,
+		className: e("max-w-full object-contain", n),
+		...u
+	});
+}
 //#endregion
-export { m as A, v as C, d as D, u as E, f as O, h as S, l as T, b as _, B as a, _ as b, R as c, N as d, V as f, D as g, x as h, z as i, p as k, H as l, S as m, F as n, I as o, C as p, M as r, L as s, U as t, P as u, E as v, c as w, g as x, O as y };
+export { p as A, h as C, u as D, l as E, d as O, g as S, c as T, D as _, z as a, O as b, L as c, P as d, N as f, x as g, S as h, M as i, m as j, f as k, R as l, C as m, W as n, B as o, V as p, F as r, I as s, U as t, H as u, b as v, v as w, _ as x, E as y };

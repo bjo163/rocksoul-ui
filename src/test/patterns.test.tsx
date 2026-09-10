@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
-import { AuthFormPattern, Pagination, RepositoryMonitor } from "../components/compat/patterns"
+import { AuthFormPattern, Pagination, RepositoryMonitor } from "../components/patterns/domain-patterns"
 
 describe("consumer behavior contracts", () => {
   it("emits pagination changes", async () => {

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { type ReactNode } from "react";
 export type BackendState = "online" | "degraded" | "offline";
 export type ResourceGroup = "System" | "Resource" | "Workspace" | "Account";
@@ -60,18 +61,18 @@ export declare function Breadcrumbs({ items }: {
         label: string;
         href?: string;
     }>;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export declare function BackendStatus({ state, label }: {
     state: BackendState;
     label?: string;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export declare function AutoMenu({ resources, activeId, compact, permissions, onNavigate, }: {
     resources?: AppResource[];
     activeId?: string;
     compact?: boolean;
     permissions?: readonly string[];
     onNavigate?: () => void;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export interface AppNotification {
     id: string;
     title: string;
@@ -84,18 +85,18 @@ export declare function NotificationsPanel({ open, onClose, notifications, onMar
     onClose: () => void;
     notifications: AppNotification[];
     onMarkAllRead?: () => void | Promise<void>;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export declare function UserMenu({ name, role }: {
     name: string;
     role: string;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export declare function CommandPalette({ open, onClose, resources, permissions, quickActions, }: {
     open: boolean;
     onClose: () => void;
     resources?: AppResource[];
     permissions?: readonly string[];
     quickActions?: AppCommandAction[];
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export declare function AppTopbar({ breadcrumbs, backendState, user, unreadCount, onOpenMenu, onOpenCommands, onOpenNotifications, }: {
     breadcrumbs: Array<{
         label: string;
@@ -110,7 +111,7 @@ export declare function AppTopbar({ breadcrumbs, backendState, user, unreadCount
     onOpenMenu: () => void;
     onOpenCommands: () => void;
     onOpenNotifications: () => void;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
 export declare function ApplicationShell({ activeResource, breadcrumbs, children, backendState, user, permissions, resources, notifications, commandActions, surfacePersonality, }: {
     activeResource: string;
     breadcrumbs: Array<{
@@ -128,4 +129,4 @@ export declare function ApplicationShell({ activeResource, breadcrumbs, children
     notifications?: AppNotification[];
     commandActions?: AppCommandAction[];
     surfacePersonality?: SurfacePersonality;
-}): import("react").JSX.Element;
+}): React.JSX.Element;
