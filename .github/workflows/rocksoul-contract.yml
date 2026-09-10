@@ -1,19 +1,10 @@
-name: ROCKSOUL Repository Contract
+name: ROCKSOUL Contract
 
 on:
-  workflow_dispatch:
   push:
-    paths:
-      - "ROCKSOUL-REPO.json"
-      - "ROCKSOUL-TODO.json"
-      - "scripts/validate-rocksoul-contract.mjs"
-      - ".github/workflows/rocksoul-contract.yml"
+    branches: [dev, main]
   pull_request:
-    paths:
-      - "ROCKSOUL-REPO.json"
-      - "ROCKSOUL-TODO.json"
-      - "scripts/validate-rocksoul-contract.mjs"
-      - ".github/workflows/rocksoul-contract.yml"
+    branches: [dev, main]
 
 permissions:
   contents: read
@@ -22,9 +13,15 @@ jobs:
   contract:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          node-version: 22
-      - name: Validate repository contract
+          node-version: "22"
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Strict repository consistency
+        run: npm run audit:repository
+      - name: ROCKSOUL control contract
         run: node scripts/validate-rocksoul-contract.mjs
