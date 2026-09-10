@@ -39,15 +39,34 @@ for (const name of ["react", "react-dom"]) {
   if (versions.length === 1 && !versions[0].startsWith("19.")) failures.push(`${name}: unsupported major version ${versions[0]}`)
 }
 
+const inventory = new Map()
+for (const line of notices.split(/\r?\n/)) {
+  const match = /^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$/.exec(line)
+  if (!match) continue
+  const [, name, license] = match
+  if (name === "Package" || name === "---") continue
+  if (inventory.has(name)) failures.push(`THIRD-PARTY-NOTICES.md duplicates package ${name}`)
+  inventory.set(name, license)
+}
+
 for (const name of Object.keys(direct)) {
   const packagePath = path.join(root, "node_modules", ...name.split("/"), "package.json")
   try {
     const installed = JSON.parse(await readFile(packagePath, "utf8"))
-    if (!installed.license && !installed.licenses) failures.push(`${name}: installed package declares no license metadata`)
-    if (!notices.includes(name)) console.warn(`license inventory notice: ${name} is not named in THIRD-PARTY-NOTICES.md`)
+    const installedLicense = installed.license ?? installed.licenses?.[0]?.type
+    if (!installedLicense) failures.push(`${name}: installed package declares no license metadata`)
+    const documentedLicense = inventory.get(name)
+    if (!documentedLicense) failures.push(`${name}: missing machine-checkable license inventory entry`)
+    else if (installedLicense && documentedLicense !== installedLicense) {
+      failures.push(`${name}: documented license ${documentedLicense} != installed license ${installedLicense}`)
+    }
   } catch {
     failures.push(`${name}: installed package metadata missing; npm ci graph is incomplete`)
   }
+}
+
+for (const name of inventory.keys()) {
+  if (!(name in direct)) failures.push(`${name}: THIRD-PARTY-NOTICES.md inventories a non-direct dependency`)
 }
 
 const audit = spawnSync("npm", ["audit", "--json", "--audit-level=high"], {
@@ -73,4 +92,4 @@ if (failures.length) {
   process.exit(1)
 }
 
-console.log("Dependency audit passed: npm/lock graph consistent, React runtime singleton verified, installed licenses present, high/critical vulnerabilities clear.")
+console.log("Dependency audit passed: npm/lock graph consistent, React runtime singleton verified, direct dependency licenses match machine-readable notices, high/critical vulnerabilities clear.")
