@@ -1,4 +1,4 @@
-import { AuthFormPattern } from "../components/patterns"
+import { AuthFormPattern } from "../components/compat/patterns"
 
 export function AuthScreen() {
   return (

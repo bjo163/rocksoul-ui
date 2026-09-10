@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { type BadgeProps } from "./badge";
+import { type BadgeProps } from "./compat/badge";
 export interface DossierHeaderProps {
     eyebrow: string;
     title: string;

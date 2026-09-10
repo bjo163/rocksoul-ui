@@ -1,5 +1,5 @@
 import { useId } from "react"
-import { Badge } from "./badge"
+import { Badge } from "./compat/badge"
 
 export type LegalState = "permitted" | "restricted" | "prohibited" | "disputed" | "unresolved"
 

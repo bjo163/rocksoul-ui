@@ -289,3 +289,7 @@ Consumers should derive result vocabulary and applicability axes from the export
 # Browser test artifacts
 
 Playwright output under `test-results/` is ephemeral and ignored. CI retains it only as failure artifacts; never commit local traces or screenshots from this directory.
+
+## Composable ROCKSOUL primitives
+
+The `src/components/ui` layer provides 61 shadcn-pattern components plus a ROCKSOUL asset primitive. See [coverage, usage, assets and compatibility](docs/ui-primitives.md).

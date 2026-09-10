@@ -1,0 +1,315 @@
+{
+  "style": "new-york-v4",
+  "sources": [
+    {
+      "name": "accordion",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/accordion.json",
+      "destination": "src/components/ui/accordion.tsx"
+    },
+    {
+      "name": "alert",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/alert.json",
+      "destination": "src/components/ui/alert.tsx"
+    },
+    {
+      "name": "button",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/button.json",
+      "destination": "src/components/ui/button.tsx"
+    },
+    {
+      "name": "alert-dialog",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/alert-dialog.json",
+      "destination": "src/components/ui/alert-dialog.tsx"
+    },
+    {
+      "name": "aspect-ratio",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/aspect-ratio.json",
+      "destination": "src/components/ui/aspect-ratio.tsx"
+    },
+    {
+      "name": "avatar",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/avatar.json",
+      "destination": "src/components/ui/avatar.tsx"
+    },
+    {
+      "name": "badge",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/badge.json",
+      "destination": "src/components/ui/badge.tsx"
+    },
+    {
+      "name": "breadcrumb",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/breadcrumb.json",
+      "destination": "src/components/ui/breadcrumb.tsx"
+    },
+    {
+      "name": "separator",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/separator.json",
+      "destination": "src/components/ui/separator.tsx"
+    },
+    {
+      "name": "button-group",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/button-group.json",
+      "destination": "src/components/ui/button-group.tsx"
+    },
+    {
+      "name": "calendar",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/calendar.json",
+      "destination": "src/components/ui/calendar.tsx"
+    },
+    {
+      "name": "card",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/card.json",
+      "destination": "src/components/ui/card.tsx"
+    },
+    {
+      "name": "carousel",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/carousel.json",
+      "destination": "src/components/ui/carousel.tsx"
+    },
+    {
+      "name": "chart",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/chart.json",
+      "destination": "src/components/ui/chart.tsx"
+    },
+    {
+      "name": "checkbox",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/checkbox.json",
+      "destination": "src/components/ui/checkbox.tsx"
+    },
+    {
+      "name": "collapsible",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/collapsible.json",
+      "destination": "src/components/ui/collapsible.tsx"
+    },
+    {
+      "name": "input",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/input.json",
+      "destination": "src/components/ui/input.tsx"
+    },
+    {
+      "name": "textarea",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/textarea.json",
+      "destination": "src/components/ui/textarea.tsx"
+    },
+    {
+      "name": "input-group",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/input-group.json",
+      "destination": "src/components/ui/input-group.tsx"
+    },
+    {
+      "name": "combobox",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/combobox.json",
+      "destination": "src/components/ui/combobox.tsx"
+    },
+    {
+      "name": "dialog",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/dialog.json",
+      "destination": "src/components/ui/dialog.tsx"
+    },
+    {
+      "name": "command",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/command.json",
+      "destination": "src/components/ui/command.tsx"
+    },
+    {
+      "name": "context-menu",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/context-menu.json",
+      "destination": "src/components/ui/context-menu.tsx"
+    },
+    {
+      "name": "drawer",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/drawer.json",
+      "destination": "src/components/ui/drawer.tsx"
+    },
+    {
+      "name": "dropdown-menu",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/dropdown-menu.json",
+      "destination": "src/components/ui/dropdown-menu.tsx"
+    },
+    {
+      "name": "empty",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/empty.json",
+      "destination": "src/components/ui/empty.tsx"
+    },
+    {
+      "name": "label",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/label.json",
+      "destination": "src/components/ui/label.tsx"
+    },
+    {
+      "name": "field",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/field.json",
+      "destination": "src/components/ui/field.tsx"
+    },
+    {
+      "name": "form",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/form.json",
+      "destination": "src/components/ui/form.tsx"
+    },
+    {
+      "name": "hover-card",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/hover-card.json",
+      "destination": "src/components/ui/hover-card.tsx"
+    },
+    {
+      "name": "input-otp",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/input-otp.json",
+      "destination": "src/components/ui/input-otp.tsx"
+    },
+    {
+      "name": "item",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/item.json",
+      "destination": "src/components/ui/item.tsx"
+    },
+    {
+      "name": "menubar",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/menubar.json",
+      "destination": "src/components/ui/menubar.tsx"
+    },
+    {
+      "name": "navigation-menu",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/navigation-menu.json",
+      "destination": "src/components/ui/navigation-menu.tsx"
+    },
+    {
+      "name": "pagination",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/pagination.json",
+      "destination": "src/components/ui/pagination.tsx"
+    },
+    {
+      "name": "popover",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/popover.json",
+      "destination": "src/components/ui/popover.tsx"
+    },
+    {
+      "name": "progress",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/progress.json",
+      "destination": "src/components/ui/progress.tsx"
+    },
+    {
+      "name": "radio-group",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/radio-group.json",
+      "destination": "src/components/ui/radio-group.tsx"
+    },
+    {
+      "name": "resizable",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/resizable.json",
+      "destination": "src/components/ui/resizable.tsx"
+    },
+    {
+      "name": "scroll-area",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/scroll-area.json",
+      "destination": "src/components/ui/scroll-area.tsx"
+    },
+    {
+      "name": "select",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/select.json",
+      "destination": "src/components/ui/select.tsx"
+    },
+    {
+      "name": "sheet",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/sheet.json",
+      "destination": "src/components/ui/sheet.tsx"
+    },
+    {
+      "name": "tooltip",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/tooltip.json",
+      "destination": "src/components/ui/tooltip.tsx"
+    },
+    {
+      "name": "use-mobile",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/use-mobile.json",
+      "destination": "src/hooks/use-mobile.ts"
+    },
+    {
+      "name": "skeleton",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/skeleton.json",
+      "destination": "src/components/ui/skeleton.tsx"
+    },
+    {
+      "name": "sidebar",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/sidebar.json",
+      "destination": "src/components/ui/sidebar.tsx"
+    },
+    {
+      "name": "slider",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/slider.json",
+      "destination": "src/components/ui/slider.tsx"
+    },
+    {
+      "name": "sonner",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/sonner.json",
+      "destination": "src/components/ui/sonner.tsx"
+    },
+    {
+      "name": "spinner",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/spinner.json",
+      "destination": "src/components/ui/spinner.tsx"
+    },
+    {
+      "name": "switch",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/switch.json",
+      "destination": "src/components/ui/switch.tsx"
+    },
+    {
+      "name": "table",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/table.json",
+      "destination": "src/components/ui/table.tsx"
+    },
+    {
+      "name": "tabs",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/tabs.json",
+      "destination": "src/components/ui/tabs.tsx"
+    },
+    {
+      "name": "toggle",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/toggle.json",
+      "destination": "src/components/ui/toggle.tsx"
+    },
+    {
+      "name": "toggle-group",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/toggle-group.json",
+      "destination": "src/components/ui/toggle-group.tsx"
+    },
+    {
+      "name": "kbd",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/kbd.json",
+      "destination": "src/components/ui/kbd.tsx"
+    },
+    {
+      "name": "native-select",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/native-select.json",
+      "destination": "src/components/ui/native-select.tsx"
+    },
+    {
+      "name": "direction",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/direction.json",
+      "destination": "src/components/ui/direction.tsx"
+    },
+    {
+      "name": "attachment",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/attachment.json",
+      "destination": "src/components/ui/attachment.tsx"
+    },
+    {
+      "name": "bubble",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/bubble.json",
+      "destination": "src/components/ui/bubble.tsx"
+    },
+    {
+      "name": "marker",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/marker.json",
+      "destination": "src/components/ui/marker.tsx"
+    },
+    {
+      "name": "message",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/message.json",
+      "destination": "src/components/ui/message.tsx"
+    },
+    {
+      "name": "message-scroller",
+      "source": "https://ui.shadcn.com/r/styles/new-york-v4/message-scroller.json",
+      "destination": "src/components/ui/message-scroller.tsx"
+    }
+  ]
+}

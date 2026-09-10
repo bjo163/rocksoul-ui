@@ -1,0 +1,3387 @@
+import { t as e } from "./cn-DhjIN-s0.js";
+import { createContext as t, useCallback as n, useContext as r, useEffect as i, useState as a } from "react";
+import { jsx as o, jsxs as s } from "react/jsx-runtime";
+//#region src/contracts/asset-packs.ts
+var c = {
+	"product-icons": {
+		id: "product-icons",
+		count: 44,
+		root: "icons",
+		manifest: "icons/icons.json"
+	},
+	dashboard: {
+		id: "dashboard",
+		count: 20,
+		root: "dashboard-pack",
+		manifest: "dashboard-pack/dashboard-pack.json"
+	},
+	"data-viz": {
+		id: "data-viz",
+		count: 20,
+		root: "data-viz",
+		manifest: "data-viz/data-viz.json"
+	},
+	"hero-backgrounds": {
+		id: "hero-backgrounds",
+		count: 8,
+		root: "hero-backgrounds",
+		manifest: "hero-backgrounds/backgrounds.json"
+	},
+	"state-illustrations": {
+		id: "state-illustrations",
+		count: 12,
+		root: "state-illustrations",
+		manifest: "state-illustrations/states.json"
+	},
+	motion: {
+		id: "motion",
+		count: 12,
+		root: "motion",
+		manifest: "motion/motion.json"
+	},
+	"application-screens": {
+		id: "application-screens",
+		count: 20,
+		root: "ui/v2",
+		manifest: "ui/v2/manifest.json"
+	},
+	sfx: {
+		id: "sfx",
+		count: 14,
+		root: "sfx",
+		manifest: "sfx/sounds.json"
+	},
+	"graph-vector": {
+		id: "graph-vector",
+		count: 10,
+		root: "graph-pack",
+		manifest: "graph-pack/manifest.json"
+	},
+	"badge-status": {
+		id: "badge-status",
+		count: 12,
+		root: "badge-pack",
+		manifest: "badge-pack/manifest.json"
+	},
+	"source-file": {
+		id: "source-file",
+		count: 15,
+		root: "source-file-pack",
+		manifest: "source-file-pack/manifest.json"
+	},
+	geospatial: {
+		id: "geospatial",
+		count: 15,
+		root: "geospatial-pack",
+		manifest: "geospatial-pack/manifest.json"
+	},
+	"cursor-interaction": {
+		id: "cursor-interaction",
+		count: 17,
+		root: "cursor-pack",
+		manifest: "cursor-pack/manifest.json"
+	},
+	"persona-avatar": {
+		id: "persona-avatar",
+		count: 9,
+		root: "persona-pack",
+		manifest: "persona-pack/manifest.json"
+	},
+	"social-campaign": {
+		id: "social-campaign",
+		count: 8,
+		root: "social-campaign-pack",
+		manifest: "social-campaign-pack/manifest.json"
+	},
+	"platform-delivery": {
+		id: "platform-delivery",
+		count: 8,
+		root: "platform-delivery-pack",
+		manifest: "platform-delivery-pack/manifest.json"
+	},
+	onboarding: {
+		id: "onboarding",
+		count: 8,
+		root: "onboarding-pack",
+		manifest: "onboarding-pack/manifest.json"
+	},
+	"document-report": {
+		id: "document-report",
+		count: 9,
+		root: "document-report-pack",
+		manifest: "document-report-pack/manifest.json"
+	},
+	notification: {
+		id: "notification",
+		count: 8,
+		root: "notification-pack",
+		manifest: "notification-pack/manifest.json"
+	},
+	editorial: {
+		id: "editorial",
+		count: 6,
+		root: "editorial-pack",
+		manifest: "editorial-pack/manifest.json"
+	},
+	"evidence-media": {
+		id: "evidence-media",
+		count: 24,
+		root: "evidence-media-pack",
+		manifest: "evidence-media-pack/manifest.json"
+	},
+	"correlation-semantics": {
+		id: "correlation-semantics",
+		count: 24,
+		root: "correlation-semantics-pack",
+		manifest: "correlation-semantics-pack/manifest.json"
+	},
+	"kanban-workflow": {
+		id: "kanban-workflow",
+		count: 18,
+		root: "kanban-pack",
+		manifest: "kanban-pack/manifest.json"
+	},
+	"calendar-temporal": {
+		id: "calendar-temporal",
+		count: 16,
+		root: "calendar-pack",
+		manifest: "calendar-pack/manifest.json"
+	},
+	"chat-collaboration": {
+		id: "chat-collaboration",
+		count: 24,
+		root: "chat-pack",
+		manifest: "chat-pack/manifest.json"
+	},
+	"ai-workspace": {
+		id: "ai-workspace",
+		count: 18,
+		root: "ai-workspace-pack",
+		manifest: "ai-workspace-pack/manifest.json"
+	},
+	"authorization-security": {
+		id: "authorization-security",
+		count: 18,
+		root: "security-pack",
+		manifest: "security-pack/manifest.json"
+	},
+	"data-grid": {
+		id: "data-grid",
+		count: 16,
+		root: "data-grid-pack",
+		manifest: "data-grid-pack/manifest.json"
+	},
+	"form-controls": {
+		id: "form-controls",
+		count: 20,
+		root: "form-controls-pack",
+		manifest: "form-controls-pack/manifest.json"
+	},
+	"theme-accessibility": {
+		id: "theme-accessibility",
+		count: 12,
+		root: "theme-accessibility-pack",
+		manifest: "theme-accessibility-pack/manifest.json"
+	},
+	"privacy-redaction": {
+		id: "privacy-redaction",
+		count: 16,
+		root: "privacy-redaction-pack",
+		manifest: "privacy-redaction-pack/manifest.json"
+	},
+	"evidence-integrity": {
+		id: "evidence-integrity",
+		count: 16,
+		root: "integrity-pack",
+		manifest: "integrity-pack/manifest.json"
+	},
+	"export-seal": {
+		id: "export-seal",
+		count: 12,
+		root: "export-seal-pack",
+		manifest: "export-seal-pack/manifest.json"
+	},
+	"rocksoul-character": {
+		id: "rocksoul-character",
+		count: 12,
+		root: "rocksoul-character-pack",
+		manifest: "rocksoul-character-pack/manifest.json"
+	},
+	"command-keyboard": {
+		id: "command-keyboard",
+		count: 14,
+		root: "command-keyboard-pack",
+		manifest: "command-keyboard-pack/manifest.json"
+	},
+	"texture-material": {
+		id: "texture-material",
+		count: 12,
+		root: "texture-material-pack",
+		manifest: "texture-material-pack/manifest.json"
+	},
+	"architecture-diagram": {
+		id: "architecture-diagram",
+		count: 16,
+		root: "architecture-diagram-pack",
+		manifest: "architecture-diagram-pack/manifest.json"
+	},
+	"device-mockup": {
+		id: "device-mockup",
+		count: 8,
+		root: "device-mockup-pack",
+		manifest: "device-mockup-pack/manifest.json"
+	},
+	"jurisdiction-locale": {
+		id: "jurisdiction-locale",
+		count: 16,
+		root: "jurisdiction-locale-pack",
+		manifest: "jurisdiction-locale-pack/manifest.json"
+	},
+	"cinematic-hero": {
+		id: "cinematic-hero",
+		count: 12,
+		root: "cinematic-hero-pack",
+		manifest: "cinematic-hero-pack/manifest.json"
+	},
+	"runtime-motion": {
+		id: "runtime-motion",
+		count: 12,
+		root: "runtime-motion-pack",
+		manifest: "runtime-motion-pack/manifest.json"
+	},
+	"developer-distribution": {
+		id: "developer-distribution",
+		count: 4,
+		root: "developer-pack",
+		manifest: "developer-pack/manifest.json"
+	},
+	"community-participation": {
+		id: "community-participation",
+		count: 8,
+		root: "community-participation-pack",
+		manifest: "community-participation-pack/manifest.json"
+	}
+}, l = "1.3.1", u = "asset-packs.json";
+function d(e, t) {
+	return `${c[e].root}/${t.replace(/^\/+/, "")}`;
+}
+//#endregion
+//#region src/generated/assets-v1.3.ts
+var f = {
+	schemaVersion: 2,
+	version: "1.3.1",
+	canonicalFormat: "svg",
+	packs: {
+		"product-icons": {
+			manifest: "moonwitness/icons/icons.json",
+			count: 44,
+			canonicalFormat: "svg",
+			svg: {
+				add: "moonwitness/icons/svg/actions/add.svg",
+				bookmark: "moonwitness/icons/svg/actions/bookmark.svg",
+				chat: "moonwitness/icons/svg/actions/chat.svg",
+				command: "moonwitness/icons/svg/actions/command.svg",
+				copy: "moonwitness/icons/svg/actions/copy.svg",
+				delete: "moonwitness/icons/svg/actions/delete.svg",
+				download: "moonwitness/icons/svg/actions/download.svg",
+				edit: "moonwitness/icons/svg/actions/edit.svg",
+				"external-link": "moonwitness/icons/svg/actions/external-link.svg",
+				save: "moonwitness/icons/svg/actions/save.svg",
+				share: "moonwitness/icons/svg/actions/share.svg",
+				upload: "moonwitness/icons/svg/actions/upload.svg",
+				ai: "moonwitness/icons/svg/domain/ai.svg",
+				correlation: "moonwitness/icons/svg/domain/correlation.svg",
+				evidence: "moonwitness/icons/svg/domain/evidence.svg",
+				"graph-node": "moonwitness/icons/svg/domain/graph-node.svg",
+				legal: "moonwitness/icons/svg/domain/legal.svg",
+				source: "moonwitness/icons/svg/domain/source.svg",
+				timeline: "moonwitness/icons/svg/domain/timeline.svg",
+				trace: "moonwitness/icons/svg/domain/trace.svg",
+				case: "moonwitness/icons/svg/navigation/case.svg",
+				dashboard: "moonwitness/icons/svg/navigation/dashboard.svg",
+				event: "moonwitness/icons/svg/navigation/event.svg",
+				explore: "moonwitness/icons/svg/navigation/explore.svg",
+				filter: "moonwitness/icons/svg/navigation/filter.svg",
+				globe: "moonwitness/icons/svg/navigation/globe.svg",
+				kanban: "moonwitness/icons/svg/navigation/kanban.svg",
+				"map-pin": "moonwitness/icons/svg/navigation/map-pin.svg",
+				person: "moonwitness/icons/svg/navigation/person.svg",
+				search: "moonwitness/icons/svg/navigation/search.svg",
+				story: "moonwitness/icons/svg/navigation/story.svg",
+				users: "moonwitness/icons/svg/navigation/users.svg",
+				check: "moonwitness/icons/svg/status/check.svg",
+				error: "moonwitness/icons/svg/status/error.svg",
+				"eye-off": "moonwitness/icons/svg/status/eye-off.svg",
+				eye: "moonwitness/icons/svg/status/eye.svg",
+				info: "moonwitness/icons/svg/status/info.svg",
+				loading: "moonwitness/icons/svg/status/loading.svg",
+				lock: "moonwitness/icons/svg/status/lock.svg",
+				offline: "moonwitness/icons/svg/status/offline.svg",
+				online: "moonwitness/icons/svg/status/online.svg",
+				sync: "moonwitness/icons/svg/status/sync.svg",
+				unlock: "moonwitness/icons/svg/status/unlock.svg",
+				warning: "moonwitness/icons/svg/status/warning.svg"
+			},
+			png: {
+				add: {
+					24: "moonwitness/icons/png/24/actions/add.png",
+					48: "moonwitness/icons/png/48/actions/add.png",
+					96: "moonwitness/icons/png/96/actions/add.png"
+				},
+				bookmark: {
+					24: "moonwitness/icons/png/24/actions/bookmark.png",
+					48: "moonwitness/icons/png/48/actions/bookmark.png",
+					96: "moonwitness/icons/png/96/actions/bookmark.png"
+				},
+				chat: {
+					24: "moonwitness/icons/png/24/actions/chat.png",
+					48: "moonwitness/icons/png/48/actions/chat.png",
+					96: "moonwitness/icons/png/96/actions/chat.png"
+				},
+				command: {
+					24: "moonwitness/icons/png/24/actions/command.png",
+					48: "moonwitness/icons/png/48/actions/command.png",
+					96: "moonwitness/icons/png/96/actions/command.png"
+				},
+				copy: {
+					24: "moonwitness/icons/png/24/actions/copy.png",
+					48: "moonwitness/icons/png/48/actions/copy.png",
+					96: "moonwitness/icons/png/96/actions/copy.png"
+				},
+				delete: {
+					24: "moonwitness/icons/png/24/actions/delete.png",
+					48: "moonwitness/icons/png/48/actions/delete.png",
+					96: "moonwitness/icons/png/96/actions/delete.png"
+				},
+				download: {
+					24: "moonwitness/icons/png/24/actions/download.png",
+					48: "moonwitness/icons/png/48/actions/download.png",
+					96: "moonwitness/icons/png/96/actions/download.png"
+				},
+				edit: {
+					24: "moonwitness/icons/png/24/actions/edit.png",
+					48: "moonwitness/icons/png/48/actions/edit.png",
+					96: "moonwitness/icons/png/96/actions/edit.png"
+				},
+				"external-link": {
+					24: "moonwitness/icons/png/24/actions/external-link.png",
+					48: "moonwitness/icons/png/48/actions/external-link.png",
+					96: "moonwitness/icons/png/96/actions/external-link.png"
+				},
+				save: {
+					24: "moonwitness/icons/png/24/actions/save.png",
+					48: "moonwitness/icons/png/48/actions/save.png",
+					96: "moonwitness/icons/png/96/actions/save.png"
+				},
+				share: {
+					24: "moonwitness/icons/png/24/actions/share.png",
+					48: "moonwitness/icons/png/48/actions/share.png",
+					96: "moonwitness/icons/png/96/actions/share.png"
+				},
+				upload: {
+					24: "moonwitness/icons/png/24/actions/upload.png",
+					48: "moonwitness/icons/png/48/actions/upload.png",
+					96: "moonwitness/icons/png/96/actions/upload.png"
+				},
+				ai: {
+					24: "moonwitness/icons/png/24/domain/ai.png",
+					48: "moonwitness/icons/png/48/domain/ai.png",
+					96: "moonwitness/icons/png/96/domain/ai.png"
+				},
+				correlation: {
+					24: "moonwitness/icons/png/24/domain/correlation.png",
+					48: "moonwitness/icons/png/48/domain/correlation.png",
+					96: "moonwitness/icons/png/96/domain/correlation.png"
+				},
+				evidence: {
+					24: "moonwitness/icons/png/24/domain/evidence.png",
+					48: "moonwitness/icons/png/48/domain/evidence.png",
+					96: "moonwitness/icons/png/96/domain/evidence.png"
+				},
+				"graph-node": {
+					24: "moonwitness/icons/png/24/domain/graph-node.png",
+					48: "moonwitness/icons/png/48/domain/graph-node.png",
+					96: "moonwitness/icons/png/96/domain/graph-node.png"
+				},
+				legal: {
+					24: "moonwitness/icons/png/24/domain/legal.png",
+					48: "moonwitness/icons/png/48/domain/legal.png",
+					96: "moonwitness/icons/png/96/domain/legal.png"
+				},
+				source: {
+					24: "moonwitness/icons/png/24/domain/source.png",
+					48: "moonwitness/icons/png/48/domain/source.png",
+					96: "moonwitness/icons/png/96/domain/source.png"
+				},
+				timeline: {
+					24: "moonwitness/icons/png/24/domain/timeline.png",
+					48: "moonwitness/icons/png/48/domain/timeline.png",
+					96: "moonwitness/icons/png/96/domain/timeline.png"
+				},
+				trace: {
+					24: "moonwitness/icons/png/24/domain/trace.png",
+					48: "moonwitness/icons/png/48/domain/trace.png",
+					96: "moonwitness/icons/png/96/domain/trace.png"
+				},
+				case: {
+					24: "moonwitness/icons/png/24/navigation/case.png",
+					48: "moonwitness/icons/png/48/navigation/case.png",
+					96: "moonwitness/icons/png/96/navigation/case.png"
+				},
+				dashboard: {
+					24: "moonwitness/icons/png/24/navigation/dashboard.png",
+					48: "moonwitness/icons/png/48/navigation/dashboard.png",
+					96: "moonwitness/icons/png/96/navigation/dashboard.png"
+				},
+				event: {
+					24: "moonwitness/icons/png/24/navigation/event.png",
+					48: "moonwitness/icons/png/48/navigation/event.png",
+					96: "moonwitness/icons/png/96/navigation/event.png"
+				},
+				explore: {
+					24: "moonwitness/icons/png/24/navigation/explore.png",
+					48: "moonwitness/icons/png/48/navigation/explore.png",
+					96: "moonwitness/icons/png/96/navigation/explore.png"
+				},
+				filter: {
+					24: "moonwitness/icons/png/24/navigation/filter.png",
+					48: "moonwitness/icons/png/48/navigation/filter.png",
+					96: "moonwitness/icons/png/96/navigation/filter.png"
+				},
+				globe: {
+					24: "moonwitness/icons/png/24/navigation/globe.png",
+					48: "moonwitness/icons/png/48/navigation/globe.png",
+					96: "moonwitness/icons/png/96/navigation/globe.png"
+				},
+				kanban: {
+					24: "moonwitness/icons/png/24/navigation/kanban.png",
+					48: "moonwitness/icons/png/48/navigation/kanban.png",
+					96: "moonwitness/icons/png/96/navigation/kanban.png"
+				},
+				"map-pin": {
+					24: "moonwitness/icons/png/24/navigation/map-pin.png",
+					48: "moonwitness/icons/png/48/navigation/map-pin.png",
+					96: "moonwitness/icons/png/96/navigation/map-pin.png"
+				},
+				person: {
+					24: "moonwitness/icons/png/24/navigation/person.png",
+					48: "moonwitness/icons/png/48/navigation/person.png",
+					96: "moonwitness/icons/png/96/navigation/person.png"
+				},
+				search: {
+					24: "moonwitness/icons/png/24/navigation/search.png",
+					48: "moonwitness/icons/png/48/navigation/search.png",
+					96: "moonwitness/icons/png/96/navigation/search.png"
+				},
+				story: {
+					24: "moonwitness/icons/png/24/navigation/story.png",
+					48: "moonwitness/icons/png/48/navigation/story.png",
+					96: "moonwitness/icons/png/96/navigation/story.png"
+				},
+				users: {
+					24: "moonwitness/icons/png/24/navigation/users.png",
+					48: "moonwitness/icons/png/48/navigation/users.png",
+					96: "moonwitness/icons/png/96/navigation/users.png"
+				},
+				check: {
+					24: "moonwitness/icons/png/24/status/check.png",
+					48: "moonwitness/icons/png/48/status/check.png",
+					96: "moonwitness/icons/png/96/status/check.png"
+				},
+				error: {
+					24: "moonwitness/icons/png/24/status/error.png",
+					48: "moonwitness/icons/png/48/status/error.png",
+					96: "moonwitness/icons/png/96/status/error.png"
+				},
+				"eye-off": {
+					24: "moonwitness/icons/png/24/status/eye-off.png",
+					48: "moonwitness/icons/png/48/status/eye-off.png",
+					96: "moonwitness/icons/png/96/status/eye-off.png"
+				},
+				eye: {
+					24: "moonwitness/icons/png/24/status/eye.png",
+					48: "moonwitness/icons/png/48/status/eye.png",
+					96: "moonwitness/icons/png/96/status/eye.png"
+				},
+				info: {
+					24: "moonwitness/icons/png/24/status/info.png",
+					48: "moonwitness/icons/png/48/status/info.png",
+					96: "moonwitness/icons/png/96/status/info.png"
+				},
+				loading: {
+					24: "moonwitness/icons/png/24/status/loading.png",
+					48: "moonwitness/icons/png/48/status/loading.png",
+					96: "moonwitness/icons/png/96/status/loading.png"
+				},
+				lock: {
+					24: "moonwitness/icons/png/24/status/lock.png",
+					48: "moonwitness/icons/png/48/status/lock.png",
+					96: "moonwitness/icons/png/96/status/lock.png"
+				},
+				offline: {
+					24: "moonwitness/icons/png/24/status/offline.png",
+					48: "moonwitness/icons/png/48/status/offline.png",
+					96: "moonwitness/icons/png/96/status/offline.png"
+				},
+				online: {
+					24: "moonwitness/icons/png/24/status/online.png",
+					48: "moonwitness/icons/png/48/status/online.png",
+					96: "moonwitness/icons/png/96/status/online.png"
+				},
+				sync: {
+					24: "moonwitness/icons/png/24/status/sync.png",
+					48: "moonwitness/icons/png/48/status/sync.png",
+					96: "moonwitness/icons/png/96/status/sync.png"
+				},
+				unlock: {
+					24: "moonwitness/icons/png/24/status/unlock.png",
+					48: "moonwitness/icons/png/48/status/unlock.png",
+					96: "moonwitness/icons/png/96/status/unlock.png"
+				},
+				warning: {
+					24: "moonwitness/icons/png/24/status/warning.png",
+					48: "moonwitness/icons/png/48/status/warning.png",
+					96: "moonwitness/icons/png/96/status/warning.png"
+				}
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/icons/png/24/actions/add.png,moonwitness/icons/png/24/actions/bookmark.png,moonwitness/icons/png/24/actions/chat.png,moonwitness/icons/png/24/actions/command.png,moonwitness/icons/png/24/actions/copy.png,moonwitness/icons/png/24/actions/delete.png,moonwitness/icons/png/24/actions/download.png,moonwitness/icons/png/24/actions/edit.png,moonwitness/icons/png/24/actions/external-link.png,moonwitness/icons/png/24/actions/save.png,moonwitness/icons/png/24/actions/share.png,moonwitness/icons/png/24/actions/upload.png,moonwitness/icons/png/24/domain/ai.png,moonwitness/icons/png/24/domain/correlation.png,moonwitness/icons/png/24/domain/evidence.png,moonwitness/icons/png/24/domain/graph-node.png,moonwitness/icons/png/24/domain/legal.png,moonwitness/icons/png/24/domain/source.png,moonwitness/icons/png/24/domain/timeline.png,moonwitness/icons/png/24/domain/trace.png,moonwitness/icons/png/24/navigation/case.png,moonwitness/icons/png/24/navigation/dashboard.png,moonwitness/icons/png/24/navigation/event.png,moonwitness/icons/png/24/navigation/explore.png,moonwitness/icons/png/24/navigation/filter.png,moonwitness/icons/png/24/navigation/globe.png,moonwitness/icons/png/24/navigation/kanban.png,moonwitness/icons/png/24/navigation/map-pin.png,moonwitness/icons/png/24/navigation/person.png,moonwitness/icons/png/24/navigation/search.png,moonwitness/icons/png/24/navigation/story.png,moonwitness/icons/png/24/navigation/users.png,moonwitness/icons/png/24/status/check.png,moonwitness/icons/png/24/status/error.png,moonwitness/icons/png/24/status/eye-off.png,moonwitness/icons/png/24/status/eye.png,moonwitness/icons/png/24/status/info.png,moonwitness/icons/png/24/status/loading.png,moonwitness/icons/png/24/status/lock.png,moonwitness/icons/png/24/status/offline.png,moonwitness/icons/png/24/status/online.png,moonwitness/icons/png/24/status/sync.png,moonwitness/icons/png/24/status/unlock.png,moonwitness/icons/png/24/status/warning.png,moonwitness/icons/png/48/actions/add.png,moonwitness/icons/png/48/actions/bookmark.png,moonwitness/icons/png/48/actions/chat.png,moonwitness/icons/png/48/actions/command.png,moonwitness/icons/png/48/actions/copy.png,moonwitness/icons/png/48/actions/delete.png,moonwitness/icons/png/48/actions/download.png,moonwitness/icons/png/48/actions/edit.png,moonwitness/icons/png/48/actions/external-link.png,moonwitness/icons/png/48/actions/save.png,moonwitness/icons/png/48/actions/share.png,moonwitness/icons/png/48/actions/upload.png,moonwitness/icons/png/48/domain/ai.png,moonwitness/icons/png/48/domain/correlation.png,moonwitness/icons/png/48/domain/evidence.png,moonwitness/icons/png/48/domain/graph-node.png,moonwitness/icons/png/48/domain/legal.png,moonwitness/icons/png/48/domain/source.png,moonwitness/icons/png/48/domain/timeline.png,moonwitness/icons/png/48/domain/trace.png,moonwitness/icons/png/48/navigation/case.png,moonwitness/icons/png/48/navigation/dashboard.png,moonwitness/icons/png/48/navigation/event.png,moonwitness/icons/png/48/navigation/explore.png,moonwitness/icons/png/48/navigation/filter.png,moonwitness/icons/png/48/navigation/globe.png,moonwitness/icons/png/48/navigation/kanban.png,moonwitness/icons/png/48/navigation/map-pin.png,moonwitness/icons/png/48/navigation/person.png,moonwitness/icons/png/48/navigation/search.png,moonwitness/icons/png/48/navigation/story.png,moonwitness/icons/png/48/navigation/users.png,moonwitness/icons/png/48/status/check.png,moonwitness/icons/png/48/status/error.png,moonwitness/icons/png/48/status/eye-off.png,moonwitness/icons/png/48/status/eye.png,moonwitness/icons/png/48/status/info.png,moonwitness/icons/png/48/status/loading.png,moonwitness/icons/png/48/status/lock.png,moonwitness/icons/png/48/status/offline.png,moonwitness/icons/png/48/status/online.png,moonwitness/icons/png/48/status/sync.png,moonwitness/icons/png/48/status/unlock.png,moonwitness/icons/png/48/status/warning.png,moonwitness/icons/png/96/actions/add.png,moonwitness/icons/png/96/actions/bookmark.png,moonwitness/icons/png/96/actions/chat.png,moonwitness/icons/png/96/actions/command.png,moonwitness/icons/png/96/actions/copy.png,moonwitness/icons/png/96/actions/delete.png,moonwitness/icons/png/96/actions/download.png,moonwitness/icons/png/96/actions/edit.png,moonwitness/icons/png/96/actions/external-link.png,moonwitness/icons/png/96/actions/save.png,moonwitness/icons/png/96/actions/share.png,moonwitness/icons/png/96/actions/upload.png,moonwitness/icons/png/96/domain/ai.png,moonwitness/icons/png/96/domain/correlation.png,moonwitness/icons/png/96/domain/evidence.png,moonwitness/icons/png/96/domain/graph-node.png,moonwitness/icons/png/96/domain/legal.png,moonwitness/icons/png/96/domain/source.png,moonwitness/icons/png/96/domain/timeline.png,moonwitness/icons/png/96/domain/trace.png,moonwitness/icons/png/96/navigation/case.png,moonwitness/icons/png/96/navigation/dashboard.png,moonwitness/icons/png/96/navigation/event.png,moonwitness/icons/png/96/navigation/explore.png,moonwitness/icons/png/96/navigation/filter.png,moonwitness/icons/png/96/navigation/globe.png,moonwitness/icons/png/96/navigation/kanban.png,moonwitness/icons/png/96/navigation/map-pin.png,moonwitness/icons/png/96/navigation/person.png,moonwitness/icons/png/96/navigation/search.png,moonwitness/icons/png/96/navigation/story.png,moonwitness/icons/png/96/navigation/users.png,moonwitness/icons/png/96/status/check.png,moonwitness/icons/png/96/status/error.png,moonwitness/icons/png/96/status/eye-off.png,moonwitness/icons/png/96/status/eye.png,moonwitness/icons/png/96/status/info.png,moonwitness/icons/png/96/status/loading.png,moonwitness/icons/png/96/status/lock.png,moonwitness/icons/png/96/status/offline.png,moonwitness/icons/png/96/status/online.png,moonwitness/icons/png/96/status/sync.png,moonwitness/icons/png/96/status/unlock.png,moonwitness/icons/png/96/status/warning.png,moonwitness/icons/svg/actions/add.svg,moonwitness/icons/svg/actions/bookmark.svg,moonwitness/icons/svg/actions/chat.svg,moonwitness/icons/svg/actions/command.svg,moonwitness/icons/svg/actions/copy.svg,moonwitness/icons/svg/actions/delete.svg,moonwitness/icons/svg/actions/download.svg,moonwitness/icons/svg/actions/edit.svg,moonwitness/icons/svg/actions/external-link.svg,moonwitness/icons/svg/actions/save.svg,moonwitness/icons/svg/actions/share.svg,moonwitness/icons/svg/actions/upload.svg,moonwitness/icons/svg/domain/ai.svg,moonwitness/icons/svg/domain/correlation.svg,moonwitness/icons/svg/domain/evidence.svg,moonwitness/icons/svg/domain/graph-node.svg,moonwitness/icons/svg/domain/legal.svg,moonwitness/icons/svg/domain/source.svg,moonwitness/icons/svg/domain/timeline.svg,moonwitness/icons/svg/domain/trace.svg,moonwitness/icons/svg/navigation/case.svg,moonwitness/icons/svg/navigation/dashboard.svg,moonwitness/icons/svg/navigation/event.svg,moonwitness/icons/svg/navigation/explore.svg,moonwitness/icons/svg/navigation/filter.svg,moonwitness/icons/svg/navigation/globe.svg,moonwitness/icons/svg/navigation/kanban.svg,moonwitness/icons/svg/navigation/map-pin.svg,moonwitness/icons/svg/navigation/person.svg,moonwitness/icons/svg/navigation/search.svg,moonwitness/icons/svg/navigation/story.svg,moonwitness/icons/svg/navigation/users.svg,moonwitness/icons/svg/status/check.svg,moonwitness/icons/svg/status/error.svg,moonwitness/icons/svg/status/eye-off.svg,moonwitness/icons/svg/status/eye.svg,moonwitness/icons/svg/status/info.svg,moonwitness/icons/svg/status/loading.svg,moonwitness/icons/svg/status/lock.svg,moonwitness/icons/svg/status/offline.svg,moonwitness/icons/svg/status/online.svg,moonwitness/icons/svg/status/sync.svg,moonwitness/icons/svg/status/unlock.svg,moonwitness/icons/svg/status/warning.svg".split(",")
+		},
+		dashboard: {
+			manifest: "moonwitness/dashboard-pack/dashboard-pack.json",
+			count: 20,
+			canonicalFormat: "svg",
+			svg: {
+				"ai-summary": "moonwitness/dashboard-pack/widgets/ai-summary.svg",
+				"audit-log": "moonwitness/dashboard-pack/widgets/audit-log.svg",
+				"backend-status": "moonwitness/dashboard-pack/widgets/backend-status.svg",
+				"bar-chart": "moonwitness/dashboard-pack/widgets/bar-chart.svg",
+				"case-progress": "moonwitness/dashboard-pack/widgets/case-progress.svg",
+				"correlation-insight": "moonwitness/dashboard-pack/widgets/correlation-insight.svg",
+				"donut-chart": "moonwitness/dashboard-pack/widgets/donut-chart.svg",
+				"empty-widget": "moonwitness/dashboard-pack/widgets/empty-widget.svg",
+				"evidence-timeline": "moonwitness/dashboard-pack/widgets/evidence-timeline.svg",
+				"kpi-stat": "moonwitness/dashboard-pack/widgets/kpi-stat.svg",
+				"line-trend": "moonwitness/dashboard-pack/widgets/line-trend.svg",
+				"mini-calendar": "moonwitness/dashboard-pack/widgets/mini-calendar.svg",
+				"mini-kanban": "moonwitness/dashboard-pack/widgets/mini-kanban.svg",
+				notifications: "moonwitness/dashboard-pack/widgets/notifications.svg",
+				"profile-summary": "moonwitness/dashboard-pack/widgets/profile-summary.svg",
+				"provenance-chain": "moonwitness/dashboard-pack/widgets/provenance-chain.svg",
+				"quick-actions": "moonwitness/dashboard-pack/widgets/quick-actions.svg",
+				"recent-cases": "moonwitness/dashboard-pack/widgets/recent-cases.svg",
+				"search-results": "moonwitness/dashboard-pack/widgets/search-results.svg",
+				"world-map": "moonwitness/dashboard-pack/widgets/world-map.svg"
+			},
+			png: {
+				"ai-summary": "moonwitness/dashboard-pack/png/ai-summary.png",
+				"audit-log": "moonwitness/dashboard-pack/png/audit-log.png",
+				"backend-status": "moonwitness/dashboard-pack/png/backend-status.png",
+				"bar-chart": "moonwitness/dashboard-pack/png/bar-chart.png",
+				"case-progress": "moonwitness/dashboard-pack/png/case-progress.png",
+				"correlation-insight": "moonwitness/dashboard-pack/png/correlation-insight.png",
+				"donut-chart": "moonwitness/dashboard-pack/png/donut-chart.png",
+				"empty-widget": "moonwitness/dashboard-pack/png/empty-widget.png",
+				"evidence-timeline": "moonwitness/dashboard-pack/png/evidence-timeline.png",
+				"kpi-stat": "moonwitness/dashboard-pack/png/kpi-stat.png",
+				"line-trend": "moonwitness/dashboard-pack/png/line-trend.png",
+				"mini-calendar": "moonwitness/dashboard-pack/png/mini-calendar.png",
+				"mini-kanban": "moonwitness/dashboard-pack/png/mini-kanban.png",
+				notifications: "moonwitness/dashboard-pack/png/notifications.png",
+				"profile-summary": "moonwitness/dashboard-pack/png/profile-summary.png",
+				"provenance-chain": "moonwitness/dashboard-pack/png/provenance-chain.png",
+				"quick-actions": "moonwitness/dashboard-pack/png/quick-actions.png",
+				"recent-cases": "moonwitness/dashboard-pack/png/recent-cases.png",
+				"search-results": "moonwitness/dashboard-pack/png/search-results.png",
+				"world-map": "moonwitness/dashboard-pack/png/world-map.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/dashboard-pack/png/ai-summary.png,moonwitness/dashboard-pack/png/audit-log.png,moonwitness/dashboard-pack/png/backend-status.png,moonwitness/dashboard-pack/png/bar-chart.png,moonwitness/dashboard-pack/png/case-progress.png,moonwitness/dashboard-pack/png/correlation-insight.png,moonwitness/dashboard-pack/png/donut-chart.png,moonwitness/dashboard-pack/png/empty-widget.png,moonwitness/dashboard-pack/png/evidence-timeline.png,moonwitness/dashboard-pack/png/kpi-stat.png,moonwitness/dashboard-pack/png/line-trend.png,moonwitness/dashboard-pack/png/mini-calendar.png,moonwitness/dashboard-pack/png/mini-kanban.png,moonwitness/dashboard-pack/png/notifications.png,moonwitness/dashboard-pack/png/profile-summary.png,moonwitness/dashboard-pack/png/provenance-chain.png,moonwitness/dashboard-pack/png/quick-actions.png,moonwitness/dashboard-pack/png/recent-cases.png,moonwitness/dashboard-pack/png/search-results.png,moonwitness/dashboard-pack/png/world-map.png,moonwitness/dashboard-pack/widgets/ai-summary.svg,moonwitness/dashboard-pack/widgets/audit-log.svg,moonwitness/dashboard-pack/widgets/backend-status.svg,moonwitness/dashboard-pack/widgets/bar-chart.svg,moonwitness/dashboard-pack/widgets/case-progress.svg,moonwitness/dashboard-pack/widgets/correlation-insight.svg,moonwitness/dashboard-pack/widgets/donut-chart.svg,moonwitness/dashboard-pack/widgets/empty-widget.svg,moonwitness/dashboard-pack/widgets/evidence-timeline.svg,moonwitness/dashboard-pack/widgets/kpi-stat.svg,moonwitness/dashboard-pack/widgets/line-trend.svg,moonwitness/dashboard-pack/widgets/mini-calendar.svg,moonwitness/dashboard-pack/widgets/mini-kanban.svg,moonwitness/dashboard-pack/widgets/notifications.svg,moonwitness/dashboard-pack/widgets/profile-summary.svg,moonwitness/dashboard-pack/widgets/provenance-chain.svg,moonwitness/dashboard-pack/widgets/quick-actions.svg,moonwitness/dashboard-pack/widgets/recent-cases.svg,moonwitness/dashboard-pack/widgets/search-results.svg,moonwitness/dashboard-pack/widgets/world-map.svg".split(",")
+		},
+		"data-viz": {
+			manifest: "moonwitness/data-viz/data-viz.json",
+			count: 20,
+			canonicalFormat: "svg",
+			svg: {
+				"activity-sparkline": "moonwitness/data-viz/charts/activity-sparkline.svg",
+				"annotation-tools": "moonwitness/data-viz/charts/annotation-tools.svg",
+				"confidence-trend": "moonwitness/data-viz/charts/confidence-trend.svg",
+				"cross-domain-relations": "moonwitness/data-viz/charts/cross-domain-relations.svg",
+				"edge-styles": "moonwitness/data-viz/charts/edge-styles.svg",
+				"event-frequency": "moonwitness/data-viz/charts/event-frequency.svg",
+				"event-topology": "moonwitness/data-viz/charts/event-topology.svg",
+				"event-type-distribution": "moonwitness/data-viz/charts/event-type-distribution.svg",
+				"evidence-matrix": "moonwitness/data-viz/charts/evidence-matrix.svg",
+				"evidence-timeline": "moonwitness/data-viz/charts/evidence-timeline.svg",
+				"geographic-heatmap": "moonwitness/data-viz/charts/geographic-heatmap.svg",
+				"graph-nodes": "moonwitness/data-viz/charts/graph-nodes.svg",
+				"historicity-band": "moonwitness/data-viz/charts/historicity-band.svg",
+				"legend-styles": "moonwitness/data-viz/charts/legend-styles.svg",
+				"metric-counters": "moonwitness/data-viz/charts/metric-counters.svg",
+				"node-link-correlation": "moonwitness/data-viz/charts/node-link-correlation.svg",
+				"place-material-context": "moonwitness/data-viz/charts/place-material-context.svg",
+				"provenance-chain": "moonwitness/data-viz/charts/provenance-chain.svg",
+				"repository-health": "moonwitness/data-viz/charts/repository-health.svg",
+				"status-ring": "moonwitness/data-viz/charts/status-ring.svg"
+			},
+			png: {
+				"activity-sparkline": "moonwitness/data-viz/png/activity-sparkline.png",
+				"annotation-tools": "moonwitness/data-viz/png/annotation-tools.png",
+				"confidence-trend": "moonwitness/data-viz/png/confidence-trend.png",
+				"cross-domain-relations": "moonwitness/data-viz/png/cross-domain-relations.png",
+				"edge-styles": "moonwitness/data-viz/png/edge-styles.png",
+				"event-frequency": "moonwitness/data-viz/png/event-frequency.png",
+				"event-topology": "moonwitness/data-viz/png/event-topology.png",
+				"event-type-distribution": "moonwitness/data-viz/png/event-type-distribution.png",
+				"evidence-matrix": "moonwitness/data-viz/png/evidence-matrix.png",
+				"evidence-timeline": "moonwitness/data-viz/png/evidence-timeline.png",
+				"geographic-heatmap": "moonwitness/data-viz/png/geographic-heatmap.png",
+				"graph-nodes": "moonwitness/data-viz/png/graph-nodes.png",
+				"historicity-band": "moonwitness/data-viz/png/historicity-band.png",
+				"legend-styles": "moonwitness/data-viz/png/legend-styles.png",
+				"metric-counters": "moonwitness/data-viz/png/metric-counters.png",
+				"node-link-correlation": "moonwitness/data-viz/png/node-link-correlation.png",
+				"place-material-context": "moonwitness/data-viz/png/place-material-context.png",
+				"provenance-chain": "moonwitness/data-viz/png/provenance-chain.png",
+				"repository-health": "moonwitness/data-viz/png/repository-health.png",
+				"status-ring": "moonwitness/data-viz/png/status-ring.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/data-viz/charts/activity-sparkline.svg,moonwitness/data-viz/charts/annotation-tools.svg,moonwitness/data-viz/charts/confidence-trend.svg,moonwitness/data-viz/charts/cross-domain-relations.svg,moonwitness/data-viz/charts/edge-styles.svg,moonwitness/data-viz/charts/event-frequency.svg,moonwitness/data-viz/charts/event-topology.svg,moonwitness/data-viz/charts/event-type-distribution.svg,moonwitness/data-viz/charts/evidence-matrix.svg,moonwitness/data-viz/charts/evidence-timeline.svg,moonwitness/data-viz/charts/geographic-heatmap.svg,moonwitness/data-viz/charts/graph-nodes.svg,moonwitness/data-viz/charts/historicity-band.svg,moonwitness/data-viz/charts/legend-styles.svg,moonwitness/data-viz/charts/metric-counters.svg,moonwitness/data-viz/charts/node-link-correlation.svg,moonwitness/data-viz/charts/place-material-context.svg,moonwitness/data-viz/charts/provenance-chain.svg,moonwitness/data-viz/charts/repository-health.svg,moonwitness/data-viz/charts/status-ring.svg,moonwitness/data-viz/png/activity-sparkline.png,moonwitness/data-viz/png/annotation-tools.png,moonwitness/data-viz/png/confidence-trend.png,moonwitness/data-viz/png/cross-domain-relations.png,moonwitness/data-viz/png/edge-styles.png,moonwitness/data-viz/png/event-frequency.png,moonwitness/data-viz/png/event-topology.png,moonwitness/data-viz/png/event-type-distribution.png,moonwitness/data-viz/png/evidence-matrix.png,moonwitness/data-viz/png/evidence-timeline.png,moonwitness/data-viz/png/geographic-heatmap.png,moonwitness/data-viz/png/graph-nodes.png,moonwitness/data-viz/png/historicity-band.png,moonwitness/data-viz/png/legend-styles.png,moonwitness/data-viz/png/metric-counters.png,moonwitness/data-viz/png/node-link-correlation.png,moonwitness/data-viz/png/place-material-context.png,moonwitness/data-viz/png/provenance-chain.png,moonwitness/data-viz/png/repository-health.png,moonwitness/data-viz/png/status-ring.png".split(",")
+		},
+		"hero-backgrounds": {
+			manifest: "moonwitness/hero-backgrounds/backgrounds.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"archive-texture": "moonwitness/hero-backgrounds/svg/archive-texture.svg",
+				"correlation-web": "moonwitness/hero-backgrounds/svg/correlation-web.svg",
+				"evidence-constellation": "moonwitness/hero-backgrounds/svg/evidence-constellation.svg",
+				"legal-boundary-field": "moonwitness/hero-backgrounds/svg/legal-boundary-field.svg",
+				"lunar-trace": "moonwitness/hero-backgrounds/svg/lunar-trace.svg",
+				"observatory-grid": "moonwitness/hero-backgrounds/svg/observatory-grid.svg",
+				"rgbl-spectrum-field": "moonwitness/hero-backgrounds/svg/rgbl-spectrum-field.svg",
+				"signal-field": "moonwitness/hero-backgrounds/svg/signal-field.svg"
+			},
+			png: {
+				"archive-texture": "moonwitness/hero-backgrounds/png/archive-texture.png",
+				"correlation-web": "moonwitness/hero-backgrounds/png/correlation-web.png",
+				"evidence-constellation": "moonwitness/hero-backgrounds/png/evidence-constellation.png",
+				"legal-boundary-field": "moonwitness/hero-backgrounds/png/legal-boundary-field.png",
+				"lunar-trace": "moonwitness/hero-backgrounds/png/lunar-trace.png",
+				"observatory-grid": "moonwitness/hero-backgrounds/png/observatory-grid.png",
+				"rgbl-spectrum-field": "moonwitness/hero-backgrounds/png/rgbl-spectrum-field.png",
+				"signal-field": "moonwitness/hero-backgrounds/png/signal-field.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/hero-backgrounds/png/archive-texture.png",
+				"moonwitness/hero-backgrounds/png/correlation-web.png",
+				"moonwitness/hero-backgrounds/png/evidence-constellation.png",
+				"moonwitness/hero-backgrounds/png/legal-boundary-field.png",
+				"moonwitness/hero-backgrounds/png/lunar-trace.png",
+				"moonwitness/hero-backgrounds/png/observatory-grid.png",
+				"moonwitness/hero-backgrounds/png/rgbl-spectrum-field.png",
+				"moonwitness/hero-backgrounds/png/signal-field.png",
+				"moonwitness/hero-backgrounds/svg/archive-texture.svg",
+				"moonwitness/hero-backgrounds/svg/correlation-web.svg",
+				"moonwitness/hero-backgrounds/svg/evidence-constellation.svg",
+				"moonwitness/hero-backgrounds/svg/legal-boundary-field.svg",
+				"moonwitness/hero-backgrounds/svg/lunar-trace.svg",
+				"moonwitness/hero-backgrounds/svg/observatory-grid.svg",
+				"moonwitness/hero-backgrounds/svg/rgbl-spectrum-field.svg",
+				"moonwitness/hero-backgrounds/svg/signal-field.svg"
+			]
+		},
+		"state-illustrations": {
+			manifest: "moonwitness/state-illustrations/states.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				"ai-unavailable": "moonwitness/state-illustrations/svg/ai-unavailable.svg",
+				"empty-search": "moonwitness/state-illustrations/svg/empty-search.svg",
+				"error-state": "moonwitness/state-illustrations/svg/error-state.svg",
+				"forbidden-access": "moonwitness/state-illustrations/svg/forbidden-access.svg",
+				"keep-investigating": "moonwitness/state-illustrations/svg/keep-investigating.svg",
+				loading: "moonwitness/state-illustrations/svg/loading.svg",
+				"no-cases": "moonwitness/state-illustrations/svg/no-cases.svg",
+				"notification-empty": "moonwitness/state-illustrations/svg/notification-empty.svg",
+				"offline-backend": "moonwitness/state-illustrations/svg/offline-backend.svg",
+				"review-complete": "moonwitness/state-illustrations/svg/review-complete.svg",
+				"source-missing": "moonwitness/state-illustrations/svg/source-missing.svg",
+				"upload-success": "moonwitness/state-illustrations/svg/upload-success.svg"
+			},
+			png: {
+				"ai-unavailable": "moonwitness/state-illustrations/png/ai-unavailable.png",
+				"empty-search": "moonwitness/state-illustrations/png/empty-search.png",
+				"error-state": "moonwitness/state-illustrations/png/error-state.png",
+				"forbidden-access": "moonwitness/state-illustrations/png/forbidden-access.png",
+				"keep-investigating": "moonwitness/state-illustrations/png/keep-investigating.png",
+				loading: "moonwitness/state-illustrations/png/loading.png",
+				"no-cases": "moonwitness/state-illustrations/png/no-cases.png",
+				"notification-empty": "moonwitness/state-illustrations/png/notification-empty.png",
+				"offline-backend": "moonwitness/state-illustrations/png/offline-backend.png",
+				"review-complete": "moonwitness/state-illustrations/png/review-complete.png",
+				"source-missing": "moonwitness/state-illustrations/png/source-missing.png",
+				"upload-success": "moonwitness/state-illustrations/png/upload-success.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/state-illustrations/png/ai-unavailable.png",
+				"moonwitness/state-illustrations/png/empty-search.png",
+				"moonwitness/state-illustrations/png/error-state.png",
+				"moonwitness/state-illustrations/png/forbidden-access.png",
+				"moonwitness/state-illustrations/png/keep-investigating.png",
+				"moonwitness/state-illustrations/png/loading.png",
+				"moonwitness/state-illustrations/png/no-cases.png",
+				"moonwitness/state-illustrations/png/notification-empty.png",
+				"moonwitness/state-illustrations/png/offline-backend.png",
+				"moonwitness/state-illustrations/png/review-complete.png",
+				"moonwitness/state-illustrations/png/source-missing.png",
+				"moonwitness/state-illustrations/png/upload-success.png",
+				"moonwitness/state-illustrations/svg/ai-unavailable.svg",
+				"moonwitness/state-illustrations/svg/empty-search.svg",
+				"moonwitness/state-illustrations/svg/error-state.svg",
+				"moonwitness/state-illustrations/svg/forbidden-access.svg",
+				"moonwitness/state-illustrations/svg/keep-investigating.svg",
+				"moonwitness/state-illustrations/svg/loading.svg",
+				"moonwitness/state-illustrations/svg/no-cases.svg",
+				"moonwitness/state-illustrations/svg/notification-empty.svg",
+				"moonwitness/state-illustrations/svg/offline-backend.svg",
+				"moonwitness/state-illustrations/svg/review-complete.svg",
+				"moonwitness/state-illustrations/svg/source-missing.svg",
+				"moonwitness/state-illustrations/svg/upload-success.svg"
+			]
+		},
+		motion: {
+			manifest: "moonwitness/motion/motion.json",
+			count: 12,
+			canonicalFormat: "animated-svg",
+			svg: {
+				"ai-thinking": "moonwitness/motion/svg/ai-thinking.svg",
+				"backend-reconnect": "moonwitness/motion/svg/backend-reconnect.svg",
+				"case-resolved": "moonwitness/motion/svg/case-resolved.svg",
+				"correlation-edge-draw": "moonwitness/motion/svg/correlation-edge-draw.svg",
+				"drawer-open": "moonwitness/motion/svg/drawer-open.svg",
+				"loading-trace": "moonwitness/motion/svg/loading-trace.svg",
+				"logo-reveal": "moonwitness/motion/svg/logo-reveal.svg",
+				"notification-pulse": "moonwitness/motion/svg/notification-pulse.svg",
+				"observatory-ring": "moonwitness/motion/svg/observatory-ring.svg",
+				"success-check": "moonwitness/motion/svg/success-check.svg",
+				"trace-node-pulse": "moonwitness/motion/svg/trace-node-pulse.svg",
+				"upload-complete": "moonwitness/motion/svg/upload-complete.svg"
+			},
+			png: {
+				"ai-thinking": "moonwitness/motion/png/ai-thinking.png",
+				"backend-reconnect": "moonwitness/motion/png/backend-reconnect.png",
+				"case-resolved": "moonwitness/motion/png/case-resolved.png",
+				"correlation-edge-draw": "moonwitness/motion/png/correlation-edge-draw.png",
+				"drawer-open": "moonwitness/motion/png/drawer-open.png",
+				"loading-trace": "moonwitness/motion/png/loading-trace.png",
+				"logo-reveal": "moonwitness/motion/png/logo-reveal.png",
+				"notification-pulse": "moonwitness/motion/png/notification-pulse.png",
+				"observatory-ring": "moonwitness/motion/png/observatory-ring.png",
+				"success-check": "moonwitness/motion/png/success-check.png",
+				"trace-node-pulse": "moonwitness/motion/png/trace-node-pulse.png",
+				"upload-complete": "moonwitness/motion/png/upload-complete.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/motion/png/ai-thinking.png",
+				"moonwitness/motion/png/backend-reconnect.png",
+				"moonwitness/motion/png/case-resolved.png",
+				"moonwitness/motion/png/correlation-edge-draw.png",
+				"moonwitness/motion/png/drawer-open.png",
+				"moonwitness/motion/png/loading-trace.png",
+				"moonwitness/motion/png/logo-reveal.png",
+				"moonwitness/motion/png/notification-pulse.png",
+				"moonwitness/motion/png/observatory-ring.png",
+				"moonwitness/motion/png/success-check.png",
+				"moonwitness/motion/png/trace-node-pulse.png",
+				"moonwitness/motion/png/upload-complete.png",
+				"moonwitness/motion/svg/ai-thinking.svg",
+				"moonwitness/motion/svg/backend-reconnect.svg",
+				"moonwitness/motion/svg/case-resolved.svg",
+				"moonwitness/motion/svg/correlation-edge-draw.svg",
+				"moonwitness/motion/svg/drawer-open.svg",
+				"moonwitness/motion/svg/loading-trace.svg",
+				"moonwitness/motion/svg/logo-reveal.svg",
+				"moonwitness/motion/svg/notification-pulse.svg",
+				"moonwitness/motion/svg/observatory-ring.svg",
+				"moonwitness/motion/svg/success-check.svg",
+				"moonwitness/motion/svg/trace-node-pulse.svg",
+				"moonwitness/motion/svg/upload-complete.svg"
+			]
+		},
+		"application-screens": {
+			manifest: "moonwitness/ui/v2/manifest.json",
+			count: 20,
+			canonicalFormat: "svg",
+			svg: {
+				"17-dashboard": "moonwitness/ui/v2/17-dashboard.svg",
+				"18-command-palette": "moonwitness/ui/v2/18-command-palette.svg",
+				"19-notifications": "moonwitness/ui/v2/19-notifications.svg",
+				"20-kanban": "moonwitness/ui/v2/20-kanban.svg",
+				"21-calendar": "moonwitness/ui/v2/21-calendar.svg",
+				"22-chat": "moonwitness/ui/v2/22-chat.svg",
+				"23-ai-workspace": "moonwitness/ui/v2/23-ai-workspace.svg",
+				"24-resources": "moonwitness/ui/v2/24-resources.svg",
+				"25-profile-settings": "moonwitness/ui/v2/25-profile-settings.svg",
+				"26-authorization": "moonwitness/ui/v2/26-authorization.svg",
+				"27-system-states": "moonwitness/ui/v2/27-system-states.svg",
+				"28-platform-dashboard": "moonwitness/ui/v2/28-platform-dashboard.svg",
+				"29-platform-users": "moonwitness/ui/v2/29-platform-users.svg",
+				"30-platform-authorization": "moonwitness/ui/v2/30-platform-authorization.svg",
+				"31-platform-moderation": "moonwitness/ui/v2/31-platform-moderation.svg",
+				"32-platform-service-status": "moonwitness/ui/v2/32-platform-service-status.svg",
+				"33-platform-audit": "moonwitness/ui/v2/33-platform-audit.svg",
+				"34-platform-settings": "moonwitness/ui/v2/34-platform-settings.svg",
+				"35-platform-system-states": "moonwitness/ui/v2/35-platform-system-states.svg",
+				"application-shell": "moonwitness/ui/v2/application-shell.svg"
+			},
+			png: {
+				"17-dashboard": "moonwitness/ui/v2/png/17-dashboard.png",
+				"18-command-palette": "moonwitness/ui/v2/png/18-command-palette.png",
+				"19-notifications": "moonwitness/ui/v2/png/19-notifications.png",
+				"20-kanban": "moonwitness/ui/v2/png/20-kanban.png",
+				"21-calendar": "moonwitness/ui/v2/png/21-calendar.png",
+				"22-chat": "moonwitness/ui/v2/png/22-chat.png",
+				"23-ai-workspace": "moonwitness/ui/v2/png/23-ai-workspace.png",
+				"24-resources": "moonwitness/ui/v2/png/24-resources.png",
+				"25-profile-settings": "moonwitness/ui/v2/png/25-profile-settings.png",
+				"26-authorization": "moonwitness/ui/v2/png/26-authorization.png",
+				"27-system-states": "moonwitness/ui/v2/png/27-system-states.png",
+				"28-platform-dashboard": "moonwitness/ui/v2/png/28-platform-dashboard.png",
+				"29-platform-users": "moonwitness/ui/v2/png/29-platform-users.png",
+				"30-platform-authorization": "moonwitness/ui/v2/png/30-platform-authorization.png",
+				"31-platform-moderation": "moonwitness/ui/v2/png/31-platform-moderation.png",
+				"32-platform-service-status": "moonwitness/ui/v2/png/32-platform-service-status.png",
+				"33-platform-audit": "moonwitness/ui/v2/png/33-platform-audit.png",
+				"34-platform-settings": "moonwitness/ui/v2/png/34-platform-settings.png",
+				"35-platform-system-states": "moonwitness/ui/v2/png/35-platform-system-states.png",
+				"application-shell": "moonwitness/ui/v2/png/application-shell.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/ui/v2/17-dashboard.svg,moonwitness/ui/v2/18-command-palette.svg,moonwitness/ui/v2/19-notifications.svg,moonwitness/ui/v2/20-kanban.svg,moonwitness/ui/v2/21-calendar.svg,moonwitness/ui/v2/22-chat.svg,moonwitness/ui/v2/23-ai-workspace.svg,moonwitness/ui/v2/24-resources.svg,moonwitness/ui/v2/25-profile-settings.svg,moonwitness/ui/v2/26-authorization.svg,moonwitness/ui/v2/27-system-states.svg,moonwitness/ui/v2/28-platform-dashboard.svg,moonwitness/ui/v2/29-platform-users.svg,moonwitness/ui/v2/30-platform-authorization.svg,moonwitness/ui/v2/31-platform-moderation.svg,moonwitness/ui/v2/32-platform-service-status.svg,moonwitness/ui/v2/33-platform-audit.svg,moonwitness/ui/v2/34-platform-settings.svg,moonwitness/ui/v2/35-platform-system-states.svg,moonwitness/ui/v2/application-shell.svg,moonwitness/ui/v2/png/17-dashboard.png,moonwitness/ui/v2/png/18-command-palette.png,moonwitness/ui/v2/png/19-notifications.png,moonwitness/ui/v2/png/20-kanban.png,moonwitness/ui/v2/png/21-calendar.png,moonwitness/ui/v2/png/22-chat.png,moonwitness/ui/v2/png/23-ai-workspace.png,moonwitness/ui/v2/png/24-resources.png,moonwitness/ui/v2/png/25-profile-settings.png,moonwitness/ui/v2/png/26-authorization.png,moonwitness/ui/v2/png/27-system-states.png,moonwitness/ui/v2/png/28-platform-dashboard.png,moonwitness/ui/v2/png/29-platform-users.png,moonwitness/ui/v2/png/30-platform-authorization.png,moonwitness/ui/v2/png/31-platform-moderation.png,moonwitness/ui/v2/png/32-platform-service-status.png,moonwitness/ui/v2/png/33-platform-audit.png,moonwitness/ui/v2/png/34-platform-settings.png,moonwitness/ui/v2/png/35-platform-system-states.png,moonwitness/ui/v2/png/application-shell.png".split(",")
+		},
+		sfx: {
+			manifest: "moonwitness/sfx/sounds.json",
+			count: 14,
+			canonicalFormat: "svg",
+			svg: {},
+			png: {},
+			webm: {},
+			lottie: {},
+			wav: {
+				"ai-complete": "moonwitness/sfx/generated/ai-complete.wav",
+				"ai-start": "moonwitness/sfx/generated/ai-start.wav",
+				"case-open": "moonwitness/sfx/generated/case-open.wav",
+				"case-resolved": "moonwitness/sfx/generated/case-resolved.wav",
+				"command-open": "moonwitness/sfx/generated/command-open.wav",
+				error: "moonwitness/sfx/generated/error.wav",
+				"evidence-linked": "moonwitness/sfx/generated/evidence-linked.wav",
+				"notification-critical": "moonwitness/sfx/generated/notification-critical.wav",
+				notification: "moonwitness/sfx/generated/notification.wav",
+				success: "moonwitness/sfx/generated/success.wav",
+				"trace-found": "moonwitness/sfx/generated/trace-found.wav",
+				"ui-click-soft": "moonwitness/sfx/generated/ui-click-soft.wav",
+				"upload-complete": "moonwitness/sfx/generated/upload-complete.wav",
+				warning: "moonwitness/sfx/generated/warning.wav"
+			},
+			ogg: {
+				"ai-complete": "moonwitness/sfx/generated/ai-complete.ogg",
+				"ai-start": "moonwitness/sfx/generated/ai-start.ogg",
+				"case-open": "moonwitness/sfx/generated/case-open.ogg",
+				"case-resolved": "moonwitness/sfx/generated/case-resolved.ogg",
+				"command-open": "moonwitness/sfx/generated/command-open.ogg",
+				error: "moonwitness/sfx/generated/error.ogg",
+				"evidence-linked": "moonwitness/sfx/generated/evidence-linked.ogg",
+				"notification-critical": "moonwitness/sfx/generated/notification-critical.ogg",
+				notification: "moonwitness/sfx/generated/notification.ogg",
+				success: "moonwitness/sfx/generated/success.ogg",
+				"trace-found": "moonwitness/sfx/generated/trace-found.ogg",
+				"ui-click-soft": "moonwitness/sfx/generated/ui-click-soft.ogg",
+				"upload-complete": "moonwitness/sfx/generated/upload-complete.ogg",
+				warning: "moonwitness/sfx/generated/warning.ogg"
+			},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/sfx/generated/ai-complete.ogg,moonwitness/sfx/generated/ai-complete.wav,moonwitness/sfx/generated/ai-start.ogg,moonwitness/sfx/generated/ai-start.wav,moonwitness/sfx/generated/case-open.ogg,moonwitness/sfx/generated/case-open.wav,moonwitness/sfx/generated/case-resolved.ogg,moonwitness/sfx/generated/case-resolved.wav,moonwitness/sfx/generated/command-open.ogg,moonwitness/sfx/generated/command-open.wav,moonwitness/sfx/generated/error.ogg,moonwitness/sfx/generated/error.wav,moonwitness/sfx/generated/evidence-linked.ogg,moonwitness/sfx/generated/evidence-linked.wav,moonwitness/sfx/generated/notification-critical.ogg,moonwitness/sfx/generated/notification-critical.wav,moonwitness/sfx/generated/notification.ogg,moonwitness/sfx/generated/notification.wav,moonwitness/sfx/generated/success.ogg,moonwitness/sfx/generated/success.wav,moonwitness/sfx/generated/trace-found.ogg,moonwitness/sfx/generated/trace-found.wav,moonwitness/sfx/generated/ui-click-soft.ogg,moonwitness/sfx/generated/ui-click-soft.wav,moonwitness/sfx/generated/upload-complete.ogg,moonwitness/sfx/generated/upload-complete.wav,moonwitness/sfx/generated/warning.ogg,moonwitness/sfx/generated/warning.wav".split(",")
+		},
+		"graph-vector": {
+			manifest: "moonwitness/graph-pack/manifest.json",
+			count: 10,
+			canonicalFormat: "svg",
+			svg: {
+				"area-chart": "moonwitness/graph-pack/svg/area-chart.svg",
+				"bar-chart": "moonwitness/graph-pack/svg/bar-chart.svg",
+				"correlation-network": "moonwitness/graph-pack/svg/correlation-network.svg",
+				"donut-chart": "moonwitness/graph-pack/svg/donut-chart.svg",
+				"evidence-timeline": "moonwitness/graph-pack/svg/evidence-timeline.svg",
+				"heat-strip": "moonwitness/graph-pack/svg/heat-strip.svg",
+				"kpi-cards": "moonwitness/graph-pack/svg/kpi-cards.svg",
+				"line-chart": "moonwitness/graph-pack/svg/line-chart.svg",
+				"radar-chart": "moonwitness/graph-pack/svg/radar-chart.svg",
+				"stacked-bar-chart": "moonwitness/graph-pack/svg/stacked-bar-chart.svg"
+			},
+			png: {
+				"area-chart": "moonwitness/graph-pack/png/area-chart.png",
+				"bar-chart": "moonwitness/graph-pack/png/bar-chart.png",
+				"correlation-network": "moonwitness/graph-pack/png/correlation-network.png",
+				"donut-chart": "moonwitness/graph-pack/png/donut-chart.png",
+				"evidence-timeline": "moonwitness/graph-pack/png/evidence-timeline.png",
+				"heat-strip": "moonwitness/graph-pack/png/heat-strip.png",
+				"kpi-cards": "moonwitness/graph-pack/png/kpi-cards.png",
+				"line-chart": "moonwitness/graph-pack/png/line-chart.png",
+				"radar-chart": "moonwitness/graph-pack/png/radar-chart.png",
+				"stacked-bar-chart": "moonwitness/graph-pack/png/stacked-bar-chart.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/graph-pack/png/area-chart.png",
+				"moonwitness/graph-pack/png/bar-chart.png",
+				"moonwitness/graph-pack/png/correlation-network.png",
+				"moonwitness/graph-pack/png/donut-chart.png",
+				"moonwitness/graph-pack/png/evidence-timeline.png",
+				"moonwitness/graph-pack/png/heat-strip.png",
+				"moonwitness/graph-pack/png/kpi-cards.png",
+				"moonwitness/graph-pack/png/line-chart.png",
+				"moonwitness/graph-pack/png/radar-chart.png",
+				"moonwitness/graph-pack/png/stacked-bar-chart.png",
+				"moonwitness/graph-pack/svg/area-chart.svg",
+				"moonwitness/graph-pack/svg/bar-chart.svg",
+				"moonwitness/graph-pack/svg/correlation-network.svg",
+				"moonwitness/graph-pack/svg/donut-chart.svg",
+				"moonwitness/graph-pack/svg/evidence-timeline.svg",
+				"moonwitness/graph-pack/svg/heat-strip.svg",
+				"moonwitness/graph-pack/svg/kpi-cards.svg",
+				"moonwitness/graph-pack/svg/line-chart.svg",
+				"moonwitness/graph-pack/svg/radar-chart.svg",
+				"moonwitness/graph-pack/svg/stacked-bar-chart.svg"
+			]
+		},
+		"badge-status": {
+			manifest: "moonwitness/badge-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				archived: "moonwitness/badge-pack/svg/archived.svg",
+				blocked: "moonwitness/badge-pack/svg/blocked.svg",
+				degraded: "moonwitness/badge-pack/svg/degraded.svg",
+				disputed: "moonwitness/badge-pack/svg/disputed.svg",
+				"legal-review": "moonwitness/badge-pack/svg/legal-review.svg",
+				"needs-context": "moonwitness/badge-pack/svg/needs-context.svg",
+				offline: "moonwitness/badge-pack/svg/offline.svg",
+				partial: "moonwitness/badge-pack/svg/partial.svg",
+				"source-linked": "moonwitness/badge-pack/svg/source-linked.svg",
+				supported: "moonwitness/badge-pack/svg/supported.svg",
+				unresolved: "moonwitness/badge-pack/svg/unresolved.svg",
+				verified: "moonwitness/badge-pack/svg/verified.svg"
+			},
+			png: {
+				archived: "moonwitness/badge-pack/png/archived.png",
+				blocked: "moonwitness/badge-pack/png/blocked.png",
+				degraded: "moonwitness/badge-pack/png/degraded.png",
+				disputed: "moonwitness/badge-pack/png/disputed.png",
+				"legal-review": "moonwitness/badge-pack/png/legal-review.png",
+				"needs-context": "moonwitness/badge-pack/png/needs-context.png",
+				offline: "moonwitness/badge-pack/png/offline.png",
+				partial: "moonwitness/badge-pack/png/partial.png",
+				"source-linked": "moonwitness/badge-pack/png/source-linked.png",
+				supported: "moonwitness/badge-pack/png/supported.png",
+				unresolved: "moonwitness/badge-pack/png/unresolved.png",
+				verified: "moonwitness/badge-pack/png/verified.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/badge-pack/png/archived.png",
+				"moonwitness/badge-pack/png/blocked.png",
+				"moonwitness/badge-pack/png/degraded.png",
+				"moonwitness/badge-pack/png/disputed.png",
+				"moonwitness/badge-pack/png/legal-review.png",
+				"moonwitness/badge-pack/png/needs-context.png",
+				"moonwitness/badge-pack/png/offline.png",
+				"moonwitness/badge-pack/png/partial.png",
+				"moonwitness/badge-pack/png/source-linked.png",
+				"moonwitness/badge-pack/png/supported.png",
+				"moonwitness/badge-pack/png/unresolved.png",
+				"moonwitness/badge-pack/png/verified.png",
+				"moonwitness/badge-pack/svg/archived.svg",
+				"moonwitness/badge-pack/svg/blocked.svg",
+				"moonwitness/badge-pack/svg/degraded.svg",
+				"moonwitness/badge-pack/svg/disputed.svg",
+				"moonwitness/badge-pack/svg/legal-review.svg",
+				"moonwitness/badge-pack/svg/needs-context.svg",
+				"moonwitness/badge-pack/svg/offline.svg",
+				"moonwitness/badge-pack/svg/partial.svg",
+				"moonwitness/badge-pack/svg/source-linked.svg",
+				"moonwitness/badge-pack/svg/supported.svg",
+				"moonwitness/badge-pack/svg/unresolved.svg",
+				"moonwitness/badge-pack/svg/verified.svg"
+			]
+		},
+		"source-file": {
+			manifest: "moonwitness/source-file-pack/manifest.json",
+			count: 15,
+			canonicalFormat: "svg",
+			svg: {
+				archive: "moonwitness/source-file-pack/svg/archive.svg",
+				audio: "moonwitness/source-file-pack/svg/audio.svg",
+				bundle: "moonwitness/source-file-pack/svg/bundle.svg",
+				dataset: "moonwitness/source-file-pack/svg/dataset.svg",
+				email: "moonwitness/source-file-pack/svg/email.svg",
+				image: "moonwitness/source-file-pack/svg/image.svg",
+				"legal-doc": "moonwitness/source-file-pack/svg/legal-doc.svg",
+				location: "moonwitness/source-file-pack/svg/location.svg",
+				note: "moonwitness/source-file-pack/svg/note.svg",
+				pdf: "moonwitness/source-file-pack/svg/pdf.svg",
+				repository: "moonwitness/source-file-pack/svg/repository.svg",
+				testimony: "moonwitness/source-file-pack/svg/testimony.svg",
+				transcript: "moonwitness/source-file-pack/svg/transcript.svg",
+				video: "moonwitness/source-file-pack/svg/video.svg",
+				webpage: "moonwitness/source-file-pack/svg/webpage.svg"
+			},
+			png: {
+				archive: "moonwitness/source-file-pack/png/archive.png",
+				audio: "moonwitness/source-file-pack/png/audio.png",
+				bundle: "moonwitness/source-file-pack/png/bundle.png",
+				dataset: "moonwitness/source-file-pack/png/dataset.png",
+				email: "moonwitness/source-file-pack/png/email.png",
+				image: "moonwitness/source-file-pack/png/image.png",
+				"legal-doc": "moonwitness/source-file-pack/png/legal-doc.png",
+				location: "moonwitness/source-file-pack/png/location.png",
+				note: "moonwitness/source-file-pack/png/note.png",
+				pdf: "moonwitness/source-file-pack/png/pdf.png",
+				repository: "moonwitness/source-file-pack/png/repository.png",
+				testimony: "moonwitness/source-file-pack/png/testimony.png",
+				transcript: "moonwitness/source-file-pack/png/transcript.png",
+				video: "moonwitness/source-file-pack/png/video.png",
+				webpage: "moonwitness/source-file-pack/png/webpage.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/source-file-pack/png/archive.png,moonwitness/source-file-pack/png/audio.png,moonwitness/source-file-pack/png/bundle.png,moonwitness/source-file-pack/png/dataset.png,moonwitness/source-file-pack/png/email.png,moonwitness/source-file-pack/png/image.png,moonwitness/source-file-pack/png/legal-doc.png,moonwitness/source-file-pack/png/location.png,moonwitness/source-file-pack/png/note.png,moonwitness/source-file-pack/png/pdf.png,moonwitness/source-file-pack/png/repository.png,moonwitness/source-file-pack/png/testimony.png,moonwitness/source-file-pack/png/transcript.png,moonwitness/source-file-pack/png/video.png,moonwitness/source-file-pack/png/webpage.png,moonwitness/source-file-pack/svg/archive.svg,moonwitness/source-file-pack/svg/audio.svg,moonwitness/source-file-pack/svg/bundle.svg,moonwitness/source-file-pack/svg/dataset.svg,moonwitness/source-file-pack/svg/email.svg,moonwitness/source-file-pack/svg/image.svg,moonwitness/source-file-pack/svg/legal-doc.svg,moonwitness/source-file-pack/svg/location.svg,moonwitness/source-file-pack/svg/note.svg,moonwitness/source-file-pack/svg/pdf.svg,moonwitness/source-file-pack/svg/repository.svg,moonwitness/source-file-pack/svg/testimony.svg,moonwitness/source-file-pack/svg/transcript.svg,moonwitness/source-file-pack/svg/video.svg,moonwitness/source-file-pack/svg/webpage.svg".split(",")
+		},
+		geospatial: {
+			manifest: "moonwitness/geospatial-pack/manifest.json",
+			count: 15,
+			canonicalFormat: "svg",
+			svg: {
+				"boundary-zone": "moonwitness/geospatial-pack/svg/boundary-zone.svg",
+				checkpoint: "moonwitness/geospatial-pack/svg/checkpoint.svg",
+				"cluster-large": "moonwitness/geospatial-pack/svg/cluster-large.svg",
+				"cluster-small": "moonwitness/geospatial-pack/svg/cluster-small.svg",
+				crosshair: "moonwitness/geospatial-pack/svg/crosshair.svg",
+				"heat-cell": "moonwitness/geospatial-pack/svg/heat-cell.svg",
+				"jurisdiction-disputed": "moonwitness/geospatial-pack/svg/jurisdiction-disputed.svg",
+				"map-grid": "moonwitness/geospatial-pack/svg/map-grid.svg",
+				"pin-alert": "moonwitness/geospatial-pack/svg/pin-alert.svg",
+				"pin-primary": "moonwitness/geospatial-pack/svg/pin-primary.svg",
+				"pin-verified": "moonwitness/geospatial-pack/svg/pin-verified.svg",
+				"route-dashed": "moonwitness/geospatial-pack/svg/route-dashed.svg",
+				"route-solid": "moonwitness/geospatial-pack/svg/route-solid.svg",
+				"uncertainty-high": "moonwitness/geospatial-pack/svg/uncertainty-high.svg",
+				"uncertainty-low": "moonwitness/geospatial-pack/svg/uncertainty-low.svg"
+			},
+			png: {
+				"boundary-zone": "moonwitness/geospatial-pack/png/boundary-zone.png",
+				checkpoint: "moonwitness/geospatial-pack/png/checkpoint.png",
+				"cluster-large": "moonwitness/geospatial-pack/png/cluster-large.png",
+				"cluster-small": "moonwitness/geospatial-pack/png/cluster-small.png",
+				crosshair: "moonwitness/geospatial-pack/png/crosshair.png",
+				"heat-cell": "moonwitness/geospatial-pack/png/heat-cell.png",
+				"jurisdiction-disputed": "moonwitness/geospatial-pack/png/jurisdiction-disputed.png",
+				"map-grid": "moonwitness/geospatial-pack/png/map-grid.png",
+				"pin-alert": "moonwitness/geospatial-pack/png/pin-alert.png",
+				"pin-primary": "moonwitness/geospatial-pack/png/pin-primary.png",
+				"pin-verified": "moonwitness/geospatial-pack/png/pin-verified.png",
+				"route-dashed": "moonwitness/geospatial-pack/png/route-dashed.png",
+				"route-solid": "moonwitness/geospatial-pack/png/route-solid.png",
+				"uncertainty-high": "moonwitness/geospatial-pack/png/uncertainty-high.png",
+				"uncertainty-low": "moonwitness/geospatial-pack/png/uncertainty-low.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/geospatial-pack/png/boundary-zone.png,moonwitness/geospatial-pack/png/checkpoint.png,moonwitness/geospatial-pack/png/cluster-large.png,moonwitness/geospatial-pack/png/cluster-small.png,moonwitness/geospatial-pack/png/crosshair.png,moonwitness/geospatial-pack/png/heat-cell.png,moonwitness/geospatial-pack/png/jurisdiction-disputed.png,moonwitness/geospatial-pack/png/map-grid.png,moonwitness/geospatial-pack/png/pin-alert.png,moonwitness/geospatial-pack/png/pin-primary.png,moonwitness/geospatial-pack/png/pin-verified.png,moonwitness/geospatial-pack/png/route-dashed.png,moonwitness/geospatial-pack/png/route-solid.png,moonwitness/geospatial-pack/png/uncertainty-high.png,moonwitness/geospatial-pack/png/uncertainty-low.png,moonwitness/geospatial-pack/svg/boundary-zone.svg,moonwitness/geospatial-pack/svg/checkpoint.svg,moonwitness/geospatial-pack/svg/cluster-large.svg,moonwitness/geospatial-pack/svg/cluster-small.svg,moonwitness/geospatial-pack/svg/crosshair.svg,moonwitness/geospatial-pack/svg/heat-cell.svg,moonwitness/geospatial-pack/svg/jurisdiction-disputed.svg,moonwitness/geospatial-pack/svg/map-grid.svg,moonwitness/geospatial-pack/svg/pin-alert.svg,moonwitness/geospatial-pack/svg/pin-primary.svg,moonwitness/geospatial-pack/svg/pin-verified.svg,moonwitness/geospatial-pack/svg/route-dashed.svg,moonwitness/geospatial-pack/svg/route-solid.svg,moonwitness/geospatial-pack/svg/uncertainty-high.svg,moonwitness/geospatial-pack/svg/uncertainty-low.svg".split(",")
+		},
+		"cursor-interaction": {
+			manifest: "moonwitness/cursor-pack/manifest.json",
+			count: 17,
+			canonicalFormat: "svg",
+			svg: {
+				annotate: "moonwitness/cursor-pack/svg/annotate.svg",
+				connect: "moonwitness/cursor-pack/svg/connect.svg",
+				crosshair: "moonwitness/cursor-pack/svg/crosshair.svg",
+				default: "moonwitness/cursor-pack/svg/default.svg",
+				"evidence-link": "moonwitness/cursor-pack/svg/evidence-link.svg",
+				grab: "moonwitness/cursor-pack/svg/grab.svg",
+				grabbing: "moonwitness/cursor-pack/svg/grabbing.svg",
+				inspect: "moonwitness/cursor-pack/svg/inspect.svg",
+				pan: "moonwitness/cursor-pack/svg/pan.svg",
+				pointer: "moonwitness/cursor-pack/svg/pointer.svg",
+				"region-select": "moonwitness/cursor-pack/svg/region-select.svg",
+				"resize-all": "moonwitness/cursor-pack/svg/resize-all.svg",
+				"resize-horizontal": "moonwitness/cursor-pack/svg/resize-horizontal.svg",
+				"resize-vertical": "moonwitness/cursor-pack/svg/resize-vertical.svg",
+				"timeline-scrub": "moonwitness/cursor-pack/svg/timeline-scrub.svg",
+				"zoom-in": "moonwitness/cursor-pack/svg/zoom-in.svg",
+				"zoom-out": "moonwitness/cursor-pack/svg/zoom-out.svg"
+			},
+			png: {
+				annotate: "moonwitness/cursor-pack/png/annotate.png",
+				connect: "moonwitness/cursor-pack/png/connect.png",
+				crosshair: "moonwitness/cursor-pack/png/crosshair.png",
+				default: "moonwitness/cursor-pack/png/default.png",
+				"evidence-link": "moonwitness/cursor-pack/png/evidence-link.png",
+				grab: "moonwitness/cursor-pack/png/grab.png",
+				grabbing: "moonwitness/cursor-pack/png/grabbing.png",
+				inspect: "moonwitness/cursor-pack/png/inspect.png",
+				pan: "moonwitness/cursor-pack/png/pan.png",
+				pointer: "moonwitness/cursor-pack/png/pointer.png",
+				"region-select": "moonwitness/cursor-pack/png/region-select.png",
+				"resize-all": "moonwitness/cursor-pack/png/resize-all.png",
+				"resize-horizontal": "moonwitness/cursor-pack/png/resize-horizontal.png",
+				"resize-vertical": "moonwitness/cursor-pack/png/resize-vertical.png",
+				"timeline-scrub": "moonwitness/cursor-pack/png/timeline-scrub.png",
+				"zoom-in": "moonwitness/cursor-pack/png/zoom-in.png",
+				"zoom-out": "moonwitness/cursor-pack/png/zoom-out.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/cursor-pack/png/annotate.png,moonwitness/cursor-pack/png/connect.png,moonwitness/cursor-pack/png/crosshair.png,moonwitness/cursor-pack/png/default.png,moonwitness/cursor-pack/png/evidence-link.png,moonwitness/cursor-pack/png/grab.png,moonwitness/cursor-pack/png/grabbing.png,moonwitness/cursor-pack/png/inspect.png,moonwitness/cursor-pack/png/pan.png,moonwitness/cursor-pack/png/pointer.png,moonwitness/cursor-pack/png/region-select.png,moonwitness/cursor-pack/png/resize-all.png,moonwitness/cursor-pack/png/resize-horizontal.png,moonwitness/cursor-pack/png/resize-vertical.png,moonwitness/cursor-pack/png/timeline-scrub.png,moonwitness/cursor-pack/png/zoom-in.png,moonwitness/cursor-pack/png/zoom-out.png,moonwitness/cursor-pack/svg/annotate.svg,moonwitness/cursor-pack/svg/connect.svg,moonwitness/cursor-pack/svg/crosshair.svg,moonwitness/cursor-pack/svg/default.svg,moonwitness/cursor-pack/svg/evidence-link.svg,moonwitness/cursor-pack/svg/grab.svg,moonwitness/cursor-pack/svg/grabbing.svg,moonwitness/cursor-pack/svg/inspect.svg,moonwitness/cursor-pack/svg/pan.svg,moonwitness/cursor-pack/svg/pointer.svg,moonwitness/cursor-pack/svg/region-select.svg,moonwitness/cursor-pack/svg/resize-all.svg,moonwitness/cursor-pack/svg/resize-horizontal.svg,moonwitness/cursor-pack/svg/resize-vertical.svg,moonwitness/cursor-pack/svg/timeline-scrub.svg,moonwitness/cursor-pack/svg/zoom-in.svg,moonwitness/cursor-pack/svg/zoom-out.svg".split(",")
+		},
+		"persona-avatar": {
+			manifest: "moonwitness/persona-pack/manifest.json",
+			count: 9,
+			canonicalFormat: "svg",
+			svg: {
+				admin: "moonwitness/persona-pack/svg/admin.svg",
+				"ai-system": "moonwitness/persona-pack/svg/ai-system.svg",
+				analyst: "moonwitness/persona-pack/svg/analyst.svg",
+				"anonymous-source": "moonwitness/persona-pack/svg/anonymous-source.svg",
+				"community-member": "moonwitness/persona-pack/svg/community-member.svg",
+				moderator: "moonwitness/persona-pack/svg/moderator.svg",
+				"protected-witness": "moonwitness/persona-pack/svg/protected-witness.svg",
+				researcher: "moonwitness/persona-pack/svg/researcher.svg",
+				rocksoul: "moonwitness/persona-pack/svg/rocksoul.svg"
+			},
+			png: {
+				admin: {
+					32: "moonwitness/persona-pack/png/32/admin.png",
+					64: "moonwitness/persona-pack/png/64/admin.png",
+					128: "moonwitness/persona-pack/png/128/admin.png",
+					256: "moonwitness/persona-pack/png/256/admin.png"
+				},
+				"ai-system": {
+					32: "moonwitness/persona-pack/png/32/ai-system.png",
+					64: "moonwitness/persona-pack/png/64/ai-system.png",
+					128: "moonwitness/persona-pack/png/128/ai-system.png",
+					256: "moonwitness/persona-pack/png/256/ai-system.png"
+				},
+				analyst: {
+					32: "moonwitness/persona-pack/png/32/analyst.png",
+					64: "moonwitness/persona-pack/png/64/analyst.png",
+					128: "moonwitness/persona-pack/png/128/analyst.png",
+					256: "moonwitness/persona-pack/png/256/analyst.png"
+				},
+				"anonymous-source": {
+					32: "moonwitness/persona-pack/png/32/anonymous-source.png",
+					64: "moonwitness/persona-pack/png/64/anonymous-source.png",
+					128: "moonwitness/persona-pack/png/128/anonymous-source.png",
+					256: "moonwitness/persona-pack/png/256/anonymous-source.png"
+				},
+				"community-member": {
+					32: "moonwitness/persona-pack/png/32/community-member.png",
+					64: "moonwitness/persona-pack/png/64/community-member.png",
+					128: "moonwitness/persona-pack/png/128/community-member.png",
+					256: "moonwitness/persona-pack/png/256/community-member.png"
+				},
+				moderator: {
+					32: "moonwitness/persona-pack/png/32/moderator.png",
+					64: "moonwitness/persona-pack/png/64/moderator.png",
+					128: "moonwitness/persona-pack/png/128/moderator.png",
+					256: "moonwitness/persona-pack/png/256/moderator.png"
+				},
+				"protected-witness": {
+					32: "moonwitness/persona-pack/png/32/protected-witness.png",
+					64: "moonwitness/persona-pack/png/64/protected-witness.png",
+					128: "moonwitness/persona-pack/png/128/protected-witness.png",
+					256: "moonwitness/persona-pack/png/256/protected-witness.png"
+				},
+				researcher: {
+					32: "moonwitness/persona-pack/png/32/researcher.png",
+					64: "moonwitness/persona-pack/png/64/researcher.png",
+					128: "moonwitness/persona-pack/png/128/researcher.png",
+					256: "moonwitness/persona-pack/png/256/researcher.png"
+				},
+				rocksoul: {
+					32: "moonwitness/persona-pack/png/32/rocksoul.png",
+					64: "moonwitness/persona-pack/png/64/rocksoul.png",
+					128: "moonwitness/persona-pack/png/128/rocksoul.png",
+					256: "moonwitness/persona-pack/png/256/rocksoul.png"
+				}
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/persona-pack/png/128/admin.png,moonwitness/persona-pack/png/128/ai-system.png,moonwitness/persona-pack/png/128/analyst.png,moonwitness/persona-pack/png/128/anonymous-source.png,moonwitness/persona-pack/png/128/community-member.png,moonwitness/persona-pack/png/128/moderator.png,moonwitness/persona-pack/png/128/protected-witness.png,moonwitness/persona-pack/png/128/researcher.png,moonwitness/persona-pack/png/128/rocksoul.png,moonwitness/persona-pack/png/256/admin.png,moonwitness/persona-pack/png/256/ai-system.png,moonwitness/persona-pack/png/256/analyst.png,moonwitness/persona-pack/png/256/anonymous-source.png,moonwitness/persona-pack/png/256/community-member.png,moonwitness/persona-pack/png/256/moderator.png,moonwitness/persona-pack/png/256/protected-witness.png,moonwitness/persona-pack/png/256/researcher.png,moonwitness/persona-pack/png/256/rocksoul.png,moonwitness/persona-pack/png/32/admin.png,moonwitness/persona-pack/png/32/ai-system.png,moonwitness/persona-pack/png/32/analyst.png,moonwitness/persona-pack/png/32/anonymous-source.png,moonwitness/persona-pack/png/32/community-member.png,moonwitness/persona-pack/png/32/moderator.png,moonwitness/persona-pack/png/32/protected-witness.png,moonwitness/persona-pack/png/32/researcher.png,moonwitness/persona-pack/png/32/rocksoul.png,moonwitness/persona-pack/png/64/admin.png,moonwitness/persona-pack/png/64/ai-system.png,moonwitness/persona-pack/png/64/analyst.png,moonwitness/persona-pack/png/64/anonymous-source.png,moonwitness/persona-pack/png/64/community-member.png,moonwitness/persona-pack/png/64/moderator.png,moonwitness/persona-pack/png/64/protected-witness.png,moonwitness/persona-pack/png/64/researcher.png,moonwitness/persona-pack/png/64/rocksoul.png,moonwitness/persona-pack/svg/admin.svg,moonwitness/persona-pack/svg/ai-system.svg,moonwitness/persona-pack/svg/analyst.svg,moonwitness/persona-pack/svg/anonymous-source.svg,moonwitness/persona-pack/svg/community-member.svg,moonwitness/persona-pack/svg/moderator.svg,moonwitness/persona-pack/svg/protected-witness.svg,moonwitness/persona-pack/svg/researcher.svg,moonwitness/persona-pack/svg/rocksoul.svg".split(",")
+		},
+		"social-campaign": {
+			manifest: "moonwitness/social-campaign-pack/manifest.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"community-announcement": "moonwitness/social-campaign-pack/svg/community-announcement.svg",
+				"discord-banner": "moonwitness/social-campaign-pack/svg/discord-banner.svg",
+				"github-banner": "moonwitness/social-campaign-pack/svg/github-banner.svg",
+				"instagram-square": "moonwitness/social-campaign-pack/svg/instagram-square.svg",
+				"instagram-story": "moonwitness/social-campaign-pack/svg/instagram-story.svg",
+				"linkedin-post": "moonwitness/social-campaign-pack/svg/linkedin-post.svg",
+				"x-post": "moonwitness/social-campaign-pack/svg/x-post.svg",
+				"youtube-thumbnail": "moonwitness/social-campaign-pack/svg/youtube-thumbnail.svg"
+			},
+			png: {
+				"community-announcement": "moonwitness/social-campaign-pack/png/community-announcement.png",
+				"discord-banner": "moonwitness/social-campaign-pack/png/discord-banner.png",
+				"github-banner": "moonwitness/social-campaign-pack/png/github-banner.png",
+				"instagram-square": "moonwitness/social-campaign-pack/png/instagram-square.png",
+				"instagram-story": "moonwitness/social-campaign-pack/png/instagram-story.png",
+				"linkedin-post": "moonwitness/social-campaign-pack/png/linkedin-post.png",
+				"x-post": "moonwitness/social-campaign-pack/png/x-post.png",
+				"youtube-thumbnail": "moonwitness/social-campaign-pack/png/youtube-thumbnail.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/social-campaign-pack/png/community-announcement.png",
+				"moonwitness/social-campaign-pack/png/discord-banner.png",
+				"moonwitness/social-campaign-pack/png/github-banner.png",
+				"moonwitness/social-campaign-pack/png/instagram-square.png",
+				"moonwitness/social-campaign-pack/png/instagram-story.png",
+				"moonwitness/social-campaign-pack/png/linkedin-post.png",
+				"moonwitness/social-campaign-pack/png/x-post.png",
+				"moonwitness/social-campaign-pack/png/youtube-thumbnail.png",
+				"moonwitness/social-campaign-pack/svg/community-announcement.svg",
+				"moonwitness/social-campaign-pack/svg/discord-banner.svg",
+				"moonwitness/social-campaign-pack/svg/github-banner.svg",
+				"moonwitness/social-campaign-pack/svg/instagram-square.svg",
+				"moonwitness/social-campaign-pack/svg/instagram-story.svg",
+				"moonwitness/social-campaign-pack/svg/linkedin-post.svg",
+				"moonwitness/social-campaign-pack/svg/x-post.svg",
+				"moonwitness/social-campaign-pack/svg/youtube-thumbnail.svg"
+			]
+		},
+		"platform-delivery": {
+			manifest: "moonwitness/platform-delivery-pack/manifest.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"adaptive-background": "moonwitness/platform-delivery-pack/svg/adaptive-background.svg",
+				"adaptive-foreground": "moonwitness/platform-delivery-pack/svg/adaptive-foreground.svg",
+				"app-store-banner": "moonwitness/platform-delivery-pack/svg/app-store-banner.svg",
+				"launcher-tile": "moonwitness/platform-delivery-pack/svg/launcher-tile.svg",
+				"loading-splash": "moonwitness/platform-delivery-pack/svg/loading-splash.svg",
+				"pwa-install-card": "moonwitness/platform-delivery-pack/svg/pwa-install-card.svg",
+				"splash-screen": "moonwitness/platform-delivery-pack/svg/splash-screen.svg",
+				"windows-tile": "moonwitness/platform-delivery-pack/svg/windows-tile.svg"
+			},
+			png: {
+				"adaptive-background": "moonwitness/platform-delivery-pack/png/adaptive-background.png",
+				"adaptive-foreground": "moonwitness/platform-delivery-pack/png/adaptive-foreground.png",
+				"app-store-banner": "moonwitness/platform-delivery-pack/png/app-store-banner.png",
+				"launcher-tile": "moonwitness/platform-delivery-pack/png/launcher-tile.png",
+				"loading-splash": "moonwitness/platform-delivery-pack/png/loading-splash.png",
+				"pwa-install-card": "moonwitness/platform-delivery-pack/png/pwa-install-card.png",
+				"splash-screen": "moonwitness/platform-delivery-pack/png/splash-screen.png",
+				"windows-tile": "moonwitness/platform-delivery-pack/png/windows-tile.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/platform-delivery-pack/png/adaptive-background.png",
+				"moonwitness/platform-delivery-pack/png/adaptive-foreground.png",
+				"moonwitness/platform-delivery-pack/png/app-store-banner.png",
+				"moonwitness/platform-delivery-pack/png/launcher-tile.png",
+				"moonwitness/platform-delivery-pack/png/loading-splash.png",
+				"moonwitness/platform-delivery-pack/png/pwa-install-card.png",
+				"moonwitness/platform-delivery-pack/png/splash-screen.png",
+				"moonwitness/platform-delivery-pack/png/windows-tile.png",
+				"moonwitness/platform-delivery-pack/svg/adaptive-background.svg",
+				"moonwitness/platform-delivery-pack/svg/adaptive-foreground.svg",
+				"moonwitness/platform-delivery-pack/svg/app-store-banner.svg",
+				"moonwitness/platform-delivery-pack/svg/launcher-tile.svg",
+				"moonwitness/platform-delivery-pack/svg/loading-splash.svg",
+				"moonwitness/platform-delivery-pack/svg/pwa-install-card.svg",
+				"moonwitness/platform-delivery-pack/svg/splash-screen.svg",
+				"moonwitness/platform-delivery-pack/svg/windows-tile.svg"
+			]
+		},
+		onboarding: {
+			manifest: "moonwitness/onboarding-pack/manifest.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"ai-workspace": "moonwitness/onboarding-pack/svg/ai-workspace.svg",
+				"connect-sources": "moonwitness/onboarding-pack/svg/connect-sources.svg",
+				"correlate-evidence": "moonwitness/onboarding-pack/svg/correlate-evidence.svg",
+				"create-case": "moonwitness/onboarding-pack/svg/create-case.svg",
+				"join-community": "moonwitness/onboarding-pack/svg/join-community.svg",
+				"responsible-investigation": "moonwitness/onboarding-pack/svg/responsible-investigation.svg",
+				"review-findings": "moonwitness/onboarding-pack/svg/review-findings.svg",
+				welcome: "moonwitness/onboarding-pack/svg/welcome.svg"
+			},
+			png: {
+				"ai-workspace": "moonwitness/onboarding-pack/png/ai-workspace.png",
+				"connect-sources": "moonwitness/onboarding-pack/png/connect-sources.png",
+				"correlate-evidence": "moonwitness/onboarding-pack/png/correlate-evidence.png",
+				"create-case": "moonwitness/onboarding-pack/png/create-case.png",
+				"join-community": "moonwitness/onboarding-pack/png/join-community.png",
+				"responsible-investigation": "moonwitness/onboarding-pack/png/responsible-investigation.png",
+				"review-findings": "moonwitness/onboarding-pack/png/review-findings.png",
+				welcome: "moonwitness/onboarding-pack/png/welcome.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/onboarding-pack/png/ai-workspace.png",
+				"moonwitness/onboarding-pack/png/connect-sources.png",
+				"moonwitness/onboarding-pack/png/correlate-evidence.png",
+				"moonwitness/onboarding-pack/png/create-case.png",
+				"moonwitness/onboarding-pack/png/join-community.png",
+				"moonwitness/onboarding-pack/png/responsible-investigation.png",
+				"moonwitness/onboarding-pack/png/review-findings.png",
+				"moonwitness/onboarding-pack/png/welcome.png",
+				"moonwitness/onboarding-pack/svg/ai-workspace.svg",
+				"moonwitness/onboarding-pack/svg/connect-sources.svg",
+				"moonwitness/onboarding-pack/svg/correlate-evidence.svg",
+				"moonwitness/onboarding-pack/svg/create-case.svg",
+				"moonwitness/onboarding-pack/svg/join-community.svg",
+				"moonwitness/onboarding-pack/svg/responsible-investigation.svg",
+				"moonwitness/onboarding-pack/svg/review-findings.svg",
+				"moonwitness/onboarding-pack/svg/welcome.svg"
+			]
+		},
+		"document-report": {
+			manifest: "moonwitness/document-report-pack/manifest.json",
+			count: 9,
+			canonicalFormat: "svg",
+			svg: {
+				"appendix-separator": "moonwitness/document-report-pack/svg/appendix-separator.svg",
+				"case-report": "moonwitness/document-report-pack/svg/case-report.svg",
+				"citation-card": "moonwitness/document-report-pack/svg/citation-card.svg",
+				"community-recap": "moonwitness/document-report-pack/svg/community-recap.svg",
+				"evidence-dossier": "moonwitness/document-report-pack/svg/evidence-dossier.svg",
+				"header-footer": "moonwitness/document-report-pack/svg/header-footer.svg",
+				"investigation-export": "moonwitness/document-report-pack/svg/investigation-export.svg",
+				"legal-review": "moonwitness/document-report-pack/svg/legal-review.svg",
+				"table-of-contents": "moonwitness/document-report-pack/svg/table-of-contents.svg"
+			},
+			png: {
+				"appendix-separator": "moonwitness/document-report-pack/png/appendix-separator.png",
+				"case-report": "moonwitness/document-report-pack/png/case-report.png",
+				"citation-card": "moonwitness/document-report-pack/png/citation-card.png",
+				"community-recap": "moonwitness/document-report-pack/png/community-recap.png",
+				"evidence-dossier": "moonwitness/document-report-pack/png/evidence-dossier.png",
+				"header-footer": "moonwitness/document-report-pack/png/header-footer.png",
+				"investigation-export": "moonwitness/document-report-pack/png/investigation-export.png",
+				"legal-review": "moonwitness/document-report-pack/png/legal-review.png",
+				"table-of-contents": "moonwitness/document-report-pack/png/table-of-contents.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/document-report-pack/png/appendix-separator.png",
+				"moonwitness/document-report-pack/png/case-report.png",
+				"moonwitness/document-report-pack/png/citation-card.png",
+				"moonwitness/document-report-pack/png/community-recap.png",
+				"moonwitness/document-report-pack/png/evidence-dossier.png",
+				"moonwitness/document-report-pack/png/header-footer.png",
+				"moonwitness/document-report-pack/png/investigation-export.png",
+				"moonwitness/document-report-pack/png/legal-review.png",
+				"moonwitness/document-report-pack/png/table-of-contents.png",
+				"moonwitness/document-report-pack/svg/appendix-separator.svg",
+				"moonwitness/document-report-pack/svg/case-report.svg",
+				"moonwitness/document-report-pack/svg/citation-card.svg",
+				"moonwitness/document-report-pack/svg/community-recap.svg",
+				"moonwitness/document-report-pack/svg/evidence-dossier.svg",
+				"moonwitness/document-report-pack/svg/header-footer.svg",
+				"moonwitness/document-report-pack/svg/investigation-export.svg",
+				"moonwitness/document-report-pack/svg/legal-review.svg",
+				"moonwitness/document-report-pack/svg/table-of-contents.svg"
+			]
+		},
+		notification: {
+			manifest: "moonwitness/notification-pack/manifest.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"case-update-banner": "moonwitness/notification-pack/svg/case-update-banner.svg",
+				"critical-alert-email": "moonwitness/notification-pack/svg/critical-alert-email.svg",
+				"digest-email": "moonwitness/notification-pack/svg/digest-email.svg",
+				"evidence-linked-email": "moonwitness/notification-pack/svg/evidence-linked-email.svg",
+				"inbox-card": "moonwitness/notification-pack/svg/inbox-card.svg",
+				"push-notification": "moonwitness/notification-pack/svg/push-notification.svg",
+				"review-request-email": "moonwitness/notification-pack/svg/review-request-email.svg",
+				"system-notice-strip": "moonwitness/notification-pack/svg/system-notice-strip.svg"
+			},
+			png: {
+				"case-update-banner": "moonwitness/notification-pack/png/case-update-banner.png",
+				"critical-alert-email": "moonwitness/notification-pack/png/critical-alert-email.png",
+				"digest-email": "moonwitness/notification-pack/png/digest-email.png",
+				"evidence-linked-email": "moonwitness/notification-pack/png/evidence-linked-email.png",
+				"inbox-card": "moonwitness/notification-pack/png/inbox-card.png",
+				"push-notification": "moonwitness/notification-pack/png/push-notification.png",
+				"review-request-email": "moonwitness/notification-pack/png/review-request-email.png",
+				"system-notice-strip": "moonwitness/notification-pack/png/system-notice-strip.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/notification-pack/png/case-update-banner.png",
+				"moonwitness/notification-pack/png/critical-alert-email.png",
+				"moonwitness/notification-pack/png/digest-email.png",
+				"moonwitness/notification-pack/png/evidence-linked-email.png",
+				"moonwitness/notification-pack/png/inbox-card.png",
+				"moonwitness/notification-pack/png/push-notification.png",
+				"moonwitness/notification-pack/png/review-request-email.png",
+				"moonwitness/notification-pack/png/system-notice-strip.png",
+				"moonwitness/notification-pack/svg/case-update-banner.svg",
+				"moonwitness/notification-pack/svg/critical-alert-email.svg",
+				"moonwitness/notification-pack/svg/digest-email.svg",
+				"moonwitness/notification-pack/svg/evidence-linked-email.svg",
+				"moonwitness/notification-pack/svg/inbox-card.svg",
+				"moonwitness/notification-pack/svg/push-notification.svg",
+				"moonwitness/notification-pack/svg/review-request-email.svg",
+				"moonwitness/notification-pack/svg/system-notice-strip.svg"
+			]
+		},
+		editorial: {
+			manifest: "moonwitness/editorial-pack/manifest.json",
+			count: 6,
+			canonicalFormat: "svg",
+			svg: {
+				"archive-dossier": "moonwitness/editorial-pack/svg/archive-dossier.svg",
+				"case-map": "moonwitness/editorial-pack/svg/case-map.svg",
+				"field-witness": "moonwitness/editorial-pack/svg/field-witness.svg",
+				"legal-boundary": "moonwitness/editorial-pack/svg/legal-boundary.svg",
+				"lunar-observatory": "moonwitness/editorial-pack/svg/lunar-observatory.svg",
+				"source-signal": "moonwitness/editorial-pack/svg/source-signal.svg"
+			},
+			png: {
+				"archive-dossier": "moonwitness/editorial-pack/png/archive-dossier.png",
+				"case-map": "moonwitness/editorial-pack/png/case-map.png",
+				"field-witness": "moonwitness/editorial-pack/png/field-witness.png",
+				"legal-boundary": "moonwitness/editorial-pack/png/legal-boundary.png",
+				"lunar-observatory": "moonwitness/editorial-pack/png/lunar-observatory.png",
+				"source-signal": "moonwitness/editorial-pack/png/source-signal.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/editorial-pack/png/archive-dossier.png",
+				"moonwitness/editorial-pack/png/case-map.png",
+				"moonwitness/editorial-pack/png/field-witness.png",
+				"moonwitness/editorial-pack/png/legal-boundary.png",
+				"moonwitness/editorial-pack/png/lunar-observatory.png",
+				"moonwitness/editorial-pack/png/source-signal.png",
+				"moonwitness/editorial-pack/svg/archive-dossier.svg",
+				"moonwitness/editorial-pack/svg/case-map.svg",
+				"moonwitness/editorial-pack/svg/field-witness.svg",
+				"moonwitness/editorial-pack/svg/legal-boundary.svg",
+				"moonwitness/editorial-pack/svg/lunar-observatory.svg",
+				"moonwitness/editorial-pack/svg/source-signal.svg"
+			]
+		},
+		"evidence-media": {
+			manifest: "moonwitness/evidence-media-pack/manifest.json",
+			count: 24,
+			canonicalFormat: "svg",
+			svg: {
+				"annotation-arrow": "moonwitness/evidence-media-pack/svg/annotation-arrow.svg",
+				"bounding-box": "moonwitness/evidence-media-pack/svg/bounding-box.svg",
+				"comment-marker": "moonwitness/evidence-media-pack/svg/comment-marker.svg",
+				"compare-ab": "moonwitness/evidence-media-pack/svg/compare-ab.svg",
+				"confidence-marker": "moonwitness/evidence-media-pack/svg/confidence-marker.svg",
+				"crop-region": "moonwitness/evidence-media-pack/svg/crop-region.svg",
+				"disputed-region": "moonwitness/evidence-media-pack/svg/disputed-region.svg",
+				"evidence-focus": "moonwitness/evidence-media-pack/svg/evidence-focus.svg",
+				"exif-panel": "moonwitness/evidence-media-pack/svg/exif-panel.svg",
+				"frame-marker": "moonwitness/evidence-media-pack/svg/frame-marker.svg",
+				"hash-chip": "moonwitness/evidence-media-pack/svg/hash-chip.svg",
+				"location-overlay": "moonwitness/evidence-media-pack/svg/location-overlay.svg",
+				measurement: "moonwitness/evidence-media-pack/svg/measurement.svg",
+				"metadata-chip": "moonwitness/evidence-media-pack/svg/metadata-chip.svg",
+				"object-region": "moonwitness/evidence-media-pack/svg/object-region.svg",
+				"ocr-region": "moonwitness/evidence-media-pack/svg/ocr-region.svg",
+				"redacted-region": "moonwitness/evidence-media-pack/svg/redacted-region.svg",
+				"source-origin": "moonwitness/evidence-media-pack/svg/source-origin.svg",
+				"timestamp-marker": "moonwitness/evidence-media-pack/svg/timestamp-marker.svg",
+				"transcript-cue": "moonwitness/evidence-media-pack/svg/transcript-cue.svg",
+				"verified-region": "moonwitness/evidence-media-pack/svg/verified-region.svg",
+				"video-scrub-marker": "moonwitness/evidence-media-pack/svg/video-scrub-marker.svg",
+				"waveform-cue": "moonwitness/evidence-media-pack/svg/waveform-cue.svg",
+				"zoom-region": "moonwitness/evidence-media-pack/svg/zoom-region.svg"
+			},
+			png: {
+				"annotation-arrow": "moonwitness/evidence-media-pack/png/annotation-arrow.png",
+				"bounding-box": "moonwitness/evidence-media-pack/png/bounding-box.png",
+				"comment-marker": "moonwitness/evidence-media-pack/png/comment-marker.png",
+				"compare-ab": "moonwitness/evidence-media-pack/png/compare-ab.png",
+				"confidence-marker": "moonwitness/evidence-media-pack/png/confidence-marker.png",
+				"crop-region": "moonwitness/evidence-media-pack/png/crop-region.png",
+				"disputed-region": "moonwitness/evidence-media-pack/png/disputed-region.png",
+				"evidence-focus": "moonwitness/evidence-media-pack/png/evidence-focus.png",
+				"exif-panel": "moonwitness/evidence-media-pack/png/exif-panel.png",
+				"frame-marker": "moonwitness/evidence-media-pack/png/frame-marker.png",
+				"hash-chip": "moonwitness/evidence-media-pack/png/hash-chip.png",
+				"location-overlay": "moonwitness/evidence-media-pack/png/location-overlay.png",
+				measurement: "moonwitness/evidence-media-pack/png/measurement.png",
+				"metadata-chip": "moonwitness/evidence-media-pack/png/metadata-chip.png",
+				"object-region": "moonwitness/evidence-media-pack/png/object-region.png",
+				"ocr-region": "moonwitness/evidence-media-pack/png/ocr-region.png",
+				"redacted-region": "moonwitness/evidence-media-pack/png/redacted-region.png",
+				"source-origin": "moonwitness/evidence-media-pack/png/source-origin.png",
+				"timestamp-marker": "moonwitness/evidence-media-pack/png/timestamp-marker.png",
+				"transcript-cue": "moonwitness/evidence-media-pack/png/transcript-cue.png",
+				"verified-region": "moonwitness/evidence-media-pack/png/verified-region.png",
+				"video-scrub-marker": "moonwitness/evidence-media-pack/png/video-scrub-marker.png",
+				"waveform-cue": "moonwitness/evidence-media-pack/png/waveform-cue.png",
+				"zoom-region": "moonwitness/evidence-media-pack/png/zoom-region.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/evidence-media-pack/png/annotation-arrow.png,moonwitness/evidence-media-pack/png/bounding-box.png,moonwitness/evidence-media-pack/png/comment-marker.png,moonwitness/evidence-media-pack/png/compare-ab.png,moonwitness/evidence-media-pack/png/confidence-marker.png,moonwitness/evidence-media-pack/png/crop-region.png,moonwitness/evidence-media-pack/png/disputed-region.png,moonwitness/evidence-media-pack/png/evidence-focus.png,moonwitness/evidence-media-pack/png/exif-panel.png,moonwitness/evidence-media-pack/png/frame-marker.png,moonwitness/evidence-media-pack/png/hash-chip.png,moonwitness/evidence-media-pack/png/location-overlay.png,moonwitness/evidence-media-pack/png/measurement.png,moonwitness/evidence-media-pack/png/metadata-chip.png,moonwitness/evidence-media-pack/png/object-region.png,moonwitness/evidence-media-pack/png/ocr-region.png,moonwitness/evidence-media-pack/png/redacted-region.png,moonwitness/evidence-media-pack/png/source-origin.png,moonwitness/evidence-media-pack/png/timestamp-marker.png,moonwitness/evidence-media-pack/png/transcript-cue.png,moonwitness/evidence-media-pack/png/verified-region.png,moonwitness/evidence-media-pack/png/video-scrub-marker.png,moonwitness/evidence-media-pack/png/waveform-cue.png,moonwitness/evidence-media-pack/png/zoom-region.png,moonwitness/evidence-media-pack/svg/annotation-arrow.svg,moonwitness/evidence-media-pack/svg/bounding-box.svg,moonwitness/evidence-media-pack/svg/comment-marker.svg,moonwitness/evidence-media-pack/svg/compare-ab.svg,moonwitness/evidence-media-pack/svg/confidence-marker.svg,moonwitness/evidence-media-pack/svg/crop-region.svg,moonwitness/evidence-media-pack/svg/disputed-region.svg,moonwitness/evidence-media-pack/svg/evidence-focus.svg,moonwitness/evidence-media-pack/svg/exif-panel.svg,moonwitness/evidence-media-pack/svg/frame-marker.svg,moonwitness/evidence-media-pack/svg/hash-chip.svg,moonwitness/evidence-media-pack/svg/location-overlay.svg,moonwitness/evidence-media-pack/svg/measurement.svg,moonwitness/evidence-media-pack/svg/metadata-chip.svg,moonwitness/evidence-media-pack/svg/object-region.svg,moonwitness/evidence-media-pack/svg/ocr-region.svg,moonwitness/evidence-media-pack/svg/redacted-region.svg,moonwitness/evidence-media-pack/svg/source-origin.svg,moonwitness/evidence-media-pack/svg/timestamp-marker.svg,moonwitness/evidence-media-pack/svg/transcript-cue.svg,moonwitness/evidence-media-pack/svg/verified-region.svg,moonwitness/evidence-media-pack/svg/video-scrub-marker.svg,moonwitness/evidence-media-pack/svg/waveform-cue.svg,moonwitness/evidence-media-pack/svg/zoom-region.svg".split(",")
+		},
+		"correlation-semantics": {
+			manifest: "moonwitness/correlation-semantics-pack/manifest.json",
+			count: 24,
+			canonicalFormat: "svg",
+			svg: {
+				"edge-contradicts": "moonwitness/correlation-semantics-pack/svg/edge-contradicts.svg",
+				"edge-derived-from": "moonwitness/correlation-semantics-pack/svg/edge-derived-from.svg",
+				"edge-inferred": "moonwitness/correlation-semantics-pack/svg/edge-inferred.svg",
+				"edge-legal-basis": "moonwitness/correlation-semantics-pack/svg/edge-legal-basis.svg",
+				"edge-located-at": "moonwitness/correlation-semantics-pack/svg/edge-located-at.svg",
+				"edge-references": "moonwitness/correlation-semantics-pack/svg/edge-references.svg",
+				"edge-reviewed-by": "moonwitness/correlation-semantics-pack/svg/edge-reviewed-by.svg",
+				"edge-same-identity": "moonwitness/correlation-semantics-pack/svg/edge-same-identity.svg",
+				"edge-submitted-by": "moonwitness/correlation-semantics-pack/svg/edge-submitted-by.svg",
+				"edge-supports": "moonwitness/correlation-semantics-pack/svg/edge-supports.svg",
+				"edge-temporal-after": "moonwitness/correlation-semantics-pack/svg/edge-temporal-after.svg",
+				"edge-temporal-before": "moonwitness/correlation-semantics-pack/svg/edge-temporal-before.svg",
+				"edge-uncertain": "moonwitness/correlation-semantics-pack/svg/edge-uncertain.svg",
+				"edge-unresolved": "moonwitness/correlation-semantics-pack/svg/edge-unresolved.svg",
+				"node-case": "moonwitness/correlation-semantics-pack/svg/node-case.svg",
+				"node-claim": "moonwitness/correlation-semantics-pack/svg/node-claim.svg",
+				"node-event": "moonwitness/correlation-semantics-pack/svg/node-event.svg",
+				"node-evidence": "moonwitness/correlation-semantics-pack/svg/node-evidence.svg",
+				"node-law": "moonwitness/correlation-semantics-pack/svg/node-law.svg",
+				"node-location": "moonwitness/correlation-semantics-pack/svg/node-location.svg",
+				"node-person": "moonwitness/correlation-semantics-pack/svg/node-person.svg",
+				"node-source": "moonwitness/correlation-semantics-pack/svg/node-source.svg",
+				"node-story": "moonwitness/correlation-semantics-pack/svg/node-story.svg",
+				"node-text": "moonwitness/correlation-semantics-pack/svg/node-text.svg"
+			},
+			png: {
+				"edge-contradicts": "moonwitness/correlation-semantics-pack/png/edge-contradicts.png",
+				"edge-derived-from": "moonwitness/correlation-semantics-pack/png/edge-derived-from.png",
+				"edge-inferred": "moonwitness/correlation-semantics-pack/png/edge-inferred.png",
+				"edge-legal-basis": "moonwitness/correlation-semantics-pack/png/edge-legal-basis.png",
+				"edge-located-at": "moonwitness/correlation-semantics-pack/png/edge-located-at.png",
+				"edge-references": "moonwitness/correlation-semantics-pack/png/edge-references.png",
+				"edge-reviewed-by": "moonwitness/correlation-semantics-pack/png/edge-reviewed-by.png",
+				"edge-same-identity": "moonwitness/correlation-semantics-pack/png/edge-same-identity.png",
+				"edge-submitted-by": "moonwitness/correlation-semantics-pack/png/edge-submitted-by.png",
+				"edge-supports": "moonwitness/correlation-semantics-pack/png/edge-supports.png",
+				"edge-temporal-after": "moonwitness/correlation-semantics-pack/png/edge-temporal-after.png",
+				"edge-temporal-before": "moonwitness/correlation-semantics-pack/png/edge-temporal-before.png",
+				"edge-uncertain": "moonwitness/correlation-semantics-pack/png/edge-uncertain.png",
+				"edge-unresolved": "moonwitness/correlation-semantics-pack/png/edge-unresolved.png",
+				"node-case": "moonwitness/correlation-semantics-pack/png/node-case.png",
+				"node-claim": "moonwitness/correlation-semantics-pack/png/node-claim.png",
+				"node-event": "moonwitness/correlation-semantics-pack/png/node-event.png",
+				"node-evidence": "moonwitness/correlation-semantics-pack/png/node-evidence.png",
+				"node-law": "moonwitness/correlation-semantics-pack/png/node-law.png",
+				"node-location": "moonwitness/correlation-semantics-pack/png/node-location.png",
+				"node-person": "moonwitness/correlation-semantics-pack/png/node-person.png",
+				"node-source": "moonwitness/correlation-semantics-pack/png/node-source.png",
+				"node-story": "moonwitness/correlation-semantics-pack/png/node-story.png",
+				"node-text": "moonwitness/correlation-semantics-pack/png/node-text.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/correlation-semantics-pack/png/edge-contradicts.png,moonwitness/correlation-semantics-pack/png/edge-derived-from.png,moonwitness/correlation-semantics-pack/png/edge-inferred.png,moonwitness/correlation-semantics-pack/png/edge-legal-basis.png,moonwitness/correlation-semantics-pack/png/edge-located-at.png,moonwitness/correlation-semantics-pack/png/edge-references.png,moonwitness/correlation-semantics-pack/png/edge-reviewed-by.png,moonwitness/correlation-semantics-pack/png/edge-same-identity.png,moonwitness/correlation-semantics-pack/png/edge-submitted-by.png,moonwitness/correlation-semantics-pack/png/edge-supports.png,moonwitness/correlation-semantics-pack/png/edge-temporal-after.png,moonwitness/correlation-semantics-pack/png/edge-temporal-before.png,moonwitness/correlation-semantics-pack/png/edge-uncertain.png,moonwitness/correlation-semantics-pack/png/edge-unresolved.png,moonwitness/correlation-semantics-pack/png/node-case.png,moonwitness/correlation-semantics-pack/png/node-claim.png,moonwitness/correlation-semantics-pack/png/node-event.png,moonwitness/correlation-semantics-pack/png/node-evidence.png,moonwitness/correlation-semantics-pack/png/node-law.png,moonwitness/correlation-semantics-pack/png/node-location.png,moonwitness/correlation-semantics-pack/png/node-person.png,moonwitness/correlation-semantics-pack/png/node-source.png,moonwitness/correlation-semantics-pack/png/node-story.png,moonwitness/correlation-semantics-pack/png/node-text.png,moonwitness/correlation-semantics-pack/svg/edge-contradicts.svg,moonwitness/correlation-semantics-pack/svg/edge-derived-from.svg,moonwitness/correlation-semantics-pack/svg/edge-inferred.svg,moonwitness/correlation-semantics-pack/svg/edge-legal-basis.svg,moonwitness/correlation-semantics-pack/svg/edge-located-at.svg,moonwitness/correlation-semantics-pack/svg/edge-references.svg,moonwitness/correlation-semantics-pack/svg/edge-reviewed-by.svg,moonwitness/correlation-semantics-pack/svg/edge-same-identity.svg,moonwitness/correlation-semantics-pack/svg/edge-submitted-by.svg,moonwitness/correlation-semantics-pack/svg/edge-supports.svg,moonwitness/correlation-semantics-pack/svg/edge-temporal-after.svg,moonwitness/correlation-semantics-pack/svg/edge-temporal-before.svg,moonwitness/correlation-semantics-pack/svg/edge-uncertain.svg,moonwitness/correlation-semantics-pack/svg/edge-unresolved.svg,moonwitness/correlation-semantics-pack/svg/node-case.svg,moonwitness/correlation-semantics-pack/svg/node-claim.svg,moonwitness/correlation-semantics-pack/svg/node-event.svg,moonwitness/correlation-semantics-pack/svg/node-evidence.svg,moonwitness/correlation-semantics-pack/svg/node-law.svg,moonwitness/correlation-semantics-pack/svg/node-location.svg,moonwitness/correlation-semantics-pack/svg/node-person.svg,moonwitness/correlation-semantics-pack/svg/node-source.svg,moonwitness/correlation-semantics-pack/svg/node-story.svg,moonwitness/correlation-semantics-pack/svg/node-text.svg".split(",")
+		},
+		"kanban-workflow": {
+			manifest: "moonwitness/kanban-pack/manifest.json",
+			count: 18,
+			canonicalFormat: "svg",
+			svg: {
+				"assignee-chip": "moonwitness/kanban-pack/svg/assignee-chip.svg",
+				"blocker-chip": "moonwitness/kanban-pack/svg/blocker-chip.svg",
+				"card-blocked": "moonwitness/kanban-pack/svg/card-blocked.svg",
+				"card-complete": "moonwitness/kanban-pack/svg/card-complete.svg",
+				"card-default": "moonwitness/kanban-pack/svg/card-default.svg",
+				"card-priority": "moonwitness/kanban-pack/svg/card-priority.svg",
+				"card-review": "moonwitness/kanban-pack/svg/card-review.svg",
+				"column-done": "moonwitness/kanban-pack/svg/column-done.svg",
+				"column-progress": "moonwitness/kanban-pack/svg/column-progress.svg",
+				"column-review": "moonwitness/kanban-pack/svg/column-review.svg",
+				"column-todo": "moonwitness/kanban-pack/svg/column-todo.svg",
+				"drag-placeholder": "moonwitness/kanban-pack/svg/drag-placeholder.svg",
+				"drop-target": "moonwitness/kanban-pack/svg/drop-target.svg",
+				"due-date-chip": "moonwitness/kanban-pack/svg/due-date-chip.svg",
+				"priority-chip": "moonwitness/kanban-pack/svg/priority-chip.svg",
+				"progress-meter": "moonwitness/kanban-pack/svg/progress-meter.svg",
+				"sla-chip": "moonwitness/kanban-pack/svg/sla-chip.svg",
+				"wip-limit": "moonwitness/kanban-pack/svg/wip-limit.svg"
+			},
+			png: {
+				"assignee-chip": "moonwitness/kanban-pack/png/assignee-chip.png",
+				"blocker-chip": "moonwitness/kanban-pack/png/blocker-chip.png",
+				"card-blocked": "moonwitness/kanban-pack/png/card-blocked.png",
+				"card-complete": "moonwitness/kanban-pack/png/card-complete.png",
+				"card-default": "moonwitness/kanban-pack/png/card-default.png",
+				"card-priority": "moonwitness/kanban-pack/png/card-priority.png",
+				"card-review": "moonwitness/kanban-pack/png/card-review.png",
+				"column-done": "moonwitness/kanban-pack/png/column-done.png",
+				"column-progress": "moonwitness/kanban-pack/png/column-progress.png",
+				"column-review": "moonwitness/kanban-pack/png/column-review.png",
+				"column-todo": "moonwitness/kanban-pack/png/column-todo.png",
+				"drag-placeholder": "moonwitness/kanban-pack/png/drag-placeholder.png",
+				"drop-target": "moonwitness/kanban-pack/png/drop-target.png",
+				"due-date-chip": "moonwitness/kanban-pack/png/due-date-chip.png",
+				"priority-chip": "moonwitness/kanban-pack/png/priority-chip.png",
+				"progress-meter": "moonwitness/kanban-pack/png/progress-meter.png",
+				"sla-chip": "moonwitness/kanban-pack/png/sla-chip.png",
+				"wip-limit": "moonwitness/kanban-pack/png/wip-limit.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/kanban-pack/png/assignee-chip.png,moonwitness/kanban-pack/png/blocker-chip.png,moonwitness/kanban-pack/png/card-blocked.png,moonwitness/kanban-pack/png/card-complete.png,moonwitness/kanban-pack/png/card-default.png,moonwitness/kanban-pack/png/card-priority.png,moonwitness/kanban-pack/png/card-review.png,moonwitness/kanban-pack/png/column-done.png,moonwitness/kanban-pack/png/column-progress.png,moonwitness/kanban-pack/png/column-review.png,moonwitness/kanban-pack/png/column-todo.png,moonwitness/kanban-pack/png/drag-placeholder.png,moonwitness/kanban-pack/png/drop-target.png,moonwitness/kanban-pack/png/due-date-chip.png,moonwitness/kanban-pack/png/priority-chip.png,moonwitness/kanban-pack/png/progress-meter.png,moonwitness/kanban-pack/png/sla-chip.png,moonwitness/kanban-pack/png/wip-limit.png,moonwitness/kanban-pack/svg/assignee-chip.svg,moonwitness/kanban-pack/svg/blocker-chip.svg,moonwitness/kanban-pack/svg/card-blocked.svg,moonwitness/kanban-pack/svg/card-complete.svg,moonwitness/kanban-pack/svg/card-default.svg,moonwitness/kanban-pack/svg/card-priority.svg,moonwitness/kanban-pack/svg/card-review.svg,moonwitness/kanban-pack/svg/column-done.svg,moonwitness/kanban-pack/svg/column-progress.svg,moonwitness/kanban-pack/svg/column-review.svg,moonwitness/kanban-pack/svg/column-todo.svg,moonwitness/kanban-pack/svg/drag-placeholder.svg,moonwitness/kanban-pack/svg/drop-target.svg,moonwitness/kanban-pack/svg/due-date-chip.svg,moonwitness/kanban-pack/svg/priority-chip.svg,moonwitness/kanban-pack/svg/progress-meter.svg,moonwitness/kanban-pack/svg/sla-chip.svg,moonwitness/kanban-pack/svg/wip-limit.svg".split(",")
+		},
+		"calendar-temporal": {
+			manifest: "moonwitness/calendar-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"agenda-row": "moonwitness/calendar-pack/svg/agenda-row.svg",
+				"all-day": "moonwitness/calendar-pack/svg/all-day.svg",
+				availability: "moonwitness/calendar-pack/svg/availability.svg",
+				conflict: "moonwitness/calendar-pack/svg/conflict.svg",
+				"date-range": "moonwitness/calendar-pack/svg/date-range.svg",
+				deadline: "moonwitness/calendar-pack/svg/deadline.svg",
+				duration: "moonwitness/calendar-pack/svg/duration.svg",
+				"event-community": "moonwitness/calendar-pack/svg/event-community.svg",
+				"event-default": "moonwitness/calendar-pack/svg/event-default.svg",
+				"event-investigation": "moonwitness/calendar-pack/svg/event-investigation.svg",
+				"event-legal": "moonwitness/calendar-pack/svg/event-legal.svg",
+				"event-review": "moonwitness/calendar-pack/svg/event-review.svg",
+				"month-cell": "moonwitness/calendar-pack/svg/month-cell.svg",
+				recurrence: "moonwitness/calendar-pack/svg/recurrence.svg",
+				timezone: "moonwitness/calendar-pack/svg/timezone.svg",
+				"today-marker": "moonwitness/calendar-pack/svg/today-marker.svg"
+			},
+			png: {
+				"agenda-row": "moonwitness/calendar-pack/png/agenda-row.png",
+				"all-day": "moonwitness/calendar-pack/png/all-day.png",
+				availability: "moonwitness/calendar-pack/png/availability.png",
+				conflict: "moonwitness/calendar-pack/png/conflict.png",
+				"date-range": "moonwitness/calendar-pack/png/date-range.png",
+				deadline: "moonwitness/calendar-pack/png/deadline.png",
+				duration: "moonwitness/calendar-pack/png/duration.png",
+				"event-community": "moonwitness/calendar-pack/png/event-community.png",
+				"event-default": "moonwitness/calendar-pack/png/event-default.png",
+				"event-investigation": "moonwitness/calendar-pack/png/event-investigation.png",
+				"event-legal": "moonwitness/calendar-pack/png/event-legal.png",
+				"event-review": "moonwitness/calendar-pack/png/event-review.png",
+				"month-cell": "moonwitness/calendar-pack/png/month-cell.png",
+				recurrence: "moonwitness/calendar-pack/png/recurrence.png",
+				timezone: "moonwitness/calendar-pack/png/timezone.png",
+				"today-marker": "moonwitness/calendar-pack/png/today-marker.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/calendar-pack/png/agenda-row.png,moonwitness/calendar-pack/png/all-day.png,moonwitness/calendar-pack/png/availability.png,moonwitness/calendar-pack/png/conflict.png,moonwitness/calendar-pack/png/date-range.png,moonwitness/calendar-pack/png/deadline.png,moonwitness/calendar-pack/png/duration.png,moonwitness/calendar-pack/png/event-community.png,moonwitness/calendar-pack/png/event-default.png,moonwitness/calendar-pack/png/event-investigation.png,moonwitness/calendar-pack/png/event-legal.png,moonwitness/calendar-pack/png/event-review.png,moonwitness/calendar-pack/png/month-cell.png,moonwitness/calendar-pack/png/recurrence.png,moonwitness/calendar-pack/png/timezone.png,moonwitness/calendar-pack/png/today-marker.png,moonwitness/calendar-pack/svg/agenda-row.svg,moonwitness/calendar-pack/svg/all-day.svg,moonwitness/calendar-pack/svg/availability.svg,moonwitness/calendar-pack/svg/conflict.svg,moonwitness/calendar-pack/svg/date-range.svg,moonwitness/calendar-pack/svg/deadline.svg,moonwitness/calendar-pack/svg/duration.svg,moonwitness/calendar-pack/svg/event-community.svg,moonwitness/calendar-pack/svg/event-default.svg,moonwitness/calendar-pack/svg/event-investigation.svg,moonwitness/calendar-pack/svg/event-legal.svg,moonwitness/calendar-pack/svg/event-review.svg,moonwitness/calendar-pack/svg/month-cell.svg,moonwitness/calendar-pack/svg/recurrence.svg,moonwitness/calendar-pack/svg/timezone.svg,moonwitness/calendar-pack/svg/today-marker.svg".split(",")
+		},
+		"chat-collaboration": {
+			manifest: "moonwitness/chat-pack/manifest.json",
+			count: 24,
+			canonicalFormat: "svg",
+			svg: {
+				"attachment-audio": "moonwitness/chat-pack/svg/attachment-audio.svg",
+				"attachment-file": "moonwitness/chat-pack/svg/attachment-file.svg",
+				"attachment-image": "moonwitness/chat-pack/svg/attachment-image.svg",
+				"attachment-link": "moonwitness/chat-pack/svg/attachment-link.svg",
+				"channel-header": "moonwitness/chat-pack/svg/channel-header.svg",
+				"composer-default": "moonwitness/chat-pack/svg/composer-default.svg",
+				"composer-disabled": "moonwitness/chat-pack/svg/composer-disabled.svg",
+				"delivery-delivered": "moonwitness/chat-pack/svg/delivery-delivered.svg",
+				"delivery-read": "moonwitness/chat-pack/svg/delivery-read.svg",
+				"delivery-sent": "moonwitness/chat-pack/svg/delivery-sent.svg",
+				"encrypted-message": "moonwitness/chat-pack/svg/encrypted-message.svg",
+				mention: "moonwitness/chat-pack/svg/mention.svg",
+				"message-other": "moonwitness/chat-pack/svg/message-other.svg",
+				"message-self": "moonwitness/chat-pack/svg/message-self.svg",
+				"message-system": "moonwitness/chat-pack/svg/message-system.svg",
+				"moderator-note": "moonwitness/chat-pack/svg/moderator-note.svg",
+				"presence-away": "moonwitness/chat-pack/svg/presence-away.svg",
+				"presence-offline": "moonwitness/chat-pack/svg/presence-offline.svg",
+				"presence-online": "moonwitness/chat-pack/svg/presence-online.svg",
+				"quote-reply": "moonwitness/chat-pack/svg/quote-reply.svg",
+				reaction: "moonwitness/chat-pack/svg/reaction.svg",
+				"thread-reply": "moonwitness/chat-pack/svg/thread-reply.svg",
+				"typing-indicator": "moonwitness/chat-pack/svg/typing-indicator.svg",
+				"unread-divider": "moonwitness/chat-pack/svg/unread-divider.svg"
+			},
+			png: {
+				"attachment-audio": "moonwitness/chat-pack/png/attachment-audio.png",
+				"attachment-file": "moonwitness/chat-pack/png/attachment-file.png",
+				"attachment-image": "moonwitness/chat-pack/png/attachment-image.png",
+				"attachment-link": "moonwitness/chat-pack/png/attachment-link.png",
+				"channel-header": "moonwitness/chat-pack/png/channel-header.png",
+				"composer-default": "moonwitness/chat-pack/png/composer-default.png",
+				"composer-disabled": "moonwitness/chat-pack/png/composer-disabled.png",
+				"delivery-delivered": "moonwitness/chat-pack/png/delivery-delivered.png",
+				"delivery-read": "moonwitness/chat-pack/png/delivery-read.png",
+				"delivery-sent": "moonwitness/chat-pack/png/delivery-sent.png",
+				"encrypted-message": "moonwitness/chat-pack/png/encrypted-message.png",
+				mention: "moonwitness/chat-pack/png/mention.png",
+				"message-other": "moonwitness/chat-pack/png/message-other.png",
+				"message-self": "moonwitness/chat-pack/png/message-self.png",
+				"message-system": "moonwitness/chat-pack/png/message-system.png",
+				"moderator-note": "moonwitness/chat-pack/png/moderator-note.png",
+				"presence-away": "moonwitness/chat-pack/png/presence-away.png",
+				"presence-offline": "moonwitness/chat-pack/png/presence-offline.png",
+				"presence-online": "moonwitness/chat-pack/png/presence-online.png",
+				"quote-reply": "moonwitness/chat-pack/png/quote-reply.png",
+				reaction: "moonwitness/chat-pack/png/reaction.png",
+				"thread-reply": "moonwitness/chat-pack/png/thread-reply.png",
+				"typing-indicator": "moonwitness/chat-pack/png/typing-indicator.png",
+				"unread-divider": "moonwitness/chat-pack/png/unread-divider.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/chat-pack/png/attachment-audio.png,moonwitness/chat-pack/png/attachment-file.png,moonwitness/chat-pack/png/attachment-image.png,moonwitness/chat-pack/png/attachment-link.png,moonwitness/chat-pack/png/channel-header.png,moonwitness/chat-pack/png/composer-default.png,moonwitness/chat-pack/png/composer-disabled.png,moonwitness/chat-pack/png/delivery-delivered.png,moonwitness/chat-pack/png/delivery-read.png,moonwitness/chat-pack/png/delivery-sent.png,moonwitness/chat-pack/png/encrypted-message.png,moonwitness/chat-pack/png/mention.png,moonwitness/chat-pack/png/message-other.png,moonwitness/chat-pack/png/message-self.png,moonwitness/chat-pack/png/message-system.png,moonwitness/chat-pack/png/moderator-note.png,moonwitness/chat-pack/png/presence-away.png,moonwitness/chat-pack/png/presence-offline.png,moonwitness/chat-pack/png/presence-online.png,moonwitness/chat-pack/png/quote-reply.png,moonwitness/chat-pack/png/reaction.png,moonwitness/chat-pack/png/thread-reply.png,moonwitness/chat-pack/png/typing-indicator.png,moonwitness/chat-pack/png/unread-divider.png,moonwitness/chat-pack/svg/attachment-audio.svg,moonwitness/chat-pack/svg/attachment-file.svg,moonwitness/chat-pack/svg/attachment-image.svg,moonwitness/chat-pack/svg/attachment-link.svg,moonwitness/chat-pack/svg/channel-header.svg,moonwitness/chat-pack/svg/composer-default.svg,moonwitness/chat-pack/svg/composer-disabled.svg,moonwitness/chat-pack/svg/delivery-delivered.svg,moonwitness/chat-pack/svg/delivery-read.svg,moonwitness/chat-pack/svg/delivery-sent.svg,moonwitness/chat-pack/svg/encrypted-message.svg,moonwitness/chat-pack/svg/mention.svg,moonwitness/chat-pack/svg/message-other.svg,moonwitness/chat-pack/svg/message-self.svg,moonwitness/chat-pack/svg/message-system.svg,moonwitness/chat-pack/svg/moderator-note.svg,moonwitness/chat-pack/svg/presence-away.svg,moonwitness/chat-pack/svg/presence-offline.svg,moonwitness/chat-pack/svg/presence-online.svg,moonwitness/chat-pack/svg/quote-reply.svg,moonwitness/chat-pack/svg/reaction.svg,moonwitness/chat-pack/svg/thread-reply.svg,moonwitness/chat-pack/svg/typing-indicator.svg,moonwitness/chat-pack/svg/unread-divider.svg".split(",")
+		},
+		"ai-workspace": {
+			manifest: "moonwitness/ai-workspace-pack/manifest.json",
+			count: 18,
+			canonicalFormat: "svg",
+			svg: {
+				"agent-chip": "moonwitness/ai-workspace-pack/svg/agent-chip.svg",
+				"ai-complete": "moonwitness/ai-workspace-pack/svg/ai-complete.svg",
+				"ai-error": "moonwitness/ai-workspace-pack/svg/ai-error.svg",
+				"ai-idle": "moonwitness/ai-workspace-pack/svg/ai-idle.svg",
+				"ai-streaming": "moonwitness/ai-workspace-pack/svg/ai-streaming.svg",
+				"ai-thinking": "moonwitness/ai-workspace-pack/svg/ai-thinking.svg",
+				"confidence-chip": "moonwitness/ai-workspace-pack/svg/confidence-chip.svg",
+				"context-chip": "moonwitness/ai-workspace-pack/svg/context-chip.svg",
+				guardrail: "moonwitness/ai-workspace-pack/svg/guardrail.svg",
+				"human-review": "moonwitness/ai-workspace-pack/svg/human-review.svg",
+				"model-selector": "moonwitness/ai-workspace-pack/svg/model-selector.svg",
+				"prompt-template": "moonwitness/ai-workspace-pack/svg/prompt-template.svg",
+				"retrieval-result": "moonwitness/ai-workspace-pack/svg/retrieval-result.svg",
+				"source-citation": "moonwitness/ai-workspace-pack/svg/source-citation.svg",
+				"token-meter": "moonwitness/ai-workspace-pack/svg/token-meter.svg",
+				"tool-call": "moonwitness/ai-workspace-pack/svg/tool-call.svg",
+				"tool-failure": "moonwitness/ai-workspace-pack/svg/tool-failure.svg",
+				"tool-success": "moonwitness/ai-workspace-pack/svg/tool-success.svg"
+			},
+			png: {
+				"agent-chip": "moonwitness/ai-workspace-pack/png/agent-chip.png",
+				"ai-complete": "moonwitness/ai-workspace-pack/png/ai-complete.png",
+				"ai-error": "moonwitness/ai-workspace-pack/png/ai-error.png",
+				"ai-idle": "moonwitness/ai-workspace-pack/png/ai-idle.png",
+				"ai-streaming": "moonwitness/ai-workspace-pack/png/ai-streaming.png",
+				"ai-thinking": "moonwitness/ai-workspace-pack/png/ai-thinking.png",
+				"confidence-chip": "moonwitness/ai-workspace-pack/png/confidence-chip.png",
+				"context-chip": "moonwitness/ai-workspace-pack/png/context-chip.png",
+				guardrail: "moonwitness/ai-workspace-pack/png/guardrail.png",
+				"human-review": "moonwitness/ai-workspace-pack/png/human-review.png",
+				"model-selector": "moonwitness/ai-workspace-pack/png/model-selector.png",
+				"prompt-template": "moonwitness/ai-workspace-pack/png/prompt-template.png",
+				"retrieval-result": "moonwitness/ai-workspace-pack/png/retrieval-result.png",
+				"source-citation": "moonwitness/ai-workspace-pack/png/source-citation.png",
+				"token-meter": "moonwitness/ai-workspace-pack/png/token-meter.png",
+				"tool-call": "moonwitness/ai-workspace-pack/png/tool-call.png",
+				"tool-failure": "moonwitness/ai-workspace-pack/png/tool-failure.png",
+				"tool-success": "moonwitness/ai-workspace-pack/png/tool-success.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/ai-workspace-pack/png/agent-chip.png,moonwitness/ai-workspace-pack/png/ai-complete.png,moonwitness/ai-workspace-pack/png/ai-error.png,moonwitness/ai-workspace-pack/png/ai-idle.png,moonwitness/ai-workspace-pack/png/ai-streaming.png,moonwitness/ai-workspace-pack/png/ai-thinking.png,moonwitness/ai-workspace-pack/png/confidence-chip.png,moonwitness/ai-workspace-pack/png/context-chip.png,moonwitness/ai-workspace-pack/png/guardrail.png,moonwitness/ai-workspace-pack/png/human-review.png,moonwitness/ai-workspace-pack/png/model-selector.png,moonwitness/ai-workspace-pack/png/prompt-template.png,moonwitness/ai-workspace-pack/png/retrieval-result.png,moonwitness/ai-workspace-pack/png/source-citation.png,moonwitness/ai-workspace-pack/png/token-meter.png,moonwitness/ai-workspace-pack/png/tool-call.png,moonwitness/ai-workspace-pack/png/tool-failure.png,moonwitness/ai-workspace-pack/png/tool-success.png,moonwitness/ai-workspace-pack/svg/agent-chip.svg,moonwitness/ai-workspace-pack/svg/ai-complete.svg,moonwitness/ai-workspace-pack/svg/ai-error.svg,moonwitness/ai-workspace-pack/svg/ai-idle.svg,moonwitness/ai-workspace-pack/svg/ai-streaming.svg,moonwitness/ai-workspace-pack/svg/ai-thinking.svg,moonwitness/ai-workspace-pack/svg/confidence-chip.svg,moonwitness/ai-workspace-pack/svg/context-chip.svg,moonwitness/ai-workspace-pack/svg/guardrail.svg,moonwitness/ai-workspace-pack/svg/human-review.svg,moonwitness/ai-workspace-pack/svg/model-selector.svg,moonwitness/ai-workspace-pack/svg/prompt-template.svg,moonwitness/ai-workspace-pack/svg/retrieval-result.svg,moonwitness/ai-workspace-pack/svg/source-citation.svg,moonwitness/ai-workspace-pack/svg/token-meter.svg,moonwitness/ai-workspace-pack/svg/tool-call.svg,moonwitness/ai-workspace-pack/svg/tool-failure.svg,moonwitness/ai-workspace-pack/svg/tool-success.svg".split(",")
+		},
+		"authorization-security": {
+			manifest: "moonwitness/security-pack/manifest.json",
+			count: 18,
+			canonicalFormat: "svg",
+			svg: {
+				"access-approved": "moonwitness/security-pack/svg/access-approved.svg",
+				"access-rejected": "moonwitness/security-pack/svg/access-rejected.svg",
+				"access-request": "moonwitness/security-pack/svg/access-request.svg",
+				"api-key": "moonwitness/security-pack/svg/api-key.svg",
+				"audit-lock": "moonwitness/security-pack/svg/audit-lock.svg",
+				"device-trusted": "moonwitness/security-pack/svg/device-trusted.svg",
+				"device-untrusted": "moonwitness/security-pack/svg/device-untrusted.svg",
+				mfa: "moonwitness/security-pack/svg/mfa.svg",
+				passkey: "moonwitness/security-pack/svg/passkey.svg",
+				"permission-denied": "moonwitness/security-pack/svg/permission-denied.svg",
+				"permission-granted": "moonwitness/security-pack/svg/permission-granted.svg",
+				"recovery-code": "moonwitness/security-pack/svg/recovery-code.svg",
+				"role-admin": "moonwitness/security-pack/svg/role-admin.svg",
+				"role-researcher": "moonwitness/security-pack/svg/role-researcher.svg",
+				"role-reviewer": "moonwitness/security-pack/svg/role-reviewer.svg",
+				"security-alert": "moonwitness/security-pack/svg/security-alert.svg",
+				"session-active": "moonwitness/security-pack/svg/session-active.svg",
+				"session-expired": "moonwitness/security-pack/svg/session-expired.svg"
+			},
+			png: {
+				"access-approved": "moonwitness/security-pack/png/access-approved.png",
+				"access-rejected": "moonwitness/security-pack/png/access-rejected.png",
+				"access-request": "moonwitness/security-pack/png/access-request.png",
+				"api-key": "moonwitness/security-pack/png/api-key.png",
+				"audit-lock": "moonwitness/security-pack/png/audit-lock.png",
+				"device-trusted": "moonwitness/security-pack/png/device-trusted.png",
+				"device-untrusted": "moonwitness/security-pack/png/device-untrusted.png",
+				mfa: "moonwitness/security-pack/png/mfa.png",
+				passkey: "moonwitness/security-pack/png/passkey.png",
+				"permission-denied": "moonwitness/security-pack/png/permission-denied.png",
+				"permission-granted": "moonwitness/security-pack/png/permission-granted.png",
+				"recovery-code": "moonwitness/security-pack/png/recovery-code.png",
+				"role-admin": "moonwitness/security-pack/png/role-admin.png",
+				"role-researcher": "moonwitness/security-pack/png/role-researcher.png",
+				"role-reviewer": "moonwitness/security-pack/png/role-reviewer.png",
+				"security-alert": "moonwitness/security-pack/png/security-alert.png",
+				"session-active": "moonwitness/security-pack/png/session-active.png",
+				"session-expired": "moonwitness/security-pack/png/session-expired.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/security-pack/png/access-approved.png,moonwitness/security-pack/png/access-rejected.png,moonwitness/security-pack/png/access-request.png,moonwitness/security-pack/png/api-key.png,moonwitness/security-pack/png/audit-lock.png,moonwitness/security-pack/png/device-trusted.png,moonwitness/security-pack/png/device-untrusted.png,moonwitness/security-pack/png/mfa.png,moonwitness/security-pack/png/passkey.png,moonwitness/security-pack/png/permission-denied.png,moonwitness/security-pack/png/permission-granted.png,moonwitness/security-pack/png/recovery-code.png,moonwitness/security-pack/png/role-admin.png,moonwitness/security-pack/png/role-researcher.png,moonwitness/security-pack/png/role-reviewer.png,moonwitness/security-pack/png/security-alert.png,moonwitness/security-pack/png/session-active.png,moonwitness/security-pack/png/session-expired.png,moonwitness/security-pack/svg/access-approved.svg,moonwitness/security-pack/svg/access-rejected.svg,moonwitness/security-pack/svg/access-request.svg,moonwitness/security-pack/svg/api-key.svg,moonwitness/security-pack/svg/audit-lock.svg,moonwitness/security-pack/svg/device-trusted.svg,moonwitness/security-pack/svg/device-untrusted.svg,moonwitness/security-pack/svg/mfa.svg,moonwitness/security-pack/svg/passkey.svg,moonwitness/security-pack/svg/permission-denied.svg,moonwitness/security-pack/svg/permission-granted.svg,moonwitness/security-pack/svg/recovery-code.svg,moonwitness/security-pack/svg/role-admin.svg,moonwitness/security-pack/svg/role-researcher.svg,moonwitness/security-pack/svg/role-reviewer.svg,moonwitness/security-pack/svg/security-alert.svg,moonwitness/security-pack/svg/session-active.svg,moonwitness/security-pack/svg/session-expired.svg".split(",")
+		},
+		"data-grid": {
+			manifest: "moonwitness/data-grid-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"bulk-select": "moonwitness/data-grid-pack/svg/bulk-select.svg",
+				"column-hidden": "moonwitness/data-grid-pack/svg/column-hidden.svg",
+				"column-pin": "moonwitness/data-grid-pack/svg/column-pin.svg",
+				"column-resize": "moonwitness/data-grid-pack/svg/column-resize.svg",
+				density: "moonwitness/data-grid-pack/svg/density.svg",
+				"filter-active": "moonwitness/data-grid-pack/svg/filter-active.svg",
+				"inline-edit": "moonwitness/data-grid-pack/svg/inline-edit.svg",
+				pagination: "moonwitness/data-grid-pack/svg/pagination.svg",
+				"row-disabled": "moonwitness/data-grid-pack/svg/row-disabled.svg",
+				"row-hover": "moonwitness/data-grid-pack/svg/row-hover.svg",
+				"row-selected": "moonwitness/data-grid-pack/svg/row-selected.svg",
+				"sort-asc": "moonwitness/data-grid-pack/svg/sort-asc.svg",
+				"sort-desc": "moonwitness/data-grid-pack/svg/sort-desc.svg",
+				"table-compact": "moonwitness/data-grid-pack/svg/table-compact.svg",
+				"table-default": "moonwitness/data-grid-pack/svg/table-default.svg",
+				"table-empty": "moonwitness/data-grid-pack/svg/table-empty.svg"
+			},
+			png: {
+				"bulk-select": "moonwitness/data-grid-pack/png/bulk-select.png",
+				"column-hidden": "moonwitness/data-grid-pack/png/column-hidden.png",
+				"column-pin": "moonwitness/data-grid-pack/png/column-pin.png",
+				"column-resize": "moonwitness/data-grid-pack/png/column-resize.png",
+				density: "moonwitness/data-grid-pack/png/density.png",
+				"filter-active": "moonwitness/data-grid-pack/png/filter-active.png",
+				"inline-edit": "moonwitness/data-grid-pack/png/inline-edit.png",
+				pagination: "moonwitness/data-grid-pack/png/pagination.png",
+				"row-disabled": "moonwitness/data-grid-pack/png/row-disabled.png",
+				"row-hover": "moonwitness/data-grid-pack/png/row-hover.png",
+				"row-selected": "moonwitness/data-grid-pack/png/row-selected.png",
+				"sort-asc": "moonwitness/data-grid-pack/png/sort-asc.png",
+				"sort-desc": "moonwitness/data-grid-pack/png/sort-desc.png",
+				"table-compact": "moonwitness/data-grid-pack/png/table-compact.png",
+				"table-default": "moonwitness/data-grid-pack/png/table-default.png",
+				"table-empty": "moonwitness/data-grid-pack/png/table-empty.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/data-grid-pack/png/bulk-select.png,moonwitness/data-grid-pack/png/column-hidden.png,moonwitness/data-grid-pack/png/column-pin.png,moonwitness/data-grid-pack/png/column-resize.png,moonwitness/data-grid-pack/png/density.png,moonwitness/data-grid-pack/png/filter-active.png,moonwitness/data-grid-pack/png/inline-edit.png,moonwitness/data-grid-pack/png/pagination.png,moonwitness/data-grid-pack/png/row-disabled.png,moonwitness/data-grid-pack/png/row-hover.png,moonwitness/data-grid-pack/png/row-selected.png,moonwitness/data-grid-pack/png/sort-asc.png,moonwitness/data-grid-pack/png/sort-desc.png,moonwitness/data-grid-pack/png/table-compact.png,moonwitness/data-grid-pack/png/table-default.png,moonwitness/data-grid-pack/png/table-empty.png,moonwitness/data-grid-pack/svg/bulk-select.svg,moonwitness/data-grid-pack/svg/column-hidden.svg,moonwitness/data-grid-pack/svg/column-pin.svg,moonwitness/data-grid-pack/svg/column-resize.svg,moonwitness/data-grid-pack/svg/density.svg,moonwitness/data-grid-pack/svg/filter-active.svg,moonwitness/data-grid-pack/svg/inline-edit.svg,moonwitness/data-grid-pack/svg/pagination.svg,moonwitness/data-grid-pack/svg/row-disabled.svg,moonwitness/data-grid-pack/svg/row-hover.svg,moonwitness/data-grid-pack/svg/row-selected.svg,moonwitness/data-grid-pack/svg/sort-asc.svg,moonwitness/data-grid-pack/svg/sort-desc.svg,moonwitness/data-grid-pack/svg/table-compact.svg,moonwitness/data-grid-pack/svg/table-default.svg,moonwitness/data-grid-pack/svg/table-empty.svg".split(",")
+		},
+		"form-controls": {
+			manifest: "moonwitness/form-controls-pack/manifest.json",
+			count: 20,
+			canonicalFormat: "svg",
+			svg: {
+				"checkbox-off": "moonwitness/form-controls-pack/svg/checkbox-off.svg",
+				"checkbox-on": "moonwitness/form-controls-pack/svg/checkbox-on.svg",
+				combobox: "moonwitness/form-controls-pack/svg/combobox.svg",
+				"date-input": "moonwitness/form-controls-pack/svg/date-input.svg",
+				"file-input": "moonwitness/form-controls-pack/svg/file-input.svg",
+				"input-default": "moonwitness/form-controls-pack/svg/input-default.svg",
+				"input-disabled": "moonwitness/form-controls-pack/svg/input-disabled.svg",
+				"input-error": "moonwitness/form-controls-pack/svg/input-error.svg",
+				"input-focus": "moonwitness/form-controls-pack/svg/input-focus.svg",
+				"input-success": "moonwitness/form-controls-pack/svg/input-success.svg",
+				"radio-off": "moonwitness/form-controls-pack/svg/radio-off.svg",
+				"radio-on": "moonwitness/form-controls-pack/svg/radio-on.svg",
+				readonly: "moonwitness/form-controls-pack/svg/readonly.svg",
+				"search-input": "moonwitness/form-controls-pack/svg/search-input.svg",
+				select: "moonwitness/form-controls-pack/svg/select.svg",
+				slider: "moonwitness/form-controls-pack/svg/slider.svg",
+				textarea: "moonwitness/form-controls-pack/svg/textarea.svg",
+				"toggle-off": "moonwitness/form-controls-pack/svg/toggle-off.svg",
+				"toggle-on": "moonwitness/form-controls-pack/svg/toggle-on.svg",
+				"validation-inline": "moonwitness/form-controls-pack/svg/validation-inline.svg"
+			},
+			png: {
+				"checkbox-off": "moonwitness/form-controls-pack/png/checkbox-off.png",
+				"checkbox-on": "moonwitness/form-controls-pack/png/checkbox-on.png",
+				combobox: "moonwitness/form-controls-pack/png/combobox.png",
+				"date-input": "moonwitness/form-controls-pack/png/date-input.png",
+				"file-input": "moonwitness/form-controls-pack/png/file-input.png",
+				"input-default": "moonwitness/form-controls-pack/png/input-default.png",
+				"input-disabled": "moonwitness/form-controls-pack/png/input-disabled.png",
+				"input-error": "moonwitness/form-controls-pack/png/input-error.png",
+				"input-focus": "moonwitness/form-controls-pack/png/input-focus.png",
+				"input-success": "moonwitness/form-controls-pack/png/input-success.png",
+				"radio-off": "moonwitness/form-controls-pack/png/radio-off.png",
+				"radio-on": "moonwitness/form-controls-pack/png/radio-on.png",
+				readonly: "moonwitness/form-controls-pack/png/readonly.png",
+				"search-input": "moonwitness/form-controls-pack/png/search-input.png",
+				select: "moonwitness/form-controls-pack/png/select.png",
+				slider: "moonwitness/form-controls-pack/png/slider.png",
+				textarea: "moonwitness/form-controls-pack/png/textarea.png",
+				"toggle-off": "moonwitness/form-controls-pack/png/toggle-off.png",
+				"toggle-on": "moonwitness/form-controls-pack/png/toggle-on.png",
+				"validation-inline": "moonwitness/form-controls-pack/png/validation-inline.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/form-controls-pack/png/checkbox-off.png,moonwitness/form-controls-pack/png/checkbox-on.png,moonwitness/form-controls-pack/png/combobox.png,moonwitness/form-controls-pack/png/date-input.png,moonwitness/form-controls-pack/png/file-input.png,moonwitness/form-controls-pack/png/input-default.png,moonwitness/form-controls-pack/png/input-disabled.png,moonwitness/form-controls-pack/png/input-error.png,moonwitness/form-controls-pack/png/input-focus.png,moonwitness/form-controls-pack/png/input-success.png,moonwitness/form-controls-pack/png/radio-off.png,moonwitness/form-controls-pack/png/radio-on.png,moonwitness/form-controls-pack/png/readonly.png,moonwitness/form-controls-pack/png/search-input.png,moonwitness/form-controls-pack/png/select.png,moonwitness/form-controls-pack/png/slider.png,moonwitness/form-controls-pack/png/textarea.png,moonwitness/form-controls-pack/png/toggle-off.png,moonwitness/form-controls-pack/png/toggle-on.png,moonwitness/form-controls-pack/png/validation-inline.png,moonwitness/form-controls-pack/svg/checkbox-off.svg,moonwitness/form-controls-pack/svg/checkbox-on.svg,moonwitness/form-controls-pack/svg/combobox.svg,moonwitness/form-controls-pack/svg/date-input.svg,moonwitness/form-controls-pack/svg/file-input.svg,moonwitness/form-controls-pack/svg/input-default.svg,moonwitness/form-controls-pack/svg/input-disabled.svg,moonwitness/form-controls-pack/svg/input-error.svg,moonwitness/form-controls-pack/svg/input-focus.svg,moonwitness/form-controls-pack/svg/input-success.svg,moonwitness/form-controls-pack/svg/radio-off.svg,moonwitness/form-controls-pack/svg/radio-on.svg,moonwitness/form-controls-pack/svg/readonly.svg,moonwitness/form-controls-pack/svg/search-input.svg,moonwitness/form-controls-pack/svg/select.svg,moonwitness/form-controls-pack/svg/slider.svg,moonwitness/form-controls-pack/svg/textarea.svg,moonwitness/form-controls-pack/svg/toggle-off.svg,moonwitness/form-controls-pack/svg/toggle-on.svg,moonwitness/form-controls-pack/svg/validation-inline.svg".split(",")
+		},
+		"theme-accessibility": {
+			manifest: "moonwitness/theme-accessibility-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				"color-safe-error": "moonwitness/theme-accessibility-pack/svg/color-safe-error.svg",
+				"color-safe-success": "moonwitness/theme-accessibility-pack/svg/color-safe-success.svg",
+				"color-safe-warning": "moonwitness/theme-accessibility-pack/svg/color-safe-warning.svg",
+				"contrast-check": "moonwitness/theme-accessibility-pack/svg/contrast-check.svg",
+				"focus-ring": "moonwitness/theme-accessibility-pack/svg/focus-ring.svg",
+				"keyboard-mode": "moonwitness/theme-accessibility-pack/svg/keyboard-mode.svg",
+				"large-text": "moonwitness/theme-accessibility-pack/svg/large-text.svg",
+				"reduced-motion": "moonwitness/theme-accessibility-pack/svg/reduced-motion.svg",
+				"screen-reader": "moonwitness/theme-accessibility-pack/svg/screen-reader.svg",
+				"theme-dark": "moonwitness/theme-accessibility-pack/svg/theme-dark.svg",
+				"theme-high-contrast": "moonwitness/theme-accessibility-pack/svg/theme-high-contrast.svg",
+				"theme-light": "moonwitness/theme-accessibility-pack/svg/theme-light.svg"
+			},
+			png: {
+				"color-safe-error": "moonwitness/theme-accessibility-pack/png/color-safe-error.png",
+				"color-safe-success": "moonwitness/theme-accessibility-pack/png/color-safe-success.png",
+				"color-safe-warning": "moonwitness/theme-accessibility-pack/png/color-safe-warning.png",
+				"contrast-check": "moonwitness/theme-accessibility-pack/png/contrast-check.png",
+				"focus-ring": "moonwitness/theme-accessibility-pack/png/focus-ring.png",
+				"keyboard-mode": "moonwitness/theme-accessibility-pack/png/keyboard-mode.png",
+				"large-text": "moonwitness/theme-accessibility-pack/png/large-text.png",
+				"reduced-motion": "moonwitness/theme-accessibility-pack/png/reduced-motion.png",
+				"screen-reader": "moonwitness/theme-accessibility-pack/png/screen-reader.png",
+				"theme-dark": "moonwitness/theme-accessibility-pack/png/theme-dark.png",
+				"theme-high-contrast": "moonwitness/theme-accessibility-pack/png/theme-high-contrast.png",
+				"theme-light": "moonwitness/theme-accessibility-pack/png/theme-light.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/theme-accessibility-pack/png/color-safe-error.png",
+				"moonwitness/theme-accessibility-pack/png/color-safe-success.png",
+				"moonwitness/theme-accessibility-pack/png/color-safe-warning.png",
+				"moonwitness/theme-accessibility-pack/png/contrast-check.png",
+				"moonwitness/theme-accessibility-pack/png/focus-ring.png",
+				"moonwitness/theme-accessibility-pack/png/keyboard-mode.png",
+				"moonwitness/theme-accessibility-pack/png/large-text.png",
+				"moonwitness/theme-accessibility-pack/png/reduced-motion.png",
+				"moonwitness/theme-accessibility-pack/png/screen-reader.png",
+				"moonwitness/theme-accessibility-pack/png/theme-dark.png",
+				"moonwitness/theme-accessibility-pack/png/theme-high-contrast.png",
+				"moonwitness/theme-accessibility-pack/png/theme-light.png",
+				"moonwitness/theme-accessibility-pack/svg/color-safe-error.svg",
+				"moonwitness/theme-accessibility-pack/svg/color-safe-success.svg",
+				"moonwitness/theme-accessibility-pack/svg/color-safe-warning.svg",
+				"moonwitness/theme-accessibility-pack/svg/contrast-check.svg",
+				"moonwitness/theme-accessibility-pack/svg/focus-ring.svg",
+				"moonwitness/theme-accessibility-pack/svg/keyboard-mode.svg",
+				"moonwitness/theme-accessibility-pack/svg/large-text.svg",
+				"moonwitness/theme-accessibility-pack/svg/reduced-motion.svg",
+				"moonwitness/theme-accessibility-pack/svg/screen-reader.svg",
+				"moonwitness/theme-accessibility-pack/svg/theme-dark.svg",
+				"moonwitness/theme-accessibility-pack/svg/theme-high-contrast.svg",
+				"moonwitness/theme-accessibility-pack/svg/theme-light.svg"
+			]
+		},
+		"privacy-redaction": {
+			manifest: "moonwitness/privacy-redaction-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"blur-face": "moonwitness/privacy-redaction-pack/svg/blur-face.svg",
+				confidential: "moonwitness/privacy-redaction-pack/svg/confidential.svg",
+				"mask-identity": "moonwitness/privacy-redaction-pack/svg/mask-identity.svg",
+				"pii-address": "moonwitness/privacy-redaction-pack/svg/pii-address.svg",
+				"pii-email": "moonwitness/privacy-redaction-pack/svg/pii-email.svg",
+				"pii-phone": "moonwitness/privacy-redaction-pack/svg/pii-phone.svg",
+				"privacy-scope": "moonwitness/privacy-redaction-pack/svg/privacy-scope.svg",
+				"privacy-warning": "moonwitness/privacy-redaction-pack/svg/privacy-warning.svg",
+				"protected-witness": "moonwitness/privacy-redaction-pack/svg/protected-witness.svg",
+				"public-safe": "moonwitness/privacy-redaction-pack/svg/public-safe.svg",
+				"redact-image": "moonwitness/privacy-redaction-pack/svg/redact-image.svg",
+				"redact-text": "moonwitness/privacy-redaction-pack/svg/redact-text.svg",
+				"redaction-review": "moonwitness/privacy-redaction-pack/svg/redaction-review.svg",
+				restricted: "moonwitness/privacy-redaction-pack/svg/restricted.svg",
+				"reveal-authorized": "moonwitness/privacy-redaction-pack/svg/reveal-authorized.svg",
+				"sealed-evidence": "moonwitness/privacy-redaction-pack/svg/sealed-evidence.svg"
+			},
+			png: {
+				"blur-face": "moonwitness/privacy-redaction-pack/png/blur-face.png",
+				confidential: "moonwitness/privacy-redaction-pack/png/confidential.png",
+				"mask-identity": "moonwitness/privacy-redaction-pack/png/mask-identity.png",
+				"pii-address": "moonwitness/privacy-redaction-pack/png/pii-address.png",
+				"pii-email": "moonwitness/privacy-redaction-pack/png/pii-email.png",
+				"pii-phone": "moonwitness/privacy-redaction-pack/png/pii-phone.png",
+				"privacy-scope": "moonwitness/privacy-redaction-pack/png/privacy-scope.png",
+				"privacy-warning": "moonwitness/privacy-redaction-pack/png/privacy-warning.png",
+				"protected-witness": "moonwitness/privacy-redaction-pack/png/protected-witness.png",
+				"public-safe": "moonwitness/privacy-redaction-pack/png/public-safe.png",
+				"redact-image": "moonwitness/privacy-redaction-pack/png/redact-image.png",
+				"redact-text": "moonwitness/privacy-redaction-pack/png/redact-text.png",
+				"redaction-review": "moonwitness/privacy-redaction-pack/png/redaction-review.png",
+				restricted: "moonwitness/privacy-redaction-pack/png/restricted.png",
+				"reveal-authorized": "moonwitness/privacy-redaction-pack/png/reveal-authorized.png",
+				"sealed-evidence": "moonwitness/privacy-redaction-pack/png/sealed-evidence.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/privacy-redaction-pack/png/blur-face.png,moonwitness/privacy-redaction-pack/png/confidential.png,moonwitness/privacy-redaction-pack/png/mask-identity.png,moonwitness/privacy-redaction-pack/png/pii-address.png,moonwitness/privacy-redaction-pack/png/pii-email.png,moonwitness/privacy-redaction-pack/png/pii-phone.png,moonwitness/privacy-redaction-pack/png/privacy-scope.png,moonwitness/privacy-redaction-pack/png/privacy-warning.png,moonwitness/privacy-redaction-pack/png/protected-witness.png,moonwitness/privacy-redaction-pack/png/public-safe.png,moonwitness/privacy-redaction-pack/png/redact-image.png,moonwitness/privacy-redaction-pack/png/redact-text.png,moonwitness/privacy-redaction-pack/png/redaction-review.png,moonwitness/privacy-redaction-pack/png/restricted.png,moonwitness/privacy-redaction-pack/png/reveal-authorized.png,moonwitness/privacy-redaction-pack/png/sealed-evidence.png,moonwitness/privacy-redaction-pack/svg/blur-face.svg,moonwitness/privacy-redaction-pack/svg/confidential.svg,moonwitness/privacy-redaction-pack/svg/mask-identity.svg,moonwitness/privacy-redaction-pack/svg/pii-address.svg,moonwitness/privacy-redaction-pack/svg/pii-email.svg,moonwitness/privacy-redaction-pack/svg/pii-phone.svg,moonwitness/privacy-redaction-pack/svg/privacy-scope.svg,moonwitness/privacy-redaction-pack/svg/privacy-warning.svg,moonwitness/privacy-redaction-pack/svg/protected-witness.svg,moonwitness/privacy-redaction-pack/svg/public-safe.svg,moonwitness/privacy-redaction-pack/svg/redact-image.svg,moonwitness/privacy-redaction-pack/svg/redact-text.svg,moonwitness/privacy-redaction-pack/svg/redaction-review.svg,moonwitness/privacy-redaction-pack/svg/restricted.svg,moonwitness/privacy-redaction-pack/svg/reveal-authorized.svg,moonwitness/privacy-redaction-pack/svg/sealed-evidence.svg".split(",")
+		},
+		"evidence-integrity": {
+			manifest: "moonwitness/integrity-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"checksum-fail": "moonwitness/integrity-pack/svg/checksum-fail.svg",
+				"checksum-ok": "moonwitness/integrity-pack/svg/checksum-ok.svg",
+				"custody-entry": "moonwitness/integrity-pack/svg/custody-entry.svg",
+				"custody-transfer": "moonwitness/integrity-pack/svg/custody-transfer.svg",
+				"digital-signature": "moonwitness/integrity-pack/svg/digital-signature.svg",
+				"evidence-seal": "moonwitness/integrity-pack/svg/evidence-seal.svg",
+				"immutable-record": "moonwitness/integrity-pack/svg/immutable-record.svg",
+				"integrity-score": "moonwitness/integrity-pack/svg/integrity-score.svg",
+				"provenance-broken": "moonwitness/integrity-pack/svg/provenance-broken.svg",
+				"provenance-verified": "moonwitness/integrity-pack/svg/provenance-verified.svg",
+				sha256: "moonwitness/integrity-pack/svg/sha256.svg",
+				"source-authentic": "moonwitness/integrity-pack/svg/source-authentic.svg",
+				"source-unverified": "moonwitness/integrity-pack/svg/source-unverified.svg",
+				"tamper-alert": "moonwitness/integrity-pack/svg/tamper-alert.svg",
+				"timestamp-seal": "moonwitness/integrity-pack/svg/timestamp-seal.svg",
+				"version-history": "moonwitness/integrity-pack/svg/version-history.svg"
+			},
+			png: {
+				"checksum-fail": "moonwitness/integrity-pack/png/checksum-fail.png",
+				"checksum-ok": "moonwitness/integrity-pack/png/checksum-ok.png",
+				"custody-entry": "moonwitness/integrity-pack/png/custody-entry.png",
+				"custody-transfer": "moonwitness/integrity-pack/png/custody-transfer.png",
+				"digital-signature": "moonwitness/integrity-pack/png/digital-signature.png",
+				"evidence-seal": "moonwitness/integrity-pack/png/evidence-seal.png",
+				"immutable-record": "moonwitness/integrity-pack/png/immutable-record.png",
+				"integrity-score": "moonwitness/integrity-pack/png/integrity-score.png",
+				"provenance-broken": "moonwitness/integrity-pack/png/provenance-broken.png",
+				"provenance-verified": "moonwitness/integrity-pack/png/provenance-verified.png",
+				sha256: "moonwitness/integrity-pack/png/sha256.png",
+				"source-authentic": "moonwitness/integrity-pack/png/source-authentic.png",
+				"source-unverified": "moonwitness/integrity-pack/png/source-unverified.png",
+				"tamper-alert": "moonwitness/integrity-pack/png/tamper-alert.png",
+				"timestamp-seal": "moonwitness/integrity-pack/png/timestamp-seal.png",
+				"version-history": "moonwitness/integrity-pack/png/version-history.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/integrity-pack/png/checksum-fail.png,moonwitness/integrity-pack/png/checksum-ok.png,moonwitness/integrity-pack/png/custody-entry.png,moonwitness/integrity-pack/png/custody-transfer.png,moonwitness/integrity-pack/png/digital-signature.png,moonwitness/integrity-pack/png/evidence-seal.png,moonwitness/integrity-pack/png/immutable-record.png,moonwitness/integrity-pack/png/integrity-score.png,moonwitness/integrity-pack/png/provenance-broken.png,moonwitness/integrity-pack/png/provenance-verified.png,moonwitness/integrity-pack/png/sha256.png,moonwitness/integrity-pack/png/source-authentic.png,moonwitness/integrity-pack/png/source-unverified.png,moonwitness/integrity-pack/png/tamper-alert.png,moonwitness/integrity-pack/png/timestamp-seal.png,moonwitness/integrity-pack/png/version-history.png,moonwitness/integrity-pack/svg/checksum-fail.svg,moonwitness/integrity-pack/svg/checksum-ok.svg,moonwitness/integrity-pack/svg/custody-entry.svg,moonwitness/integrity-pack/svg/custody-transfer.svg,moonwitness/integrity-pack/svg/digital-signature.svg,moonwitness/integrity-pack/svg/evidence-seal.svg,moonwitness/integrity-pack/svg/immutable-record.svg,moonwitness/integrity-pack/svg/integrity-score.svg,moonwitness/integrity-pack/svg/provenance-broken.svg,moonwitness/integrity-pack/svg/provenance-verified.svg,moonwitness/integrity-pack/svg/sha256.svg,moonwitness/integrity-pack/svg/source-authentic.svg,moonwitness/integrity-pack/svg/source-unverified.svg,moonwitness/integrity-pack/svg/tamper-alert.svg,moonwitness/integrity-pack/svg/timestamp-seal.svg,moonwitness/integrity-pack/svg/version-history.svg".split(",")
+		},
+		"export-seal": {
+			manifest: "moonwitness/export-seal-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				"bundle-export": "moonwitness/export-seal-pack/svg/bundle-export.svg",
+				"json-export": "moonwitness/export-seal-pack/svg/json-export.svg",
+				"legal-stamp": "moonwitness/export-seal-pack/svg/legal-stamp.svg",
+				"pdf-export": "moonwitness/export-seal-pack/svg/pdf-export.svg",
+				"print-crop-marks": "moonwitness/export-seal-pack/svg/print-crop-marks.svg",
+				"qr-citation": "moonwitness/export-seal-pack/svg/qr-citation.svg",
+				"reviewed-stamp": "moonwitness/export-seal-pack/svg/reviewed-stamp.svg",
+				"share-card": "moonwitness/export-seal-pack/svg/share-card.svg",
+				"signed-export": "moonwitness/export-seal-pack/svg/signed-export.svg",
+				"verified-stamp": "moonwitness/export-seal-pack/svg/verified-stamp.svg",
+				"watermark-confidential": "moonwitness/export-seal-pack/svg/watermark-confidential.svg",
+				"watermark-public": "moonwitness/export-seal-pack/svg/watermark-public.svg"
+			},
+			png: {
+				"bundle-export": "moonwitness/export-seal-pack/png/bundle-export.png",
+				"json-export": "moonwitness/export-seal-pack/png/json-export.png",
+				"legal-stamp": "moonwitness/export-seal-pack/png/legal-stamp.png",
+				"pdf-export": "moonwitness/export-seal-pack/png/pdf-export.png",
+				"print-crop-marks": "moonwitness/export-seal-pack/png/print-crop-marks.png",
+				"qr-citation": "moonwitness/export-seal-pack/png/qr-citation.png",
+				"reviewed-stamp": "moonwitness/export-seal-pack/png/reviewed-stamp.png",
+				"share-card": "moonwitness/export-seal-pack/png/share-card.png",
+				"signed-export": "moonwitness/export-seal-pack/png/signed-export.png",
+				"verified-stamp": "moonwitness/export-seal-pack/png/verified-stamp.png",
+				"watermark-confidential": "moonwitness/export-seal-pack/png/watermark-confidential.png",
+				"watermark-public": "moonwitness/export-seal-pack/png/watermark-public.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/export-seal-pack/png/bundle-export.png",
+				"moonwitness/export-seal-pack/png/json-export.png",
+				"moonwitness/export-seal-pack/png/legal-stamp.png",
+				"moonwitness/export-seal-pack/png/pdf-export.png",
+				"moonwitness/export-seal-pack/png/print-crop-marks.png",
+				"moonwitness/export-seal-pack/png/qr-citation.png",
+				"moonwitness/export-seal-pack/png/reviewed-stamp.png",
+				"moonwitness/export-seal-pack/png/share-card.png",
+				"moonwitness/export-seal-pack/png/signed-export.png",
+				"moonwitness/export-seal-pack/png/verified-stamp.png",
+				"moonwitness/export-seal-pack/png/watermark-confidential.png",
+				"moonwitness/export-seal-pack/png/watermark-public.png",
+				"moonwitness/export-seal-pack/svg/bundle-export.svg",
+				"moonwitness/export-seal-pack/svg/json-export.svg",
+				"moonwitness/export-seal-pack/svg/legal-stamp.svg",
+				"moonwitness/export-seal-pack/svg/pdf-export.svg",
+				"moonwitness/export-seal-pack/svg/print-crop-marks.svg",
+				"moonwitness/export-seal-pack/svg/qr-citation.svg",
+				"moonwitness/export-seal-pack/svg/reviewed-stamp.svg",
+				"moonwitness/export-seal-pack/svg/share-card.svg",
+				"moonwitness/export-seal-pack/svg/signed-export.svg",
+				"moonwitness/export-seal-pack/svg/verified-stamp.svg",
+				"moonwitness/export-seal-pack/svg/watermark-confidential.svg",
+				"moonwitness/export-seal-pack/svg/watermark-public.svg"
+			]
+		},
+		"rocksoul-character": {
+			manifest: "moonwitness/rocksoul-character-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				"ai-companion": "moonwitness/rocksoul-character-pack/svg/ai-companion.svg",
+				community: "moonwitness/rocksoul-character-pack/svg/community.svg",
+				connecting: "moonwitness/rocksoul-character-pack/svg/connecting.svg",
+				empty: "moonwitness/rocksoul-character-pack/svg/empty.svg",
+				investigating: "moonwitness/rocksoul-character-pack/svg/investigating.svg",
+				"legal-boundary": "moonwitness/rocksoul-character-pack/svg/legal-boundary.svg",
+				observing: "moonwitness/rocksoul-character-pack/svg/observing.svg",
+				offline: "moonwitness/rocksoul-character-pack/svg/offline.svg",
+				reading: "moonwitness/rocksoul-character-pack/svg/reading.svg",
+				success: "moonwitness/rocksoul-character-pack/svg/success.svg",
+				thinking: "moonwitness/rocksoul-character-pack/svg/thinking.svg",
+				warning: "moonwitness/rocksoul-character-pack/svg/warning.svg"
+			},
+			png: {
+				"ai-companion": {
+					128: "moonwitness/rocksoul-character-pack/png/128/ai-companion.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/ai-companion.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/ai-companion.png"
+				},
+				community: {
+					128: "moonwitness/rocksoul-character-pack/png/128/community.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/community.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/community.png"
+				},
+				connecting: {
+					128: "moonwitness/rocksoul-character-pack/png/128/connecting.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/connecting.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/connecting.png"
+				},
+				empty: {
+					128: "moonwitness/rocksoul-character-pack/png/128/empty.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/empty.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/empty.png"
+				},
+				investigating: {
+					128: "moonwitness/rocksoul-character-pack/png/128/investigating.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/investigating.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/investigating.png"
+				},
+				"legal-boundary": {
+					128: "moonwitness/rocksoul-character-pack/png/128/legal-boundary.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/legal-boundary.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/legal-boundary.png"
+				},
+				observing: {
+					128: "moonwitness/rocksoul-character-pack/png/128/observing.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/observing.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/observing.png"
+				},
+				offline: {
+					128: "moonwitness/rocksoul-character-pack/png/128/offline.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/offline.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/offline.png"
+				},
+				reading: {
+					128: "moonwitness/rocksoul-character-pack/png/128/reading.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/reading.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/reading.png"
+				},
+				success: {
+					128: "moonwitness/rocksoul-character-pack/png/128/success.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/success.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/success.png"
+				},
+				thinking: {
+					128: "moonwitness/rocksoul-character-pack/png/128/thinking.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/thinking.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/thinking.png"
+				},
+				warning: {
+					128: "moonwitness/rocksoul-character-pack/png/128/warning.png",
+					256: "moonwitness/rocksoul-character-pack/png/256/warning.png",
+					512: "moonwitness/rocksoul-character-pack/png/512/warning.png"
+				}
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/rocksoul-character-pack/png/128/ai-companion.png,moonwitness/rocksoul-character-pack/png/128/community.png,moonwitness/rocksoul-character-pack/png/128/connecting.png,moonwitness/rocksoul-character-pack/png/128/empty.png,moonwitness/rocksoul-character-pack/png/128/investigating.png,moonwitness/rocksoul-character-pack/png/128/legal-boundary.png,moonwitness/rocksoul-character-pack/png/128/observing.png,moonwitness/rocksoul-character-pack/png/128/offline.png,moonwitness/rocksoul-character-pack/png/128/reading.png,moonwitness/rocksoul-character-pack/png/128/success.png,moonwitness/rocksoul-character-pack/png/128/thinking.png,moonwitness/rocksoul-character-pack/png/128/warning.png,moonwitness/rocksoul-character-pack/png/256/ai-companion.png,moonwitness/rocksoul-character-pack/png/256/community.png,moonwitness/rocksoul-character-pack/png/256/connecting.png,moonwitness/rocksoul-character-pack/png/256/empty.png,moonwitness/rocksoul-character-pack/png/256/investigating.png,moonwitness/rocksoul-character-pack/png/256/legal-boundary.png,moonwitness/rocksoul-character-pack/png/256/observing.png,moonwitness/rocksoul-character-pack/png/256/offline.png,moonwitness/rocksoul-character-pack/png/256/reading.png,moonwitness/rocksoul-character-pack/png/256/success.png,moonwitness/rocksoul-character-pack/png/256/thinking.png,moonwitness/rocksoul-character-pack/png/256/warning.png,moonwitness/rocksoul-character-pack/png/512/ai-companion.png,moonwitness/rocksoul-character-pack/png/512/community.png,moonwitness/rocksoul-character-pack/png/512/connecting.png,moonwitness/rocksoul-character-pack/png/512/empty.png,moonwitness/rocksoul-character-pack/png/512/investigating.png,moonwitness/rocksoul-character-pack/png/512/legal-boundary.png,moonwitness/rocksoul-character-pack/png/512/observing.png,moonwitness/rocksoul-character-pack/png/512/offline.png,moonwitness/rocksoul-character-pack/png/512/reading.png,moonwitness/rocksoul-character-pack/png/512/success.png,moonwitness/rocksoul-character-pack/png/512/thinking.png,moonwitness/rocksoul-character-pack/png/512/warning.png,moonwitness/rocksoul-character-pack/svg/ai-companion.svg,moonwitness/rocksoul-character-pack/svg/community.svg,moonwitness/rocksoul-character-pack/svg/connecting.svg,moonwitness/rocksoul-character-pack/svg/empty.svg,moonwitness/rocksoul-character-pack/svg/investigating.svg,moonwitness/rocksoul-character-pack/svg/legal-boundary.svg,moonwitness/rocksoul-character-pack/svg/observing.svg,moonwitness/rocksoul-character-pack/svg/offline.svg,moonwitness/rocksoul-character-pack/svg/reading.svg,moonwitness/rocksoul-character-pack/svg/success.svg,moonwitness/rocksoul-character-pack/svg/thinking.svg,moonwitness/rocksoul-character-pack/svg/warning.svg".split(",")
+		},
+		"command-keyboard": {
+			manifest: "moonwitness/command-keyboard-pack/manifest.json",
+			count: 14,
+			canonicalFormat: "svg",
+			svg: {
+				"key-command": "moonwitness/command-keyboard-pack/svg/key-command.svg",
+				"key-enter": "moonwitness/command-keyboard-pack/svg/key-enter.svg",
+				"key-escape": "moonwitness/command-keyboard-pack/svg/key-escape.svg",
+				"key-option": "moonwitness/command-keyboard-pack/svg/key-option.svg",
+				"key-shift": "moonwitness/command-keyboard-pack/svg/key-shift.svg",
+				"key-tab": "moonwitness/command-keyboard-pack/svg/key-tab.svg",
+				"keyboard-navigation": "moonwitness/command-keyboard-pack/svg/keyboard-navigation.svg",
+				"sequence-node-link": "moonwitness/command-keyboard-pack/svg/sequence-node-link.svg",
+				"shortcut-command": "moonwitness/command-keyboard-pack/svg/shortcut-command.svg",
+				"shortcut-focus": "moonwitness/command-keyboard-pack/svg/shortcut-focus.svg",
+				"shortcut-help": "moonwitness/command-keyboard-pack/svg/shortcut-help.svg",
+				"shortcut-new-case": "moonwitness/command-keyboard-pack/svg/shortcut-new-case.svg",
+				"shortcut-save": "moonwitness/command-keyboard-pack/svg/shortcut-save.svg",
+				"shortcut-search": "moonwitness/command-keyboard-pack/svg/shortcut-search.svg"
+			},
+			png: {
+				"key-command": "moonwitness/command-keyboard-pack/png/key-command.png",
+				"key-enter": "moonwitness/command-keyboard-pack/png/key-enter.png",
+				"key-escape": "moonwitness/command-keyboard-pack/png/key-escape.png",
+				"key-option": "moonwitness/command-keyboard-pack/png/key-option.png",
+				"key-shift": "moonwitness/command-keyboard-pack/png/key-shift.png",
+				"key-tab": "moonwitness/command-keyboard-pack/png/key-tab.png",
+				"keyboard-navigation": "moonwitness/command-keyboard-pack/png/keyboard-navigation.png",
+				"sequence-node-link": "moonwitness/command-keyboard-pack/png/sequence-node-link.png",
+				"shortcut-command": "moonwitness/command-keyboard-pack/png/shortcut-command.png",
+				"shortcut-focus": "moonwitness/command-keyboard-pack/png/shortcut-focus.png",
+				"shortcut-help": "moonwitness/command-keyboard-pack/png/shortcut-help.png",
+				"shortcut-new-case": "moonwitness/command-keyboard-pack/png/shortcut-new-case.png",
+				"shortcut-save": "moonwitness/command-keyboard-pack/png/shortcut-save.png",
+				"shortcut-search": "moonwitness/command-keyboard-pack/png/shortcut-search.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/command-keyboard-pack/png/key-command.png,moonwitness/command-keyboard-pack/png/key-enter.png,moonwitness/command-keyboard-pack/png/key-escape.png,moonwitness/command-keyboard-pack/png/key-option.png,moonwitness/command-keyboard-pack/png/key-shift.png,moonwitness/command-keyboard-pack/png/key-tab.png,moonwitness/command-keyboard-pack/png/keyboard-navigation.png,moonwitness/command-keyboard-pack/png/sequence-node-link.png,moonwitness/command-keyboard-pack/png/shortcut-command.png,moonwitness/command-keyboard-pack/png/shortcut-focus.png,moonwitness/command-keyboard-pack/png/shortcut-help.png,moonwitness/command-keyboard-pack/png/shortcut-new-case.png,moonwitness/command-keyboard-pack/png/shortcut-save.png,moonwitness/command-keyboard-pack/png/shortcut-search.png,moonwitness/command-keyboard-pack/svg/key-command.svg,moonwitness/command-keyboard-pack/svg/key-enter.svg,moonwitness/command-keyboard-pack/svg/key-escape.svg,moonwitness/command-keyboard-pack/svg/key-option.svg,moonwitness/command-keyboard-pack/svg/key-shift.svg,moonwitness/command-keyboard-pack/svg/key-tab.svg,moonwitness/command-keyboard-pack/svg/keyboard-navigation.svg,moonwitness/command-keyboard-pack/svg/sequence-node-link.svg,moonwitness/command-keyboard-pack/svg/shortcut-command.svg,moonwitness/command-keyboard-pack/svg/shortcut-focus.svg,moonwitness/command-keyboard-pack/svg/shortcut-help.svg,moonwitness/command-keyboard-pack/svg/shortcut-new-case.svg,moonwitness/command-keyboard-pack/svg/shortcut-save.svg,moonwitness/command-keyboard-pack/svg/shortcut-search.svg".split(",")
+		},
+		"texture-material": {
+			manifest: "moonwitness/texture-material-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				"archive-paper": "moonwitness/texture-material-pack/svg/archive-paper.svg",
+				"carbon-grid": "moonwitness/texture-material-pack/svg/carbon-grid.svg",
+				"data-matrix": "moonwitness/texture-material-pack/svg/data-matrix.svg",
+				"glass-panel": "moonwitness/texture-material-pack/svg/glass-panel.svg",
+				"legal-paper": "moonwitness/texture-material-pack/svg/legal-paper.svg",
+				"lunar-grain": "moonwitness/texture-material-pack/svg/lunar-grain.svg",
+				"map-grid": "moonwitness/texture-material-pack/svg/map-grid.svg",
+				microfilm: "moonwitness/texture-material-pack/svg/microfilm.svg",
+				"red-thread": "moonwitness/texture-material-pack/svg/red-thread.svg",
+				"scanner-lines": "moonwitness/texture-material-pack/svg/scanner-lines.svg",
+				"signal-noise": "moonwitness/texture-material-pack/svg/signal-noise.svg",
+				"star-field": "moonwitness/texture-material-pack/svg/star-field.svg"
+			},
+			png: {
+				"archive-paper": "moonwitness/texture-material-pack/png/archive-paper.png",
+				"carbon-grid": "moonwitness/texture-material-pack/png/carbon-grid.png",
+				"data-matrix": "moonwitness/texture-material-pack/png/data-matrix.png",
+				"glass-panel": "moonwitness/texture-material-pack/png/glass-panel.png",
+				"legal-paper": "moonwitness/texture-material-pack/png/legal-paper.png",
+				"lunar-grain": "moonwitness/texture-material-pack/png/lunar-grain.png",
+				"map-grid": "moonwitness/texture-material-pack/png/map-grid.png",
+				microfilm: "moonwitness/texture-material-pack/png/microfilm.png",
+				"red-thread": "moonwitness/texture-material-pack/png/red-thread.png",
+				"scanner-lines": "moonwitness/texture-material-pack/png/scanner-lines.png",
+				"signal-noise": "moonwitness/texture-material-pack/png/signal-noise.png",
+				"star-field": "moonwitness/texture-material-pack/png/star-field.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/texture-material-pack/png/archive-paper.png",
+				"moonwitness/texture-material-pack/png/carbon-grid.png",
+				"moonwitness/texture-material-pack/png/data-matrix.png",
+				"moonwitness/texture-material-pack/png/glass-panel.png",
+				"moonwitness/texture-material-pack/png/legal-paper.png",
+				"moonwitness/texture-material-pack/png/lunar-grain.png",
+				"moonwitness/texture-material-pack/png/map-grid.png",
+				"moonwitness/texture-material-pack/png/microfilm.png",
+				"moonwitness/texture-material-pack/png/red-thread.png",
+				"moonwitness/texture-material-pack/png/scanner-lines.png",
+				"moonwitness/texture-material-pack/png/signal-noise.png",
+				"moonwitness/texture-material-pack/png/star-field.png",
+				"moonwitness/texture-material-pack/svg/archive-paper.svg",
+				"moonwitness/texture-material-pack/svg/carbon-grid.svg",
+				"moonwitness/texture-material-pack/svg/data-matrix.svg",
+				"moonwitness/texture-material-pack/svg/glass-panel.svg",
+				"moonwitness/texture-material-pack/svg/legal-paper.svg",
+				"moonwitness/texture-material-pack/svg/lunar-grain.svg",
+				"moonwitness/texture-material-pack/svg/map-grid.svg",
+				"moonwitness/texture-material-pack/svg/microfilm.svg",
+				"moonwitness/texture-material-pack/svg/red-thread.svg",
+				"moonwitness/texture-material-pack/svg/scanner-lines.svg",
+				"moonwitness/texture-material-pack/svg/signal-noise.svg",
+				"moonwitness/texture-material-pack/svg/star-field.svg"
+			]
+		},
+		"architecture-diagram": {
+			manifest: "moonwitness/architecture-diagram-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"api-node": "moonwitness/architecture-diagram-pack/svg/api-node.svg",
+				"arrow-dashed": "moonwitness/architecture-diagram-pack/svg/arrow-dashed.svg",
+				"arrow-error": "moonwitness/architecture-diagram-pack/svg/arrow-error.svg",
+				"arrow-event": "moonwitness/architecture-diagram-pack/svg/arrow-event.svg",
+				"arrow-solid": "moonwitness/architecture-diagram-pack/svg/arrow-solid.svg",
+				"boundary-box": "moonwitness/architecture-diagram-pack/svg/boundary-box.svg",
+				"database-node": "moonwitness/architecture-diagram-pack/svg/database-node.svg",
+				"decision-node": "moonwitness/architecture-diagram-pack/svg/decision-node.svg",
+				"external-node": "moonwitness/architecture-diagram-pack/svg/external-node.svg",
+				"queue-node": "moonwitness/architecture-diagram-pack/svg/queue-node.svg",
+				"repository-node": "moonwitness/architecture-diagram-pack/svg/repository-node.svg",
+				"sequence-lifeline": "moonwitness/architecture-diagram-pack/svg/sequence-lifeline.svg",
+				"service-node": "moonwitness/architecture-diagram-pack/svg/service-node.svg",
+				"system-cluster": "moonwitness/architecture-diagram-pack/svg/system-cluster.svg",
+				"trust-zone": "moonwitness/architecture-diagram-pack/svg/trust-zone.svg",
+				"user-node": "moonwitness/architecture-diagram-pack/svg/user-node.svg"
+			},
+			png: {
+				"api-node": "moonwitness/architecture-diagram-pack/png/api-node.png",
+				"arrow-dashed": "moonwitness/architecture-diagram-pack/png/arrow-dashed.png",
+				"arrow-error": "moonwitness/architecture-diagram-pack/png/arrow-error.png",
+				"arrow-event": "moonwitness/architecture-diagram-pack/png/arrow-event.png",
+				"arrow-solid": "moonwitness/architecture-diagram-pack/png/arrow-solid.png",
+				"boundary-box": "moonwitness/architecture-diagram-pack/png/boundary-box.png",
+				"database-node": "moonwitness/architecture-diagram-pack/png/database-node.png",
+				"decision-node": "moonwitness/architecture-diagram-pack/png/decision-node.png",
+				"external-node": "moonwitness/architecture-diagram-pack/png/external-node.png",
+				"queue-node": "moonwitness/architecture-diagram-pack/png/queue-node.png",
+				"repository-node": "moonwitness/architecture-diagram-pack/png/repository-node.png",
+				"sequence-lifeline": "moonwitness/architecture-diagram-pack/png/sequence-lifeline.png",
+				"service-node": "moonwitness/architecture-diagram-pack/png/service-node.png",
+				"system-cluster": "moonwitness/architecture-diagram-pack/png/system-cluster.png",
+				"trust-zone": "moonwitness/architecture-diagram-pack/png/trust-zone.png",
+				"user-node": "moonwitness/architecture-diagram-pack/png/user-node.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/architecture-diagram-pack/png/api-node.png,moonwitness/architecture-diagram-pack/png/arrow-dashed.png,moonwitness/architecture-diagram-pack/png/arrow-error.png,moonwitness/architecture-diagram-pack/png/arrow-event.png,moonwitness/architecture-diagram-pack/png/arrow-solid.png,moonwitness/architecture-diagram-pack/png/boundary-box.png,moonwitness/architecture-diagram-pack/png/database-node.png,moonwitness/architecture-diagram-pack/png/decision-node.png,moonwitness/architecture-diagram-pack/png/external-node.png,moonwitness/architecture-diagram-pack/png/queue-node.png,moonwitness/architecture-diagram-pack/png/repository-node.png,moonwitness/architecture-diagram-pack/png/sequence-lifeline.png,moonwitness/architecture-diagram-pack/png/service-node.png,moonwitness/architecture-diagram-pack/png/system-cluster.png,moonwitness/architecture-diagram-pack/png/trust-zone.png,moonwitness/architecture-diagram-pack/png/user-node.png,moonwitness/architecture-diagram-pack/svg/api-node.svg,moonwitness/architecture-diagram-pack/svg/arrow-dashed.svg,moonwitness/architecture-diagram-pack/svg/arrow-error.svg,moonwitness/architecture-diagram-pack/svg/arrow-event.svg,moonwitness/architecture-diagram-pack/svg/arrow-solid.svg,moonwitness/architecture-diagram-pack/svg/boundary-box.svg,moonwitness/architecture-diagram-pack/svg/database-node.svg,moonwitness/architecture-diagram-pack/svg/decision-node.svg,moonwitness/architecture-diagram-pack/svg/external-node.svg,moonwitness/architecture-diagram-pack/svg/queue-node.svg,moonwitness/architecture-diagram-pack/svg/repository-node.svg,moonwitness/architecture-diagram-pack/svg/sequence-lifeline.svg,moonwitness/architecture-diagram-pack/svg/service-node.svg,moonwitness/architecture-diagram-pack/svg/system-cluster.svg,moonwitness/architecture-diagram-pack/svg/trust-zone.svg,moonwitness/architecture-diagram-pack/svg/user-node.svg".split(",")
+		},
+		"device-mockup": {
+			manifest: "moonwitness/device-mockup-pack/manifest.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"browser-dark": "moonwitness/device-mockup-pack/svg/browser-dark.svg",
+				"browser-desktop": "moonwitness/device-mockup-pack/svg/browser-desktop.svg",
+				"desktop-monitor": "moonwitness/device-mockup-pack/svg/desktop-monitor.svg",
+				laptop: "moonwitness/device-mockup-pack/svg/laptop.svg",
+				"multi-device": "moonwitness/device-mockup-pack/svg/multi-device.svg",
+				"phone-landscape": "moonwitness/device-mockup-pack/svg/phone-landscape.svg",
+				"phone-portrait": "moonwitness/device-mockup-pack/svg/phone-portrait.svg",
+				tablet: "moonwitness/device-mockup-pack/svg/tablet.svg"
+			},
+			png: {
+				"browser-dark": "moonwitness/device-mockup-pack/png/browser-dark.png",
+				"browser-desktop": "moonwitness/device-mockup-pack/png/browser-desktop.png",
+				"desktop-monitor": "moonwitness/device-mockup-pack/png/desktop-monitor.png",
+				laptop: "moonwitness/device-mockup-pack/png/laptop.png",
+				"multi-device": "moonwitness/device-mockup-pack/png/multi-device.png",
+				"phone-landscape": "moonwitness/device-mockup-pack/png/phone-landscape.png",
+				"phone-portrait": "moonwitness/device-mockup-pack/png/phone-portrait.png",
+				tablet: "moonwitness/device-mockup-pack/png/tablet.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/device-mockup-pack/png/browser-dark.png",
+				"moonwitness/device-mockup-pack/png/browser-desktop.png",
+				"moonwitness/device-mockup-pack/png/desktop-monitor.png",
+				"moonwitness/device-mockup-pack/png/laptop.png",
+				"moonwitness/device-mockup-pack/png/multi-device.png",
+				"moonwitness/device-mockup-pack/png/phone-landscape.png",
+				"moonwitness/device-mockup-pack/png/phone-portrait.png",
+				"moonwitness/device-mockup-pack/png/tablet.png",
+				"moonwitness/device-mockup-pack/svg/browser-dark.svg",
+				"moonwitness/device-mockup-pack/svg/browser-desktop.svg",
+				"moonwitness/device-mockup-pack/svg/desktop-monitor.svg",
+				"moonwitness/device-mockup-pack/svg/laptop.svg",
+				"moonwitness/device-mockup-pack/svg/multi-device.svg",
+				"moonwitness/device-mockup-pack/svg/phone-landscape.svg",
+				"moonwitness/device-mockup-pack/svg/phone-portrait.svg",
+				"moonwitness/device-mockup-pack/svg/tablet.svg"
+			]
+		},
+		"jurisdiction-locale": {
+			manifest: "moonwitness/jurisdiction-locale-pack/manifest.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"consent-region": "moonwitness/jurisdiction-locale-pack/svg/consent-region.svg",
+				"cross-border-transfer": "moonwitness/jurisdiction-locale-pack/svg/cross-border-transfer.svg",
+				"data-residency": "moonwitness/jurisdiction-locale-pack/svg/data-residency.svg",
+				"governance-zone": "moonwitness/jurisdiction-locale-pack/svg/governance-zone.svg",
+				"jurisdiction-cross-border": "moonwitness/jurisdiction-locale-pack/svg/jurisdiction-cross-border.svg",
+				"jurisdiction-disputed": "moonwitness/jurisdiction-locale-pack/svg/jurisdiction-disputed.svg",
+				"jurisdiction-global": "moonwitness/jurisdiction-locale-pack/svg/jurisdiction-global.svg",
+				"jurisdiction-local": "moonwitness/jurisdiction-locale-pack/svg/jurisdiction-local.svg",
+				"jurisdiction-national": "moonwitness/jurisdiction-locale-pack/svg/jurisdiction-national.svg",
+				"jurisdiction-state": "moonwitness/jurisdiction-locale-pack/svg/jurisdiction-state.svg",
+				"legal-basis": "moonwitness/jurisdiction-locale-pack/svg/legal-basis.svg",
+				"locale-language": "moonwitness/jurisdiction-locale-pack/svg/locale-language.svg",
+				"locale-region": "moonwitness/jurisdiction-locale-pack/svg/locale-region.svg",
+				"retention-policy": "moonwitness/jurisdiction-locale-pack/svg/retention-policy.svg",
+				"timezone-local": "moonwitness/jurisdiction-locale-pack/svg/timezone-local.svg",
+				"timezone-utc": "moonwitness/jurisdiction-locale-pack/svg/timezone-utc.svg"
+			},
+			png: {
+				"consent-region": "moonwitness/jurisdiction-locale-pack/png/consent-region.png",
+				"cross-border-transfer": "moonwitness/jurisdiction-locale-pack/png/cross-border-transfer.png",
+				"data-residency": "moonwitness/jurisdiction-locale-pack/png/data-residency.png",
+				"governance-zone": "moonwitness/jurisdiction-locale-pack/png/governance-zone.png",
+				"jurisdiction-cross-border": "moonwitness/jurisdiction-locale-pack/png/jurisdiction-cross-border.png",
+				"jurisdiction-disputed": "moonwitness/jurisdiction-locale-pack/png/jurisdiction-disputed.png",
+				"jurisdiction-global": "moonwitness/jurisdiction-locale-pack/png/jurisdiction-global.png",
+				"jurisdiction-local": "moonwitness/jurisdiction-locale-pack/png/jurisdiction-local.png",
+				"jurisdiction-national": "moonwitness/jurisdiction-locale-pack/png/jurisdiction-national.png",
+				"jurisdiction-state": "moonwitness/jurisdiction-locale-pack/png/jurisdiction-state.png",
+				"legal-basis": "moonwitness/jurisdiction-locale-pack/png/legal-basis.png",
+				"locale-language": "moonwitness/jurisdiction-locale-pack/png/locale-language.png",
+				"locale-region": "moonwitness/jurisdiction-locale-pack/png/locale-region.png",
+				"retention-policy": "moonwitness/jurisdiction-locale-pack/png/retention-policy.png",
+				"timezone-local": "moonwitness/jurisdiction-locale-pack/png/timezone-local.png",
+				"timezone-utc": "moonwitness/jurisdiction-locale-pack/png/timezone-utc.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/jurisdiction-locale-pack/png/consent-region.png,moonwitness/jurisdiction-locale-pack/png/cross-border-transfer.png,moonwitness/jurisdiction-locale-pack/png/data-residency.png,moonwitness/jurisdiction-locale-pack/png/governance-zone.png,moonwitness/jurisdiction-locale-pack/png/jurisdiction-cross-border.png,moonwitness/jurisdiction-locale-pack/png/jurisdiction-disputed.png,moonwitness/jurisdiction-locale-pack/png/jurisdiction-global.png,moonwitness/jurisdiction-locale-pack/png/jurisdiction-local.png,moonwitness/jurisdiction-locale-pack/png/jurisdiction-national.png,moonwitness/jurisdiction-locale-pack/png/jurisdiction-state.png,moonwitness/jurisdiction-locale-pack/png/legal-basis.png,moonwitness/jurisdiction-locale-pack/png/locale-language.png,moonwitness/jurisdiction-locale-pack/png/locale-region.png,moonwitness/jurisdiction-locale-pack/png/retention-policy.png,moonwitness/jurisdiction-locale-pack/png/timezone-local.png,moonwitness/jurisdiction-locale-pack/png/timezone-utc.png,moonwitness/jurisdiction-locale-pack/svg/consent-region.svg,moonwitness/jurisdiction-locale-pack/svg/cross-border-transfer.svg,moonwitness/jurisdiction-locale-pack/svg/data-residency.svg,moonwitness/jurisdiction-locale-pack/svg/governance-zone.svg,moonwitness/jurisdiction-locale-pack/svg/jurisdiction-cross-border.svg,moonwitness/jurisdiction-locale-pack/svg/jurisdiction-disputed.svg,moonwitness/jurisdiction-locale-pack/svg/jurisdiction-global.svg,moonwitness/jurisdiction-locale-pack/svg/jurisdiction-local.svg,moonwitness/jurisdiction-locale-pack/svg/jurisdiction-national.svg,moonwitness/jurisdiction-locale-pack/svg/jurisdiction-state.svg,moonwitness/jurisdiction-locale-pack/svg/legal-basis.svg,moonwitness/jurisdiction-locale-pack/svg/locale-language.svg,moonwitness/jurisdiction-locale-pack/svg/locale-region.svg,moonwitness/jurisdiction-locale-pack/svg/retention-policy.svg,moonwitness/jurisdiction-locale-pack/svg/timezone-local.svg,moonwitness/jurisdiction-locale-pack/svg/timezone-utc.svg".split(",")
+		},
+		"cinematic-hero": {
+			manifest: "moonwitness/cinematic-hero-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "svg",
+			svg: {
+				"archive-room": "moonwitness/cinematic-hero-pack/svg/archive-room.svg",
+				"community-lab": "moonwitness/cinematic-hero-pack/svg/community-lab.svg",
+				"correlation-sky": "moonwitness/cinematic-hero-pack/svg/correlation-sky.svg",
+				"data-observatory": "moonwitness/cinematic-hero-pack/svg/data-observatory.svg",
+				"evidence-desk": "moonwitness/cinematic-hero-pack/svg/evidence-desk.svg",
+				"field-investigation": "moonwitness/cinematic-hero-pack/svg/field-investigation.svg",
+				"legal-archive": "moonwitness/cinematic-hero-pack/svg/legal-archive.svg",
+				"lunar-horizon": "moonwitness/cinematic-hero-pack/svg/lunar-horizon.svg",
+				"map-room": "moonwitness/cinematic-hero-pack/svg/map-room.svg",
+				"observatory-night": "moonwitness/cinematic-hero-pack/svg/observatory-night.svg",
+				"satellite-orbit": "moonwitness/cinematic-hero-pack/svg/satellite-orbit.svg",
+				"source-trace": "moonwitness/cinematic-hero-pack/svg/source-trace.svg"
+			},
+			png: {
+				"archive-room": "moonwitness/cinematic-hero-pack/png/archive-room.png",
+				"community-lab": "moonwitness/cinematic-hero-pack/png/community-lab.png",
+				"correlation-sky": "moonwitness/cinematic-hero-pack/png/correlation-sky.png",
+				"data-observatory": "moonwitness/cinematic-hero-pack/png/data-observatory.png",
+				"evidence-desk": "moonwitness/cinematic-hero-pack/png/evidence-desk.png",
+				"field-investigation": "moonwitness/cinematic-hero-pack/png/field-investigation.png",
+				"legal-archive": "moonwitness/cinematic-hero-pack/png/legal-archive.png",
+				"lunar-horizon": "moonwitness/cinematic-hero-pack/png/lunar-horizon.png",
+				"map-room": "moonwitness/cinematic-hero-pack/png/map-room.png",
+				"observatory-night": "moonwitness/cinematic-hero-pack/png/observatory-night.png",
+				"satellite-orbit": "moonwitness/cinematic-hero-pack/png/satellite-orbit.png",
+				"source-trace": "moonwitness/cinematic-hero-pack/png/source-trace.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/cinematic-hero-pack/png/archive-room.png",
+				"moonwitness/cinematic-hero-pack/png/community-lab.png",
+				"moonwitness/cinematic-hero-pack/png/correlation-sky.png",
+				"moonwitness/cinematic-hero-pack/png/data-observatory.png",
+				"moonwitness/cinematic-hero-pack/png/evidence-desk.png",
+				"moonwitness/cinematic-hero-pack/png/field-investigation.png",
+				"moonwitness/cinematic-hero-pack/png/legal-archive.png",
+				"moonwitness/cinematic-hero-pack/png/lunar-horizon.png",
+				"moonwitness/cinematic-hero-pack/png/map-room.png",
+				"moonwitness/cinematic-hero-pack/png/observatory-night.png",
+				"moonwitness/cinematic-hero-pack/png/satellite-orbit.png",
+				"moonwitness/cinematic-hero-pack/png/source-trace.png",
+				"moonwitness/cinematic-hero-pack/svg/archive-room.svg",
+				"moonwitness/cinematic-hero-pack/svg/community-lab.svg",
+				"moonwitness/cinematic-hero-pack/svg/correlation-sky.svg",
+				"moonwitness/cinematic-hero-pack/svg/data-observatory.svg",
+				"moonwitness/cinematic-hero-pack/svg/evidence-desk.svg",
+				"moonwitness/cinematic-hero-pack/svg/field-investigation.svg",
+				"moonwitness/cinematic-hero-pack/svg/legal-archive.svg",
+				"moonwitness/cinematic-hero-pack/svg/lunar-horizon.svg",
+				"moonwitness/cinematic-hero-pack/svg/map-room.svg",
+				"moonwitness/cinematic-hero-pack/svg/observatory-night.svg",
+				"moonwitness/cinematic-hero-pack/svg/satellite-orbit.svg",
+				"moonwitness/cinematic-hero-pack/svg/source-trace.svg"
+			]
+		},
+		"runtime-motion": {
+			manifest: "moonwitness/runtime-motion-pack/manifest.json",
+			count: 12,
+			canonicalFormat: "animated-svg",
+			svg: {
+				"ai-orbit": "moonwitness/runtime-motion-pack/svg/ai-orbit.svg",
+				"backend-reconnect": "moonwitness/runtime-motion-pack/svg/backend-reconnect.svg",
+				"case-resolved": "moonwitness/runtime-motion-pack/svg/case-resolved.svg",
+				"drawer-open": "moonwitness/runtime-motion-pack/svg/drawer-open.svg",
+				"evidence-linked": "moonwitness/runtime-motion-pack/svg/evidence-linked.svg",
+				"focus-ring": "moonwitness/runtime-motion-pack/svg/focus-ring.svg",
+				"graph-connect": "moonwitness/runtime-motion-pack/svg/graph-connect.svg",
+				"loading-trace": "moonwitness/runtime-motion-pack/svg/loading-trace.svg",
+				"notification-in": "moonwitness/runtime-motion-pack/svg/notification-in.svg",
+				"pulse-alert": "moonwitness/runtime-motion-pack/svg/pulse-alert.svg",
+				"sync-spin": "moonwitness/runtime-motion-pack/svg/sync-spin.svg",
+				"upload-rise": "moonwitness/runtime-motion-pack/svg/upload-rise.svg"
+			},
+			png: {
+				"ai-orbit": "moonwitness/runtime-motion-pack/png/ai-orbit.png",
+				"backend-reconnect": "moonwitness/runtime-motion-pack/png/backend-reconnect.png",
+				"case-resolved": "moonwitness/runtime-motion-pack/png/case-resolved.png",
+				"drawer-open": "moonwitness/runtime-motion-pack/png/drawer-open.png",
+				"evidence-linked": "moonwitness/runtime-motion-pack/png/evidence-linked.png",
+				"focus-ring": "moonwitness/runtime-motion-pack/png/focus-ring.png",
+				"graph-connect": "moonwitness/runtime-motion-pack/png/graph-connect.png",
+				"loading-trace": "moonwitness/runtime-motion-pack/png/loading-trace.png",
+				"notification-in": "moonwitness/runtime-motion-pack/png/notification-in.png",
+				"pulse-alert": "moonwitness/runtime-motion-pack/png/pulse-alert.png",
+				"sync-spin": "moonwitness/runtime-motion-pack/png/sync-spin.png",
+				"upload-rise": "moonwitness/runtime-motion-pack/png/upload-rise.png"
+			},
+			webm: {
+				"ai-orbit": "moonwitness/runtime-motion-pack/webm/ai-orbit.webm",
+				"backend-reconnect": "moonwitness/runtime-motion-pack/webm/backend-reconnect.webm",
+				"case-resolved": "moonwitness/runtime-motion-pack/webm/case-resolved.webm",
+				"drawer-open": "moonwitness/runtime-motion-pack/webm/drawer-open.webm",
+				"evidence-linked": "moonwitness/runtime-motion-pack/webm/evidence-linked.webm",
+				"focus-ring": "moonwitness/runtime-motion-pack/webm/focus-ring.webm",
+				"graph-connect": "moonwitness/runtime-motion-pack/webm/graph-connect.webm",
+				"loading-trace": "moonwitness/runtime-motion-pack/webm/loading-trace.webm",
+				"notification-in": "moonwitness/runtime-motion-pack/webm/notification-in.webm",
+				"pulse-alert": "moonwitness/runtime-motion-pack/webm/pulse-alert.webm",
+				"sync-spin": "moonwitness/runtime-motion-pack/webm/sync-spin.webm",
+				"upload-rise": "moonwitness/runtime-motion-pack/webm/upload-rise.webm"
+			},
+			lottie: {
+				"ai-orbit": "moonwitness/runtime-motion-pack/lottie/ai-orbit.json",
+				"backend-reconnect": "moonwitness/runtime-motion-pack/lottie/backend-reconnect.json",
+				"case-resolved": "moonwitness/runtime-motion-pack/lottie/case-resolved.json",
+				"drawer-open": "moonwitness/runtime-motion-pack/lottie/drawer-open.json",
+				"evidence-linked": "moonwitness/runtime-motion-pack/lottie/evidence-linked.json",
+				"focus-ring": "moonwitness/runtime-motion-pack/lottie/focus-ring.json",
+				"graph-connect": "moonwitness/runtime-motion-pack/lottie/graph-connect.json",
+				"loading-trace": "moonwitness/runtime-motion-pack/lottie/loading-trace.json",
+				"notification-in": "moonwitness/runtime-motion-pack/lottie/notification-in.json",
+				"pulse-alert": "moonwitness/runtime-motion-pack/lottie/pulse-alert.json",
+				"sync-spin": "moonwitness/runtime-motion-pack/lottie/sync-spin.json",
+				"upload-rise": "moonwitness/runtime-motion-pack/lottie/upload-rise.json"
+			},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/runtime-motion-pack/lottie/ai-orbit.json,moonwitness/runtime-motion-pack/lottie/backend-reconnect.json,moonwitness/runtime-motion-pack/lottie/case-resolved.json,moonwitness/runtime-motion-pack/lottie/drawer-open.json,moonwitness/runtime-motion-pack/lottie/evidence-linked.json,moonwitness/runtime-motion-pack/lottie/focus-ring.json,moonwitness/runtime-motion-pack/lottie/graph-connect.json,moonwitness/runtime-motion-pack/lottie/loading-trace.json,moonwitness/runtime-motion-pack/lottie/notification-in.json,moonwitness/runtime-motion-pack/lottie/pulse-alert.json,moonwitness/runtime-motion-pack/lottie/sync-spin.json,moonwitness/runtime-motion-pack/lottie/upload-rise.json,moonwitness/runtime-motion-pack/png/ai-orbit.png,moonwitness/runtime-motion-pack/png/backend-reconnect.png,moonwitness/runtime-motion-pack/png/case-resolved.png,moonwitness/runtime-motion-pack/png/drawer-open.png,moonwitness/runtime-motion-pack/png/evidence-linked.png,moonwitness/runtime-motion-pack/png/focus-ring.png,moonwitness/runtime-motion-pack/png/graph-connect.png,moonwitness/runtime-motion-pack/png/loading-trace.png,moonwitness/runtime-motion-pack/png/notification-in.png,moonwitness/runtime-motion-pack/png/pulse-alert.png,moonwitness/runtime-motion-pack/png/sync-spin.png,moonwitness/runtime-motion-pack/png/upload-rise.png,moonwitness/runtime-motion-pack/svg/ai-orbit.svg,moonwitness/runtime-motion-pack/svg/backend-reconnect.svg,moonwitness/runtime-motion-pack/svg/case-resolved.svg,moonwitness/runtime-motion-pack/svg/drawer-open.svg,moonwitness/runtime-motion-pack/svg/evidence-linked.svg,moonwitness/runtime-motion-pack/svg/focus-ring.svg,moonwitness/runtime-motion-pack/svg/graph-connect.svg,moonwitness/runtime-motion-pack/svg/loading-trace.svg,moonwitness/runtime-motion-pack/svg/notification-in.svg,moonwitness/runtime-motion-pack/svg/pulse-alert.svg,moonwitness/runtime-motion-pack/svg/sync-spin.svg,moonwitness/runtime-motion-pack/svg/upload-rise.svg,moonwitness/runtime-motion-pack/webm/ai-orbit.webm,moonwitness/runtime-motion-pack/webm/backend-reconnect.webm,moonwitness/runtime-motion-pack/webm/case-resolved.webm,moonwitness/runtime-motion-pack/webm/drawer-open.webm,moonwitness/runtime-motion-pack/webm/evidence-linked.webm,moonwitness/runtime-motion-pack/webm/focus-ring.webm,moonwitness/runtime-motion-pack/webm/graph-connect.webm,moonwitness/runtime-motion-pack/webm/loading-trace.webm,moonwitness/runtime-motion-pack/webm/notification-in.webm,moonwitness/runtime-motion-pack/webm/pulse-alert.webm,moonwitness/runtime-motion-pack/webm/sync-spin.webm,moonwitness/runtime-motion-pack/webm/upload-rise.webm".split(",")
+		},
+		"developer-distribution": {
+			manifest: "moonwitness/developer-pack/manifest.json",
+			count: 4,
+			canonicalFormat: "generated-registry",
+			svg: {},
+			png: {},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {
+				"assets.json": "dist/assets.json",
+				"assets.ts": "dist/assets.ts",
+				"assets.css": "dist/assets.css",
+				"sprite.svg": "dist/sprite.svg"
+			},
+			files: []
+		},
+		"community-participation": {
+			manifest: "moonwitness/community-participation-pack/manifest.json",
+			count: 8,
+			canonicalFormat: "svg",
+			svg: {
+				"attributed-reply": "moonwitness/community-participation-pack/svg/attributed-reply.svg",
+				"discussion-thread": "moonwitness/community-participation-pack/svg/discussion-thread.svg",
+				"identity-bridge": "moonwitness/community-participation-pack/svg/identity-bridge.svg",
+				"moderation-history": "moonwitness/community-participation-pack/svg/moderation-history.svg",
+				notification: "moonwitness/community-participation-pack/svg/notification.svg",
+				"proposal-review": "moonwitness/community-participation-pack/svg/proposal-review.svg",
+				"saved-case": "moonwitness/community-participation-pack/svg/saved-case.svg",
+				"source-linked": "moonwitness/community-participation-pack/svg/source-linked.svg"
+			},
+			png: {
+				"attributed-reply": "moonwitness/community-participation-pack/png/attributed-reply.png",
+				"discussion-thread": "moonwitness/community-participation-pack/png/discussion-thread.png",
+				"identity-bridge": "moonwitness/community-participation-pack/png/identity-bridge.png",
+				"moderation-history": "moonwitness/community-participation-pack/png/moderation-history.png",
+				notification: "moonwitness/community-participation-pack/png/notification.png",
+				"proposal-review": "moonwitness/community-participation-pack/png/proposal-review.png",
+				"saved-case": "moonwitness/community-participation-pack/png/saved-case.png",
+				"source-linked": "moonwitness/community-participation-pack/png/source-linked.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: [
+				"moonwitness/community-participation-pack/png/attributed-reply.png",
+				"moonwitness/community-participation-pack/png/discussion-thread.png",
+				"moonwitness/community-participation-pack/png/identity-bridge.png",
+				"moonwitness/community-participation-pack/png/moderation-history.png",
+				"moonwitness/community-participation-pack/png/notification.png",
+				"moonwitness/community-participation-pack/png/proposal-review.png",
+				"moonwitness/community-participation-pack/png/saved-case.png",
+				"moonwitness/community-participation-pack/png/source-linked.png",
+				"moonwitness/community-participation-pack/svg/attributed-reply.svg",
+				"moonwitness/community-participation-pack/svg/discussion-thread.svg",
+				"moonwitness/community-participation-pack/svg/identity-bridge.svg",
+				"moonwitness/community-participation-pack/svg/moderation-history.svg",
+				"moonwitness/community-participation-pack/svg/notification.svg",
+				"moonwitness/community-participation-pack/svg/proposal-review.svg",
+				"moonwitness/community-participation-pack/svg/saved-case.svg",
+				"moonwitness/community-participation-pack/svg/source-linked.svg"
+			]
+		}
+	},
+	collections: {
+		"brand-system": {
+			manifest: "moonwitness/brand/brand-assets.json",
+			count: 13,
+			canonicalFormat: "svg",
+			svg: {
+				"app-icon-maskable": "moonwitness/brand/app-icon-maskable.svg",
+				"app-icon": "moonwitness/brand/app-icon.svg",
+				"apple-touch-icon": "moonwitness/brand/apple-touch-icon.svg",
+				favicon: "moonwitness/brand/favicon.svg",
+				"logo-horizontal": "moonwitness/brand/logo-horizontal.svg",
+				"logo-mark": "moonwitness/brand/logo-mark.svg",
+				"logo-monochrome": "moonwitness/brand/logo-monochrome.svg",
+				"logo-stacked": "moonwitness/brand/logo-stacked.svg",
+				"og-card": "moonwitness/brand/og-card.svg",
+				"rocksoul-lockup": "moonwitness/brand/rocksoul-lockup.svg",
+				"safari-pinned-tab": "moonwitness/brand/safari-pinned-tab.svg",
+				"social-avatar": "moonwitness/brand/social-avatar.svg",
+				wordmark: "moonwitness/brand/wordmark.svg"
+			},
+			png: {
+				"app-icon-192": "moonwitness/brand/generated/app-icon-192.png",
+				"app-icon-512": "moonwitness/brand/generated/app-icon-512.png",
+				"app-icon-maskable-192": "moonwitness/brand/generated/app-icon-maskable-192.png",
+				"app-icon-maskable-512": "moonwitness/brand/generated/app-icon-maskable-512.png",
+				"apple-touch-icon-180": "moonwitness/brand/generated/apple-touch-icon-180.png",
+				"favicon-16": "moonwitness/brand/generated/favicon-16.png",
+				"favicon-32": "moonwitness/brand/generated/favicon-32.png",
+				"favicon-48": "moonwitness/brand/generated/favicon-48.png",
+				"logo-horizontal-1520x320": "moonwitness/brand/generated/logo-horizontal-1520x320.png",
+				"logo-mark-512": "moonwitness/brand/generated/logo-mark-512.png",
+				"logo-monochrome-1520x320": "moonwitness/brand/generated/logo-monochrome-1520x320.png",
+				"logo-stacked-1120x1040": "moonwitness/brand/generated/logo-stacked-1120x1040.png",
+				"og-card-1200x630": "moonwitness/brand/generated/og-card-1200x630.png",
+				"rocksoul-lockup-1800x360": "moonwitness/brand/generated/rocksoul-lockup-1800x360.png",
+				"safari-pinned-tab-512": "moonwitness/brand/generated/safari-pinned-tab-512.png",
+				"social-avatar-512": "moonwitness/brand/generated/social-avatar-512.png",
+				"wordmark-1360x240": "moonwitness/brand/generated/wordmark-1360x240.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: { favicon: "moonwitness/brand/generated/favicon.ico" },
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/brand/app-icon-maskable.svg,moonwitness/brand/app-icon.svg,moonwitness/brand/apple-touch-icon.svg,moonwitness/brand/favicon.svg,moonwitness/brand/generated/app-icon-192.png,moonwitness/brand/generated/app-icon-512.png,moonwitness/brand/generated/app-icon-maskable-192.png,moonwitness/brand/generated/app-icon-maskable-512.png,moonwitness/brand/generated/apple-touch-icon-180.png,moonwitness/brand/generated/favicon-16.png,moonwitness/brand/generated/favicon-32.png,moonwitness/brand/generated/favicon-48.png,moonwitness/brand/generated/favicon.ico,moonwitness/brand/generated/logo-horizontal-1520x320.png,moonwitness/brand/generated/logo-mark-512.png,moonwitness/brand/generated/logo-monochrome-1520x320.png,moonwitness/brand/generated/logo-stacked-1120x1040.png,moonwitness/brand/generated/og-card-1200x630.png,moonwitness/brand/generated/rocksoul-lockup-1800x360.png,moonwitness/brand/generated/safari-pinned-tab-512.png,moonwitness/brand/generated/social-avatar-512.png,moonwitness/brand/generated/wordmark-1360x240.png,moonwitness/brand/logo-horizontal.svg,moonwitness/brand/logo-mark.svg,moonwitness/brand/logo-monochrome.svg,moonwitness/brand/logo-stacked.svg,moonwitness/brand/og-card.svg,moonwitness/brand/rocksoul-lockup.svg,moonwitness/brand/safari-pinned-tab.svg,moonwitness/brand/social-avatar.svg,moonwitness/brand/wordmark.svg".split(",")
+		},
+		"baseline-v1": {
+			manifest: "moonwitness/ui/v1/screens/screens.json",
+			count: 16,
+			canonicalFormat: "svg",
+			svg: {
+				"01-landing-hero": "moonwitness/ui/v1/screens/01-landing-hero.svg",
+				"02-manifesto": "moonwitness/ui/v1/screens/02-manifesto.svg",
+				"03-rocksoul-character": "moonwitness/ui/v1/screens/03-rocksoul-character.svg",
+				"04-repositories-overview": "moonwitness/ui/v1/screens/04-repositories-overview.svg",
+				"05-story": "moonwitness/ui/v1/screens/05-story.svg",
+				"06-event": "moonwitness/ui/v1/screens/06-event.svg",
+				"07-person": "moonwitness/ui/v1/screens/07-person.svg",
+				"08-rgbl": "moonwitness/ui/v1/screens/08-rgbl.svg",
+				"09-aws": "moonwitness/ui/v1/screens/09-aws.svg",
+				"10-case-public": "moonwitness/ui/v1/screens/10-case-public.svg",
+				"11-correlation": "moonwitness/ui/v1/screens/11-correlation.svg",
+				"12-aws-legal": "moonwitness/ui/v1/screens/12-aws-legal.svg",
+				"13-community": "moonwitness/ui/v1/screens/13-community.svg",
+				"14-auth": "moonwitness/ui/v1/screens/14-auth.svg",
+				"15-platform-admin": "moonwitness/ui/v1/screens/15-platform-admin.svg",
+				"16-design-system": "moonwitness/ui/v1/screens/16-design-system.svg"
+			},
+			png: {
+				"01-landing-hero": "moonwitness/ui/v1/screens/01-landing-hero.png",
+				"02-manifesto": "moonwitness/ui/v1/screens/02-manifesto.png",
+				"03-rocksoul-character": "moonwitness/ui/v1/screens/03-rocksoul-character.png",
+				"04-repositories-overview": "moonwitness/ui/v1/screens/04-repositories-overview.png",
+				"05-story": "moonwitness/ui/v1/screens/05-story.png",
+				"06-event": "moonwitness/ui/v1/screens/06-event.png",
+				"07-person": "moonwitness/ui/v1/screens/07-person.png",
+				"08-rgbl": "moonwitness/ui/v1/screens/08-rgbl.png",
+				"09-aws": "moonwitness/ui/v1/screens/09-aws.png",
+				"10-case-public": "moonwitness/ui/v1/screens/10-case-public.png",
+				"11-correlation": "moonwitness/ui/v1/screens/11-correlation.png",
+				"12-aws-legal": "moonwitness/ui/v1/screens/12-aws-legal.png",
+				"13-community": "moonwitness/ui/v1/screens/13-community.png",
+				"14-auth": "moonwitness/ui/v1/screens/14-auth.png",
+				"15-platform-admin": "moonwitness/ui/v1/screens/15-platform-admin.png",
+				"16-design-system": "moonwitness/ui/v1/screens/16-design-system.png"
+			},
+			webm: {},
+			lottie: {},
+			wav: {},
+			ogg: {},
+			ico: {},
+			artifacts: {},
+			files: /* @__PURE__ */ "moonwitness/ui/v1/screens/01-landing-hero.png,moonwitness/ui/v1/screens/01-landing-hero.svg,moonwitness/ui/v1/screens/02-manifesto.png,moonwitness/ui/v1/screens/02-manifesto.svg,moonwitness/ui/v1/screens/03-rocksoul-character.png,moonwitness/ui/v1/screens/03-rocksoul-character.svg,moonwitness/ui/v1/screens/04-repositories-overview.png,moonwitness/ui/v1/screens/04-repositories-overview.svg,moonwitness/ui/v1/screens/05-story.png,moonwitness/ui/v1/screens/05-story.svg,moonwitness/ui/v1/screens/06-event.png,moonwitness/ui/v1/screens/06-event.svg,moonwitness/ui/v1/screens/07-person.png,moonwitness/ui/v1/screens/07-person.svg,moonwitness/ui/v1/screens/08-rgbl.png,moonwitness/ui/v1/screens/08-rgbl.svg,moonwitness/ui/v1/screens/09-aws.png,moonwitness/ui/v1/screens/09-aws.svg,moonwitness/ui/v1/screens/10-case-public.png,moonwitness/ui/v1/screens/10-case-public.svg,moonwitness/ui/v1/screens/11-correlation.png,moonwitness/ui/v1/screens/11-correlation.svg,moonwitness/ui/v1/screens/12-aws-legal.png,moonwitness/ui/v1/screens/12-aws-legal.svg,moonwitness/ui/v1/screens/13-community.png,moonwitness/ui/v1/screens/13-community.svg,moonwitness/ui/v1/screens/14-auth.png,moonwitness/ui/v1/screens/14-auth.svg,moonwitness/ui/v1/screens/15-platform-admin.png,moonwitness/ui/v1/screens/15-platform-admin.svg,moonwitness/ui/v1/screens/16-design-system.png,moonwitness/ui/v1/screens/16-design-system.svg".split(",")
+		}
+	},
+	coverage: {
+		packFamilies: 43,
+		foundationCollections: 2,
+		showcaseCollections: 45,
+		deliveryFiles: 1464,
+		indexedDeliveryFiles: 1464,
+		missingDeliveryFiles: 0,
+		coveragePercent: 100,
+		extensions: {
+			svg: 634,
+			png: 777,
+			ico: 1,
+			webm: 12,
+			wav: 14,
+			ogg: 14,
+			lottie: 12
+		}
+	}
+}, p = {
+	repository: "bjo163/rocksoul-assets",
+	ref: "main",
+	commit: "5b035d0d83612f847ccd8b35f2c1b04022500110",
+	acceptedMainCommit: "429b2d5adf50b1d67494e60d96ab274735fc6ce9",
+	manifestSchemaVersion: 3,
+	applicationVersion: "v2",
+	syncedAt: "2026-09-08",
+	assetRelease: "1.3.1",
+	assetReleaseStatus: "released",
+	repositoryAcceptance: "passed",
+	livePenpotVerification: "manual-follow-up",
+	assetPackIndex: "moonwitness/asset-packs.json",
+	developerDistribution: [
+		"dist/assets.json",
+		"dist/assets.ts",
+		"dist/assets.css",
+		"dist/sprite.svg"
+	]
+}, m = {
+	brand: "MoonWitness",
+	ecosystem: "MoonWitness × Rocksoul",
+	tagline: "Truth leaves a trace.",
+	sourceType: "editable-vector"
+}, h = [
+	{
+		id: "dashboard",
+		label: "Dashboard",
+		path: "/",
+		kind: "system",
+		permission: "authenticated"
+	},
+	{
+		id: "cases",
+		label: "Cases",
+		path: "/cases",
+		kind: "resource",
+		resource: "case",
+		permission: "case:read"
+	},
+	{
+		id: "kanban",
+		label: "Kanban",
+		path: "/work/kanban",
+		kind: "workspace",
+		permission: "review:read"
+	},
+	{
+		id: "calendar",
+		label: "Calendar",
+		path: "/work/calendar",
+		kind: "workspace",
+		permission: "review:read"
+	},
+	{
+		id: "chat",
+		label: "Chat",
+		path: "/chat",
+		kind: "workspace",
+		permission: "community:read"
+	},
+	{
+		id: "ai",
+		label: "AI Workspace",
+		path: "/ai",
+		kind: "workspace",
+		permission: "ai:use"
+	},
+	{
+		id: "resources",
+		label: "Resources",
+		path: "/resources",
+		kind: "system",
+		permission: "resource:read"
+	},
+	{
+		id: "profile",
+		label: "Profile",
+		path: "/profile",
+		kind: "account",
+		permission: "authenticated"
+	},
+	{
+		id: "settings",
+		label: "Settings",
+		path: "/settings",
+		kind: "account",
+		permission: "authenticated"
+	}
+], g = [
+	{
+		resource: "case",
+		label: "STORY / Cases",
+		path: "/cases",
+		repo: "rocksoul-mftl"
+	},
+	{
+		resource: "event",
+		label: "EVENT / Events",
+		path: "/events",
+		repo: "rocksoul-legend"
+	},
+	{
+		resource: "person",
+		label: "PERSON / People",
+		path: "/people",
+		repo: "rocksoul-superhero"
+	},
+	{
+		resource: "rgbl",
+		label: "TEXT / RGBL",
+		path: "/sources",
+		repo: "rocksoul-rgbl"
+	},
+	{
+		resource: "aws",
+		label: "LAW / AWS",
+		path: "/aws",
+		repo: "rocksoul-aws"
+	},
+	{
+		resource: "perspective",
+		label: "PERSPECTIVE / Perspectives",
+		path: "/perspectives",
+		repo: "rocksoul-jizz"
+	},
+	{
+		resource: "correlation",
+		label: "RELATIONSHIP / Correlation",
+		path: "/correlation",
+		repo: "rocksoul-correlation"
+	}
+], _ = [
+	{
+		id: "17",
+		slug: "dashboard",
+		activeNav: "Dashboard"
+	},
+	{
+		id: "18",
+		slug: "command-palette",
+		activeNav: "Dashboard",
+		overlay: !0
+	},
+	{
+		id: "19",
+		slug: "notifications",
+		activeNav: "Dashboard",
+		overlay: !0
+	},
+	{
+		id: "20",
+		slug: "kanban",
+		activeNav: "Kanban"
+	},
+	{
+		id: "21",
+		slug: "calendar",
+		activeNav: "Calendar"
+	},
+	{
+		id: "22",
+		slug: "chat",
+		activeNav: "Chat"
+	},
+	{
+		id: "23",
+		slug: "ai-workspace",
+		activeNav: "AI Workspace"
+	},
+	{
+		id: "24",
+		slug: "resources",
+		activeNav: "Resources"
+	},
+	{
+		id: "25",
+		slug: "profile-settings",
+		activeNav: "Settings"
+	},
+	{
+		id: "26",
+		slug: "authorization",
+		activeNav: "Settings"
+	},
+	{
+		id: "27",
+		slug: "system-states",
+		activeNav: "Dashboard"
+	}
+], v = {
+	desktop: {
+		width: 1440,
+		sidebar: 220,
+		behavior: "persistent"
+	},
+	tablet: {
+		width: 768,
+		sidebar: 72,
+		behavior: "icon-rail"
+	},
+	mobile: {
+		width: 390,
+		sidebar: 0,
+		behavior: "drawer"
+	},
+	backendStates: [
+		"online",
+		"degraded",
+		"offline"
+	],
+	themeStates: [
+		"light",
+		"dark",
+		"system"
+	],
+	sidebarStates: [
+		"expanded",
+		"compact",
+		"drawer-open",
+		"drawer-closed"
+	],
+	notificationStates: [
+		"empty",
+		"unread",
+		"open"
+	],
+	userMenuStates: ["closed", "open"],
+	accessibility: {
+		skipLink: !0,
+		landmarks: [
+			"navigation",
+			"banner",
+			"main"
+		],
+		keyboardCommandPalette: !0,
+		focusVisible: !0,
+		drawerFocusTrap: !0
+	}
+}, y = {
+	loading: [
+		"skeleton-or-progress",
+		"accessible-busy-state",
+		"reduced-motion-safe"
+	],
+	empty: [
+		"headline",
+		"supporting-copy",
+		"recovery-or-create-action"
+	],
+	error: [
+		"error-summary",
+		"system-context",
+		"retry-or-back-action",
+		"trace-id-when-available"
+	],
+	offline: [
+		"backend-status",
+		"last-known-state",
+		"retry"
+	],
+	forbidden: [
+		"required-permission",
+		"current-role",
+		"request-access-when-available"
+	]
+}, b = f, x = {
+	repository: p.repository,
+	ref: p.ref,
+	commit: p.commit,
+	version: f.version,
+	packCount: Object.keys(f.packs).length,
+	canonicalAssetCount: f.coverage.extensions.svg,
+	deliveryFileCount: f.coverage.deliveryFiles,
+	coveragePercent: f.coverage.coveragePercent,
+	canonicalFormat: f.canonicalFormat,
+	developerDistribution: p.developerDistribution
+}, S = `https://raw.githubusercontent.com/${p.repository}/${p.commit}`, C = `https://raw.githubusercontent.com/${p.repository}/${p.acceptedMainCommit}`;
+function w(e) {
+	return e.replace(/\/+$/, "");
+}
+function T(e, t) {
+	if (typeof e == "string") return e;
+	if (e) return t && e[t] ? e[t] : Object.values(e)[0];
+}
+function E(e, t, n = {}) {
+	let r = f.packs[e];
+	return T(r[n.format ?? "svg"]?.[t], n.size);
+}
+function D(e, t, n = {}) {
+	return !!E(e, t, n);
+}
+function O(e, t, n = {}) {
+	let r = E(e, t, n);
+	if (!r) return;
+	let i = (n.rootMode ?? "repository") === "moonwitness" ? r.replace(/^moonwitness\//, "") : r;
+	return `${w(n.baseUrl ?? S)}/${i}`;
+}
+//#endregion
+//#region src/components/asset-provider.tsx
+var k = "/assets", A = t(k);
+function j(e) {
+	return e.replace(/\/+$/, "");
+}
+function M({ baseUrl: e = k, children: t }) {
+	return /* @__PURE__ */ o(A.Provider, {
+		value: j(e),
+		children: t
+	});
+}
+function N() {
+	return r(A);
+}
+function P(e, t, n) {
+	return `${j(e)}/${d(t, n)}`;
+}
+function F({ pack: e, file: t, alt: n, ...r }) {
+	let i = N();
+	return /* @__PURE__ */ o("img", {
+		src: P(i, e, t),
+		alt: n,
+		...r
+	});
+}
+function I({ pack: e, assetId: t, format: n = "svg", size: r, baseUrl: s = S, rootMode: c = "repository", alt: l, ...u }) {
+	let d = O(e, t, {
+		format: n,
+		size: r,
+		baseUrl: s,
+		rootMode: c
+	}), f = O(e, t, {
+		format: n,
+		size: r,
+		baseUrl: k,
+		rootMode: c
+	}), [p, m] = a(d);
+	return i(() => m(d), [d]), p ? /* @__PURE__ */ o("img", {
+		src: p,
+		alt: l,
+		...u,
+		onError: (e) => {
+			p !== f && f && m(f), u.onError?.(e);
+		}
+	}) : null;
+}
+function L({ src: e, fallbackSrc: t, alt: n, ...r }) {
+	let [s, c] = a(e);
+	return i(() => c(e), [e]), /* @__PURE__ */ o("img", {
+		src: s,
+		alt: n,
+		...r,
+		onError: (e) => {
+			t && s !== t && c(t), r.onError?.(e);
+		}
+	});
+}
+function R({ status: e, label: t = e, className: n }) {
+	return /* @__PURE__ */ s("span", {
+		className: n,
+		children: [/* @__PURE__ */ o(F, {
+			pack: "badge-status",
+			file: `svg/${e}.svg`,
+			alt: "",
+			"aria-hidden": "true"
+		}), /* @__PURE__ */ o("span", {
+			className: "sr-only",
+			children: t
+		})]
+	});
+}
+function z({ alt: e = "Person", className: t }) {
+	return /* @__PURE__ */ o(I, {
+		pack: "product-icons",
+		assetId: "person",
+		alt: e,
+		className: t
+	});
+}
+function B({ persona: e, alt: t, className: n }) {
+	return /* @__PURE__ */ o(F, {
+		pack: "persona-avatar",
+		file: `svg/${e}.svg`,
+		alt: t,
+		className: n
+	});
+}
+function V({ enabled: e = !1, volume: t = .35, format: r = "ogg" } = {}) {
+	let i = N();
+	return n((n) => {
+		if (!e || typeof Audio > "u") return;
+		let a = `${j(i)}/sfx/generated/${n}.${r}`, o = new Audio(a);
+		o.volume = Math.max(0, Math.min(1, t)), o.play().catch(() => void 0);
+	}, [
+		i,
+		e,
+		r,
+		t
+	]);
+}
+var H = {
+	localMirrorBase: k,
+	registryRepositoryBase: S,
+	packCount: Object.keys(c).length,
+	preferSvgInProductUi: !0,
+	rasterIsDerivative: !0,
+	runtimeMotionFormats: [
+		"svg",
+		"apng",
+		"webm",
+		"lottie"
+	],
+	sfxOptInOnly: !0
+};
+//#endregion
+//#region src/components/ui/asset.tsx
+function U({ className: t, pack: n, file: r, alt: i, ...a }) {
+	return /* @__PURE__ */ o(F, {
+		"data-slot": "asset",
+		pack: n,
+		file: r,
+		alt: i,
+		className: e("max-w-full object-contain", t),
+		...a
+	});
+}
+//#endregion
+export { d as A, g as C, u as D, y as E, l as O, h as S, v as T, b as _, B as a, p as b, R as c, N as d, V as f, D as g, x as h, z as i, c as k, H as l, S as m, F as n, I as o, C as p, M as r, L as s, U as t, P as u, E as v, _ as w, m as x, O as y };

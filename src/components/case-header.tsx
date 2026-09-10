@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { Badge } from "./badge"
+import { Badge } from "./compat/badge"
 import { cn } from "../lib/cn"
 
 export interface CaseHeaderProps {

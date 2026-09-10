@@ -1,4 +1,4 @@
-import { Badge } from "../components/badge"
+import { Badge } from "../components/compat/badge"
 import { AWSBoundary, EvidenceCard, SourceBlock, TimelineEntry } from "../components/archive-components"
 import { LegalStatus } from "../components/legal-status"
 import { mw0042 } from "../fixtures/mw0042"

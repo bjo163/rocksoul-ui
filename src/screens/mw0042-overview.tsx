@@ -7,7 +7,7 @@ import {
   EvidenceGridPattern,
   PublicCasePattern,
   RelatedCases,
-} from "../components/patterns"
+} from "../components/compat/patterns"
 import { mw0042 } from "../fixtures/mw0042"
 
 export function MW0042Overview() {

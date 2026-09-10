@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "../lib/cn"
-import { Badge } from "./badge"
+import { Badge } from "./compat/badge"
 
 export type TextualTraceState = "available" | "partial" | "missing" | "restricted" | "candidate" | "unresolved"
 

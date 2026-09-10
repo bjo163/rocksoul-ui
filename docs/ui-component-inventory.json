@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-10",
+  "scope": "packages/ui/src",
+  "canonicalSurfaces": {
+    "foundation": ["tokens.ts", "styles.css", "lib/cn.ts"],
+    "subPrimitives": ["components/ui/form.tsx", "components/ui/input-group.tsx"],
+    "atoms": [
+      "components/ui/button.tsx", "components/ui/badge.tsx", "components/ui/input.tsx",
+      "components/ui/textarea.tsx", "components/ui/checkbox.tsx", "components/ui/radio-group.tsx",
+      "components/ui/switch.tsx", "components/ui/slider.tsx", "components/ui/select.tsx",
+      "components/ui/native-select.tsx", "components/ui/input-otp.tsx", "components/ui/label.tsx",
+      "components/ui/avatar.tsx", "components/ui/card.tsx", "components/ui/separator.tsx",
+      "components/ui/scroll-area.tsx", "components/ui/aspect-ratio.tsx", "components/ui/progress.tsx",
+      "components/ui/spinner.tsx", "components/ui/skeleton.tsx", "components/ui/kbd.tsx",
+      "components/ui/tooltip.tsx", "components/ui/popover.tsx", "components/ui/hover-card.tsx",
+      "components/ui/dialog.tsx", "components/ui/alert-dialog.tsx", "components/ui/sheet.tsx",
+      "components/ui/drawer.tsx", "components/ui/dropdown-menu.tsx", "components/ui/context-menu.tsx",
+      "components/ui/command.tsx", "components/ui/tabs.tsx", "components/ui/accordion.tsx",
+      "components/ui/collapsible.tsx", "components/ui/calendar.tsx", "components/ui/table.tsx",
+      "components/ui/pagination.tsx", "components/ui/breadcrumb.tsx", "components/ui/sidebar.tsx"
+    ],
+    "molecules": [],
+    "organisms": [],
+    "templates": [],
+    "features": "apps/web/src/features"
+  },
+  "compatibility": [
+    "components/compat/button.tsx", "components/compat/badge.tsx",
+    "components/compat/form-controls.tsx", "components/compat/overlays.tsx",
+    "components/compat/tabs.tsx", "components/compat/patterns.tsx"
+  ],
+  "domainComponents": "components/*.tsx",
+  "screens": "screens/*.tsx",
+  "overlapDecisions": [
+    { "behavior": "Button", "owner": "components/ui/button.tsx", "legacy": "components/compat/button.tsx", "action": "migrate then delete compat" },
+    { "behavior": "Badge", "owner": "components/ui/badge.tsx", "legacy": "components/compat/badge.tsx", "action": "keep StatusBadge as domain wrapper; do not export generic Badge from compat" },
+    { "behavior": "Input/Textarea/Select/Checkbox/Radio/Switch", "owner": "components/ui/*", "legacy": "components/compat/form-controls.tsx", "action": "replace with Field + canonical controls" },
+    { "behavior": "Dialog/Drawer/Tooltip/Avatar/Skeleton", "owner": "components/ui/*", "legacy": "components/compat/overlays.tsx", "action": "replace legacy APIs and delete compat" },
+    { "behavior": "Tabs", "owner": "components/ui/tabs.tsx", "legacy": "components/compat/tabs.tsx", "action": "migrate item-array consumers" },
+    { "behavior": "Pagination", "owner": "components/ui/pagination.tsx", "legacy": "components/compat/patterns.tsx", "action": "remove duplicate export" }
+  ],
+  "promotionQueue": [
+    { "name": "Field", "level": "molecule", "source": "components/ui/form.tsx + components/ui/field.tsx" },
+    { "name": "SearchInput", "level": "molecule", "source": "new" },
+    { "name": "FilterBar", "level": "organism", "source": "new" },
+    { "name": "DataTable", "level": "organism", "source": "components/ui/table.tsx" },
+    { "name": "AppShell", "level": "template", "source": "components/application-shell.tsx" }
+  ]
+}

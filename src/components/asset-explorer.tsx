@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
-import { Button } from "./button"
-import { Dialog } from "./overlays"
+import { Button } from "./compat/button"
+import { Dialog } from "./compat/overlays"
 import { MoonWitnessResilientImage } from "./asset-provider"
 import {
   MOONWITNESS_STABLE_REPOSITORY_BASE,

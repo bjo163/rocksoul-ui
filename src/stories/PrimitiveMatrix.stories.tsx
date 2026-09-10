@@ -1,10 +1,10 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Badge } from "../components/badge"
-import { Button } from "../components/button"
-import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/form-controls"
-import { Avatar, Dialog, Divider, Drawer, IconButton, Skeleton, Tooltip } from "../components/overlays"
-import { Tabs } from "../components/tabs"
+import { Badge } from "../components/compat/badge"
+import { Button } from "../components/compat/button"
+import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/compat/form-controls"
+import { Avatar, Dialog, Divider, Drawer, IconButton, Skeleton, Tooltip } from "../components/compat/overlays"
+import { Tabs } from "../components/compat/tabs"
 
 const meta = {
   title: "QA/Primitive Contract Matrix",

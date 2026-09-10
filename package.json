@@ -12,12 +12,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "audit:tokens": "node scripts/token-audit.mjs",
+    "audit:architecture": "node scripts/architecture-audit.mjs",
     "audit:a11y": "node scripts/a11y-audit.mjs",
     "audit:domains": "node scripts/domain-audit.mjs",
     "audit:application": "node scripts/application-audit.mjs",
     "audit:semantic-map": "node scripts/semantic-asset-map-audit.mjs",
     "audit:package": "node scripts/package-audit.mjs",
-    "ci": "npm run audit:tokens && npm run audit:a11y && npm run audit:research-visuals && npm run audit:domains && npm run audit:assets-sync && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:platform-admin && npm run audit:application && npm run audit:semantic-map && npm run typecheck && npm run test:unit && npm run build:lib && npm run audit:package && npm run test:consumer && npm run audit:release && npm run build:playground && npm run build-storybook",
+    "ci": "npm run audit:tokens && npm run audit:architecture && npm run audit:a11y && npm run audit:research-visuals && npm run audit:domains && npm run audit:assets-sync && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:platform-admin && npm run audit:application && npm run audit:semantic-map && npm run typecheck && npm run test:unit && npm run build:lib && npm run audit:package && npm run test:consumer && npm run audit:release && npm run build:playground && npm run build-storybook",
     "prepare": "npm run build:lib",
     "audit:assets-sync": "node scripts/assets-sync-audit.mjs",
     "audit:assets-freshness": "node scripts/assets-freshness-audit.mjs",
@@ -30,34 +31,52 @@
     "audit:platform-admin": "node scripts/platform-admin-audit.mjs",
     "audit:research-visuals": "node scripts/research-visual-contract-audit.mjs",
     "test:browser:desktop": "playwright test --project=desktop-chromium",
-    "test:browser:mobile": "playwright test --project=mobile-chromium"
+    "test:browser:mobile": "playwright test --project=mobile-chromium",
+    "audit:consumer": "node scripts/ui-consumer-audit.mjs",
+    "audit:adapters": "node scripts/adapter-audit.mjs"
   },
   "dependencies": {
+    "@base-ui/react": "1.8.0",
+    "@hookform/resolvers": "5.9.1",
+    "@shadcn/react": "0.3.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
-    "tailwind-merge": "3.6.0"
+    "cmdk": "1.1.1",
+    "date-fns": "4.4.0",
+    "embla-carousel-react": "8.6.0",
+    "input-otp": "1.5.0",
+    "radix-ui": "1.6.7",
+    "react-day-picker": "10.0.1",
+    "react-hook-form": "7.87.0",
+    "react-resizable-panels": "4.12.4",
+    "recharts": "3.8.0",
+    "sonner": "2.0.8",
+    "tailwind-merge": "3.6.0",
+    "tw-animate-css": "1.4.0",
+    "vaul": "1.1.2",
+    "zod": "3.25.76"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
     "@storybook/addon-a11y": "10.6.0",
     "@storybook/react-vite": "10.6.0",
     "@tailwindcss/vite": "4.3.3",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
     "@vitejs/plugin-react": "6.1.1",
+    "jsdom": "^27.0.0",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "storybook": "10.6.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
     "vite": "8.2.2",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "@axe-core/playwright": "^4.10.2",
-    "@playwright/test": "^1.55.0",
-    "@testing-library/jest-dom": "^6.8.0",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
-    "jsdom": "^27.0.0",
-    "pixelmatch": "^7.1.0",
-    "pngjs": "^7.0.0",
     "vitest": "^4.0.0"
   },
   "engines": {
@@ -65,7 +84,8 @@
     "npm": ">=11.6.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "THIRD-PARTY-NOTICES.md"
   ],
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -77,7 +97,23 @@
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json",
     "./brand/*": "./dist/brand/*",
-    "./assets/*": "./dist/assets/*"
+    "./assets/*": "./dist/assets/*",
+    "./components/ui": {
+      "types": "./dist/components/ui/index.d.ts",
+      "import": "./dist/components/ui/index.js"
+    },
+    "./components/ui/*": {
+      "types": "./dist/components/ui/*.d.ts",
+      "import": "./dist/components/ui/*.js"
+    },
+    "./components/molecules": {
+      "types": "./dist/components/molecules/index.d.ts",
+      "import": "./dist/components/molecules/index.js"
+    },
+    "./components/molecules/*": {
+      "types": "./dist/components/molecules/*.d.ts",
+      "import": "./dist/components/molecules/*.js"
+    }
   },
   "sideEffects": [
     "./dist/styles.css"

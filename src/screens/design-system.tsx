@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { Badge } from "../components/badge"
-import { Button } from "../components/button"
+import { Badge } from "../components/compat/badge"
+import { Button } from "../components/compat/button"
 import {
   AuditEventRow,
   Citation,
@@ -11,9 +11,9 @@ import {
   StatePanel,
   SubmissionCard,
 } from "../components/archive-components"
-import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/form-controls"
-import { Dialog, Divider, Skeleton } from "../components/overlays"
-import { Tabs } from "../components/tabs"
+import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/compat/form-controls"
+import { Dialog, Divider, Skeleton } from "../components/compat/overlays"
+import { Tabs } from "../components/compat/tabs"
 import { AssetExplorer } from "../components/asset-explorer"
 import { ROCKSOUL_ASSETS_REGISTRY } from "../contracts/assets-registry"
 

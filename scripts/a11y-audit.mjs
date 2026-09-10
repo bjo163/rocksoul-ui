@@ -17,12 +17,12 @@ const [
 ] = await Promise.all([
   read("src/styles.css"),
   read("src/components/evidence-graph.tsx"),
-  read("src/components/form-controls.tsx"),
-  read("src/components/overlays.tsx"),
+  read("src/components/compat/form-controls.tsx"),
+  read("src/components/compat/overlays.tsx"),
   read("src/components/legal-status.tsx"),
   read("src/screens/community.tsx"),
   read("src/screens/mw0042-overview.tsx"),
-  read("src/components/patterns.tsx"),
+  read("src/components/compat/patterns.tsx"),
   read("src/components/event-intelligence.tsx"),
 ])
 
@@ -35,8 +35,8 @@ const checks = [
   [forms.includes("aria-describedby"), "form helper/error association"],
   [forms.includes("aria-invalid"), "form invalid state"],
   [forms.includes('aria-checked={indeterminate ? "mixed"'), "checkbox indeterminate semantics"],
-  [overlays.includes("aria-labelledby={titleId}"), "modal accessible names"],
-  [overlays.includes("onCancel"), "Escape-close modal behavior"],
+  [overlays.includes("<DialogTitle>") && overlays.includes("<SheetTitle>"), "modal accessible names through shared primitives"],
+  [overlays.includes("onOpenChange="), "controlled modal close behavior (Escape verified by interaction tests)"],
   [overlays.includes("restoreRef.current?.focus()"), "modal focus restoration"],
   [legal.includes("not a court judgment"), "legal-analysis guardrail"],
   [community.includes("Community submission ≠ canonical evidence"), "community/canonical separation"],

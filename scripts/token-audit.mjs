@@ -117,11 +117,11 @@ const requiredComponents = [
   "Skeleton",
 ]
 for (const component of requiredComponents) {
-  if (!sourceText.includes(`export function ${component}`)) violations.push(`component inventory: missing export function ${component}`)
+  if (!sourceText.includes(`export function ${component}`) && !sourceText.includes(`export const ${component} =`)) violations.push(`component inventory: missing export ${component}`)
 }
 
 
-const patternSource = await readFile(path.join(src, "components", "patterns.tsx"), "utf8")
+const patternSource = await readFile(path.join(src, "components", "compat", "patterns.tsx"), "utf8")
 const requiredPatterns = [
   "PublicCasePattern",
   "EvidenceGridPattern",

@@ -3,6 +3,36 @@
   "schema": "rocksoul.todo.v1",
   "tasks": [
     {
+      "acceptance_criteria": [
+        "Preserve Git HEAD and tracked content across relocation",
+        "Update workspace and registry paths",
+        "Pass UI typecheck and library build from the new path"
+      ],
+      "affected_paths": [
+        "ROCKSOUL/packages/ui",
+        "ROCKSOUL/rocksoul.code-workspace",
+        "LOCAL-FORGE.json",
+        "control/rocksoul-ecosystem/registry"
+      ],
+      "depends_on": [],
+      "evidence": [
+        "UI repo relocated to ROCKSOUL/packages/ui after partial move recovery; Git HEAD 2404f1d361b28c75a945bdceba92003a61504ba2 preserved; target contains 721 tracked files and status was clean before migration metadata; npm ci --ignore-scripts PASS; npm run typecheck PASS; npm run build:lib PASS; workspace and registry paths updated; runtime doctor PASS"
+      ],
+      "evidence_required": [
+        "Before/after Git comparison",
+        "npm install and build checks",
+        "Runtime doctor and task lookup"
+      ],
+      "id": "UI-RELOCATE-001",
+      "owner": "rocksoul-ui",
+      "phase": "WORKSPACE_RELOCATION",
+      "priority": "HIGH",
+      "risk": "MEDIUM",
+      "scope": "repository",
+      "status": "VERIFIED",
+      "title": "Relocate UI to ROCKSOUL/packages/ui and verify workspace integration"
+    },
+    {
       "evidence": [
         "node scripts/validate-rocksoul-contract.mjs => PASS: rocksoul-ui contract; tasks=1",
         "ROCKSOUL-REPO.json and ROCKSOUL-TODO.json repository_id values match; .github/workflows/rocksoul-contract.yml runs the same validator"
@@ -227,6 +257,79 @@
       "scope": "repository",
       "status": "VERIFIED",
       "title": "Define cleanup policy for browser test artifacts"
+    },
+    {
+      "id": "UI-PRIMITIVES-001",
+      "title": "Complete composable ROCKSOUL UI primitives using owned tokens and assets",
+      "owner": "rocksoul-ui",
+      "scope": "repository",
+      "phase": "UI_FOUNDATIONS",
+      "priority": "HIGH",
+      "risk": "MEDIUM",
+      "status": "VERIFIED",
+      "depends_on": [],
+      "acceptance_criteria": [
+        "Provide a composable components/ui layer with documented coverage",
+        "Use ROCKSOUL tokens and assets while preserving existing public APIs",
+        "Verify types, interactions, package exports and Storybook build"
+      ],
+      "affected_paths": [
+        "src/components/ui",
+        "src/hooks/use-mobile.ts",
+        "src/styles.css",
+        "src/index.ts",
+        "vite.lib.config.ts",
+        "package.json",
+        "docs/ui-primitives.md"
+      ],
+      "evidence": [
+        "62 components: 61 upstream registry UI entries plus ROCKSOUL Asset; local icon module uses owned asset geometry and supplementary navigation glyphs.",
+        "npm run typecheck PASS; npm run test:unit PASS (17 files, 46 tests); audit:tokens and audit:a11y PASS.",
+        "npm run build:lib, audit:package, test:consumer, build-storybook PASS. All 63 public TSX subpath imports and declarations resolve.",
+        "Browser visual review not performed; Dark and Light Storybook examples are built for review."
+      ],
+      "evidence_required": [
+        "Typecheck and keyboard/focus interaction tests",
+        "Package import and declaration verification",
+        "Library and Storybook builds"
+      ],
+      "completed_at": "2026-09-10T03:32:01.163Z"
+    },
+    {
+      "scope": "repository",
+      "phase": "UI_FOUNDATIONS",
+      "priority": "HIGH",
+      "risk": "MEDIUM",
+      "status": "VERIFIED",
+      "acceptance_criteria": [
+        "Use standard component names and public UI imports",
+        "Classify overlaps and share primitive implementations through compatibility adapters",
+        "Verify UI tests and apps/web consumer behavior"
+      ],
+      "evidence": [
+        "UI typecheck PASS; 18 unit-test files / 50 tests PASS; token and accessibility audits PASS; library build, package audit and consumer smoke PASS.",
+        "UI consumer audit PASS: 63 unique TSX modules, 16 classified compatibility exports; no raw form controls or old primitive imports in apps/web.",
+        "apps/web pnpm run ci PASS; local installed UI dist/index.js matches current package build.",
+        "Agent Browser: desktop/mobile public page and /aws render without JavaScript errors; theme toggles, search focus and filtering, case selection, and AWS form tested. Mobile viewport and scroll width both 390px after correcting wrapped list buttons.",
+        "AWS live lookup unavailable without its configured API; live AWS data retrieval was not certified. Screenshots: packages/ui/test-results/web-primitives-mobile.png and web-primitives-desktop.png."
+      ],
+      "evidence_required": [
+        "Typecheck, unit tests and public exports",
+        "Consumer CI and desktop/mobile browser checks"
+      ],
+      "completed_at": "2026-09-10T03:48:17.251Z",
+      "id": "UI-CONSUMER-001",
+      "title": "Consolidate UI compatibility components and document standard consumer usage",
+      "owner": "rocksoul-ui",
+      "depends_on": [
+        "UI-PRIMITIVES-001"
+      ],
+      "affected_paths": [
+        "src/components",
+        "scripts/ui-consumer-audit.mjs",
+        "src/test/ui-compatibility.test.tsx",
+        "docs/component-usage.md"
+      ]
     }
   ]
 }

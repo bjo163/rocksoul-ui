@@ -1,5 +1,5 @@
 import { useId, useState } from "react"
-import { Badge } from "./badge"
+import { Badge } from "./compat/badge"
 import type { RecordDomain, RecordSummary } from "./four-record-summary"
 import type { ResearchDomain } from "../contracts/ecosystem-domains"
 import { cn } from "../lib/cn"

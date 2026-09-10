@@ -1,4 +1,13 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
+
+@layer base {
+  [data-slot] {
+    border-color: var(--mw-border-default);
+  }
+}
 
 @theme inline {
   --font-sans: "Inter", "Arial", sans-serif;
@@ -18,6 +27,28 @@
   --color-border-strong: var(--mw-border-strong);
   --color-primary: var(--mw-brand-crimson-ui);
   --color-primary-foreground: var(--mw-text-inverse);
+  --color-popover: var(--mw-surface-overlay);
+  --color-popover-foreground: var(--mw-text-primary);
+  --color-secondary: var(--mw-surface-panel);
+  --color-secondary-foreground: var(--mw-text-primary);
+  --color-accent: var(--mw-surface-overlay);
+  --color-accent-foreground: var(--mw-text-primary);
+  --color-destructive: var(--mw-status-prohibited-fg);
+  --color-input: var(--mw-border-default);
+  --color-ring: var(--mw-brand-crimson-ui);
+  --color-sidebar: var(--mw-surface-raised);
+  --color-sidebar-foreground: var(--mw-text-primary);
+  --color-sidebar-primary: var(--mw-brand-crimson-ui);
+  --color-sidebar-primary-foreground: var(--mw-text-inverse);
+  --color-sidebar-accent: var(--mw-surface-overlay);
+  --color-sidebar-accent-foreground: var(--mw-text-primary);
+  --color-sidebar-border: var(--mw-border-default);
+  --color-sidebar-ring: var(--mw-brand-crimson-ui);
+  --color-chart-1: var(--mw-brand-crimson-ui);
+  --color-chart-2: var(--mw-status-supported-fg);
+  --color-chart-3: var(--mw-status-info-fg);
+  --color-chart-4: var(--mw-status-partial-fg);
+  --color-chart-5: var(--mw-text-secondary);
   --color-success: var(--mw-status-supported-fg);
   --color-verified: var(--mw-status-verified-fg);
   --color-warning: var(--mw-status-partial-fg);
