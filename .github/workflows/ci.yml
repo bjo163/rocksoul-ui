@@ -92,3 +92,5 @@ jobs:
             playwright-report/**
           if-no-files-found: warn
           retention-days: 14
+
+      # Canonical trigger after automated tracked-dist synchronization.
