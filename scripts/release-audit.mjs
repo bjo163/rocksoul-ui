@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process"
 
 const root = process.cwd()
 const pkg = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"))
-const changelog = await readFile(path.join(root, "CHANGELOG.md"), "utf8"))
+const changelog = await readFile(path.join(root, "CHANGELOG.md"), "utf8")
 const failures = []
 
 function git(args) {
