@@ -6,9 +6,10 @@ import { Textarea as PrimitiveTextarea } from "../ui/textarea"
 import { Avatar as PrimitiveAvatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Dialog as PrimitiveDialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet"
+import { NativeSelect } from "../ui/native-select"
 
 export function SurfaceSelect({ label, options, ...props }: React.SelectHTMLAttributes<HTMLSelectElement> & { label?: string; options: Array<{ label: string; value: string }> }) {
-  return <label className="grid gap-2 text-sm font-medium">{label ? <span>{label}</span> : null}<select className="h-9 w-full border border-input bg-transparent px-3 text-sm" {...props}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+  return <label className="grid gap-2 text-sm font-medium">{label ? <span>{label}</span> : null}<NativeSelect {...props}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</NativeSelect></label>
 }
 
 export function SurfaceButton({ variant = "default", ...props }: Omit<React.ComponentProps<typeof PrimitiveButton>, "variant"> & { variant?: "default" | "primary" | "secondary" | "danger" | "destructive" | "outline" | "ghost" | "link" }) {
