@@ -1,6 +1,7 @@
 export * from "./tokens"
 export * as UI from "./components/ui"
 export * from "./components/molecules"
+export * from "./components/organisms"
 export * from "./contracts/ecosystem-domains"
 export * from "./contracts/ecosystem-links"
 export * from "./contracts/assets-v2"

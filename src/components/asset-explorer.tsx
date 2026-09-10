@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Button } from "./compat/button"
+import { Button } from "./ui/button"
 import { Dialog } from "./compat/overlays"
 import { MoonWitnessResilientImage } from "./asset-provider"
 import {
@@ -70,8 +70,8 @@ export function AssetExplorer({
           <h2 className="mt-2 text-2xl font-bold">{ROCKSOUL_ASSETS_REGISTRY.packCount} packs / {ROCKSOUL_ASSETS_REGISTRY.canonicalAssetCount} canonical assets</h2>
         </div>
         <div className="flex gap-2" aria-label="Asset explorer view">
-          <Button variant={view==="grid"?"primary":"secondary"} onClick={()=>setView("grid")}>Grid</Button>
-          <Button variant={view==="compact"?"primary":"secondary"} onClick={()=>setView("compact")}>Compact</Button>
+          <Button variant={view==="grid"?"default":"secondary"} onClick={()=>setView("grid")}>Grid</Button>
+          <Button variant={view==="compact"?"default":"secondary"} onClick={()=>setView("compact")}>Compact</Button>
         </div>
       </div>
 

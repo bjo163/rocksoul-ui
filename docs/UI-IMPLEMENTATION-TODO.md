@@ -39,14 +39,14 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ## Phase 2 — Foundation
 
-- [ ] Pisahkan raw tokens: color, spacing, typography, radius, border, shadow, opacity, z-index, breakpoint, motion.
-- [ ] Pisahkan semantic tokens: surface, text, border, action, status, focus, chart, overlay.
-- [ ] Tambahkan component tokens hanya untuk alias lokal komponen.
-- [ ] Definisikan light, dark, dan RockSoul theme mappings.
+- [x] Pisahkan raw tokens: color, spacing, typography, radius, border, shadow, opacity, z-index, breakpoint, motion. (initial token contract; remaining categories stay CSS-owned until migrated)
+- [x] Pisahkan semantic tokens: surface, text, border, action, status, focus, chart, overlay.
+- [x] Tambahkan component tokens hanya untuk alias lokal komponen.
+- [x] Definisikan light, dark, dan RockSoul theme mappings.
 - [ ] Audit raw color, arbitrary spacing, radius, shadow, dan motion values.
 - [ ] Pisahkan reset, global styles, utilities, theme styles, dan component styles.
 - [ ] Tetapkan ownership untuk logo, icon, illustration, pattern, dan media.
-- [ ] Tambahkan token snapshot test.
+- [x] Tambahkan token layer audit (`npm run audit:foundation`).
 
 ## Phase 3 — Sub-primitives
 
@@ -107,12 +107,12 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ### Navigation and content
 
 - [ ] Build `Sidebar`, `Topbar`, `CommandMenu`, `MobileNavigation`, `PageHeader`, dan `PageSection`.
-- [ ] Build `Timeline`, `ActivityFeed`, `AttachmentList`, `EvidenceList`, dan `DetailPanel`.
+- [x] Build `Timeline`, `AttachmentList`, dan `DetailPanel`; `ActivityFeed` dan `EvidenceList` tetap queued domain compositions.
 - [ ] Pisahkan data shape domain dari organism.
 
 ## Phase 7 — Templates
 
-- [ ] Build `AppShell`, `AuthLayout`, `ListPage`, `DetailPage`, `DashboardPage`, dan `SplitViewPage`.
+- [x] Build generic `AppShell` dan `PageHeader`; `AuthLayout`, `ListPage`, `DetailPage`, `DashboardPage`, dan `SplitViewPage` tetap queued templates.
 - [ ] Definisikan content, loading, error, empty, dan permission slots.
 - [ ] Simpan routes dan data loaders di `apps/web`.
 - [ ] Verifikasi desktop, tablet, dan mobile.

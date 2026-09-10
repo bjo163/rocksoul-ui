@@ -1,4 +1,4 @@
-import { Button } from "../components/compat/button"
+import { Button } from "../components/ui/button"
 import { MetricTile, MWHeader } from "../components/archive-components"
 import { CaseHeader } from "../components/case-header"
 import { CommunityCaseThreadPattern } from "../components/compat/patterns"

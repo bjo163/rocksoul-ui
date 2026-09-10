@@ -18,11 +18,17 @@ import { FileInput as Re } from "./components/molecules/file-input.js";
 import { DateInput as ze } from "./components/molecules/date-input.js";
 import { FormActions as Be } from "./components/molecules/form-actions.js";
 import { SimplePagination as Ve } from "./components/molecules/pagination.js";
-import { createContext as He, useContext as Ue, useEffect as C, useId as w, useMemo as We, useRef as Ge, useState as T } from "react";
+import { DataTable as He } from "./components/organisms/data-table.js";
+import { FilterBar as Ue } from "./components/organisms/filter-bar.js";
+import { DetailPanel as We } from "./components/organisms/detail-panel.js";
+import { ContentState as Ge, EmptyState as Ke, ErrorState as qe, LoadingState as Je } from "./components/organisms/content-states.js";
+import { Timeline as Ye } from "./components/organisms/timeline.js";
+import { AttachmentList as Xe } from "./components/organisms/attachment-list.js";
+import { createContext as Ze, useContext as Qe, useEffect as C, useId as w, useMemo as $e, useRef as et, useState as T } from "react";
 import { Fragment as E, jsx as D, jsxs as O } from "react/jsx-runtime";
-import { cva as Ke } from "class-variance-authority";
+import { cva as tt } from "class-variance-authority";
 //#region src/tokens.ts
-var qe = {
+var nt = {
 	color: {
 		brand: {
 			crimson: "var(--mw-brand-crimson)",
@@ -80,7 +86,7 @@ var qe = {
 		slow: 420,
 		cinematic: 900
 	}
-}, Je = {
+}, rt = {
 	schemaVersion: 2,
 	rule: "Semantic domains are not repository identities. Visual consumers resolve qualified references through this canonical owner contract; identifier-kind rules provide graph semantics without consumer-side prefix hardcoding.",
 	domains: [
@@ -183,7 +189,7 @@ var qe = {
 		idKinds: {},
 		defaultKind: "case"
 	}
-}, Ye = [...Je.domains, Je.relationshipLayer], k = Object.fromEntries(Ye.map((e) => [e.domain, {
+}, it = [...rt.domains, rt.relationshipLayer], k = Object.fromEntries(it.map((e) => [e.domain, {
 	label: e.label,
 	repository: e.repository,
 	prefix: e.prefix,
@@ -192,14 +198,14 @@ var qe = {
 	iconAssetId: e.iconAssetId,
 	idKinds: e.idKinds,
 	defaultKind: e.defaultKind
-}])), Xe = Je;
-function Ze(e) {
+}])), at = rt;
+function ot(e) {
 	return k[e];
 }
-function Qe(e) {
+function st(e) {
 	return Object.prototype.hasOwnProperty.call(k, e) && e !== "RELATIONSHIP";
 }
-function $e(e) {
+function ct(e) {
 	let t = Object.entries(k).find(([, t]) => e.startsWith(t.prefix));
 	if (!t) return null;
 	let [n, r] = t, i = e.slice(r.prefix.length);
@@ -217,7 +223,7 @@ function $e(e) {
 }
 //#endregion
 //#region src/contracts/ecosystem-links.ts
-var et = "https://github.com", tt = "https://raw.githubusercontent.com", nt = {
+var lt = "https://github.com", ut = "https://raw.githubusercontent.com", dt = {
 	assets: "rocksoul-assets",
 	ui: "rocksoul-ui",
 	web: "rocksoul-web",
@@ -230,23 +236,23 @@ var et = "https://github.com", tt = "https://raw.githubusercontent.com", nt = {
 	law: "rocksoul-aws",
 	perspective: "rocksoul-jizz",
 	relationship: "rocksoul-correlation"
-}, rt = y.repository.split("/")[0];
-function it(e) {
+}, ft = y.repository.split("/")[0];
+function pt(e) {
 	return e.replace(/^\/+/, "");
 }
-function at(e, t = {}) {
-	let n = t.ref ?? "main", r = t.path ? it(t.path) : void 0;
-	if (t.raw) return r ? `${tt}/${rt}/${e}/${n}/${r}` : `${tt}/${rt}/${e}/${n}`;
-	let i = `${et}/${rt}/${e}`;
+function mt(e, t = {}) {
+	let n = t.ref ?? "main", r = t.path ? pt(t.path) : void 0;
+	if (t.raw) return r ? `${ut}/${ft}/${e}/${n}/${r}` : `${ut}/${ft}/${e}/${n}`;
+	let i = `${lt}/${ft}/${e}`;
 	return r ? `${i}/blob/${n}/${r}` : i;
 }
-function ot(e) {
-	return at(nt.assets, {
+function ht(e) {
+	return mt(dt.assets, {
 		ref: y.commit,
 		path: e
 	});
 }
-function st(e) {
+function gt(e) {
 	let t = e?.trim();
 	if (!t) return null;
 	try {
@@ -261,11 +267,11 @@ function st(e) {
 	return n ? {
 		source: t,
 		kind: "case",
-		href: ot(`penpot/golden-cases/${n[1].toLowerCase()}/SCREEN-CONTRACT.md`)
+		href: ht(`penpot/golden-cases/${n[1].toLowerCase()}/SCREEN-CONTRACT.md`)
 	} : t.startsWith("COMMUNITY-") ? {
 		source: t,
 		kind: "community",
-		href: at(nt.community, { path: "README.md" })
+		href: mt(dt.community, { path: "README.md" })
 	} : {
 		source: t,
 		kind: "opaque"
@@ -273,15 +279,15 @@ function st(e) {
 }
 //#endregion
 //#region src/contracts/interactions.tsx
-var ct = He({});
-function lt({ actions: e, children: t }) {
-	return /* @__PURE__ */ D(ct.Provider, {
+var _t = Ze({});
+function vt({ actions: e, children: t }) {
+	return /* @__PURE__ */ D(_t.Provider, {
 		value: e ?? {},
 		children: t
 	});
 }
 function A() {
-	return Ue(ct);
+	return Qe(_t);
 }
 //#endregion
 //#region src/contracts/platform-admin.ts
@@ -483,7 +489,7 @@ var j = {
 		"forbidden",
 		"unconfigured"
 	]
-}, ut = {
+}, yt = {
 	dashboard: "28-platform-dashboard.svg",
 	users: "29-platform-users.svg",
 	authorization: "30-platform-authorization.svg",
@@ -492,18 +498,18 @@ var j = {
 	audit: "33-platform-audit.svg",
 	settings: "34-platform-settings.svg",
 	"system-states": "35-platform-system-states.svg"
-}, dt = {
+}, bt = {
 	repository: "bjo163/rocksoul-assets",
 	ref: "main",
 	commit: "e978695a3dd92d952faaa0ff356980e9ad6438a2",
 	manifest: "moonwitness/cinematic-web-hero/manifest.json",
 	profileVersion: "1.0.0",
 	sourceRelease: "1.3.1"
-}, ft = `https://raw.githubusercontent.com/${dt.repository}/${dt.commit}`;
+}, xt = `https://raw.githubusercontent.com/${bt.repository}/${bt.commit}`;
 function M(e) {
-	return `${ft}/${e.replace(/^\/+/, "")}`;
+	return `${xt}/${e.replace(/^\/+/, "")}`;
 }
-var pt = {
+var St = {
 	desktop: M("moonwitness/cinematic-hero-pack/webp/hero-master-desktop.webp"),
 	mobile: M("moonwitness/cinematic-hero-pack/webp/hero-master-mobile.webp"),
 	moon: M("moonwitness/cinematic-hero-pack/webp/moon-photographic.webp"),
@@ -516,7 +522,7 @@ var pt = {
 		M("moonwitness/hero-backgrounds/png/evidence-constellation.png"),
 		M("moonwitness/hero-backgrounds/png/correlation-web.png")
 	]
-}, mt = {
+}, Ct = {
 	composition: "composite-photographic-master",
 	desktopAspectRatio: "16:9",
 	mobileAspectRatio: "3:4",
@@ -525,18 +531,18 @@ var pt = {
 	reducedMotion: "static-by-default",
 	evidenceGraphTextEquivalent: !0,
 	correlationImpliesCausation: !1
-}, ht = He({});
-function gt({ adapter: e, children: t }) {
-	return /* @__PURE__ */ D(ht.Provider, {
+}, wt = Ze({});
+function Tt({ adapter: e, children: t }) {
+	return /* @__PURE__ */ D(wt.Provider, {
 		value: e ?? {},
 		children: t
 	});
 }
-function _t(e, t, n) {
+function Et(e, t, n) {
 	return t.startsWith("/") && !t.startsWith("//") && !e.defaultPrevented && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && (!n || n === "_self");
 }
 function N({ href: e, onClick: t, target: n, children: r, ...i }) {
-	let a = Ue(ht);
+	let a = Qe(wt);
 	return a.renderLink ? /* @__PURE__ */ D(E, { children: a.renderLink({
 		href: e,
 		onClick: t,
@@ -548,14 +554,14 @@ function N({ href: e, onClick: t, target: n, children: r, ...i }) {
 		target: n,
 		...i,
 		onClick: (r) => {
-			t?.(r), a.navigate && _t(r, e, n) && (r.preventDefault(), a.navigate(e));
+			t?.(r), a.navigate && Et(r, e, n) && (r.preventDefault(), a.navigate(e));
 		},
 		children: r
 	});
 }
 //#endregion
 //#region src/components/brand.tsx
-var vt = {
+var Dt = {
 	mark: "brand/logo-mark.svg",
 	horizontal: "brand/logo-horizontal.svg",
 	stacked: "brand/logo-stacked.svg",
@@ -583,7 +589,7 @@ var vt = {
 	socialAvatar512: "brand/generated/social-avatar-512.png",
 	ogCard1200x630: "brand/generated/og-card-1200x630.png"
 };
-function yt({ className: t, title: n = "MoonWitness", ...r }) {
+function Ot({ className: t, title: n = "MoonWitness", ...r }) {
 	return /* @__PURE__ */ D("svg", {
 		viewBox: "0 0 128 128",
 		role: "img",
@@ -631,10 +637,10 @@ function yt({ className: t, title: n = "MoonWitness", ...r }) {
 		})
 	});
 }
-function bt({ compact: t = !1, ecosystem: n = !1, subtitle: r = Pe.tagline, className: i }) {
+function kt({ compact: t = !1, ecosystem: n = !1, subtitle: r = Pe.tagline, className: i }) {
 	return /* @__PURE__ */ O("span", {
 		className: e("inline-flex items-center gap-3", i),
-		children: [/* @__PURE__ */ D(yt, { className: t ? "size-8" : "size-10" }), t ? null : /* @__PURE__ */ O("span", {
+		children: [/* @__PURE__ */ D(Ot, { className: t ? "size-8" : "size-10" }), t ? null : /* @__PURE__ */ O("span", {
 			className: "min-w-0",
 			children: [/* @__PURE__ */ O("span", {
 				className: "mw-display block text-base font-black tracking-tight",
@@ -658,7 +664,7 @@ function bt({ compact: t = !1, ecosystem: n = !1, subtitle: r = Pe.tagline, clas
 }
 //#endregion
 //#region src/components/community-participation.tsx
-var xt = [
+var At = [
 	"source-linked",
 	"discussion-thread",
 	"proposal-review",
@@ -668,7 +674,7 @@ var xt = [
 	"moderation-history",
 	"attributed-reply"
 ];
-function St({ asset: e, alt: t, ...n }) {
+function jt({ asset: e, alt: t, ...n }) {
 	return /* @__PURE__ */ D(Oe, {
 		pack: "community-participation",
 		assetId: e,
@@ -676,8 +682,8 @@ function St({ asset: e, alt: t, ...n }) {
 		...n
 	});
 }
-function Ct({ source: e, className: t }) {
-	let n = st(e);
+function Mt({ source: e, className: t }) {
+	let n = gt(e);
 	return n ? n.href ? /* @__PURE__ */ O("a", {
 		className: t,
 		href: n.href,
@@ -701,7 +707,7 @@ function Ct({ source: e, className: t }) {
 }
 //#endregion
 //#region src/components/runtime-motion.tsx
-var wt = [
+var Nt = [
 	"pulse-alert",
 	"evidence-linked",
 	"case-resolved",
@@ -714,12 +720,12 @@ var wt = [
 	"upload-rise",
 	"graph-connect",
 	"backend-reconnect"
-], Tt = "/assets/runtime-motion-pack";
-function Et(e, t, n = Tt) {
+], Pt = "/assets/runtime-motion-pack";
+function Ft(e, t, n = Pt) {
 	let r = n.replace(/\/+$/, "");
 	return t === "apng" ? `${r}/png/${e}.png` : t === "lottie" ? `${r}/lottie/${e}.json` : `${r}/${t}/${e}.${t}`;
 }
-function Dt() {
+function It() {
 	let [e, t] = T(!1);
 	return C(() => {
 		if (typeof window > "u" || !window.matchMedia) return;
@@ -727,8 +733,8 @@ function Dt() {
 		return n(), e.addEventListener?.("change", n), () => e.removeEventListener?.("change", n);
 	}, []), e;
 }
-function Ot({ id: e, format: t = "webm", alt: n, baseUrl: r = Tt, className: i, reducedMotionFallback: a, ...o }) {
-	let s = Dt(), [c, l] = T(!1);
+function Lt({ id: e, format: t = "webm", alt: n, baseUrl: r = Pt, className: i, reducedMotionFallback: a, ...o }) {
+	let s = It(), [c, l] = T(!1);
 	if (s) return /* @__PURE__ */ D("span", {
 		className: i,
 		role: "img",
@@ -740,7 +746,7 @@ function Ot({ id: e, format: t = "webm", alt: n, baseUrl: r = Tt, className: i, 
 			children: n
 		})
 	});
-	let u = Et(e, t, r), d = Et(e, "svg", Tt);
+	let u = Ft(e, t, r), d = Ft(e, "svg", Pt);
 	return t === "webm" ? c ? /* @__PURE__ */ D(x, {
 		className: i,
 		src: d,
@@ -766,7 +772,7 @@ function Ot({ id: e, format: t = "webm", alt: n, baseUrl: r = Tt, className: i, 
 }
 //#endregion
 //#region src/components/cinematic-web-hero.tsx
-var kt = [
+var Rt = [
 	{
 		id: "STORY",
 		marker: "▤"
@@ -784,11 +790,11 @@ var kt = [
 		marker: "↗"
 	}
 ];
-function At(e) {
+function zt(e) {
 	let t = e.indexOf("/moonwitness/");
 	return t >= 0 ? `/assets${e.slice(t)}` : void 0;
 }
-function jt({ assets: e = pt, eyebrow: t = /* @__PURE__ */ O(E, { children: [
+function Bt({ assets: e = St, eyebrow: t = /* @__PURE__ */ O(E, { children: [
 	"REAL STORIES.",
 	/* @__PURE__ */ D("br", {}),
 	"PERSISTENT TRACES.",
@@ -813,7 +819,7 @@ function jt({ assets: e = pt, eyebrow: t = /* @__PURE__ */ O(E, { children: [
 		"aria-hidden": "true",
 		children: "→"
 	})]
-}), caseIndex: a = /* @__PURE__ */ D(E, { children: "MW / ARCHIVE / CASE 0001 — ∞" }), evidence: o = kt, archive: s, coordinates: c = ["35.6762° N", "139.6503° E"], witnessCaption: l = /* @__PURE__ */ O(E, { children: [
+}), caseIndex: a = /* @__PURE__ */ D(E, { children: "MW / ARCHIVE / CASE 0001 — ∞" }), evidence: o = Rt, archive: s, coordinates: c = ["35.6762° N", "139.6503° E"], witnessCaption: l = /* @__PURE__ */ O(E, { children: [
 	"ROCKSOUL —",
 	/* @__PURE__ */ D("br", {}),
 	"THE WITNESS IN MOTION"
@@ -861,7 +867,7 @@ function jt({ assets: e = pt, eyebrow: t = /* @__PURE__ */ O(E, { children: [
 					srcSet: e.mobile
 				}), /* @__PURE__ */ D(x, {
 					src: e.desktop,
-					fallbackSrc: At(e.desktop),
+					fallbackSrc: zt(e.desktop),
 					alt: "",
 					width: 2880,
 					height: 1620,
@@ -984,7 +990,7 @@ function jt({ assets: e = pt, eyebrow: t = /* @__PURE__ */ O(E, { children: [
 				children: _.map((e) => /* @__PURE__ */ O("figure", { children: [
 					/* @__PURE__ */ D(x, {
 						src: e.src,
-						fallbackSrc: At(e.src),
+						fallbackSrc: zt(e.src),
 						alt: "",
 						"aria-hidden": "true",
 						loading: "lazy"
@@ -1009,60 +1015,8 @@ function jt({ assets: e = pt, eyebrow: t = /* @__PURE__ */ O(E, { children: [
 	});
 }
 //#endregion
-//#region src/components/compat/button.tsx
-var Mt = Ke("relative inline-flex min-h-11 items-center justify-center gap-2 rounded-none border font-mono text-[10px] font-bold uppercase tracking-[0.1em] transition-[background-color,border-color,color,opacity,transform] duration-[var(--mw-motion-fast)] ease-[var(--mw-ease-standard)] active:translate-y-px disabled:pointer-events-none disabled:opacity-45", {
-	variants: {
-		variant: {
-			primary: "border-primary bg-primary text-primary-foreground hover:bg-[var(--mw-brand-crimson-dark)]",
-			secondary: "border-border bg-card text-foreground hover:border-border-strong hover:bg-panel",
-			ghost: "border-transparent bg-transparent text-foreground hover:bg-panel",
-			danger: "border-primary bg-transparent text-primary hover:bg-primary/10"
-		},
-		size: {
-			sm: "px-3",
-			md: "px-4",
-			lg: "min-h-12 px-5"
-		}
-	},
-	defaultVariants: {
-		variant: "primary",
-		size: "md"
-	}
-});
-function P({ className: n, variant: r, size: i, loading: a = !1, disabled: o, leading: s, trailing: c, children: l, type: u = "button", ...d }) {
-	return /* @__PURE__ */ O(t, {
-		type: u,
-		className: e(Mt({
-			variant: r,
-			size: i
-		}), n),
-		disabled: o || a,
-		"aria-busy": a || void 0,
-		...d,
-		children: [
-			s ? /* @__PURE__ */ D("span", {
-				"aria-hidden": "true",
-				children: s
-			}) : null,
-			/* @__PURE__ */ D("span", {
-				className: e(a && "invisible"),
-				children: l
-			}),
-			c ? /* @__PURE__ */ D("span", {
-				"aria-hidden": "true",
-				children: c
-			}) : null,
-			a ? /* @__PURE__ */ D("span", {
-				className: "absolute inset-0 flex items-center justify-center",
-				"aria-hidden": "true",
-				children: "···"
-			}) : null
-		]
-	});
-}
-//#endregion
 //#region src/components/compat/overlays.tsx
-function Nt({ label: n, children: r, variant: i = "outline", size: a = "md", loading: o = !1, disabled: s, className: c, type: l = "button", ...u }) {
+function Vt({ label: n, children: r, variant: i = "outline", size: a = "md", loading: o = !1, disabled: s, className: c, type: l = "button", ...u }) {
 	return /* @__PURE__ */ O(t, {
 		variant: "ghost",
 		size: "icon",
@@ -1083,8 +1037,8 @@ function Nt({ label: n, children: r, variant: i = "outline", size: a = "md", loa
 		}) : null]
 	});
 }
-function Pt({ open: t, title: n, children: r, onClose: i, size: a = "md", actions: o }) {
-	let s = Ge(null);
+function Ht({ open: t, title: n, children: r, onClose: i, size: a = "md", actions: o }) {
+	let s = et(null);
 	return /* @__PURE__ */ D(f, {
 		open: t,
 		onOpenChange: (e) => {
@@ -1116,8 +1070,8 @@ function Pt({ open: t, title: n, children: r, onClose: i, size: a = "md", action
 		})
 	});
 }
-function Ft({ open: t, title: n, children: r, onClose: i, position: a = "right", footer: o }) {
-	let s = Ge(null);
+function Ut({ open: t, title: n, children: r, onClose: i, position: a = "right", footer: o }) {
+	let s = et(null);
 	return /* @__PURE__ */ D(_, {
 		open: t,
 		onOpenChange: (e) => {
@@ -1150,7 +1104,7 @@ function Ft({ open: t, title: n, children: r, onClose: i, position: a = "right",
 		})
 	});
 }
-function F({ label: t, size: n = "md", src: r, status: i }) {
+function P({ label: t, size: n = "md", src: r, status: i }) {
 	let a = {
 		xs: "size-6 text-[9px]",
 		sm: "size-8 text-[10px]",
@@ -1173,14 +1127,14 @@ function F({ label: t, size: n = "md", src: r, status: i }) {
 		}) : null]
 	});
 }
-function It({ variant: t = "default" }) {
+function Wt({ variant: t = "default" }) {
 	return /* @__PURE__ */ D(r, {
 		decorative: !1,
 		className: e("w-full", t === "default" && "h-px bg-border", t === "soft" && "h-px bg-border opacity-50", t === "legal-boundary" && "h-0.5 bg-primary"),
 		"aria-label": t === "legal-boundary" ? "AWS legal boundary" : void 0
 	});
 }
-function Lt({ variant: t = "text" }) {
+function Gt({ variant: t = "text" }) {
 	return /* @__PURE__ */ D(ie, {
 		className: e("block bg-panel motion-reduce:animate-none", {
 			text: "h-4 w-full",
@@ -1193,7 +1147,7 @@ function Lt({ variant: t = "text" }) {
 }
 //#endregion
 //#region src/components/asset-explorer.tsx
-var Rt = {
+var Kt = {
 	Core: [
 		"product-icons",
 		"dashboard",
@@ -1249,26 +1203,26 @@ var Rt = {
 		"developer-distribution"
 	]
 };
-function zt(e) {
-	return Object.entries(Rt).find(([, t]) => t.includes(e))?.[0] ?? "System";
+function qt(e) {
+	return Object.entries(Kt).find(([, t]) => t.includes(e))?.[0] ?? "System";
 }
-function Bt(e) {
+function Jt(e) {
 	return e.replaceAll("-", " ").replace(/\b\w/g, (e) => e.toUpperCase());
 }
-function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r = !1 }) {
-	let [i, a] = T(t), [o, s] = T(""), [c, l] = T(null), [u, d] = T(""), [f, p] = T(r ? "compact" : "grid"), m = We(() => {
-		let e = o.trim().toLowerCase(), t = Object.entries(v.packs).filter(([t, n]) => i !== "All" && zt(t) !== i ? !1 : !e || [
+function Yt({ baseUrl: e = Ee, initialCategory: n = "All", limit: r, compact: i = !1 }) {
+	let [a, o] = T(n), [s, c] = T(""), [l, u] = T(null), [d, f] = T(""), [p, m] = T(i ? "compact" : "grid"), h = $e(() => {
+		let e = s.trim().toLowerCase(), t = Object.entries(v.packs).filter(([t, n]) => a !== "All" && qt(t) !== a ? !1 : !e || [
 			t,
-			zt(t),
+			qt(t),
 			...Object.keys(n.svg ?? {}),
 			...Object.keys(n.png ?? {})
 		].join(" ").toLowerCase().includes(e));
-		return typeof n == "number" ? t.slice(0, n) : t;
+		return typeof r == "number" ? t.slice(0, r) : t;
 	}, [
-		i,
-		n,
-		o
-	]), h = c ? v.packs[c] : null, g = h ? Object.entries(h.svg ?? {}).filter(([e]) => e.toLowerCase().includes(u.trim().toLowerCase())) : [];
+		a,
+		r,
+		s
+	]), g = l ? v.packs[l] : null, _ = g ? Object.entries(g.svg ?? {}).filter(([e]) => e.toLowerCase().includes(d.trim().toLowerCase())) : [];
 	return /* @__PURE__ */ O("section", {
 		"aria-label": "MoonWitness asset explorer",
 		children: [
@@ -1288,13 +1242,13 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 				})] }), /* @__PURE__ */ O("div", {
 					className: "flex gap-2",
 					"aria-label": "Asset explorer view",
-					children: [/* @__PURE__ */ D(P, {
-						variant: f === "grid" ? "primary" : "secondary",
-						onClick: () => p("grid"),
+					children: [/* @__PURE__ */ D(t, {
+						variant: p === "grid" ? "default" : "secondary",
+						onClick: () => m("grid"),
 						children: "Grid"
-					}), /* @__PURE__ */ D(P, {
-						variant: f === "compact" ? "primary" : "secondary",
-						onClick: () => p("compact"),
+					}), /* @__PURE__ */ D(t, {
+						variant: p === "compact" ? "default" : "secondary",
+						onClick: () => m("compact"),
 						children: "Compact"
 					})]
 				})]
@@ -1307,40 +1261,40 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 						className: "sr-only",
 						children: "Search asset packs"
 					}), /* @__PURE__ */ D("input", {
-						value: o,
-						onChange: (e) => s(e.target.value),
+						value: s,
+						onChange: (e) => c(e.target.value),
 						placeholder: "Search packs or asset names…",
 						className: "min-h-11 border border-border bg-card px-3 text-foreground outline-none focus:border-primary"
 					})]
 				}), /* @__PURE__ */ D("div", {
 					className: "flex flex-wrap gap-2",
 					"aria-label": "Asset categories",
-					children: ["All", ...Object.keys(Rt)].map((e) => /* @__PURE__ */ D("button", {
+					children: ["All", ...Object.keys(Kt)].map((e) => /* @__PURE__ */ D("button", {
 						type: "button",
-						onClick: () => a(e),
-						"aria-pressed": i === e,
-						className: `min-h-11 border px-3 text-xs font-bold uppercase tracking-wide ${i === e ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground hover:text-foreground"}`,
+						onClick: () => o(e),
+						"aria-pressed": a === e,
+						className: `min-h-11 border px-3 text-xs font-bold uppercase tracking-wide ${a === e ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground hover:text-foreground"}`,
 						children: e
 					}, e))
 				})]
 			}),
 			/* @__PURE__ */ O("p", {
 				className: "mw-meta mt-4 text-muted-foreground",
-				children: [m.length, " pack families shown"]
+				children: [h.length, " pack families shown"]
 			}),
 			/* @__PURE__ */ D("div", {
-				className: `mt-4 grid gap-3 ${f === "grid" ? "sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1"}`,
-				children: m.map(([t, n]) => {
-					let r = Object.entries(n.svg ?? {}).slice(0, f === "grid" ? 3 : 1);
+				className: `mt-4 grid gap-3 ${p === "grid" ? "sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1"}`,
+				children: h.map(([t, n]) => {
+					let r = Object.entries(n.svg ?? {}).slice(0, p === "grid" ? 3 : 1);
 					return /* @__PURE__ */ O("button", {
 						type: "button",
 						onClick: () => {
-							l(t), d("");
+							u(t), f("");
 						},
-						className: `border border-border bg-card text-left transition hover:border-border-strong focus-visible:outline-2 focus-visible:outline-primary ${f === "grid" ? "p-4" : "grid min-h-20 grid-cols-[88px_1fr_auto] items-center gap-4 p-3"}`,
+						className: `border border-border bg-card text-left transition hover:border-border-strong focus-visible:outline-2 focus-visible:outline-primary ${p === "grid" ? "p-4" : "grid min-h-20 grid-cols-[88px_1fr_auto] items-center gap-4 p-3"}`,
 						children: [
 							/* @__PURE__ */ D("span", {
-								className: `flex items-center justify-center overflow-hidden bg-panel ${f === "grid" ? "min-h-36" : "h-14"}`,
+								className: `flex items-center justify-center overflow-hidden bg-panel ${p === "grid" ? "min-h-36" : "h-14"}`,
 								children: r.length ? r.map(([n]) => {
 									let r = S(t, n, { baseUrl: e }), i = S(t, n, { baseUrl: "/assets" });
 									return r ? /* @__PURE__ */ D(x, {
@@ -1356,13 +1310,13 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 								})
 							}),
 							/* @__PURE__ */ O("span", {
-								className: f === "grid" ? "mt-4 block" : "",
+								className: p === "grid" ? "mt-4 block" : "",
 								children: [/* @__PURE__ */ D("span", {
 									className: "mw-meta text-primary",
-									children: zt(t)
+									children: qt(t)
 								}), /* @__PURE__ */ D("strong", {
 									className: "mt-1 block text-base",
-									children: Bt(t)
+									children: Jt(t)
 								})]
 							}),
 							/* @__PURE__ */ D("span", {
@@ -1373,34 +1327,34 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 					}, t);
 				})
 			}),
-			m.length === 0 ? /* @__PURE__ */ O("div", {
+			h.length === 0 ? /* @__PURE__ */ O("div", {
 				className: "mt-5 border border-dashed border-border p-8 text-center",
 				children: [/* @__PURE__ */ D("strong", { children: "No asset packs found." }), /* @__PURE__ */ D("p", {
 					className: "mt-2 text-sm text-muted-foreground",
 					children: "Clear the search or choose another category."
 				})]
 			}) : null,
-			/* @__PURE__ */ D(Pt, {
-				open: !!c,
-				title: c ? Bt(c) : "Asset pack",
+			/* @__PURE__ */ D(Ht, {
+				open: !!l,
+				title: l ? Jt(l) : "Asset pack",
 				size: "lg",
-				onClose: () => l(null),
-				children: c && h ? /* @__PURE__ */ O("div", { children: [
+				onClose: () => u(null),
+				children: l && g ? /* @__PURE__ */ O("div", { children: [
 					/* @__PURE__ */ O("div", {
 						className: "flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4",
 						children: [/* @__PURE__ */ O("div", { children: [/* @__PURE__ */ O("p", {
 							className: "mw-meta text-primary",
 							children: [
-								zt(c),
+								qt(l),
 								" / ",
-								h.count,
+								g.count,
 								" canonical assets"
 							]
 						}), /* @__PURE__ */ D("p", {
 							className: "mt-1 font-mono text-xs text-muted-foreground",
-							children: h.manifest
+							children: g.manifest
 						})] }), /* @__PURE__ */ D("a", {
-							href: `${e.replace(/\/+$/, "")}/${h.manifest}`,
+							href: `${e.replace(/\/+$/, "")}/${g.manifest}`,
 							target: "_blank",
 							rel: "noreferrer",
 							className: "inline-flex min-h-11 items-center border border-border px-3 text-xs font-bold uppercase hover:border-primary",
@@ -1413,16 +1367,16 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 							className: "mw-meta text-muted-foreground",
 							children: "Filter assets"
 						}), /* @__PURE__ */ D("input", {
-							value: u,
-							onChange: (e) => d(e.target.value),
+							value: d,
+							onChange: (e) => f(e.target.value),
 							placeholder: "Search inside this pack…",
 							className: "min-h-11 border border-border bg-background px-3 text-foreground outline-none focus:border-primary"
 						})]
 					}),
 					/* @__PURE__ */ O("div", {
 						className: "mt-4 max-h-[55vh] overflow-auto border border-border",
-						children: [g.map(([t, n]) => {
-							let r = S(c, t, { baseUrl: e }), i = S(c, t, { baseUrl: "/assets" });
+						children: [_.map(([t, n]) => {
+							let r = S(l, t, { baseUrl: e }), i = S(l, t, { baseUrl: "/assets" });
 							return /* @__PURE__ */ O("div", {
 								className: "grid grid-cols-[64px_minmax(0,1fr)_auto] items-center gap-3 border-b border-border p-3 last:border-b-0",
 								children: [
@@ -1440,7 +1394,7 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 										className: "min-w-0",
 										children: [/* @__PURE__ */ D("strong", {
 											className: "block text-sm",
-											children: Bt(t)
+											children: Jt(t)
 										}), /* @__PURE__ */ D("span", {
 											className: "block truncate font-mono text-[10px] text-muted-foreground",
 											children: n
@@ -1463,7 +1417,7 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 									})
 								]
 							}, t);
-						}), g.length === 0 ? /* @__PURE__ */ D("p", {
+						}), _.length === 0 ? /* @__PURE__ */ D("p", {
 							className: "p-5 text-sm text-muted-foreground",
 							children: "No SVG assets match this filter."
 						}) : null]
@@ -1475,18 +1429,18 @@ function Vt({ baseUrl: e = Ee, initialCategory: t = "All", limit: n, compact: r 
 }
 //#endregion
 //#region src/components/candidate-asset-provider.tsx
-var Ht = Ee, Ut = S;
-function Wt(e) {
+var Xt = Ee, Zt = S;
+function Qt(e) {
 	return /* @__PURE__ */ D(Oe, { ...e });
 }
-var Gt = {
+var $t = {
 	channel: "deprecated-stable-alias",
 	registryVersion: b.version,
 	packCount: b.packCount,
 	canonicalAssetCount: b.canonicalAssetCount,
 	defaultBaseUrl: Ee,
 	stableByDefault: !0
-}, Kt = Ke("inline-flex items-center rounded-full border font-mono font-semibold uppercase tracking-[0.08em]", {
+}, en = tt("inline-flex items-center rounded-full border font-mono font-semibold uppercase tracking-[0.08em]", {
 	variants: {
 		variant: {
 			neutral: "border-border-strong bg-panel text-muted-foreground",
@@ -1510,20 +1464,69 @@ var Gt = {
 		size: "sm"
 	}
 });
-function qt({ className: t, variant: r, size: i, ...a }) {
+function tn({ className: t, variant: r, size: i, ...a }) {
 	return /* @__PURE__ */ D(n, {
 		variant: "outline",
-		className: e(Kt({
+		className: e(en({
 			variant: r,
 			size: i
 		}), t),
 		...a
 	});
 }
-var I = qt;
+var F = tn, nn = tt("relative inline-flex min-h-11 items-center justify-center gap-2 rounded-none border font-mono text-[10px] font-bold uppercase tracking-[0.1em] transition-[background-color,border-color,color,opacity,transform] duration-[var(--mw-motion-fast)] ease-[var(--mw-ease-standard)] active:translate-y-px disabled:pointer-events-none disabled:opacity-45", {
+	variants: {
+		variant: {
+			primary: "border-primary bg-primary text-primary-foreground hover:bg-[var(--mw-brand-crimson-dark)]",
+			secondary: "border-border bg-card text-foreground hover:border-border-strong hover:bg-panel",
+			ghost: "border-transparent bg-transparent text-foreground hover:bg-panel",
+			danger: "border-primary bg-transparent text-primary hover:bg-primary/10"
+		},
+		size: {
+			sm: "px-3",
+			md: "px-4",
+			lg: "min-h-12 px-5"
+		}
+	},
+	defaultVariants: {
+		variant: "primary",
+		size: "md"
+	}
+});
+function I({ className: n, variant: r, size: i, loading: a = !1, disabled: o, leading: s, trailing: c, children: l, type: u = "button", ...d }) {
+	return /* @__PURE__ */ O(t, {
+		type: u,
+		className: e(nn({
+			variant: r,
+			size: i
+		}), n),
+		disabled: o || a,
+		"aria-busy": a || void 0,
+		...d,
+		children: [
+			s ? /* @__PURE__ */ D("span", {
+				"aria-hidden": "true",
+				children: s
+			}) : null,
+			/* @__PURE__ */ D("span", {
+				className: e(a && "invisible"),
+				children: l
+			}),
+			c ? /* @__PURE__ */ D("span", {
+				"aria-hidden": "true",
+				children: c
+			}) : null,
+			a ? /* @__PURE__ */ D("span", {
+				className: "absolute inset-0 flex items-center justify-center",
+				"aria-hidden": "true",
+				children: "···"
+			}) : null
+		]
+	});
+}
 //#endregion
 //#region src/components/compat/form-controls.tsx
-function Jt({ id: t, label: n, helper: r, error: i, children: a }) {
+function rn({ id: t, label: n, helper: r, error: i, children: a }) {
 	let o = i ?? r, s = o ? `${t}-message` : void 0;
 	return /* @__PURE__ */ O("div", {
 		className: "grid gap-2 text-sm",
@@ -1544,7 +1547,7 @@ function Jt({ id: t, label: n, helper: r, error: i, children: a }) {
 }
 function L({ label: t, helper: n, error: r, variant: a = "default", size: o = "md", id: s, className: c, ...l }) {
 	let u = w(), d = s ?? u;
-	return /* @__PURE__ */ D(Jt, {
+	return /* @__PURE__ */ D(rn, {
 		id: d,
 		label: t,
 		helper: n,
@@ -1566,11 +1569,11 @@ function L({ label: t, helper: n, error: r, variant: a = "default", size: o = "m
 		})
 	});
 }
-function Yt({ label: t, helper: n, error: r, characterCount: i, id: o, className: s, maxLength: c, value: l, defaultValue: u, onChange: d, ...f }) {
+function an({ label: t, helper: n, error: r, characterCount: i, id: o, className: s, maxLength: c, value: l, defaultValue: u, onChange: d, ...f }) {
 	let p = w(), m = o ?? p, h = typeof l == "string" ? l.length : typeof u == "string" ? u.length : 0, [g, _] = T(h);
 	return C(() => {
 		typeof l == "string" && _(l.length);
-	}, [l]), /* @__PURE__ */ O(Jt, {
+	}, [l]), /* @__PURE__ */ O(rn, {
 		id: m,
 		label: t,
 		helper: n,
@@ -1598,9 +1601,9 @@ function Yt({ label: t, helper: n, error: r, characterCount: i, id: o, className
 		}) : null]
 	});
 }
-function Xt({ label: t, helper: n, error: r, options: i, id: a, className: o, ...s }) {
+function on({ label: t, helper: n, error: r, options: i, id: a, className: o, ...s }) {
 	let c = w(), l = a ?? c;
-	return /* @__PURE__ */ D(Jt, {
+	return /* @__PURE__ */ D(rn, {
 		id: l,
 		label: t,
 		helper: n,
@@ -1618,8 +1621,8 @@ function Xt({ label: t, helper: n, error: r, options: i, id: a, className: o, ..
 		})
 	});
 }
-function Zt({ label: t, description: n, indeterminate: r = !1, disabled: i, ...a }) {
-	let o = Ge(null);
+function sn({ label: t, description: n, indeterminate: r = !1, disabled: i, ...a }) {
+	let o = et(null);
 	return C(() => {
 		o.current && (o.current.indeterminate = r);
 	}, [r]), /* @__PURE__ */ O("label", {
@@ -1640,7 +1643,7 @@ function Zt({ label: t, description: n, indeterminate: r = !1, disabled: i, ...a
 		}) : null] })]
 	});
 }
-function Qt({ label: t, description: n, disabled: r, ...i }) {
+function cn({ label: t, description: n, disabled: r, ...i }) {
 	return /* @__PURE__ */ O("label", {
 		className: e("flex min-h-11 items-start gap-3 py-2", r ? "cursor-not-allowed opacity-45" : "cursor-pointer"),
 		children: [/* @__PURE__ */ D("input", {
@@ -1657,7 +1660,7 @@ function Qt({ label: t, description: n, disabled: r, ...i }) {
 		}) : null] })]
 	});
 }
-function $t({ label: t, description: n, disabled: r, id: i, ...a }) {
+function ln({ label: t, description: n, disabled: r, id: i, ...a }) {
 	let o = w(), s = i ?? o;
 	return /* @__PURE__ */ O("label", {
 		htmlFor: s,
@@ -1687,19 +1690,19 @@ function $t({ label: t, description: n, disabled: r, id: i, ...a }) {
 }
 //#endregion
 //#region src/components/theme-toggle.tsx
-var en = [
+var un = [
 	"system",
 	"dark",
 	"light"
 ];
-function tn(e) {
+function dn(e) {
 	return e === "light" || e === "dark" ? e : window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
-function nn(e) {
-	let t = tn(e), n = document.documentElement;
+function fn(e) {
+	let t = dn(e), n = document.documentElement;
 	n.dataset.themePreference = e, n.dataset.theme = t, n.dataset.effectiveTheme = t, n.classList.toggle("light", t === "light");
 }
-function rn() {
+function pn() {
 	try {
 		let e = window.localStorage?.getItem("mw-theme");
 		return e === "light" || e === "dark" || e === "system" ? e : "system";
@@ -1708,14 +1711,14 @@ function rn() {
 	}
 }
 function R() {
-	let [e, t] = T(rn), [n, r] = T(() => tn(rn()));
+	let [e, t] = T(pn), [n, r] = T(() => dn(pn()));
 	C(() => {
 		let t = window.matchMedia("(prefers-color-scheme: light)"), n = () => {
-			nn(e), r(tn(e));
+			fn(e), r(dn(e));
 		};
 		return n(), t.addEventListener("change", n), () => t.removeEventListener("change", n);
 	}, [e]);
-	let i = en[(en.indexOf(e) + 1) % en.length];
+	let i = un[(un.indexOf(e) + 1) % un.length];
 	return /* @__PURE__ */ D("button", {
 		type: "button",
 		className: "inline-flex min-h-11 min-w-11 items-center justify-center rounded-[16px] border border-border bg-background px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-muted",
@@ -1732,7 +1735,7 @@ function R() {
 }
 //#endregion
 //#region src/components/application-shell.tsx
-var an = {
+var mn = {
 	dashboard: "What changed, what needs attention, and what can wait.",
 	cases: "Investigative case review.",
 	kanban: "Move work, not evidence.",
@@ -1742,7 +1745,7 @@ var an = {
 	resources: "AutoMenu resource descriptors and permissions.",
 	profile: "Profile identity and preferences.",
 	settings: "Appearance, notifications, security, and integrations."
-}, on = {
+}, hn = {
 	dashboard: "D",
 	cases: "C",
 	kanban: "K",
@@ -1752,7 +1755,7 @@ var an = {
 	resources: "R",
 	profile: "P",
 	settings: "S"
-}, sn = {
+}, gn = {
 	system: "System",
 	resource: "Resource",
 	workspace: "Workspace",
@@ -1761,12 +1764,12 @@ var an = {
 	id: e.id,
 	label: e.label,
 	href: e.path,
-	group: sn[e.kind],
-	description: an[e.id],
-	shortcut: on[e.id],
+	group: gn[e.kind],
+	description: mn[e.id],
+	shortcut: hn[e.id],
 	resource: "resource" in e ? e.resource : void 0,
 	requiredPermission: e.permission
-})), cn = fe, B = [
+})), _n = fe, B = [
 	"authenticated",
 	"case:read",
 	"review:read",
@@ -1774,10 +1777,10 @@ var an = {
 	"ai:use",
 	"resource:read"
 ];
-function ln(e, t) {
+function vn(e, t) {
 	return t.includes(e.requiredPermission);
 }
-function un({ items: e }) {
+function yn({ items: e }) {
 	return /* @__PURE__ */ D("nav", {
 		"aria-label": "Breadcrumb",
 		children: /* @__PURE__ */ D("ol", {
@@ -1800,8 +1803,8 @@ function un({ items: e }) {
 		})
 	});
 }
-function dn({ state: e, label: t = "Backend" }) {
-	return /* @__PURE__ */ O(I, {
+function bn({ state: e, label: t = "Backend" }) {
+	return /* @__PURE__ */ O(F, {
 		variant: e === "online" ? "supported" : e === "degraded" ? "partial" : "contested",
 		children: [
 			t,
@@ -1811,7 +1814,7 @@ function dn({ state: e, label: t = "Backend" }) {
 	});
 }
 function V({ resources: t = z, activeId: n, compact: r = !1, permissions: i = B, onNavigate: a }) {
-	let o = t.filter((e) => ln(e, i));
+	let o = t.filter((e) => vn(e, i));
 	return /* @__PURE__ */ D("nav", {
 		"aria-label": "Resource navigation",
 		"data-mode": "AutoMenu",
@@ -1840,14 +1843,14 @@ function V({ resources: t = z, activeId: n, compact: r = !1, permissions: i = B,
 		})
 	});
 }
-function fn({ open: t, onClose: n, notifications: r, onMarkAllRead: i }) {
+function xn({ open: t, onClose: n, notifications: r, onMarkAllRead: i }) {
 	let a = A(), o = i ?? a.onMarkAllNotificationsRead;
-	return /* @__PURE__ */ O(Ft, {
+	return /* @__PURE__ */ O(Ut, {
 		open: t,
 		title: "Notifications",
 		onClose: n,
 		position: "right",
-		footer: /* @__PURE__ */ D(P, {
+		footer: /* @__PURE__ */ D(I, {
 			variant: "secondary",
 			onClick: n,
 			children: "Close"
@@ -1874,7 +1877,7 @@ function fn({ open: t, onClose: n, notifications: r, onMarkAllRead: i }) {
 						children: [/* @__PURE__ */ D("strong", {
 							className: "text-sm",
 							children: t.title
-						}), /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D(F, {
 							variant: t.state === "unread" ? "info" : "neutral",
 							children: t.variant
 						})]
@@ -1910,13 +1913,13 @@ function fn({ open: t, onClose: n, notifications: r, onMarkAllRead: i }) {
 		})]
 	});
 }
-function pn({ name: e, role: t }) {
+function Sn({ name: e, role: t }) {
 	let n = A();
 	return /* @__PURE__ */ O("details", {
 		className: "relative",
 		children: [/* @__PURE__ */ O("summary", {
 			className: "mw-touch flex cursor-pointer list-none items-center gap-2 rounded-full border border-border bg-background px-2",
-			children: [/* @__PURE__ */ D(F, {
+			children: [/* @__PURE__ */ D(P, {
 				label: e,
 				size: "sm"
 			}), /* @__PURE__ */ O("span", {
@@ -1952,7 +1955,7 @@ function pn({ name: e, role: t }) {
 		})]
 	});
 }
-var mn = [
+var Cn = [
 	{
 		label: "Open case by ID",
 		shortcut: "C",
@@ -1969,16 +1972,16 @@ var mn = [
 		href: "/ai"
 	}
 ];
-function hn({ open: e, onClose: t, resources: n = z, permissions: r = B, quickActions: i = mn }) {
-	let [a, o] = T(""), s = We(() => {
+function wn({ open: e, onClose: t, resources: n = z, permissions: r = B, quickActions: i = Cn }) {
+	let [a, o] = T(""), s = $e(() => {
 		let e = a.trim().toLowerCase();
-		return n.filter((t) => ln(t, r) && (!e || `${t.label} ${t.description}`.toLowerCase().includes(e)));
+		return n.filter((t) => vn(t, r) && (!e || `${t.label} ${t.description}`.toLowerCase().includes(e)));
 	}, [
 		r,
 		a,
 		n
 	]);
-	return /* @__PURE__ */ O(Pt, {
+	return /* @__PURE__ */ O(Ht, {
 		open: e,
 		title: "Command palette / ⌘K",
 		onClose: t,
@@ -2044,14 +2047,14 @@ function hn({ open: e, onClose: t, resources: n = z, permissions: r = B, quickAc
 		]
 	});
 }
-function gn({ breadcrumbs: e, backendState: t, user: n, unreadCount: r, onOpenMenu: i, onOpenCommands: a, onOpenNotifications: o }) {
+function Tn({ breadcrumbs: e, backendState: t, user: n, unreadCount: r, onOpenMenu: i, onOpenCommands: a, onOpenNotifications: o }) {
 	return /* @__PURE__ */ D("header", {
 		className: "sticky top-0 z-30 border-b border-border bg-panel/95 backdrop-blur",
 		role: "banner",
 		children: /* @__PURE__ */ O("div", {
 			className: "flex min-h-[68px] items-center gap-3 px-3 sm:px-5 lg:px-8",
 			children: [
-				/* @__PURE__ */ D(Nt, {
+				/* @__PURE__ */ D(Vt, {
 					label: "Open navigation",
 					className: "md:hidden",
 					onClick: i,
@@ -2059,13 +2062,13 @@ function gn({ breadcrumbs: e, backendState: t, user: n, unreadCount: r, onOpenMe
 				}),
 				/* @__PURE__ */ D("div", {
 					className: "min-w-0 flex-1",
-					children: /* @__PURE__ */ D(un, { items: e })
+					children: /* @__PURE__ */ D(yn, { items: e })
 				}),
 				/* @__PURE__ */ D("div", {
 					className: "hidden sm:block",
-					children: /* @__PURE__ */ D(dn, { state: t })
+					children: /* @__PURE__ */ D(bn, { state: t })
 				}),
-				/* @__PURE__ */ D(Nt, {
+				/* @__PURE__ */ D(Vt, {
 					label: "Open command palette",
 					"aria-keyshortcuts": "Control+K Meta+K",
 					onClick: a,
@@ -2079,7 +2082,7 @@ function gn({ breadcrumbs: e, backendState: t, user: n, unreadCount: r, onOpenMe
 					children: r || 0
 				}),
 				/* @__PURE__ */ D(R, {}),
-				/* @__PURE__ */ D(pn, {
+				/* @__PURE__ */ D(Sn, {
 					name: n.name,
 					role: n.role
 				})
@@ -2087,7 +2090,7 @@ function gn({ breadcrumbs: e, backendState: t, user: n, unreadCount: r, onOpenMe
 		})
 	});
 }
-function _n({ activeResource: t, breadcrumbs: n, children: r, backendState: i = "online", user: a = {
+function En({ activeResource: t, breadcrumbs: n, children: r, backendState: i = "online", user: a = {
 	name: "Rocksoul",
 	role: "researcher"
 }, permissions: o = B, resources: s = z, notifications: c = [], commandActions: l, surfacePersonality: u = "operator" }) {
@@ -2115,16 +2118,16 @@ function _n({ activeResource: t, breadcrumbs: n, children: r, backendState: i = 
 						/* @__PURE__ */ O("div", {
 							className: "flex min-h-[112px] items-center justify-between border-b border-border px-3",
 							children: [
-								/* @__PURE__ */ D(bt, {
+								/* @__PURE__ */ D(kt, {
 									compact: _,
 									subtitle: "APPLICATION",
 									className: e(!_ && "hidden lg:inline-flex")
 								}),
-								_ ? null : /* @__PURE__ */ D(bt, {
+								_ ? null : /* @__PURE__ */ D(kt, {
 									compact: !0,
 									className: "lg:hidden"
 								}),
-								/* @__PURE__ */ D(Nt, {
+								/* @__PURE__ */ D(Vt, {
 									label: _ ? "Expand sidebar" : "Compact sidebar",
 									size: "sm",
 									variant: "ghost",
@@ -2153,7 +2156,7 @@ function _n({ activeResource: t, breadcrumbs: n, children: r, backendState: i = 
 					]
 				}), /* @__PURE__ */ O("div", {
 					className: "min-w-0 flex-1",
-					children: [/* @__PURE__ */ D(gn, {
+					children: [/* @__PURE__ */ D(Tn, {
 						breadcrumbs: n,
 						backendState: i,
 						user: a,
@@ -2169,19 +2172,19 @@ function _n({ activeResource: t, breadcrumbs: n, children: r, backendState: i = 
 					})]
 				})]
 			}),
-			/* @__PURE__ */ O(Ft, {
+			/* @__PURE__ */ O(Ut, {
 				open: d,
 				title: "Navigation",
 				onClose: () => f(!1),
 				position: "left",
 				children: [
-					/* @__PURE__ */ D(bt, {
+					/* @__PURE__ */ D(kt, {
 						subtitle: "APPLICATION",
 						className: "mb-5"
 					}),
 					/* @__PURE__ */ D("div", {
 						className: "mb-4",
-						children: /* @__PURE__ */ D(dn, { state: i })
+						children: /* @__PURE__ */ D(bn, { state: i })
 					}),
 					/* @__PURE__ */ D(V, {
 						resources: s,
@@ -2191,14 +2194,14 @@ function _n({ activeResource: t, breadcrumbs: n, children: r, backendState: i = 
 					})
 				]
 			}),
-			/* @__PURE__ */ D(hn, {
+			/* @__PURE__ */ D(wn, {
 				open: p,
 				onClose: () => m(!1),
 				resources: s,
 				permissions: o,
 				quickActions: l
 			}),
-			/* @__PURE__ */ D(fn, {
+			/* @__PURE__ */ D(xn, {
 				open: h,
 				onClose: () => g(!1),
 				notifications: c
@@ -2208,7 +2211,7 @@ function _n({ activeResource: t, breadcrumbs: n, children: r, backendState: i = 
 }
 //#endregion
 //#region src/components/archive-components.tsx
-function H({ caseId: t, surface: n = "web", variant: r = "auto", homeHref: i = "#top", brandLabel: a = "INDEPENDENT OBSERVATORY", navItems: o = [
+function Dn({ caseId: t, surface: n = "web", variant: r = "auto", homeHref: i = "#top", brandLabel: a = "INDEPENDENT OBSERVATORY", navItems: o = [
 	{
 		label: "Observe",
 		href: "#method"
@@ -2270,7 +2273,7 @@ function H({ caseId: t, surface: n = "web", variant: r = "auto", homeHref: i = "
 							children: c
 						}),
 						/* @__PURE__ */ D(R, {}),
-						/* @__PURE__ */ D(F, {
+						/* @__PURE__ */ D(P, {
 							label: n === "community" ? "Member" : "Guest",
 							size: "sm"
 						})
@@ -2288,7 +2291,7 @@ function H({ caseId: t, surface: n = "web", variant: r = "auto", homeHref: i = "
 							className: "mw-touch inline-flex items-center justify-center border border-border px-2 font-mono text-[9px] font-bold uppercase",
 							children: "Search"
 						}),
-						/* @__PURE__ */ D(F, {
+						/* @__PURE__ */ D(P, {
 							label: n === "community" ? "Member" : "Guest",
 							size: "sm"
 						}),
@@ -2303,7 +2306,7 @@ function H({ caseId: t, surface: n = "web", variant: r = "auto", homeHref: i = "
 					]
 				})
 			]
-		}), /* @__PURE__ */ D(Ft, {
+		}), /* @__PURE__ */ D(Ut, {
 			open: l,
 			title: "MoonWitness",
 			onClose: () => u(!1),
@@ -2330,14 +2333,14 @@ function H({ caseId: t, surface: n = "web", variant: r = "auto", homeHref: i = "
 		})]
 	});
 }
-var vn = {
+var On = {
 	STORY: "text-rgbl-red-fg",
 	EVENT: "text-rgbl-green-fg",
 	PERSON: "text-warning",
 	RGBL: "text-rgbl-blue-fg",
 	AWS: "text-primary"
 };
-function yn({ domain: t, recordId: n, repo: r, claim: i, provenance: a, verification: o, status: s, canonical: c, selected: l, flagged: u, sourceHref: d }) {
+function kn({ domain: t, recordId: n, repo: r, claim: i, provenance: a, verification: o, status: s, canonical: c, selected: l, flagged: u, sourceHref: d }) {
 	return /* @__PURE__ */ O("article", {
 		className: e("flex min-h-72 flex-col border bg-card p-4", u ? "border-warning" : l ? "border-foreground" : "border-border"),
 		"aria-label": `${t} evidence: ${s}`,
@@ -2346,9 +2349,9 @@ function yn({ domain: t, recordId: n, repo: r, claim: i, provenance: a, verifica
 			/* @__PURE__ */ O("div", {
 				className: "flex items-start justify-between gap-3",
 				children: [/* @__PURE__ */ D("span", {
-					className: e("mw-eyebrow", vn[t]),
+					className: e("mw-eyebrow", On[t]),
 					children: t
-				}), /* @__PURE__ */ D(I, {
+				}), /* @__PURE__ */ D(F, {
 					variant: s,
 					children: s
 				})]
@@ -2405,7 +2408,7 @@ function yn({ domain: t, recordId: n, repo: r, claim: i, provenance: a, verifica
 		]
 	});
 }
-function U({ repo: t, domain: n, status: r, records: i, schema: a, lastSync: o, variant: s = "public" }) {
+function H({ repo: t, domain: n, status: r, records: i, schema: a, lastSync: o, variant: s = "public" }) {
 	let c = r === "healthy" ? "supported" : r === "degraded" ? "partial" : r === "offline" ? "contested" : "info";
 	return /* @__PURE__ */ O("article", {
 		className: e("mw-panel", s === "platform" ? "p-3" : "p-4"),
@@ -2418,7 +2421,7 @@ function U({ repo: t, domain: n, status: r, records: i, schema: a, lastSync: o, 
 			}), /* @__PURE__ */ D("h3", {
 				className: e("mt-2 font-bold", s === "platform" ? "text-sm" : "text-base"),
 				children: t
-			})] }), /* @__PURE__ */ D(I, {
+			})] }), /* @__PURE__ */ D(F, {
 				variant: c,
 				children: r
 			})]
@@ -2450,7 +2453,7 @@ function U({ repo: t, domain: n, status: r, records: i, schema: a, lastSync: o, 
 		})]
 	});
 }
-function W({ id: t, variant: n = "record", sourceId: r, title: i, excerpt: a, citation: o, provenance: s, verification: c }) {
+function U({ id: t, variant: n = "record", sourceId: r, title: i, excerpt: a, citation: o, provenance: s, verification: c }) {
 	return /* @__PURE__ */ O("figure", {
 		id: t,
 		className: e("scroll-mt-24 border bg-card p-5", n === "legal-instrument" ? "border-primary" : "border-border"),
@@ -2460,7 +2463,7 @@ function W({ id: t, variant: n = "record", sourceId: r, title: i, excerpt: a, ci
 				children: [/* @__PURE__ */ D("span", {
 					className: "mw-eyebrow text-muted-foreground",
 					children: r
-				}), /* @__PURE__ */ D(I, {
+				}), /* @__PURE__ */ D(F, {
 					variant: n === "legal-instrument" ? "contested" : "info",
 					children: c
 				})]
@@ -2492,7 +2495,7 @@ function W({ id: t, variant: n = "record", sourceId: r, title: i, excerpt: a, ci
 		]
 	});
 }
-function bn({ code: t, source: n, locator: r, variant: i = "inline" }) {
+function An({ code: t, source: n, locator: r, variant: i = "inline" }) {
 	let [a, o] = T(!1), s = `${t} · ${n} · ${r}`;
 	return i === "inline" ? /* @__PURE__ */ D("button", {
 		type: "button",
@@ -2516,7 +2519,7 @@ function bn({ code: t, source: n, locator: r, variant: i = "inline" }) {
 				className: "mw-meta mt-2 opacity-70",
 				children: r
 			}),
-			/* @__PURE__ */ D(P, {
+			/* @__PURE__ */ D(I, {
 				className: "mt-4",
 				variant: i === "legal" ? "danger" : "secondary",
 				onClick: () => {
@@ -2527,7 +2530,7 @@ function bn({ code: t, source: n, locator: r, variant: i = "inline" }) {
 		]
 	});
 }
-function xn({ timestamp: t, title: n, description: r, source: i, status: a, flagged: o, variant: s = "event" }) {
+function jn({ timestamp: t, title: n, description: r, source: i, status: a, flagged: o, variant: s = "event" }) {
 	return /* @__PURE__ */ O("article", {
 		className: e("grid gap-3 border-l-2 py-4 pl-4 sm:grid-cols-[120px_1fr]", o ? "border-warning" : "border-border"),
 		"data-variant": s,
@@ -2558,12 +2561,12 @@ function xn({ timestamp: t, title: n, description: r, source: i, status: a, flag
 		] })]
 	});
 }
-function Sn({ kind: t, author: n, role: r, body: i, timestamp: a, state: o = "default", replies: s = 0, actions: c }) {
+function Mn({ kind: t, author: n, role: r, body: i, timestamp: a, state: o = "default", replies: s = 0, actions: c }) {
 	let l = t === "question" ? "info" : t === "moderator-note" ? "verified" : o === "reported" ? "contested" : "neutral";
 	return o === "hidden" ? /* @__PURE__ */ O("article", {
 		className: "border-b border-border py-5 opacity-70",
 		"data-state": "hidden",
-		children: [/* @__PURE__ */ D(I, {
+		children: [/* @__PURE__ */ D(F, {
 			variant: "unresolved",
 			children: "hidden"
 		}), /* @__PURE__ */ D("p", {
@@ -2577,7 +2580,7 @@ function Sn({ kind: t, author: n, role: r, body: i, timestamp: a, state: o = "de
 			/* @__PURE__ */ O("div", {
 				className: "flex flex-wrap items-center gap-2",
 				children: [
-					/* @__PURE__ */ D(F, {
+					/* @__PURE__ */ D(P, {
 						label: n,
 						size: "sm"
 					}),
@@ -2585,11 +2588,11 @@ function Sn({ kind: t, author: n, role: r, body: i, timestamp: a, state: o = "de
 						className: "text-sm",
 						children: n
 					}),
-					/* @__PURE__ */ D(I, {
+					/* @__PURE__ */ D(F, {
 						variant: l,
 						children: t
 					}),
-					o === "default" ? null : /* @__PURE__ */ D(I, {
+					o === "default" ? null : /* @__PURE__ */ D(F, {
 						variant: o === "reported" ? "contested" : "neutral",
 						children: o
 					})
@@ -2618,7 +2621,7 @@ function Sn({ kind: t, author: n, role: r, body: i, timestamp: a, state: o = "de
 		]
 	});
 }
-function Cn({ id: t, state: n, title: r, body: i, canonicalEvidence: a = !1, submitter: o = "community member", source: s = "provenance pending", reviewer: c = "unassigned", reviewActions: l }) {
+function W({ id: t, state: n, title: r, body: i, canonicalEvidence: a = !1, submitter: o = "community member", source: s = "provenance pending", reviewer: c = "unassigned", reviewActions: l }) {
 	let u = n === "verified" ? "verified" : n === "rejected" ? "contested" : n === "needs-context" ? "partial" : n === "in-review" ? "info" : "unresolved";
 	return /* @__PURE__ */ O("article", {
 		className: e("border bg-card p-4", n === "needs-context" ? "border-warning" : "border-border"),
@@ -2629,7 +2632,7 @@ function Cn({ id: t, state: n, title: r, body: i, canonicalEvidence: a = !1, sub
 				children: [/* @__PURE__ */ D("p", {
 					className: "mw-meta text-muted-foreground",
 					children: t
-				}), /* @__PURE__ */ D(I, {
+				}), /* @__PURE__ */ D(F, {
 					variant: u,
 					children: n.replace("-", " ")
 				})]
@@ -2682,7 +2685,7 @@ function Cn({ id: t, state: n, title: r, body: i, canonicalEvidence: a = !1, sub
 		]
 	});
 }
-function wn({ title: t, body: n, unread: r, variant: i = "system" }) {
+function Nn({ title: t, body: n, unread: r, variant: i = "system" }) {
 	return /* @__PURE__ */ O("article", {
 		className: e("border-b border-border p-4", r && "bg-panel"),
 		"data-variant": i,
@@ -2693,7 +2696,7 @@ function wn({ title: t, body: n, unread: r, variant: i = "system" }) {
 				children: [/* @__PURE__ */ D("p", {
 					className: "text-sm font-bold",
 					children: t
-				}), /* @__PURE__ */ D(I, {
+				}), /* @__PURE__ */ D(F, {
 					variant: r ? "info" : "neutral",
 					children: i
 				})]
@@ -2709,7 +2712,7 @@ function wn({ title: t, body: n, unread: r, variant: i = "system" }) {
 		]
 	});
 }
-function Tn({ repo: e, status: t, commit: n = "fixture", schema: r = "v1", records: i = "—", queue: a = 0, errors: o = 0, lastSync: s = "now", action: c }) {
+function Pn({ repo: e, status: t, commit: n = "fixture", schema: r = "v1", records: i = "—", queue: a = 0, errors: o = 0, lastSync: s = "now", action: c }) {
 	let l = t === "online" ? "supported" : t === "degraded" ? "partial" : t === "offline" ? "contested" : "info";
 	return /* @__PURE__ */ O("div", {
 		className: "grid min-h-11 grid-cols-[1.5fr_auto] items-center gap-3 border-b border-border bg-card px-3 py-2 md:grid-cols-[1.5fr_.8fr_.7fr_.6fr_.6fr_.6fr_.8fr_auto_auto]",
@@ -2720,7 +2723,7 @@ function Tn({ repo: e, status: t, commit: n = "fixture", schema: r = "v1", recor
 			}),
 			/* @__PURE__ */ D("span", {
 				className: "md:hidden",
-				children: /* @__PURE__ */ D(I, {
+				children: /* @__PURE__ */ D(F, {
 					variant: l,
 					children: t
 				})
@@ -2751,7 +2754,7 @@ function Tn({ repo: e, status: t, commit: n = "fixture", schema: r = "v1", recor
 			}),
 			/* @__PURE__ */ D("span", {
 				className: "hidden md:block",
-				children: /* @__PURE__ */ D(I, {
+				children: /* @__PURE__ */ D(F, {
 					variant: l,
 					children: t
 				})
@@ -2806,7 +2809,7 @@ function K({ label: t, value: n, context: r, delta: i, tone: a = "neutral" }) {
 		]
 	});
 }
-function En({ active: t = "Cases", collapsed: n = !1 }) {
+function Fn({ active: t = "Cases", collapsed: n = !1 }) {
 	let r = t.toLowerCase().replace(/\s+/g, "-");
 	return /* @__PURE__ */ O("aside", {
 		className: e("hidden min-h-[calc(100vh-64px)] shrink-0 flex-col border-r border-border bg-panel md:flex", n ? "w-[72px]" : "w-[72px] lg:w-[220px]"),
@@ -2839,7 +2842,7 @@ function En({ active: t = "Cases", collapsed: n = !1 }) {
 					children: n ? "●" : "System / online"
 				}), n ? null : /* @__PURE__ */ O("div", {
 					className: "mt-2 hidden items-center gap-2 lg:flex",
-					children: [/* @__PURE__ */ D(F, {
+					children: [/* @__PURE__ */ D(P, {
 						label: "Researcher",
 						size: "xs"
 					}), /* @__PURE__ */ D("span", {
@@ -2851,7 +2854,7 @@ function En({ active: t = "Cases", collapsed: n = !1 }) {
 		]
 	});
 }
-function Dn({ resultCount: e = 4, chips: t = [
+function In({ resultCount: e = 4, chips: t = [
 	"All records",
 	"Canonical",
 	"Source-linked"
@@ -2868,7 +2871,7 @@ function Dn({ resultCount: e = 4, chips: t = [
 					variant: "search",
 					placeholder: "Search records, IDs, sources…"
 				}),
-				/* @__PURE__ */ D(Xt, {
+				/* @__PURE__ */ D(on, {
 					label: "Status",
 					defaultValue: "all",
 					options: [
@@ -2890,7 +2893,7 @@ function Dn({ resultCount: e = 4, chips: t = [
 						}
 					]
 				}),
-				/* @__PURE__ */ D(Xt, {
+				/* @__PURE__ */ D(on, {
 					label: "Sort",
 					defaultValue: "relevance",
 					options: [
@@ -2910,7 +2913,7 @@ function Dn({ resultCount: e = 4, chips: t = [
 				}),
 				/* @__PURE__ */ D("div", {
 					className: "self-end",
-					children: /* @__PURE__ */ D(P, {
+					children: /* @__PURE__ */ D(I, {
 						type: "submit",
 						children: "Apply"
 					})
@@ -2920,7 +2923,7 @@ function Dn({ resultCount: e = 4, chips: t = [
 			className: "flex flex-wrap items-center justify-between gap-3",
 			children: [/* @__PURE__ */ D("div", {
 				className: "flex flex-wrap gap-2",
-				children: t.map((e) => /* @__PURE__ */ D(I, {
+				children: t.map((e) => /* @__PURE__ */ D(F, {
 					variant: "neutral",
 					children: e
 				}, e))
@@ -2979,7 +2982,7 @@ function q({ state: e, traceId: t = "TRACE-UNAVAILABLE", lastKnownState: n = "No
 				className: "mw-meta mt-4 text-muted-foreground",
 				children: ["Trace / ", t]
 			}),
-			/* @__PURE__ */ D(P, {
+			/* @__PURE__ */ D(I, {
 				className: "mt-5",
 				variant: "danger",
 				onClick: () => void l?.(),
@@ -3006,7 +3009,7 @@ function q({ state: e, traceId: t = "TRACE-UNAVAILABLE", lastKnownState: n = "No
 				className: "mw-meta mt-4 text-muted-foreground",
 				children: ["Last known state / ", n]
 			}),
-			/* @__PURE__ */ D(P, {
+			/* @__PURE__ */ D(I, {
 				className: "mt-5",
 				variant: "secondary",
 				onClick: () => void l?.(),
@@ -3041,7 +3044,7 @@ function q({ state: e, traceId: t = "TRACE-UNAVAILABLE", lastKnownState: n = "No
 					})]
 				})]
 			}),
-			/* @__PURE__ */ D(P, {
+			/* @__PURE__ */ D(I, {
 				className: "mt-5",
 				variant: "danger",
 				onClick: () => void u?.(),
@@ -3063,7 +3066,7 @@ function q({ state: e, traceId: t = "TRACE-UNAVAILABLE", lastKnownState: n = "No
 				className: "mt-2 text-sm text-muted-foreground",
 				children: "Change filters or create a record."
 			}),
-			/* @__PURE__ */ D(P, {
+			/* @__PURE__ */ D(I, {
 				className: "mt-5",
 				variant: "secondary",
 				onClick: () => void d?.(),
@@ -3072,7 +3075,7 @@ function q({ state: e, traceId: t = "TRACE-UNAVAILABLE", lastKnownState: n = "No
 		]
 	});
 }
-function On({ mode: t = "context", onSubmit: n }) {
+function Ln({ mode: t = "context", onSubmit: n }) {
 	let r = t === "question", i = A(), [a, o] = T(""), [s, c] = T(""), l = n ?? i.onCommunitySubmit;
 	return /* @__PURE__ */ O("form", {
 		className: e("border bg-card p-4", r ? "border-info" : "border-primary"),
@@ -3101,7 +3104,7 @@ function On({ mode: t = "context", onSubmit: n }) {
 						onChange: (e) => o(e.currentTarget.value),
 						placeholder: "Paste source ID or locator"
 					}),
-					/* @__PURE__ */ D(Yt, {
+					/* @__PURE__ */ D(an, {
 						label: r ? "Question" : "Context",
 						value: s,
 						onChange: (e) => c(e.currentTarget.value),
@@ -3109,7 +3112,7 @@ function On({ mode: t = "context", onSubmit: n }) {
 						characterCount: !0,
 						placeholder: r ? "What needs explanation?" : "What does this add, and what remains uncertain?"
 					}),
-					/* @__PURE__ */ D(P, {
+					/* @__PURE__ */ D(I, {
 						type: "submit",
 						disabled: !s.trim(),
 						children: r ? "Ask question" : "Submit context"
@@ -3119,7 +3122,7 @@ function On({ mode: t = "context", onSubmit: n }) {
 		]
 	});
 }
-function kn({ caseId: t, title: n, summary: r, status: i, traceCount: a, updatedAt: o, variant: s = "default", selected: c = !1 }) {
+function Rn({ caseId: t, title: n, summary: r, status: i, traceCount: a, updatedAt: o, variant: s = "default", selected: c = !1 }) {
 	return /* @__PURE__ */ O("article", {
 		className: e("border bg-card transition-colors hover:border-border-strong", s === "compact" ? "p-3" : "p-5", c ? "border-foreground" : s === "featured" ? "border-primary" : "border-border"),
 		"data-variant": s,
@@ -3130,7 +3133,7 @@ function kn({ caseId: t, title: n, summary: r, status: i, traceCount: a, updated
 				children: [/* @__PURE__ */ O("span", {
 					className: "mw-meta text-muted-foreground",
 					children: ["CASE / ", t]
-				}), /* @__PURE__ */ D(I, {
+				}), /* @__PURE__ */ D(F, {
 					variant: i,
 					children: i
 				})]
@@ -3150,14 +3153,14 @@ function kn({ caseId: t, title: n, summary: r, status: i, traceCount: a, updated
 		]
 	});
 }
-function An({ type: t, label: n, highlighted: r = !1, dimmed: i = !1 }) {
+function zn({ type: t, label: n, highlighted: r = !1, dimmed: i = !1 }) {
 	return /* @__PURE__ */ D("span", {
 		className: e("inline-flex min-h-8 items-center border-l-2 pl-2 font-mono text-[10px] font-bold uppercase tracking-[0.08em]", t === "supports" || t === "temporal" ? "border-success" : t === "identity" ? "border-warning" : t === "references" ? "border-info" : "border-primary", r ? "text-foreground" : "text-muted-foreground", i && "opacity-80"),
 		"aria-label": `${t} relationship${n ? `: ${n}` : ""}`,
 		children: n ?? t
 	});
 }
-function jn({ children: t, active: n = !0, legalState: r = "unresolved" }) {
+function Bn({ children: t, active: n = !0, legalState: r = "unresolved" }) {
 	return /* @__PURE__ */ O("section", {
 		className: e("border-t-2 pt-5", n ? "border-primary" : "border-border"),
 		"aria-label": "AWS legal boundary",
@@ -3166,7 +3169,7 @@ function jn({ children: t, active: n = !0, legalState: r = "unresolved" }) {
 			children: [/* @__PURE__ */ D("p", {
 				className: e("mw-eyebrow", n ? "text-primary" : "text-muted-foreground"),
 				children: "THE BOUNDARY / AWS"
-			}), /* @__PURE__ */ D(I, {
+			}), /* @__PURE__ */ D(F, {
 				variant: n ? "disputed" : "unresolved",
 				children: r
 			})]
@@ -3176,7 +3179,7 @@ function jn({ children: t, active: n = !0, legalState: r = "unresolved" }) {
 		}) : null]
 	});
 }
-function Mn({ entries: e, filter: t = "all" }) {
+function Vn({ entries: e, filter: t = "all" }) {
 	let n = t === "all" ? e : e.filter((e) => (e.variant ?? "event") === t);
 	return /* @__PURE__ */ O("section", {
 		"aria-label": "Case timeline",
@@ -3189,19 +3192,19 @@ function Mn({ entries: e, filter: t = "all" }) {
 				"source",
 				"decision",
 				"community"
-			].map((e) => /* @__PURE__ */ D(I, {
+			].map((e) => /* @__PURE__ */ D(F, {
 				variant: e === t ? "info" : "neutral",
 				children: e
 			}, e))
 		}), /* @__PURE__ */ D("div", {
 			className: "border-t border-border",
-			children: n.map((e) => /* @__PURE__ */ D(xn, { ...e }, `${e.timestamp}-${e.title}`))
+			children: n.map((e) => /* @__PURE__ */ D(jn, { ...e }, `${e.timestamp}-${e.title}`))
 		})]
 	});
 }
 //#endregion
 //#region src/components/case-header.tsx
-function Nn({ caseId: t, eyebrow: n, title: r, summary: i, status: a, variant: o = "public", metadata: s = [], actions: c }) {
+function Hn({ caseId: t, eyebrow: n, title: r, summary: i, status: a, variant: o = "public", metadata: s = [], actions: c }) {
 	return /* @__PURE__ */ O("header", {
 		className: e("border-b border-border pb-7", o === "platform" && "pb-5"),
 		children: [/* @__PURE__ */ O("div", {
@@ -3226,7 +3229,7 @@ function Nn({ caseId: t, eyebrow: n, title: r, summary: i, status: a, variant: o
 				}),
 				/* @__PURE__ */ O("div", {
 					className: "mt-5 flex flex-wrap items-center gap-2",
-					children: [/* @__PURE__ */ D(I, {
+					children: [/* @__PURE__ */ D(F, {
 						variant: a,
 						children: a
 					}), s.map((e) => /* @__PURE__ */ O("span", {
@@ -3251,7 +3254,7 @@ function Nn({ caseId: t, eyebrow: n, title: r, summary: i, status: a, variant: o
 }
 //#endregion
 //#region src/components/correlation-score.tsx
-function Pn({ score: e, confidence: t, explanation: n, dimensions: r, methodHref: i = "#method", variant: a = "detailed" }) {
+function Un({ score: e, confidence: t, explanation: n, dimensions: r, methodHref: i = "#method", variant: a = "detailed" }) {
 	let o = w();
 	return /* @__PURE__ */ O("section", {
 		className: "border border-border bg-panel p-5",
@@ -3319,12 +3322,12 @@ function Pn({ score: e, confidence: t, explanation: n, dimensions: r, methodHref
 }
 //#endregion
 //#region src/components/domain-record-summary.tsx
-function Fn({ records: e, className: t = "" }) {
+function Wn({ records: e, className: t = "" }) {
 	return /* @__PURE__ */ D("div", {
 		className: t,
 		"data-testid": "domain-record-summary",
 		children: e.map((e) => {
-			let t = Ze(e.domain), n = /* @__PURE__ */ O(E, { children: [
+			let t = ot(e.domain), n = /* @__PURE__ */ O(E, { children: [
 				/* @__PURE__ */ D("strong", { children: e.domain }),
 				/* @__PURE__ */ D("span", { children: e.title }),
 				/* @__PURE__ */ O("code", { children: [t.prefix, e.recordId] }),
@@ -3345,7 +3348,7 @@ function Fn({ records: e, className: t = "" }) {
 }
 //#endregion
 //#region src/components/evidence-graph.tsx
-var In = {
+var Gn = {
 	STORY: "text-rgbl-red-fg border-rgbl-red",
 	EVENT: "text-rgbl-green-fg border-rgbl-green",
 	PERSON: "text-warning border-warning",
@@ -3356,12 +3359,12 @@ var In = {
 	PERSPECTIVE: "text-warning border-warning",
 	RELATIONSHIP: "text-foreground border-primary",
 	CASE: "text-foreground border-primary"
-}, Ln = {
+}, Kn = {
 	STORY: "left-[8%] top-[10%]",
 	EVENT: "right-[8%] top-[10%]",
 	PERSON: "bottom-[10%] left-[8%]",
 	RGBL: "bottom-[10%] right-[8%]"
-}, Rn = [
+}, qn = [
 	{
 		type: "supports",
 		label: "supports",
@@ -3393,7 +3396,7 @@ var In = {
 		className: "border-primary"
 	}
 ];
-function zn({ records: t, score: n }) {
+function Jn({ records: t, score: n }) {
 	let r = w(), [i, a] = T("EVENT"), o = t.find((e) => e.domain === i);
 	return /* @__PURE__ */ O("section", {
 		"aria-labelledby": r,
@@ -3408,7 +3411,7 @@ function zn({ records: t, score: n }) {
 					id: r,
 					className: "mw-display mt-2 text-2xl font-bold",
 					children: "Separate records. Shared correlation layer."
-				})] }), /* @__PURE__ */ D(I, {
+				})] }), /* @__PURE__ */ D(F, {
 					variant: "unresolved",
 					children: "not causation"
 				})]
@@ -3464,7 +3467,7 @@ function zn({ records: t, score: n }) {
 							})
 						]
 					}),
-					/* @__PURE__ */ D(Bn, {
+					/* @__PURE__ */ D(Yn, {
 						type: "CASE",
 						label: n.toFixed(2),
 						status: "correlation",
@@ -3473,20 +3476,20 @@ function zn({ records: t, score: n }) {
 						className: "absolute left-1/2 top-1/2 size-[clamp(82px,22vw,104px)] -translate-x-1/2 -translate-y-1/2",
 						onSelect: () => a("CASE")
 					}),
-					t.map((t) => /* @__PURE__ */ D(Bn, {
+					t.map((t) => /* @__PURE__ */ D(Yn, {
 						type: t.domain,
 						label: t.domain,
 						status: t.status,
 						relationCount: 1,
 						state: i === t.domain ? "selected" : t.domain === "PERSON" ? "unresolved" : "default",
-						className: e("absolute", Ln[t.domain]),
+						className: e("absolute", Kn[t.domain]),
 						onSelect: () => a(t.domain)
 					}, t.domain))
 				]
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-4 flex justify-end",
-				children: /* @__PURE__ */ D(Bn, {
+				children: /* @__PURE__ */ D(Yn, {
 					type: "AWS",
 					label: "AWS",
 					status: "after boundary",
@@ -3498,7 +3501,7 @@ function zn({ records: t, score: n }) {
 			/* @__PURE__ */ D("div", {
 				className: "mt-5 flex flex-wrap gap-3",
 				"aria-label": "Relationship legend",
-				children: Rn.map((t) => /* @__PURE__ */ D("span", {
+				children: qn.map((t) => /* @__PURE__ */ D("span", {
 					className: e("mw-meta border-l-2 pl-2 text-muted-foreground", t.className),
 					children: t.label
 				}, t.type))
@@ -3507,7 +3510,7 @@ function zn({ records: t, score: n }) {
 				className: "mt-5 border-l-2 border-primary bg-background p-4",
 				"aria-live": "polite",
 				children: o ? /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ O("p", {
-					className: e("mw-eyebrow", In[o.domain].split(" ")[0]),
+					className: e("mw-eyebrow", Gn[o.domain].split(" ")[0]),
 					children: [o.domain, " selected"]
 				}), /* @__PURE__ */ O("p", {
 					className: "mt-2 text-sm leading-6 text-muted-foreground",
@@ -3572,10 +3575,10 @@ function zn({ records: t, score: n }) {
 		]
 	});
 }
-function Bn({ type: t, label: n, status: r, relationCount: i = 0, state: a = "default", className: o, onSelect: s }) {
+function Yn({ type: t, label: n, status: r, relationCount: i = 0, state: a = "default", className: o, onSelect: s }) {
 	return /* @__PURE__ */ O("button", {
 		type: "button",
-		className: e("flex min-h-11 min-w-11 flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity] hover:border-foreground hover:bg-panel", In[t], a === "selected" && "bg-panel ring-2 ring-foreground ring-offset-2 ring-offset-background", a === "dimmed" && "opacity-90", a === "unresolved" && "border-dashed", (o?.includes("absolute"), ""), o),
+		className: e("flex min-h-11 min-w-11 flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity] hover:border-foreground hover:bg-panel", Gn[t], a === "selected" && "bg-panel ring-2 ring-foreground ring-offset-2 ring-offset-background", a === "dimmed" && "opacity-90", a === "unresolved" && "border-dashed", (o?.includes("absolute"), ""), o),
 		"data-type": t.toLowerCase(),
 		"data-state": a,
 		"aria-pressed": a === "selected",
@@ -3599,18 +3602,18 @@ function Bn({ type: t, label: n, status: r, relationCount: i = 0, state: a = "de
 }
 //#endregion
 //#region src/components/four-record-summary.tsx
-var Vn = [
+var Xn = [
 	"STORY",
 	"EVENT",
 	"PERSON",
 	"RGBL"
-], Hn = {
+], Zn = {
 	STORY: "text-rgbl-red-fg",
 	EVENT: "text-rgbl-green-fg",
 	PERSON: "text-warning",
 	RGBL: "text-rgbl-blue-fg"
 };
-function Un({ records: t, compact: n = !1 }) {
+function Qn({ records: t, compact: n = !1 }) {
 	let r = w();
 	return /* @__PURE__ */ O("section", {
 		"aria-labelledby": r,
@@ -3630,7 +3633,7 @@ function Un({ records: t, compact: n = !1 }) {
 			})]
 		}), /* @__PURE__ */ D("div", {
 			className: "rs-record-grid",
-			children: Vn.map((r) => {
+			children: Xn.map((r) => {
 				let i = t.find((e) => e.domain === r);
 				return i ? /* @__PURE__ */ O("article", {
 					id: `evidence-${i.domain.toLowerCase()}`,
@@ -3640,9 +3643,9 @@ function Un({ records: t, compact: n = !1 }) {
 						/* @__PURE__ */ O("div", {
 							className: "flex items-start justify-between gap-3",
 							children: [/* @__PURE__ */ D("span", {
-								className: e("mw-eyebrow", Hn[i.domain]),
+								className: e("mw-eyebrow", Zn[i.domain]),
 								children: i.domain
-							}), /* @__PURE__ */ D(I, {
+							}), /* @__PURE__ */ D(F, {
 								variant: i.status,
 								children: i.status
 							})]
@@ -3705,9 +3708,9 @@ function Un({ records: t, compact: n = !1 }) {
 					children: [/* @__PURE__ */ O("div", {
 						className: "flex items-start justify-between gap-3",
 						children: [/* @__PURE__ */ D("span", {
-							className: e("mw-eyebrow", Hn[r]),
+							className: e("mw-eyebrow", Zn[r]),
 							children: r
-						}), /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D(F, {
 							variant: "unresolved",
 							children: "missing"
 						})]
@@ -3722,14 +3725,14 @@ function Un({ records: t, compact: n = !1 }) {
 }
 //#endregion
 //#region src/components/legal-status.tsx
-var Wn = {
+var $n = {
 	permitted: "verified",
 	restricted: "restricted",
 	prohibited: "prohibited",
 	disputed: "disputed",
 	unresolved: "unresolved"
 };
-function Gn({ status: e, jurisdiction: t, review: n, prompt: r, basis: i = "fixture instruments only" }) {
+function er({ status: e, jurisdiction: t, review: n, prompt: r, basis: i = "fixture instruments only" }) {
 	let a = w();
 	return /* @__PURE__ */ O("section", {
 		className: "border border-primary bg-card p-5",
@@ -3765,8 +3768,8 @@ function Gn({ status: e, jurisdiction: t, review: n, prompt: r, basis: i = "fixt
 						children: [/* @__PURE__ */ D("dt", {
 							className: "mw-meta text-muted-foreground",
 							children: "Legal state"
-						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(I, {
-							variant: Wn[e],
+						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(F, {
+							variant: $n[e],
 							children: e
 						}) })]
 					}),
@@ -3775,7 +3778,7 @@ function Gn({ status: e, jurisdiction: t, review: n, prompt: r, basis: i = "fixt
 						children: [/* @__PURE__ */ D("dt", {
 							className: "mw-meta text-muted-foreground",
 							children: "Jurisdiction"
-						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(F, {
 							variant: "unresolved",
 							children: t
 						}) })]
@@ -3785,7 +3788,7 @@ function Gn({ status: e, jurisdiction: t, review: n, prompt: r, basis: i = "fixt
 						children: [/* @__PURE__ */ D("dt", {
 							className: "mw-meta text-muted-foreground",
 							children: "Review"
-						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(F, {
 							variant: "info",
 							children: n
 						}) })]
@@ -3808,29 +3811,29 @@ function Gn({ status: e, jurisdiction: t, review: n, prompt: r, basis: i = "fixt
 }
 //#endregion
 //#region src/components/platform-admin.tsx
-var Kn = {
+var tr = {
 	System: "System",
 	Resource: "Resource",
 	Account: "Account"
-}, qn = j.navigation.map((e) => ({
+}, nr = j.navigation.map((e) => ({
 	id: e.id,
 	label: e.label,
 	href: e.path,
-	group: Kn[e.group],
+	group: tr[e.group],
 	description: e.label + " / Platform administration contract.",
 	shortcut: e.label.slice(0, 1).toUpperCase(),
 	requiredPermission: e.permission
-})), Jn = j.commands.map((e) => ({
+})), rr = j.commands.map((e) => ({
 	label: e.label,
 	href: e.path,
 	shortcut: e.shortcut
-})), Yn = Array.from(new Set(j.navigation.map((e) => e.permission))), Xn = {
+})), ir = Array.from(new Set(j.navigation.map((e) => e.permission))), ar = {
 	allow: "verified",
 	limited: "partial",
 	read: "info",
 	deny: "prohibited"
 };
-function Zn({ currentRole: e }) {
+function or({ currentRole: e }) {
 	return /* @__PURE__ */ D("div", {
 		className: "overflow-x-auto",
 		children: /* @__PURE__ */ O("table", {
@@ -3853,8 +3856,8 @@ function Zn({ currentRole: e }) {
 					let n = e[t.id];
 					return /* @__PURE__ */ D("td", {
 						className: "p-4",
-						children: /* @__PURE__ */ D(I, {
-							variant: Xn[n],
+						children: /* @__PURE__ */ D(F, {
+							variant: ar[n],
 							children: n
 						})
 					}, t.id);
@@ -3863,13 +3866,13 @@ function Zn({ currentRole: e }) {
 		})
 	});
 }
-var Qn = {
+var sr = {
 	connected: "verified",
 	degraded: "partial",
 	offline: "prohibited",
 	unconfigured: "neutral"
 };
-function $n({ state: e, detail: t }) {
+function cr({ state: e, detail: t }) {
 	return /* @__PURE__ */ D("section", {
 		className: "border border-border bg-card p-5",
 		"data-platform-runtime": e,
@@ -3888,14 +3891,14 @@ function $n({ state: e, detail: t }) {
 					className: "mt-2 max-w-2xl text-sm text-muted-foreground",
 					children: t ?? (e === "unconfigured" ? "No Platform backend is configured. Mutations must remain unavailable." : "Runtime state comes from the Platform API, not from baked UI fixtures.")
 				})
-			] }), /* @__PURE__ */ D(I, {
-				variant: Qn[e],
+			] }), /* @__PURE__ */ D(F, {
+				variant: sr[e],
 				children: e
 			})]
 		})
 	});
 }
-function er({ runtime: e = [] }) {
+function lr({ runtime: e = [] }) {
 	let t = new Map(e.map((e) => [e.id, e]));
 	return /* @__PURE__ */ O("section", {
 		className: "border border-border bg-card",
@@ -3924,8 +3927,8 @@ function er({ runtime: e = [] }) {
 						className: "text-xs text-muted-foreground",
 						children: n.detail ?? "Runtime status unavailable."
 					}),
-					/* @__PURE__ */ D(I, {
-						variant: Qn[n.state],
+					/* @__PURE__ */ D(F, {
+						variant: sr[n.state],
 						children: n.state
 					})
 				]
@@ -3933,8 +3936,8 @@ function er({ runtime: e = [] }) {
 		})]
 	});
 }
-function tr({ screen: e, alt: t, ...n }) {
-	let r = be().replace(/\/+$/, "") + "/ui/v2/" + ut[e], i = "/assets/ui/v2/" + ut[e];
+function ur({ screen: e, alt: t, ...n }) {
+	let r = be().replace(/\/+$/, "") + "/ui/v2/" + yt[e], i = "/assets/ui/v2/" + yt[e];
 	return /* @__PURE__ */ D(x, {
 		src: r,
 		fallbackSrc: i,
@@ -3944,7 +3947,7 @@ function tr({ screen: e, alt: t, ...n }) {
 }
 //#endregion
 //#region src/components/compat/patterns.tsx
-function nr({ page: e = 1, pages: t = 1, onPageChange: n }) {
+function dr({ page: e = 1, pages: t = 1, onPageChange: n }) {
 	let r = A(), i = n ?? r.onPageChange;
 	return /* @__PURE__ */ D(Ve, {
 		page: e,
@@ -3952,7 +3955,7 @@ function nr({ page: e = 1, pages: t = 1, onPageChange: n }) {
 		onPageChange: i
 	});
 }
-function rr({ records: e }) {
+function fr({ records: e }) {
 	return /* @__PURE__ */ O("section", {
 		"aria-labelledby": "evidence-grid-heading",
 		children: [
@@ -3967,10 +3970,10 @@ function rr({ records: e }) {
 					children: "Inspect each record independently."
 				})]
 			}),
-			/* @__PURE__ */ D(Dn, { resultCount: e.length }),
+			/* @__PURE__ */ D(In, { resultCount: e.length }),
 			/* @__PURE__ */ D("div", {
 				className: "mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4",
-				children: e.map((e, t) => /* @__PURE__ */ D(yn, {
+				children: e.map((e, t) => /* @__PURE__ */ D(kn, {
 					domain: e.domain,
 					recordId: e.recordId,
 					repo: e.sourceRepo,
@@ -3986,7 +3989,7 @@ function rr({ records: e }) {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-4 grid gap-4 lg:grid-cols-2",
-				children: e.map((e) => /* @__PURE__ */ D(W, {
+				children: e.map((e) => /* @__PURE__ */ D(U, {
 					id: `source-${e.domain.toLowerCase()}`,
 					sourceId: e.source,
 					title: e.title,
@@ -3996,27 +3999,27 @@ function rr({ records: e }) {
 					verification: e.verification
 				}, e.source))
 			}),
-			/* @__PURE__ */ D(nr, {
+			/* @__PURE__ */ D(dr, {
 				page: 1,
 				pages: 1
 			})
 		]
 	});
 }
-function ir({ records: e, correlation: t }) {
+function pr({ records: e, correlation: t }) {
 	return /* @__PURE__ */ O("section", {
 		className: "grid gap-4 lg:grid-cols-[1.15fr_.85fr]",
 		"aria-label": "Correlation graph pattern",
-		children: [/* @__PURE__ */ D(zn, {
+		children: [/* @__PURE__ */ D(Jn, {
 			records: e,
 			score: t.score
-		}), /* @__PURE__ */ D(Pn, { ...t })]
+		}), /* @__PURE__ */ D(Un, { ...t })]
 	});
 }
-function ar({ legal: e, sources: t }) {
+function mr({ legal: e, sources: t }) {
 	return /* @__PURE__ */ O("section", {
 		"aria-label": "AWS legal summary",
-		children: [/* @__PURE__ */ D(jn, {
+		children: [/* @__PURE__ */ D(Bn, {
 			legalState: e.status,
 			children: /* @__PURE__ */ D("p", {
 				className: "text-sm font-semibold",
@@ -4024,9 +4027,9 @@ function ar({ legal: e, sources: t }) {
 			})
 		}), /* @__PURE__ */ O("div", {
 			className: "mt-4 grid gap-4 lg:grid-cols-[.8fr_1.2fr]",
-			children: [/* @__PURE__ */ D(Gn, { ...e }), /* @__PURE__ */ D("div", {
+			children: [/* @__PURE__ */ D(er, { ...e }), /* @__PURE__ */ D("div", {
 				className: "grid gap-4",
-				children: t.map((e) => /* @__PURE__ */ D(W, {
+				children: t.map((e) => /* @__PURE__ */ D(U, {
 					id: `legal-${e.id.toLowerCase()}`,
 					variant: "legal-instrument",
 					sourceId: e.id,
@@ -4040,7 +4043,7 @@ function ar({ legal: e, sources: t }) {
 		})]
 	});
 }
-function or({ cases: e }) {
+function hr({ cases: e }) {
 	return /* @__PURE__ */ O("section", {
 		"aria-labelledby": "related-cases-heading",
 		children: [
@@ -4055,7 +4058,7 @@ function or({ cases: e }) {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-4 grid gap-4 md:grid-cols-2",
-				children: e.map((e) => /* @__PURE__ */ D(kn, {
+				children: e.map((e) => /* @__PURE__ */ D(Rn, {
 					...e,
 					variant: "compact"
 				}, e.caseId))
@@ -4063,7 +4066,7 @@ function or({ cases: e }) {
 		]
 	});
 }
-function sr({ header: e, evidence: t, correlation: n, legal: r, related: i, summary: a }) {
+function gr({ header: e, evidence: t, correlation: n, legal: r, related: i, summary: a }) {
 	return /* @__PURE__ */ O("div", {
 		className: "grid gap-8",
 		children: [
@@ -4076,7 +4079,7 @@ function sr({ header: e, evidence: t, correlation: n, legal: r, related: i, summ
 		]
 	});
 }
-function cr({ repositories: e, onSyncAll: t, onInspect: n }) {
+function _r({ repositories: e, onSyncAll: t, onInspect: n }) {
 	let r = A(), i = t ?? r.onRepositorySyncAll, a = n ?? r.onRepositoryInspect;
 	return /* @__PURE__ */ O("section", {
 		"aria-labelledby": "repository-monitor-heading",
@@ -4091,10 +4094,10 @@ function cr({ repositories: e, onSyncAll: t, onInspect: n }) {
 				children: "Source-layer health"
 			})] }), /* @__PURE__ */ O("div", {
 				className: "flex gap-2",
-				children: [/* @__PURE__ */ D(qt, {
+				children: [/* @__PURE__ */ D(tn, {
 					variant: "info",
 					children: "job: idle"
-				}), /* @__PURE__ */ D(P, {
+				}), /* @__PURE__ */ D(I, {
 					variant: "secondary",
 					size: "sm",
 					onClick: () => void i?.(),
@@ -4103,12 +4106,12 @@ function cr({ repositories: e, onSyncAll: t, onInspect: n }) {
 			})]
 		}), /* @__PURE__ */ D("div", {
 			className: "mt-4 border border-border",
-			children: e.map((e) => /* @__PURE__ */ D(Tn, {
+			children: e.map((e) => /* @__PURE__ */ D(Pn, {
 				repo: e.repo,
 				status: e.status,
 				queue: e.queue ?? 0,
 				errors: e.errors ?? 0,
-				action: /* @__PURE__ */ D(P, {
+				action: /* @__PURE__ */ D(I, {
 					variant: "ghost",
 					size: "sm",
 					onClick: () => void a?.(e.repo),
@@ -4118,7 +4121,7 @@ function cr({ repositories: e, onSyncAll: t, onInspect: n }) {
 		})]
 	});
 }
-function lr({ submission: e, onSelectAll: t, onRequestContext: n, onReject: r, onBulkRequestContext: i, onReturnSelected: a }) {
+function vr({ submission: e, onSelectAll: t, onRequestContext: n, onReject: r, onBulkRequestContext: i, onReturnSelected: a }) {
 	let o = A();
 	return /* @__PURE__ */ O("section", {
 		"aria-labelledby": "moderation-queue-heading",
@@ -4134,10 +4137,10 @@ function lr({ submission: e, onSelectAll: t, onRequestContext: n, onReject: r, o
 					children: "Community submissions stay non-canonical until reviewed."
 				})] }), /* @__PURE__ */ O("div", {
 					className: "flex gap-2",
-					children: [/* @__PURE__ */ D(qt, {
+					children: [/* @__PURE__ */ D(tn, {
 						variant: "neutral",
 						children: "filter: needs context"
-					}), /* @__PURE__ */ D(P, {
+					}), /* @__PURE__ */ D(I, {
 						variant: "ghost",
 						size: "sm",
 						onClick: () => void (t ?? o.onModerationSelectAll)?.(),
@@ -4147,17 +4150,17 @@ function lr({ submission: e, onSelectAll: t, onRequestContext: n, onReject: r, o
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-4",
-				children: /* @__PURE__ */ D(Cn, {
+				children: /* @__PURE__ */ D(W, {
 					...e,
 					canonicalEvidence: !1,
 					source: "provenance incomplete",
 					reviewer: "unassigned",
-					reviewActions: /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(P, {
+					reviewActions: /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(I, {
 						variant: "danger",
 						size: "sm",
 						onClick: () => void (n ?? o.onModerationRequestContext)?.(e.id),
 						children: "Request context"
-					}), /* @__PURE__ */ D(P, {
+					}), /* @__PURE__ */ D(I, {
 						variant: "secondary",
 						size: "sm",
 						onClick: () => void (r ?? o.onModerationReject)?.(e.id),
@@ -4167,12 +4170,12 @@ function lr({ submission: e, onSelectAll: t, onRequestContext: n, onReject: r, o
 			}),
 			/* @__PURE__ */ O("div", {
 				className: "mt-3 flex flex-wrap gap-2",
-				children: [/* @__PURE__ */ D(P, {
+				children: [/* @__PURE__ */ D(I, {
 					variant: "secondary",
 					size: "sm",
 					onClick: () => void (i ?? o.onModerationBulkRequestContext)?.(),
 					children: "Bulk request context"
-				}), /* @__PURE__ */ D(P, {
+				}), /* @__PURE__ */ D(I, {
 					variant: "ghost",
 					size: "sm",
 					onClick: () => void (a ?? o.onModerationReturnSelected)?.(),
@@ -4182,12 +4185,12 @@ function lr({ submission: e, onSelectAll: t, onRequestContext: n, onReject: r, o
 		]
 	});
 }
-function ur({ question: e, moderatorNote: t, submission: n }) {
+function yr({ question: e, moderatorNote: t, submission: n }) {
 	return /* @__PURE__ */ O("section", {
 		"aria-label": "Community case thread",
 		className: "border border-border bg-card p-5",
 		children: [
-			/* @__PURE__ */ D(Sn, {
+			/* @__PURE__ */ D(Mn, {
 				kind: "question",
 				author: "Member",
 				role: "member",
@@ -4195,7 +4198,7 @@ function ur({ question: e, moderatorNote: t, submission: n }) {
 				body: e,
 				replies: 1
 			}),
-			/* @__PURE__ */ D(Sn, {
+			/* @__PURE__ */ D(Mn, {
 				kind: "moderator-note",
 				author: "Moderator",
 				role: "moderator",
@@ -4205,7 +4208,7 @@ function ur({ question: e, moderatorNote: t, submission: n }) {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-5",
-				children: /* @__PURE__ */ D(Cn, {
+				children: /* @__PURE__ */ D(W, {
 					...n,
 					canonicalEvidence: !1,
 					source: "provenance incomplete"
@@ -4213,19 +4216,19 @@ function ur({ question: e, moderatorNote: t, submission: n }) {
 			}),
 			/* @__PURE__ */ O("div", {
 				className: "mt-5 grid gap-4 lg:grid-cols-2",
-				children: [/* @__PURE__ */ D(On, { mode: "question" }), /* @__PURE__ */ D(On, { mode: "context" })]
+				children: [/* @__PURE__ */ D(Ln, { mode: "question" }), /* @__PURE__ */ D(Ln, { mode: "context" })]
 			})
 		]
 	});
 }
-function dr({ entries: e }) {
-	return /* @__PURE__ */ D(Mn, {
+function br({ entries: e }) {
+	return /* @__PURE__ */ D(Vn, {
 		entries: e,
 		filter: "all"
 	});
 }
-function fr() {
-	return /* @__PURE__ */ D(Dn, {
+function xr() {
+	return /* @__PURE__ */ D(In, {
 		resultCount: 4,
 		chips: [
 			"All records",
@@ -4234,13 +4237,13 @@ function fr() {
 		]
 	});
 }
-function pr({ children: e }) {
+function Sr({ children: e }) {
 	return /* @__PURE__ */ D("section", {
 		"aria-label": "Empty loading error pattern",
 		children: e
 	});
 }
-function mr({ onSubmit: e, onProvider: t } = {}) {
+function Cr({ onSubmit: e, onProvider: t } = {}) {
 	let [n, r] = T("default"), i = A(), a = e ?? i.onAuthSubmit, o = t ?? i.onAuthProvider;
 	return /* @__PURE__ */ O("form", {
 		"aria-label": "Sign in",
@@ -4294,17 +4297,17 @@ function mr({ onSubmit: e, onProvider: t } = {}) {
 						error: n === "error" ? "That credential pair was not accepted." : void 0,
 						required: !0
 					}),
-					/* @__PURE__ */ D(Zt, {
+					/* @__PURE__ */ D(sn, {
 						name: "keepSignedIn",
 						label: "Keep me signed in",
 						description: "Use only on a device you control."
 					}),
-					/* @__PURE__ */ D(P, {
+					/* @__PURE__ */ D(I, {
 						type: "submit",
 						loading: n === "loading",
 						children: "Continue"
 					}),
-					/* @__PURE__ */ D(P, {
+					/* @__PURE__ */ D(I, {
 						type: "button",
 						variant: "secondary",
 						onClick: () => void o?.(),
@@ -4327,7 +4330,7 @@ function mr({ onSubmit: e, onProvider: t } = {}) {
 }
 //#endregion
 //#region src/contracts/semantic-asset-map.ts
-var hr = {
+var wr = {
 	story: "graph-node",
 	claim: "graph-node",
 	evidence: "evidence-source",
@@ -4338,7 +4341,7 @@ var hr = {
 	law: "law-node",
 	case: "graph-node",
 	location: "jurisdiction-zone"
-}, gr = {
+}, Tr = {
 	dashboard: {
 		required: [
 			"dashboard",
@@ -4368,12 +4371,12 @@ var hr = {
 		allowed: ["primitive", "illustration"]
 	}
 };
-function _r(e, t = y.acceptedMainCommit) {
+function Er(e, t = y.acceptedMainCommit) {
 	return `https://raw.githubusercontent.com/${y.repository}/${t}/moonwitness/semantic-primitives-pack/svg/${e}.svg`;
 }
 //#endregion
 //#region src/components/workflow-strip.tsx
-var vr = [
+var Dr = [
 	{
 		name: "Observe",
 		target: "observe",
@@ -4400,13 +4403,13 @@ var vr = [
 		copy: "Keep unresolved when evidence stops."
 	}
 ];
-function yr() {
+function Or() {
 	return /* @__PURE__ */ D("nav", {
 		"aria-label": "MoonWitness method",
 		className: "border-y border-border",
 		children: /* @__PURE__ */ D("ol", {
 			className: "grid sm:grid-cols-5",
-			children: vr.map((e, t) => /* @__PURE__ */ D("li", {
+			children: Dr.map((e, t) => /* @__PURE__ */ D("li", {
 				className: "border-b border-border last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0",
 				children: /* @__PURE__ */ O("a", {
 					href: `#${e.target}`,
@@ -4605,7 +4608,7 @@ var J = {
 			status: "online"
 		}
 	]
-}, br = [
+}, kr = [
 	{
 		id: "N-1",
 		title: "MW-0042 review changed",
@@ -4629,18 +4632,18 @@ var J = {
 	}
 ];
 function Y({ activeResource: e, section: t, title: n, children: r, backendState: i = "online" }) {
-	return /* @__PURE__ */ D(_n, {
+	return /* @__PURE__ */ D(En, {
 		activeResource: e,
 		breadcrumbs: [{ label: t }, { label: n }],
 		backendState: i,
-		notifications: br,
+		notifications: kr,
 		children: /* @__PURE__ */ D("div", {
 			className: "px-4 py-8 sm:px-8 lg:px-8",
 			children: r
 		})
 	});
 }
-function xr() {
+function Ar() {
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "dashboard",
 		section: "HOME",
@@ -4758,7 +4761,7 @@ function xr() {
 		]
 	});
 }
-var Sr = [
+var jr = [
 	{
 		title: "INBOX",
 		count: 5,
@@ -4792,7 +4795,7 @@ var Sr = [
 		meta: "Source linked"
 	}
 ];
-function Cr({ actions: e } = {}) {
+function Mr({ actions: e } = {}) {
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "kanban",
 		section: "WORK",
@@ -4808,7 +4811,7 @@ function Cr({ actions: e } = {}) {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-10 grid gap-4 xl:grid-cols-4",
-				children: Sr.map((t) => /* @__PURE__ */ O("section", {
+				children: jr.map((t) => /* @__PURE__ */ O("section", {
 					className: "min-h-[540px] border border-border bg-panel p-4",
 					children: [/* @__PURE__ */ O("div", {
 						className: "flex items-center justify-between",
@@ -4819,7 +4822,7 @@ function Cr({ actions: e } = {}) {
 								" / ",
 								t.count
 							]
-						}), /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D(F, {
 							variant: t.tone,
 							children: t.count
 						})]
@@ -4838,7 +4841,7 @@ function Cr({ actions: e } = {}) {
 								className: "mw-meta mt-3 text-muted-foreground",
 								children: t.meta
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								className: "mt-4",
 								size: "sm",
 								variant: "ghost",
@@ -4856,7 +4859,7 @@ function Cr({ actions: e } = {}) {
 		]
 	});
 }
-function wr({ actions: e } = {}) {
+function Nr({ actions: e } = {}) {
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "calendar",
 		section: "WORK",
@@ -4931,7 +4934,7 @@ function wr({ actions: e } = {}) {
 		]
 	});
 }
-function Tr({ actions: e } = {}) {
+function Pr({ actions: e } = {}) {
 	let [t, n] = T("# mw-0042"), [r, i] = T("");
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "chat",
@@ -4955,7 +4958,7 @@ function Tr({ actions: e } = {}) {
 					type: "button",
 					onClick: () => n(e),
 					className: `mw-link mt-2 w-full px-3 text-left text-sm ${t === e ? "bg-card font-bold text-primary" : "text-muted-foreground"}`,
-					children: [e, r === 0 ? /* @__PURE__ */ D(I, {
+					children: [e, r === 0 ? /* @__PURE__ */ D(F, {
 						variant: "info",
 						children: "3"
 					}) : null]
@@ -4991,7 +4994,7 @@ function Tr({ actions: e } = {}) {
 								message: r.trim()
 							}), i(""));
 						},
-						children: [/* @__PURE__ */ D(Yt, {
+						children: [/* @__PURE__ */ D(an, {
 							label: `Message ${t}…`,
 							value: r,
 							onChange: (e) => i(e.currentTarget.value),
@@ -5000,7 +5003,7 @@ function Tr({ actions: e } = {}) {
 							placeholder: `Message ${t}…`
 						}), /* @__PURE__ */ D("div", {
 							className: "mt-3 flex justify-end",
-							children: /* @__PURE__ */ D(P, {
+							children: /* @__PURE__ */ D(I, {
 								type: "submit",
 								disabled: !r.trim(),
 								children: "Send"
@@ -5012,7 +5015,7 @@ function Tr({ actions: e } = {}) {
 		})]
 	});
 }
-function Er({ actions: e } = {}) {
+function Fr({ actions: e } = {}) {
 	let [t, n] = T("");
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "ai",
@@ -5085,14 +5088,14 @@ function Er({ actions: e } = {}) {
 									prompt: t.trim()
 								}), n(""));
 							},
-							children: [/* @__PURE__ */ D(Yt, {
+							children: [/* @__PURE__ */ D(an, {
 								label: "Ask with case context…",
 								value: t,
 								onChange: (e) => n(e.currentTarget.value),
 								maxLength: 1200,
 								characterCount: !0,
 								placeholder: "Ask with case context…"
-							}), /* @__PURE__ */ D(P, {
+							}), /* @__PURE__ */ D(I, {
 								className: "mt-3",
 								type: "submit",
 								disabled: !t.trim(),
@@ -5143,7 +5146,7 @@ function Er({ actions: e } = {}) {
 		]
 	});
 }
-var Dr = {
+var Ir = {
 	case: "READ / WRITE",
 	event: "READ / WRITE",
 	person: "READ / REVIEW",
@@ -5152,7 +5155,7 @@ var Dr = {
 	perspective: "READ / ANALYZE",
 	correlation: "READ / ANALYZE"
 };
-function Or() {
+function Lr() {
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "resources",
 		section: "DATA",
@@ -5186,7 +5189,7 @@ function Or() {
 								className: "p-3 mw-meta text-muted-foreground",
 								children: e
 							}, e))
-						}) }), /* @__PURE__ */ D("tbody", { children: cn.map((e) => /* @__PURE__ */ O("tr", {
+						}) }), /* @__PURE__ */ D("tbody", { children: _n.map((e) => /* @__PURE__ */ O("tr", {
 							className: "border-b border-border",
 							children: [
 								/* @__PURE__ */ D("th", {
@@ -5203,9 +5206,9 @@ function Or() {
 								}),
 								/* @__PURE__ */ D("td", {
 									className: "p-4",
-									children: /* @__PURE__ */ D(I, {
+									children: /* @__PURE__ */ D(F, {
 										variant: e.resource === "aws" ? "partial" : e.resource === "correlation" || e.resource === "perspective" ? "info" : "verified",
-										children: Dr[e.resource]
+										children: Ir[e.resource]
 									})
 								})
 							]
@@ -5220,7 +5223,7 @@ function Or() {
 		]
 	});
 }
-function kr({ actions: e } = {}) {
+function Rr({ actions: e } = {}) {
 	let [t, n] = T("Profile"), [r, i] = T("Rocksoul");
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "settings",
@@ -5277,7 +5280,7 @@ function kr({ actions: e } = {}) {
 								readOnly: !0,
 								value: "researcher"
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								onClick: () => void e?.onSaveProfile?.({ displayName: r }),
 								children: "Save profile"
 							})
@@ -5295,10 +5298,10 @@ function kr({ actions: e } = {}) {
 					}) : null,
 					t === "Notifications" ? /* @__PURE__ */ O("div", {
 						className: "mt-6 max-w-xl",
-						children: [/* @__PURE__ */ D($t, {
+						children: [/* @__PURE__ */ D(ln, {
 							label: "Case updates",
 							defaultChecked: !0
-						}), /* @__PURE__ */ D($t, {
+						}), /* @__PURE__ */ D(ln, {
 							label: "Mentions and review assignments",
 							defaultChecked: !0
 						})]
@@ -5309,7 +5312,7 @@ function kr({ actions: e } = {}) {
 							label: "Current session",
 							readOnly: !0,
 							value: "Current browser / fixture"
-						}), /* @__PURE__ */ D(P, {
+						}), /* @__PURE__ */ D(I, {
 							variant: "danger",
 							onClick: () => void e?.onSignOutOtherSessions?.(),
 							children: "Sign out other sessions"
@@ -5317,7 +5320,7 @@ function kr({ actions: e } = {}) {
 					}) : null,
 					t === "API / Integrations" ? /* @__PURE__ */ O("div", {
 						className: "mt-6 grid max-w-xl gap-4",
-						children: [/* @__PURE__ */ D(q, { state: "empty" }), /* @__PURE__ */ D(P, {
+						children: [/* @__PURE__ */ D(q, { state: "empty" }), /* @__PURE__ */ D(I, {
 							variant: "secondary",
 							onClick: () => void e?.onAddIntegration?.(),
 							children: "Add integration"
@@ -5328,7 +5331,7 @@ function kr({ actions: e } = {}) {
 		})]
 	});
 }
-function Ar({ actions: e } = {}) {
+function zr({ actions: e } = {}) {
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "settings",
 		section: "SECURITY",
@@ -5383,7 +5386,7 @@ function Ar({ actions: e } = {}) {
 								]
 							].map(([e, t, n]) => /* @__PURE__ */ O("div", {
 								className: "grid grid-cols-[1fr_180px] items-center border-b border-border py-4 text-sm",
-								children: [/* @__PURE__ */ D("span", { children: e }), /* @__PURE__ */ D(I, {
+								children: [/* @__PURE__ */ D("span", { children: e }), /* @__PURE__ */ D(F, {
 									variant: n,
 									children: t
 								})]
@@ -5403,7 +5406,7 @@ function Ar({ actions: e } = {}) {
 									className: "mt-3 text-sm text-muted-foreground",
 									children: "Legal Reviewer or Admin is required."
 								}),
-								/* @__PURE__ */ D(P, {
+								/* @__PURE__ */ D(I, {
 									className: "mt-6",
 									variant: "danger",
 									onClick: () => void e?.onRequestAccess?.({
@@ -5420,7 +5423,7 @@ function Ar({ actions: e } = {}) {
 		]
 	});
 }
-function jr() {
+function Br() {
 	return /* @__PURE__ */ O(Y, {
 		activeResource: "dashboard",
 		section: "SYSTEM",
@@ -5458,19 +5461,19 @@ function jr() {
 		]
 	});
 }
-function Mr() {
-	return /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(xr, {}), /* @__PURE__ */ D(hn, {
+function Vr() {
+	return /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(Ar, {}), /* @__PURE__ */ D(wn, {
 		open: !0,
 		onClose: () => void 0,
 		resources: z,
 		permissions: B
 	})] });
 }
-function Nr() {
-	return /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(xr, {}), /* @__PURE__ */ D(fn, {
+function Hr() {
+	return /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(Ar, {}), /* @__PURE__ */ D(xn, {
 		open: !0,
 		onClose: () => void 0,
-		notifications: br
+		notifications: kr
 	})] });
 }
 var X = {
@@ -5561,35 +5564,35 @@ var X = {
 		"observability is operational metadata, not legal evidence",
 		"reviewed legal analysis remains distinct from Mizan and evidence reconstruction"
 	]
-}, Pr = X, Fr = X.legalResultStates, Ir = X.applicabilityAxes, Lr = X.reviewPipeline, Rr = X.guardrails;
-function zr(e) {
+}, Ur = X, Wr = X.legalResultStates, Gr = X.applicabilityAxes, Kr = X.reviewPipeline, qr = X.guardrails;
+function Jr(e) {
 	return X.legalResultStates.find((t) => t.id === e);
 }
-function Br(e) {
+function Yr(e) {
 	return X.applicabilityAxes.find((t) => t.id === e);
 }
 //#endregion
 //#region src/components/legal-applicability-matrix.tsx
-var Vr = {
+var Xr = {
 	supported: "verified",
 	"not-supported": "restricted",
 	disputed: "disputed",
 	unresolved: "unresolved"
-}, Hr = {
+}, Zr = {
 	permitted: "verified",
 	restricted: "restricted",
 	prohibited: "prohibited",
 	disputed: "disputed",
 	unresolved: "unresolved"
 };
-function Ur(e, t) {
+function Qr(e, t) {
 	return e.find((e) => e.axisId === t) ?? {
 		axisId: t,
 		state: "unresolved",
 		basis: "Not assessed."
 	};
 }
-function Wr({ assessments: t = [], className: n, title: r = "Legal applicability matrix", description: i = "Applicability is assessed across independent temporal, territorial, personal, and subject-matter axes. Axis state is not itself a legal verdict.", showVocabulary: a = !0, showPipeline: o = !0 }) {
+function $r({ assessments: t = [], className: n, title: r = "Legal applicability matrix", description: i = "Applicability is assessed across independent temporal, territorial, personal, and subject-matter axes. Axis state is not itself a legal verdict.", showVocabulary: a = !0, showPipeline: o = !0 }) {
 	let s = w(), c = w();
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-primary bg-card p-5", n),
@@ -5613,17 +5616,17 @@ function Wr({ assessments: t = [], className: n, title: r = "Legal applicability
 						className: "mt-2 max-w-3xl text-sm leading-6 text-muted-foreground",
 						children: i
 					})
-				] }), /* @__PURE__ */ D(I, {
+				] }), /* @__PURE__ */ D(F, {
 					variant: "unresolved",
-					children: Pr.principle
+					children: Ur.principle
 				})]
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-5 grid gap-3 md:grid-cols-2",
 				role: "list",
 				"aria-label": "Applicability axes",
-				children: Ir.map((e) => {
-					let n = Ur(t, e.id);
+				children: Gr.map((e) => {
+					let n = Qr(t, e.id);
 					return /* @__PURE__ */ O("article", {
 						role: "listitem",
 						className: "border border-border bg-background p-4",
@@ -5637,8 +5640,8 @@ function Wr({ assessments: t = [], className: n, title: r = "Legal applicability
 								}), /* @__PURE__ */ D("h4", {
 									className: "mt-1 font-bold text-foreground",
 									children: e.label
-								})] }), /* @__PURE__ */ D(I, {
-									variant: Vr[n.state],
+								})] }), /* @__PURE__ */ D(F, {
+									variant: Xr[n.state],
 									children: n.state
 								})]
 							}),
@@ -5676,8 +5679,8 @@ function Wr({ assessments: t = [], className: n, title: r = "Legal applicability
 					}),
 					/* @__PURE__ */ D("div", {
 						className: "mt-3 flex flex-wrap gap-2",
-						children: Fr.map((e) => /* @__PURE__ */ D(I, {
-							variant: Hr[e.id] ?? "neutral",
+						children: Wr.map((e) => /* @__PURE__ */ D(F, {
+							variant: Zr[e.id] ?? "neutral",
 							children: e.label
 						}, e.id))
 					}),
@@ -5690,7 +5693,7 @@ function Wr({ assessments: t = [], className: n, title: r = "Legal applicability
 			o ? /* @__PURE__ */ D("ol", {
 				className: "mt-5 grid gap-2 border-t border-border pt-4 lg:grid-cols-5",
 				"aria-label": "Legal review pipeline",
-				children: Lr.map((e, t) => /* @__PURE__ */ O("li", {
+				children: Kr.map((e, t) => /* @__PURE__ */ O("li", {
 					className: "relative border border-border bg-background p-3",
 					children: [
 						/* @__PURE__ */ D("p", {
@@ -5717,7 +5720,7 @@ function Wr({ assessments: t = [], className: n, title: r = "Legal applicability
 }
 //#endregion
 //#region src/screens/aws-legal.tsx
-function Gr() {
+function ei() {
 	return /* @__PURE__ */ O("section", {
 		className: "mw-shell-wide min-h-[760px] py-14",
 		children: [
@@ -5742,13 +5745,13 @@ function Gr() {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-8",
-				children: /* @__PURE__ */ D(Wr, {})
+				children: /* @__PURE__ */ D($r, {})
 			}),
 			/* @__PURE__ */ O("div", {
 				className: "mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]",
-				children: [/* @__PURE__ */ D(Gn, { ...J.legal }), /* @__PURE__ */ O("div", {
+				children: [/* @__PURE__ */ D(er, { ...J.legal }), /* @__PURE__ */ O("div", {
 					className: "grid gap-4",
-					children: [/* @__PURE__ */ D(W, {
+					children: [/* @__PURE__ */ D(U, {
 						variant: "legal-instrument",
 						sourceId: "LAW-FIX-01",
 						title: "Synthetic Cross-Border Movement Instrument",
@@ -5756,7 +5759,7 @@ function Gr() {
 						citation: "LAW-FIX-01",
 						provenance: "fixture/aws/0042/law-01",
 						verification: "reference-only"
-					}), /* @__PURE__ */ D(bn, {
+					}), /* @__PURE__ */ D(An, {
 						code: "LAW-FIX-02",
 						source: "Synthetic Protected-Passage Rule",
 						locator: "fixture/aws/0042/law-02",
@@ -5769,31 +5772,31 @@ function Gr() {
 }
 //#endregion
 //#region src/screens/community.tsx
-function Kr() {
+function ti() {
 	return /* @__PURE__ */ O("div", {
 		className: "bg-background text-foreground",
-		children: [/* @__PURE__ */ D(H, {
+		children: [/* @__PURE__ */ D(Dn, {
 			caseId: J.caseId,
 			surface: "community"
 		}), /* @__PURE__ */ O("main", {
 			className: "mw-shell-wide py-12",
-			children: [/* @__PURE__ */ D(Nn, {
+			children: [/* @__PURE__ */ D(Hn, {
 				caseId: J.caseId,
 				eyebrow: "13 / Community / MW-0042",
 				title: J.title,
 				summary: "Ask, follow, save, and submit context without mutating canonical evidence.",
 				status: J.status,
 				variant: "community",
-				actions: /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(P, {
+				actions: /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D(t, {
 					variant: "secondary",
 					children: "Follow"
-				}), /* @__PURE__ */ D(P, {
+				}), /* @__PURE__ */ D(t, {
 					variant: "ghost",
 					children: "Save"
 				})] })
 			}), /* @__PURE__ */ O("div", {
 				className: "mt-8 grid gap-5 lg:grid-cols-[1.4fr_.7fr]",
-				children: [/* @__PURE__ */ D(ur, {
+				children: [/* @__PURE__ */ D(yr, {
 					question: "If the person match is partial, why is the overall correlation still high?",
 					moderatorNote: "Temporal and source-independence dimensions are strong. Identity remains a blocking uncertainty and is shown separately.",
 					submission: J.community.submission
@@ -5829,7 +5832,7 @@ function Kr() {
 }
 //#endregion
 //#region src/screens/correlation.tsx
-function qr() {
+function ni() {
 	return /* @__PURE__ */ O("section", {
 		className: "mw-shell-wide min-h-[760px] py-14",
 		children: [
@@ -5847,10 +5850,10 @@ function qr() {
 			}),
 			/* @__PURE__ */ O("div", {
 				className: "mt-10 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]",
-				children: [/* @__PURE__ */ D(zn, {
+				children: [/* @__PURE__ */ D(Jn, {
 					records: J.records,
 					score: J.correlation.score
-				}), /* @__PURE__ */ D(Pn, { ...J.correlation })]
+				}), /* @__PURE__ */ D(Un, { ...J.correlation })]
 			}),
 			/* @__PURE__ */ D("p", {
 				className: "mt-5 text-sm font-semibold text-warning",
@@ -5861,7 +5864,7 @@ function qr() {
 }
 //#endregion
 //#region src/components/compat/tabs.tsx
-function Jr({ items: t, variant: n = "underline" }) {
+function ri({ items: t, variant: n = "underline" }) {
 	let r = t.find((e) => !e.disabled)?.id ?? "", [i, a] = T(r), o = t.some((e) => e.id === i && !e.disabled) ? i : r;
 	return /* @__PURE__ */ O(ae, {
 		value: o,
@@ -5887,7 +5890,7 @@ function Jr({ items: t, variant: n = "underline" }) {
 }
 //#endregion
 //#region src/screens/design-system.tsx
-var Yr = [
+var ii = [
 	["Crimson", "bg-primary"],
 	["Supported", "bg-success"],
 	["Partial", "bg-warning"],
@@ -5898,7 +5901,7 @@ var Yr = [
 	["RGBL Blue", "bg-rgbl-blue"],
 	["RGBL Light", "bg-rgbl-light"]
 ];
-function Xr() {
+function ai() {
 	let [e, t] = T(!1);
 	return /* @__PURE__ */ O("section", {
 		className: "mw-shell-wide py-12",
@@ -5922,7 +5925,7 @@ function Xr() {
 					children: "Color semantics"
 				}), /* @__PURE__ */ D("div", {
 					className: "mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5",
-					children: Yr.map(([e, t]) => /* @__PURE__ */ O("div", {
+					children: ii.map(([e, t]) => /* @__PURE__ */ O("div", {
 						className: "border border-border bg-card p-3",
 						children: [/* @__PURE__ */ D("div", { className: `h-20 ${t}` }), /* @__PURE__ */ D("p", {
 							className: "mw-meta mt-3",
@@ -5964,24 +5967,24 @@ function Xr() {
 					/* @__PURE__ */ O("div", {
 						className: "mt-6 flex flex-wrap gap-3",
 						children: [
-							/* @__PURE__ */ D(P, { children: "Primary" }),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, { children: "Primary" }),
+							/* @__PURE__ */ D(I, {
 								variant: "secondary",
 								children: "Secondary"
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								variant: "ghost",
 								children: "Ghost"
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								variant: "danger",
 								children: "Danger"
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								loading: !0,
 								children: "Loading"
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								disabled: !0,
 								children: "Disabled"
 							})
@@ -5999,7 +6002,7 @@ function Xr() {
 							"prohibited",
 							"info",
 							"neutral"
-						].map((e) => /* @__PURE__ */ D(I, {
+						].map((e) => /* @__PURE__ */ D(F, {
 							variant: e,
 							children: e
 						}, e))
@@ -6017,13 +6020,13 @@ function Xr() {
 									label: "Error",
 									error: "Source locator is required."
 								}),
-								/* @__PURE__ */ D(Yt, {
+								/* @__PURE__ */ D(an, {
 									label: "Textarea",
 									maxLength: 120,
 									characterCount: !0,
 									defaultValue: "Not enough yet."
 								}),
-								/* @__PURE__ */ D(Xt, {
+								/* @__PURE__ */ D(on, {
 									label: "Select",
 									options: [{
 										label: "Supported",
@@ -6035,26 +6038,26 @@ function Xr() {
 								})
 							]
 						}), /* @__PURE__ */ O("div", { children: [
-							/* @__PURE__ */ D(Zt, {
+							/* @__PURE__ */ D(sn, {
 								label: "Checkbox",
 								description: "Labels activate the control.",
 								defaultChecked: !0
 							}),
-							/* @__PURE__ */ D(Qt, {
+							/* @__PURE__ */ D(cn, {
 								name: "demo-radio",
 								label: "Radio A",
 								defaultChecked: !0
 							}),
-							/* @__PURE__ */ D(Qt, {
+							/* @__PURE__ */ D(cn, {
 								name: "demo-radio",
 								label: "Radio B"
 							}),
-							/* @__PURE__ */ D($t, {
+							/* @__PURE__ */ D(ln, {
 								label: "Switch",
 								description: "Binary states only.",
 								defaultChecked: !0
 							}),
-							/* @__PURE__ */ D(P, {
+							/* @__PURE__ */ D(I, {
 								className: "mt-5",
 								variant: "secondary",
 								onClick: () => t(!0),
@@ -6062,7 +6065,7 @@ function Xr() {
 							})
 						] })]
 					}),
-					/* @__PURE__ */ D(Pt, {
+					/* @__PURE__ */ D(Ht, {
 						open: e,
 						title: "Accessible dialog",
 						onClose: () => t(!1),
@@ -6081,7 +6084,7 @@ function Xr() {
 				}), /* @__PURE__ */ O("div", {
 					className: "mt-6 grid gap-4 lg:grid-cols-2",
 					children: [
-						/* @__PURE__ */ D(yn, {
+						/* @__PURE__ */ D(kn, {
 							domain: "PERSON",
 							recordId: "PERSON-0042-A",
 							repo: "rocksoul-superhero",
@@ -6092,7 +6095,7 @@ function Xr() {
 							canonical: !1,
 							flagged: !0
 						}),
-						/* @__PURE__ */ D(W, {
+						/* @__PURE__ */ D(U, {
 							sourceId: "SRC-STORY-0042-A",
 							title: "A route nobody remembers taking",
 							excerpt: "Synthetic source block used for component review.",
@@ -6100,13 +6103,13 @@ function Xr() {
 							provenance: "fixture/story/0042/a",
 							verification: "source-linked"
 						}),
-						/* @__PURE__ */ D(bn, {
+						/* @__PURE__ */ D(An, {
 							code: "SRC-EVENT-0042-A",
 							source: "Synthetic event log",
 							locator: "fixture/event/0042/a",
 							variant: "block"
 						}),
-						/* @__PURE__ */ D(Cn, {
+						/* @__PURE__ */ D(W, {
 							id: "SUB-0042-01",
 							state: "needs-context",
 							title: "Possible second event trace",
@@ -6132,7 +6135,7 @@ function Xr() {
 					}),
 					/* @__PURE__ */ O("div", {
 						className: "mt-6 grid gap-3",
-						children: [/* @__PURE__ */ D(Lt, { variant: "text" }), /* @__PURE__ */ D(Lt, { variant: "table-row" })]
+						children: [/* @__PURE__ */ D(Gt, { variant: "text" }), /* @__PURE__ */ D(Gt, { variant: "table-row" })]
 					})
 				]
 			}),
@@ -6158,13 +6161,13 @@ function Xr() {
 							className: "mt-2 max-w-3xl text-sm leading-6 text-muted-foreground",
 							children: "Released upstream visual language. The registry, runtime motion, and developer distribution are now stable UI contracts."
 						})
-					] }), /* @__PURE__ */ O(I, {
+					] }), /* @__PURE__ */ O(F, {
 						variant: "verified",
 						children: ["STABLE · ", b.commit.slice(0, 8)]
 					})]
 				}), /* @__PURE__ */ D("div", {
 					className: "mt-6",
-					children: /* @__PURE__ */ D(Vt, {
+					children: /* @__PURE__ */ D(Yt, {
 						initialCategory: "Investigation",
 						limit: 6,
 						compact: !0
@@ -6180,7 +6183,7 @@ function Xr() {
 					}),
 					/* @__PURE__ */ D("div", {
 						className: "mt-5",
-						children: /* @__PURE__ */ D(Jr, { items: [
+						children: /* @__PURE__ */ D(ri, { items: [
 							{
 								id: "evidence",
 								label: "Evidence",
@@ -6207,11 +6210,11 @@ function Xr() {
 							}
 						] })
 					}),
-					/* @__PURE__ */ D(It, {}),
+					/* @__PURE__ */ D(Wt, {}),
 					/* @__PURE__ */ O("div", {
 						className: "mw-platform mt-6 border border-border bg-background p-4 text-foreground",
 						children: [
-							/* @__PURE__ */ D(Tn, {
+							/* @__PURE__ */ D(Pn, {
 								repo: "rocksoul-superhero",
 								status: "degraded",
 								queue: 1
@@ -6242,7 +6245,7 @@ function Xr() {
 }
 //#endregion
 //#region src/screens/domain-screens.tsx
-var Zr = {
+var oi = {
 	STORY: {
 		number: "05",
 		kicker: "Narrative record",
@@ -6269,7 +6272,7 @@ var Zr = {
 		statement: "Evidence reconstruction ends here. Legal interpretation starts after the line."
 	}
 };
-function Qr({ domain: e }) {
+function si({ domain: e }) {
 	if (e === "EVENT") {
 		let e = J.recordDetails.EVENT.temporal;
 		return /* @__PURE__ */ O("section", {
@@ -6349,7 +6352,7 @@ function Qr({ domain: e }) {
 						children: [/* @__PURE__ */ D("dt", {
 							className: "mw-meta text-muted-foreground",
 							children: e
-						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D("dd", { children: /* @__PURE__ */ D(F, {
 							variant: t ? "supported" : "partial",
 							children: t ? "MATCH" : "NOT VERIFIED"
 						}) })]
@@ -6452,7 +6455,7 @@ function Qr({ domain: e }) {
 	});
 }
 function Z({ domain: e }) {
-	let t = Zr[e];
+	let t = oi[e];
 	if (e === "AWS") return /* @__PURE__ */ O("section", {
 		className: "mw-shell-wide min-h-[760px] py-14",
 		children: [
@@ -6474,7 +6477,7 @@ function Z({ domain: e }) {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-10",
-				children: /* @__PURE__ */ D(jn, {
+				children: /* @__PURE__ */ D(Bn, {
 					legalState: J.legal.status,
 					children: /* @__PURE__ */ D("p", {
 						className: "text-sm font-semibold",
@@ -6484,9 +6487,9 @@ function Z({ domain: e }) {
 			}),
 			/* @__PURE__ */ O("div", {
 				className: "mt-8 grid gap-4 lg:grid-cols-[.8fr_1.2fr]",
-				children: [/* @__PURE__ */ D(Gn, { ...J.legal }), /* @__PURE__ */ D("div", {
+				children: [/* @__PURE__ */ D(er, { ...J.legal }), /* @__PURE__ */ D("div", {
 					className: "grid gap-4",
-					children: J.legal.instruments.map((e) => /* @__PURE__ */ D(W, {
+					children: J.legal.instruments.map((e) => /* @__PURE__ */ D(U, {
 						id: `source-${e.id.toLowerCase()}`,
 						variant: "legal-instrument",
 						sourceId: e.id,
@@ -6534,10 +6537,10 @@ function Z({ domain: e }) {
 				}),
 				/* @__PURE__ */ O("div", {
 					className: "mt-6 flex flex-wrap gap-2",
-					children: [/* @__PURE__ */ D(I, {
+					children: [/* @__PURE__ */ D(F, {
 						variant: n.status,
 						children: n.status
-					}), /* @__PURE__ */ D(I, {
+					}), /* @__PURE__ */ D(F, {
 						variant: r.independent ? "verified" : "unresolved",
 						children: r.independent ? "independent source" : "dependency unknown"
 					})]
@@ -6561,7 +6564,7 @@ function Z({ domain: e }) {
 			] }), /* @__PURE__ */ O("div", {
 				className: "grid gap-4",
 				children: [
-					/* @__PURE__ */ D(yn, {
+					/* @__PURE__ */ D(kn, {
 						domain: n.domain,
 						recordId: n.recordId,
 						repo: n.sourceRepo,
@@ -6574,8 +6577,8 @@ function Z({ domain: e }) {
 						selected: n.domain === "EVENT",
 						sourceHref: `#source-${n.domain.toLowerCase()}`
 					}),
-					/* @__PURE__ */ D(Qr, { domain: n.domain }),
-					n.domain === "EVENT" ? /* @__PURE__ */ D(xn, {
+					/* @__PURE__ */ D(si, { domain: n.domain }),
+					n.domain === "EVENT" ? /* @__PURE__ */ D(jn, {
 						variant: "event",
 						timestamp: `${J.recordDetails.EVENT.temporal.start}–${J.recordDetails.EVENT.temporal.end}`,
 						title: "Movement inside missing interval",
@@ -6583,7 +6586,7 @@ function Z({ domain: e }) {
 						source: n.source,
 						status: n.verification
 					}) : null,
-					/* @__PURE__ */ D(W, {
+					/* @__PURE__ */ D(U, {
 						id: `source-${n.domain.toLowerCase()}`,
 						variant: n.domain === "RGBL" ? "quote" : "record",
 						sourceId: n.source,
@@ -6598,10 +6601,10 @@ function Z({ domain: e }) {
 		})
 	});
 }
-var $r = () => /* @__PURE__ */ D(Z, { domain: "STORY" }), ei = () => /* @__PURE__ */ D(Z, { domain: "EVENT" }), ti = () => /* @__PURE__ */ D(Z, { domain: "PERSON" }), ni = () => /* @__PURE__ */ D(Z, { domain: "RGBL" }), ri = () => /* @__PURE__ */ D(Z, { domain: "AWS" });
+var ci = () => /* @__PURE__ */ D(Z, { domain: "STORY" }), li = () => /* @__PURE__ */ D(Z, { domain: "EVENT" }), ui = () => /* @__PURE__ */ D(Z, { domain: "PERSON" }), di = () => /* @__PURE__ */ D(Z, { domain: "RGBL" }), fi = () => /* @__PURE__ */ D(Z, { domain: "AWS" });
 //#endregion
 //#region src/screens/auth.tsx
-function ii() {
+function pi() {
 	return /* @__PURE__ */ D("section", {
 		className: "flex min-h-[760px] items-center justify-center bg-background px-4 py-12 text-foreground",
 		children: /* @__PURE__ */ O("div", {
@@ -6620,14 +6623,14 @@ function ii() {
 				})]
 			}), /* @__PURE__ */ D("div", {
 				className: "p-6 sm:p-10",
-				children: /* @__PURE__ */ D(mr, {})
+				children: /* @__PURE__ */ D(Cr, {})
 			})]
 		})
 	});
 }
 //#endregion
 //#region src/screens/landing.tsx
-var ai = [
+var mi = [
 	[
 		"observe",
 		"01",
@@ -6659,10 +6662,10 @@ var ai = [
 		"Let supported stay supported, partial stay partial, and unresolved stay open."
 	]
 ];
-function oi() {
-	return /* @__PURE__ */ D(jt, {});
+function hi() {
+	return /* @__PURE__ */ D(Bt, {});
 }
-function si() {
+function gi() {
 	return /* @__PURE__ */ D("section", {
 		id: "manifesto",
 		className: "mw-shell-wide mw-section scroll-mt-20",
@@ -6698,7 +6701,7 @@ function si() {
 		})
 	});
 }
-function ci() {
+function _i() {
 	return /* @__PURE__ */ D("section", {
 		id: "rocksoul",
 		className: "mw-shell-wide mw-section",
@@ -6738,7 +6741,7 @@ function ci() {
 		})
 	});
 }
-function li() {
+function vi() {
 	return /* @__PURE__ */ O("section", {
 		id: "repositories",
 		className: "mw-shell-wide mw-section",
@@ -6757,7 +6760,7 @@ function li() {
 		}), /* @__PURE__ */ O("div", {
 			className: "mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5",
 			children: [
-				/* @__PURE__ */ D(U, {
+				/* @__PURE__ */ D(H, {
 					repo: "rocksoul-legend",
 					domain: "STORY",
 					status: "healthy",
@@ -6765,7 +6768,7 @@ function li() {
 					schema: "v1",
 					lastSync: "fixture"
 				}),
-				/* @__PURE__ */ D(U, {
+				/* @__PURE__ */ D(H, {
 					repo: "rocksoul-event",
 					domain: "EVENT",
 					status: "healthy",
@@ -6773,7 +6776,7 @@ function li() {
 					schema: "v1",
 					lastSync: "fixture"
 				}),
-				/* @__PURE__ */ D(U, {
+				/* @__PURE__ */ D(H, {
 					repo: "rocksoul-superhero",
 					domain: "PERSON",
 					status: "degraded",
@@ -6781,7 +6784,7 @@ function li() {
 					schema: "v1",
 					lastSync: "fixture"
 				}),
-				/* @__PURE__ */ D(U, {
+				/* @__PURE__ */ D(H, {
 					repo: "rocksoul-rgbl",
 					domain: "RGBL",
 					status: "healthy",
@@ -6789,7 +6792,7 @@ function li() {
 					schema: "v1",
 					lastSync: "fixture"
 				}),
-				/* @__PURE__ */ D(U, {
+				/* @__PURE__ */ D(H, {
 					repo: "rocksoul-aws",
 					domain: "AWS / downstream",
 					status: "healthy",
@@ -6801,11 +6804,11 @@ function li() {
 		})]
 	});
 }
-function ui() {
+function yi() {
 	return /* @__PURE__ */ O(E, { children: [/* @__PURE__ */ D("div", {
 		id: "method",
 		className: "mw-shell-wide scroll-mt-20",
-		children: /* @__PURE__ */ D(yr, {})
+		children: /* @__PURE__ */ D(Or, {})
 	}), /* @__PURE__ */ D("section", {
 		className: "mw-shell-wide mw-section",
 		children: /* @__PURE__ */ O("div", {
@@ -6822,7 +6825,7 @@ function ui() {
 				]
 			})] }), /* @__PURE__ */ D("div", {
 				className: "grid border-t border-border",
-				children: ai.map(([e, t, n, r]) => /* @__PURE__ */ D("article", {
+				children: mi.map(([e, t, n, r]) => /* @__PURE__ */ D("article", {
 					id: e,
 					className: "scroll-mt-24 border-b border-border py-6",
 					children: /* @__PURE__ */ O("div", {
@@ -6847,26 +6850,26 @@ function ui() {
 		})
 	})] });
 }
-function di() {
+function bi() {
 	return /* @__PURE__ */ O("div", {
 		id: "top",
 		className: "bg-background text-foreground",
-		children: [/* @__PURE__ */ D(H, {}), /* @__PURE__ */ O("main", { children: [
-			/* @__PURE__ */ D(oi, {}),
-			/* @__PURE__ */ D(si, {}),
-			/* @__PURE__ */ D(ci, {}),
-			/* @__PURE__ */ D(li, {}),
-			/* @__PURE__ */ D(ui, {})
+		children: [/* @__PURE__ */ D(Dn, {}), /* @__PURE__ */ O("main", { children: [
+			/* @__PURE__ */ D(hi, {}),
+			/* @__PURE__ */ D(gi, {}),
+			/* @__PURE__ */ D(_i, {}),
+			/* @__PURE__ */ D(vi, {}),
+			/* @__PURE__ */ D(yi, {})
 		] })]
 	});
 }
 //#endregion
 //#region src/screens/mw0042-overview.tsx
-function fi() {
+function xi() {
 	let e = /* @__PURE__ */ D("div", {
 		id: "case-overview",
 		className: "scroll-mt-24",
-		children: /* @__PURE__ */ D(Nn, {
+		children: /* @__PURE__ */ D(Hn, {
 			caseId: J.caseId,
 			eyebrow: J.eyebrow,
 			title: J.title,
@@ -6877,13 +6880,13 @@ function fi() {
 				value: "05:30 WIB / fixture"
 			}]
 		})
-	}), t = /* @__PURE__ */ D(Un, {
+	}), t = /* @__PURE__ */ D(Qn, {
 		records: J.records,
 		compact: !0
 	}), n = /* @__PURE__ */ D("section", {
 		id: "evidence",
 		className: "scroll-mt-24",
-		children: /* @__PURE__ */ D(rr, { records: J.records })
+		children: /* @__PURE__ */ D(fr, { records: J.records })
 	}), r = /* @__PURE__ */ O("section", {
 		id: "correlation",
 		className: "scroll-mt-24",
@@ -6902,7 +6905,7 @@ function fi() {
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mt-6",
-				children: /* @__PURE__ */ D(ir, {
+				children: /* @__PURE__ */ D(pr, {
 					records: J.records,
 					correlation: J.correlation
 				})
@@ -6911,7 +6914,7 @@ function fi() {
 	}), i = /* @__PURE__ */ D("section", {
 		id: "aws",
 		className: "scroll-mt-24",
-		children: /* @__PURE__ */ D(ar, {
+		children: /* @__PURE__ */ D(mr, {
 			legal: J.legal,
 			sources: [{
 				id: "LAW-FIX-01",
@@ -6925,7 +6928,7 @@ function fi() {
 				locator: "fixture/aws/0042/law-02"
 			}]
 		})
-	}), a = /* @__PURE__ */ D(or, { cases: [{
+	}), a = /* @__PURE__ */ D(hr, { cases: [{
 		caseId: "MW-0038",
 		title: "Night Window",
 		summary: "A separate synthetic case sharing temporal structure, not identity.",
@@ -6944,7 +6947,7 @@ function fi() {
 		id: "case",
 		className: "scroll-mt-16 bg-background text-foreground",
 		"data-surface-personality": "editorial",
-		children: [/* @__PURE__ */ D(H, { caseId: J.caseId }), /* @__PURE__ */ O("div", {
+		children: [/* @__PURE__ */ D(Dn, { caseId: J.caseId }), /* @__PURE__ */ O("div", {
 			className: "mw-shell-wide py-10 sm:py-14",
 			children: [
 				/* @__PURE__ */ D("nav", {
@@ -6961,7 +6964,7 @@ function fi() {
 						children: e
 					}, t))
 				}),
-				/* @__PURE__ */ D(sr, {
+				/* @__PURE__ */ D(gr, {
 					header: e,
 					summary: t,
 					evidence: n,
@@ -6982,7 +6985,7 @@ function fi() {
 }
 //#endregion
 //#region src/screens/platform.tsx
-var pi = [{
+var Si = [{
 	id: "PLATFORM-N-1",
 	title: "Canonical blocker remains",
 	body: "PERSON identity is still incomplete.",
@@ -6995,8 +6998,8 @@ var pi = [{
 	state: "unread",
 	variant: "case-update"
 }];
-function mi({ actions: e } = {}) {
-	return /* @__PURE__ */ D(_n, {
+function Ci({ actions: e } = {}) {
+	return /* @__PURE__ */ D(En, {
 		activeResource: "cases",
 		breadcrumbs: [
 			{
@@ -7010,12 +7013,12 @@ function mi({ actions: e } = {}) {
 			{ label: J.caseId }
 		],
 		backendState: "degraded",
-		notifications: pi,
+		notifications: Si,
 		children: /* @__PURE__ */ O("div", {
 			id: "platform",
 			className: "px-4 py-8 sm:px-8 lg:px-12",
 			children: [
-				/* @__PURE__ */ D(Nn, {
+				/* @__PURE__ */ D(Hn, {
 					caseId: J.caseId,
 					eyebrow: "15 / Platform / Case review",
 					title: "Review the blockers.",
@@ -7026,7 +7029,7 @@ function mi({ actions: e } = {}) {
 						label: "review",
 						value: "needs-review"
 					}],
-					actions: /* @__PURE__ */ D(P, {
+					actions: /* @__PURE__ */ D(I, {
 						variant: "secondary",
 						onClick: () => void e?.onPlatformAction?.({
 							action: "keep-unresolved",
@@ -7053,7 +7056,7 @@ function mi({ actions: e } = {}) {
 				}),
 				/* @__PURE__ */ D("section", {
 					className: "mt-6",
-					children: /* @__PURE__ */ D(cr, { repositories: J.repositories.map((e) => ({
+					children: /* @__PURE__ */ D(_r, { repositories: J.repositories.map((e) => ({
 						...e,
 						queue: +(e.status === "degraded"),
 						errors: 0
@@ -7061,11 +7064,11 @@ function mi({ actions: e } = {}) {
 				}),
 				/* @__PURE__ */ D("section", {
 					className: "mt-6",
-					children: /* @__PURE__ */ D(lr, { submission: J.community.submission })
+					children: /* @__PURE__ */ D(vr, { submission: J.community.submission })
 				}),
 				/* @__PURE__ */ D("section", {
 					className: "mt-6",
-					children: /* @__PURE__ */ D(ar, {
+					children: /* @__PURE__ */ D(mr, {
 						legal: J.legal,
 						sources: [{
 							id: "LAW-FIX-01",
@@ -7148,7 +7151,7 @@ function mi({ actions: e } = {}) {
 				/* @__PURE__ */ O("div", {
 					className: "sticky bottom-0 mt-6 flex flex-wrap gap-2 border-t border-border bg-background/95 py-3 backdrop-blur md:static md:bg-transparent",
 					children: [
-						/* @__PURE__ */ D(P, {
+						/* @__PURE__ */ D(I, {
 							variant: "danger",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "request-context",
@@ -7156,7 +7159,7 @@ function mi({ actions: e } = {}) {
 							}),
 							children: "Request context"
 						}),
-						/* @__PURE__ */ D(P, {
+						/* @__PURE__ */ D(I, {
 							variant: "secondary",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "flag-record",
@@ -7164,7 +7167,7 @@ function mi({ actions: e } = {}) {
 							}),
 							children: "Flag record"
 						}),
-						/* @__PURE__ */ D(P, {
+						/* @__PURE__ */ D(I, {
 							variant: "secondary",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "keep-unresolved",
@@ -7172,7 +7175,7 @@ function mi({ actions: e } = {}) {
 							}),
 							children: "Keep case unresolved"
 						}),
-						/* @__PURE__ */ D(P, {
+						/* @__PURE__ */ D(I, {
 							variant: "ghost",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "return-to-queue",
@@ -7188,7 +7191,7 @@ function mi({ actions: e } = {}) {
 }
 //#endregion
 //#region src/components/dossier-header.tsx
-function hi({ eyebrow: t, title: n, summary: r, recordId: i, status: a, metadata: o = [], actions: s, variant: c = "cinematic", className: l, assetFile: u = "svg/archive-dossier.svg" }) {
+function wi({ eyebrow: t, title: n, summary: r, recordId: i, status: a, metadata: o = [], actions: s, variant: c = "cinematic", className: l, assetFile: u = "svg/archive-dossier.svg" }) {
 	let d = c === "cinematic";
 	return /* @__PURE__ */ O("header", {
 		className: e("relative isolate overflow-hidden border border-border bg-background", d ? "min-h-[320px] px-6 py-8 sm:min-h-[380px] sm:px-8 sm:py-10" : "px-5 py-6", l),
@@ -7227,7 +7230,7 @@ function hi({ eyebrow: t, title: n, summary: r, recordId: i, status: a, metadata
 			] }), a || o.length ? /* @__PURE__ */ O("aside", {
 				className: "border border-border bg-background/70 p-4 backdrop-blur-md",
 				"aria-label": "Dossier metadata",
-				children: [a ? /* @__PURE__ */ D(I, {
+				children: [a ? /* @__PURE__ */ D(F, {
 					variant: a.variant ?? "neutral",
 					children: a.label
 				}) : null, /* @__PURE__ */ D("dl", {
@@ -7249,7 +7252,7 @@ function hi({ eyebrow: t, title: n, summary: r, recordId: i, status: a, metadata
 }
 //#endregion
 //#region src/components/evidence-matrix.tsx
-var gi = [
+var Ti = [
 	{
 		key: "support",
 		label: "Support"
@@ -7267,10 +7270,10 @@ var gi = [
 		label: "Alternative"
 	}
 ];
-function _i(e, t, n) {
+function Ei(e, t, n) {
 	n && (e.key === "Enter" || e.key === " ") && (e.preventDefault(), n(t));
 }
-function vi({ rows: t, className: n, caption: r = "Claim by evidence matrix", onActivateRow: i }) {
+function Di({ rows: t, className: n, caption: r = "Claim by evidence matrix", onActivateRow: i }) {
 	return /* @__PURE__ */ O("div", {
 		className: e("max-h-[560px] overflow-auto border border-border bg-card", n),
 		children: [/* @__PURE__ */ O("table", {
@@ -7289,7 +7292,7 @@ function vi({ rows: t, className: n, caption: r = "Claim by evidence matrix", on
 						className: "sticky top-0 z-20 border-b border-border bg-panel px-3 py-3 mw-meta text-muted-foreground",
 						children: "Epistemic"
 					}),
-					gi.map((e) => /* @__PURE__ */ D("th", {
+					Ti.map((e) => /* @__PURE__ */ D("th", {
 						className: "sticky top-0 z-20 border-b border-border bg-panel px-3 py-3 mw-meta text-muted-foreground",
 						children: e.label
 					}, e.key)),
@@ -7299,12 +7302,12 @@ function vi({ rows: t, className: n, caption: r = "Claim by evidence matrix", on
 					})
 				] }) }),
 				/* @__PURE__ */ D("tbody", { children: t.map((t) => {
-					let n = gi.map(({ key: e, label: n }) => `${t.values[e] ?? 0} ${n.toLowerCase()}`).join(", ");
+					let n = Ti.map(({ key: e, label: n }) => `${t.values[e] ?? 0} ${n.toLowerCase()}`).join(", ");
 					return /* @__PURE__ */ O("tr", {
 						tabIndex: 0,
 						"aria-label": `${t.label}. ${n}. ${t.sourceCount ?? 0} sources.`,
 						onClick: () => i?.(t),
-						onKeyDown: (e) => _i(e, t, i),
+						onKeyDown: (e) => Ei(e, t, i),
 						className: e("group outline-none", i && "cursor-pointer", "focus-visible:[&>td]:bg-panel hover:[&>td]:bg-panel"),
 						children: [
 							/* @__PURE__ */ O("td", {
@@ -7321,7 +7324,7 @@ function vi({ rows: t, className: n, caption: r = "Claim by evidence matrix", on
 								className: "border-b border-border px-3 py-3 text-muted-foreground",
 								children: t.epistemic ?? "—"
 							}),
-							gi.map(({ key: n }) => {
+							Ti.map(({ key: n }) => {
 								let r = t.values[n] ?? 0;
 								return /* @__PURE__ */ D("td", {
 									className: "border-b border-border px-3 py-3",
@@ -7347,7 +7350,7 @@ function vi({ rows: t, className: n, caption: r = "Claim by evidence matrix", on
 }
 //#endregion
 //#region src/components/observatory-section-nav.tsx
-function yi({ items: t, label: n = "INDEX /", offset: r = 112, className: i }) {
+function Oi({ items: t, label: n = "INDEX /", offset: r = 112, className: i }) {
 	let [a, o] = T(t[0]?.id ?? "");
 	return C(() => {
 		let e = t.map((e) => document.getElementById(e.id)).filter(Boolean);
@@ -7385,7 +7388,7 @@ function yi({ items: t, label: n = "INDEX /", offset: r = 112, className: i }) {
 }
 //#endregion
 //#region src/components/provenance-rail.tsx
-function bi({ nodes: t, orientation: n = "horizontal", className: r, description: i, onActivate: a }) {
+function ki({ nodes: t, orientation: n = "horizontal", className: r, description: i, onActivate: a }) {
 	let o = n === "horizontal", s = i ?? t.map((e) => `${e.kind}: ${e.label}`).join(" → ");
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-border bg-card p-4", r),
@@ -7399,7 +7402,7 @@ function bi({ nodes: t, orientation: n = "horizontal", className: r, description
 					onClick: () => a?.(n),
 					className: e("grid min-h-20 min-w-[150px] grid-cols-[32px_1fr] items-center gap-3 border bg-background p-3 text-left", n.active ? "border-primary" : "border-border", n.unresolved && "border-dashed border-warning", n.external && "shadow-[inset_0_-2px_var(--mw-status-info)]"),
 					children: [/* @__PURE__ */ D(x, {
-						src: _r(hr[n.kind]),
+						src: Er(wr[n.kind]),
 						alt: "",
 						"aria-hidden": "true",
 						className: "h-8 w-8"
@@ -7438,7 +7441,7 @@ function bi({ nodes: t, orientation: n = "horizontal", className: r, description
 }
 //#endregion
 //#region src/components/event-intelligence.tsx
-var xi = {
+var Ai = {
 	event: 0,
 	claim: 1,
 	place: 1,
@@ -7453,17 +7456,17 @@ var xi = {
 	law: 3,
 	perspective: 3,
 	relationship: 3
-}, Si = [
+}, ji = [
 	78,
 	258,
 	438,
 	618
 ];
-function Ci({ nodes: t, edges: n, className: r, title: i = "Event intelligence topology", description: a = "Canonical event graph showing claims, evidence, sources, context and qualified external references." }) {
-	let o = w(), s = w(), c = We(() => {
+function Mi({ nodes: t, edges: n, className: r, title: i = "Event intelligence topology", description: a = "Canonical event graph showing claims, evidence, sources, context and qualified external references." }) {
+	let o = w(), s = w(), c = $e(() => {
 		let e = /* @__PURE__ */ new Map();
 		t.forEach((t) => {
-			let n = xi[t.kind];
+			let n = Ai[t.kind];
 			e.set(n, [...e.get(n) ?? [], t]);
 		});
 		let n = Math.max(1, ...Array.from(e.values()).map((e) => e.length)), r = Math.max(320, 112 + n * 76), i = /* @__PURE__ */ new Map();
@@ -7471,7 +7474,7 @@ function Ci({ nodes: t, edges: n, className: r, title: i = "Event intelligence t
 			let e = (r - 120) / Math.max(1, n.length);
 			n.forEach((n, r) => {
 				i.set(n.id, {
-					x: Si[t],
+					x: ji[t],
 					y: 76 + e * (r + .5)
 				});
 			});
@@ -7596,7 +7599,7 @@ function Ci({ nodes: t, edges: n, className: r, title: i = "Event intelligence t
 		})]
 	});
 }
-function wi({ confidence: t, scope: n, uncertainty: r, alternatives: i, status: a, className: o }) {
+function Ni({ confidence: t, scope: n, uncertainty: r, alternatives: i, status: a, className: o }) {
 	let s = Math.round(Math.max(0, Math.min(1, t)) * 100);
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-border bg-card p-4", o),
@@ -7666,7 +7669,7 @@ function wi({ confidence: t, scope: n, uncertainty: r, alternatives: i, status: 
 }
 //#endregion
 //#region src/components/textual-intelligence.tsx
-function Ti(e) {
+function Pi(e) {
 	switch (e) {
 		case "available": return "verified";
 		case "partial": return "partial";
@@ -7677,7 +7680,7 @@ function Ti(e) {
 		default: return "neutral";
 	}
 }
-function Ei({ items: t, title: n = "Canonical textual hierarchy", description: r = "Ordered textual identities. Each node remains a distinct record.", className: i, empty: a }) {
+function Fi({ items: t, title: n = "Canonical textual hierarchy", description: r = "Ordered textual identities. Each node remains a distinct record.", className: i, empty: a }) {
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-border bg-card", i),
 		"aria-label": n,
@@ -7705,8 +7708,8 @@ function Ei({ items: t, title: n = "Canonical textual hierarchy", description: r
 								" / ",
 								e.kind.replaceAll("_", " ")
 							]
-						}), /* @__PURE__ */ D(I, {
-							variant: Ti(e.state),
+						}), /* @__PURE__ */ D(F, {
+							variant: Pi(e.state),
 							children: e.state ?? "record"
 						})]
 					}),
@@ -7747,10 +7750,10 @@ function Ei({ items: t, title: n = "Canonical textual hierarchy", description: r
 		})]
 	});
 }
-function Di(e) {
+function Ii(e) {
 	return e.direction ? e.direction : e.script === "Arab" || e.script === "Hebr" ? "rtl" : "ltr";
 }
-function Oi({ lanes: t, title: n = "Parallel exact-text lanes", description: r = "Source and translation content remain separate records.", className: i }) {
+function Li({ lanes: t, title: n = "Parallel exact-text lanes", description: r = "Source and translation content remain separate records.", className: i }) {
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-border bg-card", i),
 		"aria-label": n,
@@ -7775,15 +7778,15 @@ function Oi({ lanes: t, title: n = "Parallel exact-text lanes", description: r =
 							children: [/* @__PURE__ */ O("div", {
 								className: "flex flex-wrap items-center gap-2",
 								children: [
-									/* @__PURE__ */ D(I, {
-										variant: Ti(n),
+									/* @__PURE__ */ D(F, {
+										variant: Pi(n),
 										children: n
 									}),
-									/* @__PURE__ */ D(I, {
+									/* @__PURE__ */ D(F, {
 										variant: "neutral",
 										children: e.language
 									}),
-									/* @__PURE__ */ D(I, {
+									/* @__PURE__ */ D(F, {
 										variant: "info",
 										children: e.representation
 									})
@@ -7796,7 +7799,7 @@ function Oi({ lanes: t, title: n = "Parallel exact-text lanes", description: r =
 						t ? /* @__PURE__ */ D("p", {
 							className: "m-0 px-5 py-6 text-lg leading-8 text-foreground md:text-xl",
 							lang: e.language,
-							dir: Di(e),
+							dir: Ii(e),
 							children: e.text
 						}) : /* @__PURE__ */ O("div", {
 							className: "px-5 py-6",
@@ -7835,7 +7838,7 @@ function Oi({ lanes: t, title: n = "Parallel exact-text lanes", description: r =
 		})]
 	});
 }
-function ki({ records: t, title: n = "Source, integrity & rights", description: r = "Source metadata is displayed only when declared by the record.", className: i }) {
+function Ri({ records: t, title: n = "Source, integrity & rights", description: r = "Source metadata is displayed only when declared by the record.", className: i }) {
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-border bg-card", i),
 		"aria-label": n,
@@ -7855,8 +7858,8 @@ function ki({ records: t, title: n = "Source, integrity & rights", description: 
 				children: [
 					/* @__PURE__ */ O("div", {
 						className: "flex items-center justify-between gap-3",
-						children: [/* @__PURE__ */ D(I, {
-							variant: Ti(e.state),
+						children: [/* @__PURE__ */ D(F, {
+							variant: Pi(e.state),
 							children: e.state ?? "declared"
 						}), /* @__PURE__ */ D("span", {
 							className: "mw-meta text-muted-foreground",
@@ -7898,7 +7901,7 @@ function ki({ records: t, title: n = "Source, integrity & rights", description: 
 		})]
 	});
 }
-function Ai({ relations: t, title: n = "Explicit textual relations", description: r = "Relation type, method and provenance remain inspectable. Visual proximity does not imply identity.", className: i }) {
+function zi({ relations: t, title: n = "Explicit textual relations", description: r = "Relation type, method and provenance remain inspectable. Visual proximity does not imply identity.", className: i }) {
 	return /* @__PURE__ */ O("section", {
 		className: e("border border-border bg-card", i),
 		"aria-label": n,
@@ -7918,10 +7921,10 @@ function Ai({ relations: t, title: n = "Explicit textual relations", description
 				children: [
 					/* @__PURE__ */ O("div", {
 						className: "flex flex-wrap items-center gap-2",
-						children: [/* @__PURE__ */ D(I, {
-							variant: Ti(e.state),
+						children: [/* @__PURE__ */ D(F, {
+							variant: Pi(e.state),
 							children: e.state ?? "asserted"
-						}), /* @__PURE__ */ D(I, {
+						}), /* @__PURE__ */ D(F, {
 							variant: "info",
 							children: e.relation.replaceAll("_", " ")
 						})]
@@ -7974,7 +7977,7 @@ function Ai({ relations: t, title: n = "Explicit textual relations", description
 		})]
 	});
 }
-var ji = {
+var Bi = {
 	schemaVersion: 1,
 	rule: "Application data statuses resolve to a semantic visual state. Consumers must show the original text label as well as the visual state; color alone is insufficient.",
 	defaultVariant: "neutral",
@@ -8010,13 +8013,13 @@ var ji = {
 		discovery_only: "info",
 		unknown: "neutral"
 	}
-}, Mi = ji.variants, Ni = ji;
-function Pi(e) {
-	return e ? Mi[e] ?? ji.defaultVariant : ji.defaultVariant;
+}, Vi = Bi.variants, Hi = Bi;
+function Ui(e) {
+	return e ? Vi[e] ?? Bi.defaultVariant : Bi.defaultVariant;
 }
 //#endregion
 //#region src/components/confidence-meter.tsx
-function Fi({ value: t, label: n = "Confidence", detail: r, className: i }) {
+function Wi({ value: t, label: n = "Confidence", detail: r, className: i }) {
 	let a = Math.round(Math.max(0, Math.min(1, Number.isFinite(t) ? t : 0)) * 100);
 	return /* @__PURE__ */ O("div", {
 		className: e("grid gap-2", i),
@@ -8053,14 +8056,14 @@ function Fi({ value: t, label: n = "Confidence", detail: r, className: i }) {
 }
 //#endregion
 //#region src/components/qualified-reference.tsx
-function Ii({ value: t, href: n, compact: r = !1, className: i }) {
-	let a = $e(t), o = /* @__PURE__ */ O("span", {
+function Gi({ value: t, href: n, compact: r = !1, className: i }) {
+	let a = ct(t), o = /* @__PURE__ */ O("span", {
 		className: e("inline-grid gap-1", r ? "grid-cols-[auto_1fr] items-center gap-x-2" : "", i),
 		children: [
-			a ? /* @__PURE__ */ D(I, {
+			a ? /* @__PURE__ */ D(F, {
 				variant: "info",
 				children: a.domain
-			}) : /* @__PURE__ */ D(I, {
+			}) : /* @__PURE__ */ D(F, {
 				variant: "neutral",
 				children: "REFERENCE"
 			}),
@@ -8086,17 +8089,17 @@ function Ii({ value: t, href: n, compact: r = !1, className: i }) {
 }
 //#endregion
 //#region src/components/record-field-grid.tsx
-function Li(e) {
+function Ki(e) {
 	return e.replaceAll("_", " ").replace(/\b\w/g, (e) => e.toUpperCase());
 }
-function Ri(e) {
+function qi(e) {
 	return /^[a-z][a-z0-9-]*:.+$/i.test(e);
 }
-function zi(e, t) {
+function Ji(e, t) {
 	return e == null || e === "" ? /* @__PURE__ */ D("span", {
 		className: "text-muted-foreground",
 		children: "—"
-	}) : typeof e == "boolean" ? e ? "Yes" : "No" : typeof e == "number" ? Number.isInteger(e) ? String(e) : e.toFixed(2) : typeof e == "string" ? Ri(e) ? /* @__PURE__ */ D(Ii, {
+	}) : typeof e == "boolean" ? e ? "Yes" : "No" : typeof e == "number" ? Number.isInteger(e) ? String(e) : e.toFixed(2) : typeof e == "string" ? qi(e) ? /* @__PURE__ */ D(Gi, {
 		value: e,
 		href: t?.(e)
 	}) : /* @__PURE__ */ D("span", {
@@ -8106,7 +8109,7 @@ function zi(e, t) {
 		className: "grid gap-2",
 		children: e.map((e, n) => /* @__PURE__ */ D("div", {
 			className: "border-l border-border pl-3",
-			children: zi(e, t)
+			children: Ji(e, t)
 		}, typeof e == "string" ? e : n))
 	}) : /* @__PURE__ */ D("span", {
 		className: "text-muted-foreground",
@@ -8117,15 +8120,15 @@ function zi(e, t) {
 			className: "grid gap-1 border-l border-border pl-3",
 			children: [/* @__PURE__ */ D("dt", {
 				className: "mw-meta text-muted-foreground",
-				children: Li(e)
+				children: Ki(e)
 			}), /* @__PURE__ */ D("dd", {
 				className: "m-0 text-sm leading-6 text-foreground",
-				children: zi(n, t)
+				children: Ji(n, t)
 			})]
 		}, e))
 	}) : String(e);
 }
-function Bi({ record: t, labels: n = {}, exclude: r = [], className: i, referenceHref: a, emptyLabel: o = "No fields recorded." }) {
+function Yi({ record: t, labels: n = {}, exclude: r = [], className: i, referenceHref: a, emptyLabel: o = "No fields recorded." }) {
 	let s = new Set(r), c = Object.entries(t).filter(([e]) => !s.has(e));
 	return /* @__PURE__ */ O("dl", {
 		className: e("grid gap-px border border-border bg-border sm:grid-cols-2 xl:grid-cols-3", i),
@@ -8133,10 +8136,10 @@ function Bi({ record: t, labels: n = {}, exclude: r = [], className: i, referenc
 			className: "min-w-0 bg-card p-4",
 			children: [/* @__PURE__ */ D("dt", {
 				className: "mw-meta text-muted-foreground",
-				children: n[e] ?? Li(e)
+				children: n[e] ?? Ki(e)
 			}), /* @__PURE__ */ D("dd", {
 				className: "m-0 mt-2 text-sm leading-6 text-foreground",
-				children: zi(t, a)
+				children: Ji(t, a)
 			})]
 		}, e)), c.length ? null : /* @__PURE__ */ D("div", {
 			className: "bg-card p-4 text-sm text-muted-foreground",
@@ -8146,7 +8149,7 @@ function Bi({ record: t, labels: n = {}, exclude: r = [], className: i, referenc
 }
 //#endregion
 //#region src/components/research-domain-ownership-map.tsx
-var Vi = [
+var Xi = [
 	{
 		x: 84,
 		y: 78
@@ -8171,8 +8174,8 @@ var Vi = [
 		x: 624,
 		y: 356
 	}
-], Hi = Object.keys(k).filter((e) => e !== "RELATIONSHIP");
-function Ui({ className: t, title: n = "Research domain ownership", description: r = "Six canonical research domains connect through the reviewed relationship layer while retaining their canonical repository ownership." }) {
+], Zi = Object.keys(k).filter((e) => e !== "RELATIONSHIP");
+function Qi({ className: t, title: n = "Research domain ownership", description: r = "Six canonical research domains connect through the reviewed relationship layer while retaining their canonical repository ownership." }) {
 	let i = w(), a = `${i}-title`, o = `${i}-description`, s = k.RELATIONSHIP;
 	return /* @__PURE__ */ O("figure", {
 		className: e("border border-border bg-card p-4", t),
@@ -8218,15 +8221,15 @@ function Ui({ className: t, title: n = "Research domain ownership", description:
 					stroke: "var(--mw-border-strong)",
 					strokeWidth: "2",
 					"aria-hidden": "true",
-					children: Vi.map((e, t) => /* @__PURE__ */ D("line", {
+					children: Xi.map((e, t) => /* @__PURE__ */ D("line", {
 						x1: "480",
 						y1: "270",
 						x2: e.x + 126,
 						y2: e.y + 66
-					}, Hi[t]))
+					}, Zi[t]))
 				}),
-				Hi.map((e, t) => {
-					let n = k[e], r = Vi[t];
+				Zi.map((e, t) => {
+					let n = k[e], r = Xi[t];
 					return /* @__PURE__ */ O("g", {
 						transform: `translate(${r.x} ${r.y})`,
 						"aria-hidden": "true",
@@ -8329,7 +8332,7 @@ function Ui({ className: t, title: n = "Research domain ownership", description:
 				}),
 				/* @__PURE__ */ O("ul", {
 					className: "mt-3 grid gap-2 md:grid-cols-2",
-					children: [Hi.map((e) => {
+					children: [Zi.map((e) => {
 						let t = k[e];
 						return /* @__PURE__ */ O("li", {
 							className: "border border-border bg-background p-3 text-xs leading-5",
@@ -8366,7 +8369,7 @@ function Ui({ className: t, title: n = "Research domain ownership", description:
 }
 //#endregion
 //#region src/contracts/perspective-intelligence.ts
-var Wi = [
+var $i = [
 	"visual separation is not truth distance",
 	"geographic coverage is not population weight",
 	"divergence is not a truth score",
@@ -8379,7 +8382,7 @@ function Q(e) {
 }
 //#endregion
 //#region src/components/perspective-intelligence.tsx
-var Gi = {
+var ea = {
 	SUPPORT: "support",
 	OPPOSE: "oppose",
 	QUESTIONING: "questioning",
@@ -8387,7 +8390,7 @@ var Gi = {
 	NEUTRAL: "neutral",
 	UNKNOWN: "unknown"
 };
-function Ki(e) {
+function ta(e) {
 	return new Intl.NumberFormat(void 0, {
 		notation: "compact",
 		maximumFractionDigits: 1
@@ -8396,7 +8399,7 @@ function Ki(e) {
 function $(e) {
 	return `${Math.round(Q(e) * 100)}%`;
 }
-function qi({ phenomenon: e, perspectives: t, className: n = "" }) {
+function na({ phenomenon: e, perspectives: t, className: n = "" }) {
 	let r = Math.max(1, t.length), i = {
 		x: 50,
 		y: 50
@@ -8451,7 +8454,7 @@ function qi({ phenomenon: e, perspectives: t, className: n = "" }) {
 								cx: a,
 								cy: o,
 								r: 2.5 + s * 1.9,
-								className: `mw-perspective-dot mw-perspective-dot--${Gi[e.position] ?? "unknown"}`
+								className: `mw-perspective-dot mw-perspective-dot--${ea[e.position] ?? "unknown"}`
 							}),
 							/* @__PURE__ */ D("text", {
 								x: a,
@@ -8480,7 +8483,7 @@ function qi({ phenomenon: e, perspectives: t, className: n = "" }) {
 			})
 		}), /* @__PURE__ */ D("div", {
 			className: "mw-perspective-constellation__legend",
-			children: t.map((e) => /* @__PURE__ */ O("article", { children: [/* @__PURE__ */ D("i", { className: `mw-perspective-legend-dot mw-perspective-legend-dot--${Gi[e.position] ?? "unknown"}` }), /* @__PURE__ */ O("div", { children: [/* @__PURE__ */ D("strong", { children: e.label }), /* @__PURE__ */ O("span", { children: [
+			children: t.map((e) => /* @__PURE__ */ O("article", { children: [/* @__PURE__ */ D("i", { className: `mw-perspective-legend-dot mw-perspective-legend-dot--${ea[e.position] ?? "unknown"}` }), /* @__PURE__ */ O("div", { children: [/* @__PURE__ */ D("strong", { children: e.label }), /* @__PURE__ */ O("span", { children: [
 				e.actorType,
 				" · ",
 				e.position,
@@ -8489,7 +8492,7 @@ function qi({ phenomenon: e, perspectives: t, className: n = "" }) {
 		})]
 	});
 }
-var Ji = {
+var ra = {
 	GLOBAL: [50, 46],
 	"US-NY": [25, 34],
 	"US-TX": [22, 42],
@@ -8504,7 +8507,7 @@ var Ji = {
 	ZA: [57, 70],
 	AU: [84, 70]
 };
-function Yi({ points: e, className: t = "" }) {
+function ia({ points: e, className: t = "" }) {
 	let n = Math.max(1, ...e.map((e) => e.count));
 	return /* @__PURE__ */ O("section", {
 		className: `mw-perspective-geo ${t}`.trim(),
@@ -8519,7 +8522,7 @@ function Yi({ points: e, className: t = "" }) {
 					d: "M7 22 15 16 25 18 29 24 23 28 17 26 12 30 7 27ZM27 31 31 29 35 35 32 43 29 48 26 39ZM40 16 49 13 58 16 62 21 57 24 51 23 46 25 40 22ZM49 26 55 26 58 32 56 42 52 48 49 40 47 32ZM59 15 68 13 79 16 87 20 94 25 90 30 81 29 75 33 68 29 62 23ZM84 40 89 38 95 42 92 48 87 49 83 45Z"
 				}),
 				e.map((e, t) => {
-					let r = Ji[e.label] ?? [12 + t * 13 % 76, 18 + t * 11 % 34], i = e.x ?? r[0], a = e.y ?? r[1], o = 1.3 + e.count / n * 2.5;
+					let r = ra[e.label] ?? [12 + t * 13 % 76, 18 + t * 11 % 34], i = e.x ?? r[0], a = e.y ?? r[1], o = 1.3 + e.count / n * 2.5;
 					return /* @__PURE__ */ O("g", { children: [
 						/* @__PURE__ */ D("circle", {
 							cx: i,
@@ -8544,11 +8547,11 @@ function Yi({ points: e, className: t = "" }) {
 			]
 		}), /* @__PURE__ */ D("div", {
 			className: "mw-perspective-geo__list",
-			children: e.map((e) => /* @__PURE__ */ O("span", { children: [/* @__PURE__ */ D("b", { children: e.label }), Ki(e.count)] }, e.id))
+			children: e.map((e) => /* @__PURE__ */ O("span", { children: [/* @__PURE__ */ D("b", { children: e.label }), ta(e.count)] }, e.id))
 		})]
 	});
 }
-function Xi({ divergence: e, uncertainty: t, convergence: n = 1 - e, coverage: r, className: i = "" }) {
+function aa({ divergence: e, uncertainty: t, convergence: n = 1 - e, coverage: r, className: i = "" }) {
 	let a = 14 + Q(e) * 72, o = 14 + Q(t) * 72;
 	return /* @__PURE__ */ O("section", {
 		className: `mw-divergence-compass ${i}`.trim(),
@@ -8629,7 +8632,7 @@ function Xi({ divergence: e, uncertainty: t, convergence: n = 1 - e, coverage: r
 		})]
 	});
 }
-function Zi({ cells: e, className: t = "" }) {
+function oa({ cells: e, className: t = "" }) {
 	let n = [...new Set(e.map((e) => e.actor))], r = [...new Set(e.map((e) => e.framing))], i = new Map(e.map((e) => [`${e.actor}::${e.framing}`, Q(e.value)]));
 	return /* @__PURE__ */ O("section", {
 		className: `mw-actor-framing-matrix ${t}`.trim(),
@@ -8655,7 +8658,7 @@ function Zi({ cells: e, className: t = "" }) {
 		}), /* @__PURE__ */ D("p", { children: "Cell intensity represents observed presence or salience. It does not represent support." })]
 	});
 }
-function Qi({ signals: e, className: t = "" }) {
+function sa({ signals: e, className: t = "" }) {
 	let n = e.map((t, n) => {
 		let r = e.length <= 1 ? 50 : 7 + n / (e.length - 1) * 86, i = 84 - Q(t.confidence) * 62;
 		return {
@@ -8707,7 +8710,7 @@ function Qi({ signals: e, className: t = "" }) {
 		})]
 	});
 }
-function $i({ snapshots: e, changes: t = [], className: n = "" }) {
+function ca({ snapshots: e, changes: t = [], className: n = "" }) {
 	let r = [...e].sort((e, t) => Date.parse(e.timestamp) - Date.parse(t.timestamp)), i = (e) => r.map((t, n) => `${r.length <= 1 ? 50 : 8 + n / (r.length - 1) * 84},${86 - Q(t[e]) * 68}`).join(" ");
 	return /* @__PURE__ */ O("section", {
 		className: `mw-perspective-history ${n}`.trim(),
@@ -8784,7 +8787,7 @@ function $i({ snapshots: e, changes: t = [], className: n = "" }) {
 		})]
 	});
 }
-function ea({ reactions: e, className: t = "" }) {
+function la({ reactions: e, className: t = "" }) {
 	let n = Math.max(1, ...e.map((e) => e.count));
 	return /* @__PURE__ */ D("section", {
 		className: `mw-reaction-spectrum ${t}`.trim(),
@@ -8799,7 +8802,7 @@ function ea({ reactions: e, className: t = "" }) {
 		] }, e.type))
 	});
 }
-function ta({ coverage: e, className: t = "" }) {
+function ua({ coverage: e, className: t = "" }) {
 	let n = [
 		e.source,
 		e.actor,
@@ -8853,7 +8856,7 @@ function ta({ coverage: e, className: t = "" }) {
 		}), /* @__PURE__ */ D("p", { children: "Coverage quality is not evidence strength." })]
 	});
 }
-function na({ stages: e, className: t = "" }) {
+function da({ stages: e, className: t = "" }) {
 	return /* @__PURE__ */ O("section", {
 		className: `mw-perspective-provenance ${t}`.trim(),
 		"aria-label": "Perspective provenance flow",
@@ -8875,20 +8878,20 @@ function na({ stages: e, className: t = "" }) {
 		}, t.id)) }), /* @__PURE__ */ D("p", { children: "Issue first · source second · canon last." })]
 	});
 }
-function ra({ phenomenon: e, perspectives: t, geography: n, divergence: r, convergence: i, uncertainty: a, coverage: o, framingCells: s, signals: c, reactions: l, snapshots: u = [], changes: d = [], provenance: f, className: p = "" }) {
+function fa({ phenomenon: e, perspectives: t, geography: n, divergence: r, convergence: i, uncertainty: a, coverage: o, framingCells: s, signals: c, reactions: l, snapshots: u = [], changes: d = [], provenance: f, className: p = "" }) {
 	return /* @__PURE__ */ O("section", {
 		className: `mw-perspective-board ${p}`.trim(),
 		"aria-label": "Perspective intelligence visual board",
 		children: [
 			/* @__PURE__ */ D("div", {
 				className: "mw-perspective-board__wide",
-				children: /* @__PURE__ */ D(qi, {
+				children: /* @__PURE__ */ D(na, {
 					phenomenon: e,
 					perspectives: t
 				})
 			}),
-			/* @__PURE__ */ D(Yi, { points: n }),
-			/* @__PURE__ */ D(Xi, {
+			/* @__PURE__ */ D(ia, { points: n }),
+			/* @__PURE__ */ D(aa, {
 				divergence: r,
 				convergence: i,
 				uncertainty: a,
@@ -8896,32 +8899,32 @@ function ra({ phenomenon: e, perspectives: t, geography: n, divergence: r, conve
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mw-perspective-board__wide",
-				children: /* @__PURE__ */ D(Zi, { cells: s })
+				children: /* @__PURE__ */ D(oa, { cells: s })
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mw-perspective-board__wide",
-				children: /* @__PURE__ */ D(Qi, { signals: c })
+				children: /* @__PURE__ */ D(sa, { signals: c })
 			}),
 			/* @__PURE__ */ D("div", {
 				className: "mw-perspective-board__wide",
-				children: /* @__PURE__ */ D($i, {
+				children: /* @__PURE__ */ D(ca, {
 					snapshots: u,
 					changes: d
 				})
 			}),
-			/* @__PURE__ */ D(ea, { reactions: l }),
-			/* @__PURE__ */ D(ta, { coverage: o }),
+			/* @__PURE__ */ D(la, { reactions: l }),
+			/* @__PURE__ */ D(ua, { coverage: o }),
 			/* @__PURE__ */ D("div", {
 				className: "mw-perspective-board__wide",
-				children: /* @__PURE__ */ D(na, { stages: f })
+				children: /* @__PURE__ */ D(da, { stages: f })
 			})
 		]
 	});
 }
 //#endregion
 //#region src/components/web-stats.tsx
-var ia = "https://api-worker.bjo163.workers.dev";
-function aa({ domain: t = "moonwitness.biz.id", apiHost: n = ia, autoTrack: r = !0, className: i, variant: a = "detailed" }) {
+var pa = "https://api-worker.bjo163.workers.dev";
+function ma({ domain: t = "moonwitness.biz.id", apiHost: n = pa, autoTrack: r = !0, className: i, variant: a = "detailed" }) {
 	let [o, s] = T(null), [c, l] = T(!0), [u, d] = T(null);
 	C(() => {
 		if (!(!r || typeof window > "u")) try {
@@ -8961,7 +8964,7 @@ function aa({ domain: t = "moonwitness.biz.id", apiHost: n = ia, autoTrack: r = 
 			e = !1, clearInterval(i);
 		};
 	}, [t, n]);
-	let f = We(() => Math.max(...o?.charts?.hourly_24h?.map((e) => e.pageviews) || [1], 1), [o]);
+	let f = $e(() => Math.max(...o?.charts?.hourly_24h?.map((e) => e.pageviews) || [1], 1), [o]);
 	return u ? /* @__PURE__ */ O("div", {
 		className: e("p-4 border border-border bg-panel text-xs text-muted-foreground font-mono", i),
 		children: [
@@ -9199,13 +9202,13 @@ function aa({ domain: t = "moonwitness.biz.id", apiHost: n = ia, autoTrack: r = 
 }
 //#endregion
 //#region src/components/observatory-footer.tsx
-function oa({ domain: t = "moonwitness.biz.id", apiHost: n, showStats: r = !0, statsVariant: i = "detailed", statsProps: a, customStats: o, tagline: s = "MoonWitness watches. Rocksoul follows. The record connects. The law draws the line. The trail stays inspectable.", legalNote: c = "TRUTH LEAVES A TRACE.", className: l }) {
+function ha({ domain: t = "moonwitness.biz.id", apiHost: n, showStats: r = !0, statsVariant: i = "detailed", statsProps: a, customStats: o, tagline: s = "MoonWitness watches. Rocksoul follows. The record connects. The law draws the line. The trail stays inspectable.", legalNote: c = "TRUTH LEAVES A TRACE.", className: l }) {
 	return /* @__PURE__ */ O("footer", {
 		id: "about",
 		className: e("border-t border-border bg-background pt-10 font-mono text-foreground", l),
 		children: [r ? /* @__PURE__ */ D("div", {
 			className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-12",
-			children: o || /* @__PURE__ */ D(aa, {
+			children: o || /* @__PURE__ */ D(ma, {
 				domain: t,
 				apiHost: n,
 				variant: i,
@@ -9219,7 +9222,7 @@ function oa({ domain: t = "moonwitness.biz.id", apiHost: n, showStats: r = !0, s
 					className: "flex flex-col gap-6 md:flex-row md:items-center md:justify-between",
 					children: [/* @__PURE__ */ O("div", {
 						className: "flex items-center gap-3",
-						children: [/* @__PURE__ */ D(yt, { className: "h-8 w-8 text-foreground" }), /* @__PURE__ */ O("div", { children: [/* @__PURE__ */ D("strong", {
+						children: [/* @__PURE__ */ D(Ot, { className: "h-8 w-8 text-foreground" }), /* @__PURE__ */ O("div", { children: [/* @__PURE__ */ D("strong", {
 							className: "block text-sm font-black tracking-wider text-foreground",
 							children: "MOONWITNESS"
 						}), /* @__PURE__ */ D("span", {
@@ -9239,4 +9242,4 @@ function oa({ domain: t = "moonwitness.biz.id", apiHost: n, showStats: r = !0, s
 	});
 }
 //#endregion
-export { Er as AIWorkspaceScreen, jn as AWSBoundary, Gr as AWSLegalScreen, ar as AWSLegalSummaryPattern, ri as AWSScreen, Zi as ActorFramingMatrix, gn as AppTopbar, lt as ApplicationActionsProvider, _n as ApplicationShell, jr as ApplicationStatesScreen, Vt as AssetExplorer, G as AuditEventRow, mr as AuthFormPattern, ii as AuthScreen, Ar as AuthorizationScreen, V as AutoMenu, dn as BackendStatus, I as Badge, un as Breadcrumbs, wr as CalendarScreen, kn as CaseCard, Nn as CaseHeader, Mn as CaseTimeline, dr as CaseTimelinePattern, Tr as ChatScreen, jt as CinematicWebHero, bn as Citation, hn as CommandPalette, Mr as CommandPaletteReferenceScreen, ur as CommunityCaseThreadPattern, On as CommunityComposer, Kr as CommunityScreen, Ct as CommunitySourceLocatorLink, Fi as ConfidenceMeter, ir as CorrelationGraphPattern, Pn as CorrelationScore, qr as CorrelationScreen, ta as CoverageRadar, xr as DashboardScreen, ze as DateInput, Xr as DesignSystemScreen, Sn as DiscussionItem, Xi as DivergenceCompass, Fn as DomainRecordSummary, Z as DomainScreen, hi as DossierHeader, pr as EmptyLoadingErrorPattern, ei as EventScreen, Ci as EventTopologyGraph, yn as EvidenceCard, zn as EvidenceGraph, rr as EvidenceGridPattern, vi as EvidenceMatrix, Re as FileInput, Be as FormActions, Un as FourRecordSummary, An as GraphEdge, Bn as GraphNode, wi as HistoricityBand, o as InputGroup, s as InputGroupAddon, c as InputGroupButton, l as InputGroupInput, u as InputGroupText, d as InputGroupTextarea, Cr as KanbanScreen, oi as LandingHeroScreen, di as LandingScreen, Wr as LegalApplicabilityMatrix, Gn as LegalStatus, ke as MOONWITNESS_ACCEPTED_REPOSITORY_BASE, Ht as MOONWITNESS_CANDIDATE_ASSET_BASE, ft as MOONWITNESS_CINEMATIC_WEB_HERO_BASE, Ee as MOONWITNESS_STABLE_REPOSITORY_BASE, fi as MW0042Overview, H as MWHeader, si as ManifestoScreen, ui as MethodScreen, K as MetricTile, lr as ModerationQueue, De as MoonWitnessAssetImage, Ae as MoonWitnessAssetProvider, bt as MoonWitnessBrand, Wt as MoonWitnessCandidateAssetImage, St as MoonWitnessCommunityParticipationAsset, yt as MoonWitnessMark, Ce as MoonWitnessPersonMark, ve as MoonWitnessPersonaAvatar, Oe as MoonWitnessRegistryAssetImage, x as MoonWitnessResilientImage, Ot as MoonWitnessRuntimeMotion, ye as MoonWitnessStatusAsset, N as NavigationLink, gt as NavigationProvider, wn as NotificationItem, fn as NotificationsPanel, Nr as NotificationsReferenceScreen, oa as ObservatoryFooter, yi as ObservatorySectionNav, Wi as PERSPECTIVE_VISUAL_GUARDRAILS, nr as Pagination, Oi as ParallelTextLanes, Le as PasswordInput, ti as PersonScreen, qi as PerspectiveConstellation, Yi as PerspectiveGeographyField, ra as PerspectiveIntelligenceBoard, tr as PlatformAdminVisual, $n as PlatformBackendBoundary, Zn as PlatformRoleMatrix, mi as PlatformScreen, er as PlatformServiceRegistry, En as PlatformSidebar, kr as ProfileSettingsScreen, na as ProvenanceFlow, bi as ProvenanceRail, sr as PublicCasePattern, Ii as QualifiedReferenceView, ni as RGBLScreen, b as ROCKSOUL_ASSETS_CANDIDATE, b as ROCKSOUL_ASSETS_REGISTRY, y as ROCKSOUL_ASSETS_SYNC, dt as ROCKSOUL_CINEMATIC_WEB_HERO_SYNC, rt as ROCKSOUL_ECOSYSTEM_OWNER, tt as ROCKSOUL_GITHUB_RAW_ORIGIN, et as ROCKSOUL_GITHUB_WEB_ORIGIN, ea as ReactionSpectrum, Bi as RecordFieldGrid, or as RelatedCases, li as RepositoriesOverviewScreen, U as RepositoryCard, Tn as RepositoryHealthRow, cr as RepositoryMonitor, Ui as ResearchDomainOwnershipMap, Or as ResourcesScreen, ci as RocksoulCharacterScreen, Dn as SearchFilters, fr as SearchFiltersPattern, Ie as SearchInput, Ve as SimplePagination, W as SourceBlock, ki as SourceRightsSummary, q as StatePanel, qt as StatusBadge, $r as StoryScreen, Cn as SubmissionCard, $i as TemporalPerspectiveHistory, Ei as TextualHierarchyTrace, Ai as TextualRelationTrace, R as ThemeToggle, xn as TimelineEntry, Fe as UI, pn as UserMenu, aa as WebStats, yr as WorkflowStrip, Qi as ZigzagTimeline, br as applicationNotifications, z as applicationResources, nn as applyTheme, k as canonicalDomainOwners, Ze as canonicalOwnerFor, pt as cinematicWebHeroAssets, mt as cinematicWebHeroContract, Q as clampPerspectiveMetric, xt as communityParticipationAssetIds, B as defaultApplicationPermissions, Se as hasMoonWitnessCandidateAsset, Se as hasMoonWitnessRegistryAsset, Qe as isResearchDomain, Ir as legalApplicabilityAxes, Br as legalApplicabilityAxis, Pr as legalIntelligenceContract, zr as legalResultDefinition, Fr as legalResultVocabulary, Lr as legalReviewPipeline, Rr as legalVisualGuardrails, Te as moonWitnessAssetConsumption, pe as moonWitnessAssetPackIndexPath, he as moonWitnessAssetPackVersion, we as moonWitnessAssetPacks, de as moonWitnessAssetRelativePath, v as moonWitnessAssets, v as moonWitnessCandidateAssets, vt as moonWitnessBrandAssets, Pe as moonWitnessBrandContract, Me as moonWitnessCandidateAssetPath, Me as moonWitnessRegistryAssetPath, Gt as moonWitnessCandidateConsumption, wt as moonWitnessRuntimeMotionIds, qe as moonWitnessTokens, J as mw0042, $e as parseQualifiedReference, Jn as platformAdminCommandActions, j as platformAdminContract, Yn as platformAdminPermissions, qn as platformAdminResources, ut as platformAdminVisuals, gr as productionScreenAssetMap, Xe as researchDomainVisualContract, st as resolveCommunitySourceLocator, je as resolveMoonWitnessAssetUrl, Ut as resolveMoonWitnessCandidateAssetUrl, S as resolveMoonWitnessRegistryAssetUrl, Et as resolveMoonWitnessRuntimeMotion, ot as resolvePinnedRocksoulAssetSourceUrl, at as resolveRocksoulRepositoryUrl, tn as resolveTheme, cn as resourceDescriptors, nt as rocksoulEcosystemRepositories, hr as semanticPrimitiveByNodeKind, _r as semanticPrimitiveUrl, Pi as semanticStatusVariant, Mi as semanticStatusVariants, Kt as statusBadgeVariants, Ni as statusVisualContract, A as useApplicationActions, be as useMoonWitnessAssetBaseUrl, xe as useMoonWitnessSfx, Dt as usePrefersReducedMotion, ge as v2NavigationItems, fe as v2ResourceDescriptors, Ne as v2ScreenContract, _e as v2ShellContract, me as v2SystemStateContract };
+export { Fr as AIWorkspaceScreen, Bn as AWSBoundary, ei as AWSLegalScreen, mr as AWSLegalSummaryPattern, fi as AWSScreen, oa as ActorFramingMatrix, Tn as AppTopbar, vt as ApplicationActionsProvider, En as ApplicationShell, Br as ApplicationStatesScreen, Yt as AssetExplorer, Xe as AttachmentList, G as AuditEventRow, Cr as AuthFormPattern, pi as AuthScreen, zr as AuthorizationScreen, V as AutoMenu, bn as BackendStatus, F as Badge, yn as Breadcrumbs, Nr as CalendarScreen, Rn as CaseCard, Hn as CaseHeader, Vn as CaseTimeline, br as CaseTimelinePattern, Pr as ChatScreen, Bt as CinematicWebHero, An as Citation, wn as CommandPalette, Vr as CommandPaletteReferenceScreen, yr as CommunityCaseThreadPattern, Ln as CommunityComposer, ti as CommunityScreen, Mt as CommunitySourceLocatorLink, Wi as ConfidenceMeter, Ge as ContentState, pr as CorrelationGraphPattern, Un as CorrelationScore, ni as CorrelationScreen, ua as CoverageRadar, Ar as DashboardScreen, He as DataTable, ze as DateInput, ai as DesignSystemScreen, We as DetailPanel, Mn as DiscussionItem, aa as DivergenceCompass, Wn as DomainRecordSummary, Z as DomainScreen, wi as DossierHeader, Sr as EmptyLoadingErrorPattern, Ke as EmptyState, qe as ErrorState, li as EventScreen, Mi as EventTopologyGraph, kn as EvidenceCard, Jn as EvidenceGraph, fr as EvidenceGridPattern, Di as EvidenceMatrix, Re as FileInput, Ue as FilterBar, Be as FormActions, Qn as FourRecordSummary, zn as GraphEdge, Yn as GraphNode, Ni as HistoricityBand, o as InputGroup, s as InputGroupAddon, c as InputGroupButton, l as InputGroupInput, u as InputGroupText, d as InputGroupTextarea, Mr as KanbanScreen, hi as LandingHeroScreen, bi as LandingScreen, $r as LegalApplicabilityMatrix, er as LegalStatus, Je as LoadingState, ke as MOONWITNESS_ACCEPTED_REPOSITORY_BASE, Xt as MOONWITNESS_CANDIDATE_ASSET_BASE, xt as MOONWITNESS_CINEMATIC_WEB_HERO_BASE, Ee as MOONWITNESS_STABLE_REPOSITORY_BASE, xi as MW0042Overview, Dn as MWHeader, gi as ManifestoScreen, yi as MethodScreen, K as MetricTile, vr as ModerationQueue, De as MoonWitnessAssetImage, Ae as MoonWitnessAssetProvider, kt as MoonWitnessBrand, Qt as MoonWitnessCandidateAssetImage, jt as MoonWitnessCommunityParticipationAsset, Ot as MoonWitnessMark, Ce as MoonWitnessPersonMark, ve as MoonWitnessPersonaAvatar, Oe as MoonWitnessRegistryAssetImage, x as MoonWitnessResilientImage, Lt as MoonWitnessRuntimeMotion, ye as MoonWitnessStatusAsset, N as NavigationLink, Tt as NavigationProvider, Nn as NotificationItem, xn as NotificationsPanel, Hr as NotificationsReferenceScreen, ha as ObservatoryFooter, Oi as ObservatorySectionNav, $i as PERSPECTIVE_VISUAL_GUARDRAILS, dr as Pagination, Li as ParallelTextLanes, Le as PasswordInput, ui as PersonScreen, na as PerspectiveConstellation, ia as PerspectiveGeographyField, fa as PerspectiveIntelligenceBoard, ur as PlatformAdminVisual, cr as PlatformBackendBoundary, or as PlatformRoleMatrix, Ci as PlatformScreen, lr as PlatformServiceRegistry, Fn as PlatformSidebar, Rr as ProfileSettingsScreen, da as ProvenanceFlow, ki as ProvenanceRail, gr as PublicCasePattern, Gi as QualifiedReferenceView, di as RGBLScreen, b as ROCKSOUL_ASSETS_CANDIDATE, b as ROCKSOUL_ASSETS_REGISTRY, y as ROCKSOUL_ASSETS_SYNC, bt as ROCKSOUL_CINEMATIC_WEB_HERO_SYNC, ft as ROCKSOUL_ECOSYSTEM_OWNER, ut as ROCKSOUL_GITHUB_RAW_ORIGIN, lt as ROCKSOUL_GITHUB_WEB_ORIGIN, la as ReactionSpectrum, Yi as RecordFieldGrid, hr as RelatedCases, vi as RepositoriesOverviewScreen, H as RepositoryCard, Pn as RepositoryHealthRow, _r as RepositoryMonitor, Qi as ResearchDomainOwnershipMap, Lr as ResourcesScreen, _i as RocksoulCharacterScreen, In as SearchFilters, xr as SearchFiltersPattern, Ie as SearchInput, Ve as SimplePagination, U as SourceBlock, Ri as SourceRightsSummary, q as StatePanel, tn as StatusBadge, ci as StoryScreen, W as SubmissionCard, ca as TemporalPerspectiveHistory, Fi as TextualHierarchyTrace, zi as TextualRelationTrace, R as ThemeToggle, Ye as Timeline, jn as TimelineEntry, Fe as UI, Sn as UserMenu, ma as WebStats, Or as WorkflowStrip, sa as ZigzagTimeline, kr as applicationNotifications, z as applicationResources, fn as applyTheme, k as canonicalDomainOwners, ot as canonicalOwnerFor, St as cinematicWebHeroAssets, Ct as cinematicWebHeroContract, Q as clampPerspectiveMetric, At as communityParticipationAssetIds, B as defaultApplicationPermissions, Se as hasMoonWitnessCandidateAsset, Se as hasMoonWitnessRegistryAsset, st as isResearchDomain, Gr as legalApplicabilityAxes, Yr as legalApplicabilityAxis, Ur as legalIntelligenceContract, Jr as legalResultDefinition, Wr as legalResultVocabulary, Kr as legalReviewPipeline, qr as legalVisualGuardrails, Te as moonWitnessAssetConsumption, pe as moonWitnessAssetPackIndexPath, he as moonWitnessAssetPackVersion, we as moonWitnessAssetPacks, de as moonWitnessAssetRelativePath, v as moonWitnessAssets, v as moonWitnessCandidateAssets, Dt as moonWitnessBrandAssets, Pe as moonWitnessBrandContract, Me as moonWitnessCandidateAssetPath, Me as moonWitnessRegistryAssetPath, $t as moonWitnessCandidateConsumption, Nt as moonWitnessRuntimeMotionIds, nt as moonWitnessTokens, J as mw0042, ct as parseQualifiedReference, rr as platformAdminCommandActions, j as platformAdminContract, ir as platformAdminPermissions, nr as platformAdminResources, yt as platformAdminVisuals, Tr as productionScreenAssetMap, at as researchDomainVisualContract, gt as resolveCommunitySourceLocator, je as resolveMoonWitnessAssetUrl, Zt as resolveMoonWitnessCandidateAssetUrl, S as resolveMoonWitnessRegistryAssetUrl, Ft as resolveMoonWitnessRuntimeMotion, ht as resolvePinnedRocksoulAssetSourceUrl, mt as resolveRocksoulRepositoryUrl, dn as resolveTheme, _n as resourceDescriptors, dt as rocksoulEcosystemRepositories, wr as semanticPrimitiveByNodeKind, Er as semanticPrimitiveUrl, Ui as semanticStatusVariant, Vi as semanticStatusVariants, en as statusBadgeVariants, Hi as statusVisualContract, A as useApplicationActions, be as useMoonWitnessAssetBaseUrl, xe as useMoonWitnessSfx, It as usePrefersReducedMotion, ge as v2NavigationItems, fe as v2ResourceDescriptors, Ne as v2ScreenContract, _e as v2ShellContract, me as v2SystemStateContract };
