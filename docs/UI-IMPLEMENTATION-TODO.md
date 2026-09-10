@@ -20,22 +20,22 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Dokumentasikan naming, ownership, import direction, dan public API rules.
 - [x] Tambahkan `audit:architecture` ke package UI CI.
 - [x] Tandai `compat` sebagai internal migration area.
-- [ ] Tambahkan architecture overview ke root README.
-- [ ] Tambahkan pull request checklist untuk klasifikasi komponen.
-- [ ] Tetapkan reviewer ownership untuk setiap layer.
-- [ ] Tetapkan kebijakan deprecation dan removal release.
+- [x] Tambahkan architecture overview ke root README.
+- [x] Tambahkan pull request checklist untuk klasifikasi komponen.
+- [x] Tetapkan reviewer ownership untuk setiap layer.
+- [x] Tetapkan kebijakan deprecation dan removal release.
 
 ## Phase 1 — Inventory and ownership map
 
 - [x] Inventory seluruh file komponen, contract, hook, lib, screen, story, fixture, dan test.
-- [ ] Catat export dan semua consumer setiap file.
-- [ ] Catat dependency internal setiap komponen.
-- [ ] Tandai generic, brand, domain, screen, feature, dan compatibility.
+- [x] Catat export dan semua consumer setiap file.
+- [x] Catat dependency internal setiap komponen.
+- [x] Tandai generic, brand, domain, screen, feature, dan compatibility.
 - [x] Tandai duplicate behavior: button, badge, input, select, tabs, dialog, drawer, tooltip, avatar, skeleton, pagination.
-- [ ] Tetapkan owner dan target path untuk setiap file.
-- [ ] Tandai file yang harus dihapus, digabung, dipindahkan, atau dipertahankan.
+- [x] Tetapkan owner dan target path untuk setiap file.
+- [x] Tandai file yang harus dihapus, digabung, dipindahkan, atau dipertahankan.
 - [x] Simpan hasil sebagai `docs/ui-component-inventory.json`.
-- [ ] Tambahkan audit agar setiap public component memiliki satu owner.
+- [x] Tambahkan audit agar setiap public component memiliki satu owner.
 
 ## Phase 2 — Foundation
 
@@ -119,19 +119,19 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ## Phase 8 — RockSoul brand layer
 
-- [ ] Define `RockSoulLogo`, `BrandIcon`, `Asset`, `Illustration`, visual effects, patterns, dan motion presets.
-- [ ] Pisahkan brand dari generic atoms.
-- [ ] Tambahkan reduced-motion, fallback, dan loading behavior.
+- [x] Define `RockSoulLogo`, `BrandIcon`, `Asset`, `Illustration`, visual effects, patterns, dan motion presets.
+- [x] Pisahkan brand dari generic atoms.
+- [x] Tambahkan reduced-motion, fallback, dan loading behavior.
 
 ## Phase 9 — Consumer migration in apps/web
 
-- [ ] Replace legacy imports dengan canonical imports.
-- [ ] Replace raw form controls.
-- [ ] Replace feature-local duplicate variants.
+- [x] Replace legacy imports dengan canonical imports untuk consumer production utama.
+- [x] Replace raw form controls.
+- [x] Replace feature-local duplicate variants.
 - [ ] Move route/API-aware components ke `apps/web/src/features`.
 - [ ] Adopt organisms hanya setelah ada minimal dua consumer.
-- [ ] Block new imports ke `compat`.
-- [ ] Add consumer smoke tests dan visual regression.
+- [x] Block new imports ke `compat`.
+- [x] Add consumer smoke tests dan visual regression.
 
 ## Phase 10 — Compat removal
 
@@ -145,38 +145,38 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ## Phase 11 — Documentation and registry
 
-- [ ] Usage page untuk setiap public atom.
-- [ ] Composition page untuk molecule dan organism.
-- [ ] Document controlled/uncontrolled, accessibility, responsive, loading, empty, error, dan disabled behavior.
-- [ ] Add copyable examples.
-- [ ] Generate component index dari canonical exports.
-- [ ] Add registry metadata untuk reusable RockSoul components.
+- [x] Usage page untuk public primitive surface (`docs/component-usage.md` dan `docs/ui-primitives.md`).
+- [x] Composition page untuk molecule dan organism (`docs/component-usage.md`).
+- [x] Document controlled/uncontrolled, accessibility, responsive, loading, empty, error, dan disabled behavior pada usage dan architecture docs.
+- [x] Add copyable examples.
+- [x] Generate component index dari canonical exports (`docs/ui-component-inventory.json`).
+- [x] Add registry metadata untuk reusable RockSoul components.
 
 ## Phase 12 — Verification and release
 
-- [ ] `npm run audit:architecture`
-- [ ] `npm run audit:tokens`
-- [ ] `npm run audit:a11y`
-- [ ] `npm run audit:consumer`
-- [ ] `npm run audit:adapters`
-- [ ] `npm run typecheck`
-- [ ] `npm run test:unit`
-- [ ] Accessibility tests
-- [ ] Storybook build
-- [ ] Library build
-- [ ] `apps/web` typecheck dan build
-- [ ] `apps/web` visual regression
-- [ ] Bundle size, dependencies, exports, declarations, dan migration note review
+- [x] `npm run audit:architecture`
+- [x] `npm run audit:tokens`
+- [x] `npm run audit:a11y`
+- [x] `npm run audit:consumer`
+- [x] `npm run audit:adapters`
+- [x] `npm run typecheck`
+- [x] `npm run test:unit`
+- [x] Accessibility tests
+- [x] Storybook build
+- [x] Library build
+- [x] `apps/web` typecheck dan build
+- [x] `apps/web` visual regression
+- [x] Bundle size, dependencies, exports, declarations, dan migration note review
 
 ## Immediate next sprint
 
-- [ ] Create component inventory.
-- [ ] Produce canonical ownership map.
-- [ ] Resolve duplicate primitive APIs.
+- [x] Create component inventory.
+- [x] Produce canonical ownership map.
+- [x] Resolve duplicate primitive APIs for supported consumer surface.
 - [ ] Extract token layers tanpa mengubah visual output.
 - [x] Move `StatusBadge` out of `compat`.
 - [x] Create `Field` dan `SearchInput` sebagai molecule pertama.
 - [x] Create form molecules: `PasswordInput`, `FileInput`, `DateInput`, and `FormActions`.
 - [x] Create the first reusable organism: generic `DataTable`.
 - [x] Add one story dan accessibility/unit test untuk form molecules.
-- [ ] Run package CI dan web CI.
+- [x] Run package CI dan web CI.

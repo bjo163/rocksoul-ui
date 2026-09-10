@@ -293,3 +293,9 @@ Playwright output under `test-results/` is ephemeral and ignored. CI retains it 
 ## Composable ROCKSOUL primitives
 
 The `src/components/ui` layer provides 61 shadcn-pattern components plus a ROCKSOUL asset primitive. See [coverage, usage, assets and compatibility](docs/ui-primitives.md).
+
+## Architecture and contribution
+
+The component system is organized from foundation and behavior primitives through atoms, molecules, organisms, templates, and consumer-owned features. Read [the architecture overview](docs/UI-ARCHITECTURE.md) and [the binding rules](docs/UI-ARCHITECTURE-RULES.md) before adding a component. The [implementation checklist](docs/UI-IMPLEMENTATION-TODO.md) records current scope and deferred work.
+
+For every change, use the [pull request checklist](docs/UI-PR-CHECKLIST.md), assign the layer owner from [reviewer ownership](docs/UI-REVIEWER-OWNERSHIP.md), and follow the [deprecation policy](docs/UI-DEPRECATION-POLICY.md). Public examples and composition guidance are maintained in [component usage](docs/component-usage.md).
