@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -38,46 +40,16 @@ jobs:
       # prepare/build runs during npm ci; tracked dist must already match that deterministic output.
       - name: Enforce tracked dist reproducibility
         run: git diff --exit-code -- dist
-      - name: Strict repository consistency audit
-        run: npm run audit:repository
-      - name: Design contract audit
-        run: npm run audit:tokens
-      - name: Accessibility contract audit
-        run: npm run audit:a11y
-      - name: Research visual contract audit
-        run: npm run audit:research-visuals
-      - name: Domain contract audit
-        run: npm run audit:domains
-      - name: Rocksoul assets v2 sync audit
-        run: npm run audit:assets-sync
-      - name: Rocksoul assets remote freshness
-        run: npm run audit:assets-freshness
-      - name: MoonWitness asset registry v1.3
-        run: npm run audit:assets-registry
-      - name: Asset pack byte integrity
-        run: npm run audit:assets-integrity
-      - name: Platform/Admin contract audit
-        run: npm run audit:platform-admin
-      - name: Application framework audit
-        run: npm run audit:application
-      - name: Architecture and dependency hardening
-        run: npm run audit:architecture && npm run audit:dependencies
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Unit tests
-        run: npm run test:unit
-      - name: Build consumable library
-        run: npm run build:lib
-      - name: Package artifact audit
-        run: npm run audit:package
-      - name: Consumer package smoke
-        run: npm run test:consumer
-      - name: Release closure audit
-        run: npm run audit:release
-      - name: Build playground
-        run: npm run build:playground
-      - name: Build Storybook
-        run: npm run build-storybook
+      - name: Run canonical repository CI contract
+        run: npm run ci
+      - name: Upload Quanta audit evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: quanta-audit-${{ github.run_id }}
+          path: artifacts/audit/**
+          if-no-files-found: warn
+          retention-days: 14
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
       - name: Browser accessibility + responsive QA
