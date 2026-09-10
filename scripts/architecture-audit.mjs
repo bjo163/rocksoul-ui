@@ -33,13 +33,14 @@ async function walk(directory) {
     }
     if (!/\.(?:c|m)?(?:t|j)sx?$/.test(entry.name)) continue
     const relative = path.relative(sourceRoot, file).split(path.sep).join("/")
-    sourceFiles.set(relative.replace(/\.(?:c|m)?(?:t|j)sx?$/, ""), file)
+    const withoutExtension = relative.replace(/\.(?:c|m)?(?:t|j)sx?$/, "")
+    sourceFiles.set(withoutExtension, file)
     const owner = levels.get(relative.split("/")[0])
-    if (owner !== undefined) {
-      const key = entry.name.replace(/\.(?:c|m)?(?:t|j)sx?$/, "").toLowerCase()
-      const owners = basenameOwners.get(key) ?? []
+    const basename = path.basename(withoutExtension).toLowerCase()
+    if (owner !== undefined && basename !== "index") {
+      const owners = basenameOwners.get(basename) ?? []
       owners.push(relative)
-      basenameOwners.set(key, owners)
+      basenameOwners.set(basename, owners)
     }
   }
 }
@@ -49,12 +50,8 @@ function levelFor(file) {
   return levels.get(firstDirectory)
 }
 
-function normalizeSpecifier(specifier) {
-  return specifier.replace(/\\/g, "/")
-}
-
 async function resolveSource(from, specifier, aliases) {
-  const raw = normalizeSpecifier(specifier)
+  const raw = specifier.replace(/\\/g, "/")
   const candidates = []
   if (raw.startsWith(".")) candidates.push(path.resolve(path.dirname(from), raw))
   for (const [alias, targets] of aliases) {
@@ -76,8 +73,7 @@ async function resolveSource(from, specifier, aliases) {
 }
 
 const tsconfig = JSON.parse(await readFile(path.join(root, "tsconfig.json"), "utf8"))
-const inventoryPath = path.join(root, "docs/ui-component-inventory.json")
-const inventory = JSON.parse(await readFile(inventoryPath, "utf8"))
+const inventory = JSON.parse(await readFile(path.join(root, "docs/ui-component-inventory.json"), "utf8"))
 const aliases = new Map(Object.entries(tsconfig.compilerOptions?.paths ?? {}))
 const documentedOverlap = JSON.stringify(inventory.overlapDecisions ?? [])
 
