@@ -60,6 +60,8 @@ jobs:
         run: npm run audit:platform-admin
       - name: Application framework audit
         run: npm run audit:application
+      - name: Architecture and dependency hardening
+        run: npm run audit:architecture && npm run audit:dependencies
       - name: Typecheck
         run: npm run typecheck
       - name: Unit tests
