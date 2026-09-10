@@ -3,333 +3,122 @@
   "schema": "rocksoul.todo.v1",
   "tasks": [
     {
-      "acceptance_criteria": [
-        "Preserve Git HEAD and tracked content across relocation",
-        "Update workspace and registry paths",
-        "Pass UI typecheck and library build from the new path"
-      ],
-      "affected_paths": [
-        "ROCKSOUL/packages/ui",
-        "ROCKSOUL/rocksoul.code-workspace",
-        "LOCAL-FORGE.json",
-        "control/rocksoul-ecosystem/registry"
-      ],
-      "depends_on": [],
-      "evidence": [
-        "UI repo relocated to ROCKSOUL/packages/ui after partial move recovery; Git HEAD 2404f1d361b28c75a945bdceba92003a61504ba2 preserved; target contains 721 tracked files and status was clean before migration metadata; npm ci --ignore-scripts PASS; npm run typecheck PASS; npm run build:lib PASS; workspace and registry paths updated; runtime doctor PASS"
-      ],
-      "evidence_required": [
-        "Before/after Git comparison",
-        "npm install and build checks",
-        "Runtime doctor and task lookup"
-      ],
-      "id": "UI-RELOCATE-001",
+      "id": "UI-CONTRACT-001",
+      "title": "Enforce strict repository consistency and provenance contracts",
       "owner": "rocksoul-ui",
-      "phase": "WORKSPACE_RELOCATION",
-      "priority": "HIGH",
-      "risk": "MEDIUM",
       "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Relocate UI to ROCKSOUL/packages/ui and verify workspace integration"
-    },
-    {
-      "evidence": [
-        "node scripts/validate-rocksoul-contract.mjs => PASS: rocksoul-ui contract; tasks=1",
-        "ROCKSOUL-REPO.json and ROCKSOUL-TODO.json repository_id values match; .github/workflows/rocksoul-contract.yml runs the same validator"
-      ],
-      "github_issue": "https://github.com/bjo163/rocksoul-ui/issues/20",
-      "id": "UI-001",
-      "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Maintain repository control contract and local TODO"
-    },
-    {
+      "phase": "GOVERNANCE",
+      "priority": "P0",
+      "risk": "HIGH",
+      "status": "IN_PROGRESS",
       "acceptance_criteria": [
-        "Theme light, dark, and system apply coherently to every application surface.",
-        "Operator/editorial surface personality is represented independently from color theme.",
-        "Sidebar, header, cards, controls, semantic statuses, overlays, and focus states change consistently without theme leakage."
+        "Exactly one canonical package manager and lockfile",
+        "Package, lockfile, release, changelog, CI and repository identity agree",
+        "Tracked dist is reproducible from source on clean CI checkout",
+        "Unknown contract drift fails closed"
       ],
-      "affected_paths": [
-        "src/styles.css",
-        "src/components/theme-toggle.tsx",
-        "src/components/application-shell.tsx"
-      ],
-      "dependencies": [],
-      "evidence": [
-        "commit 0e66c29 pushed to origin/main; removed mw-platform fixed-light token overrides and added independent operator/editorial personality contract; 8 Playwright theme-contract tests PASS across dashboard/case/platform light+dark, system preference persistence, chrome/content/status/overlay/focus inheritance; Axe WCAG 2A/AA serious+critical violations zero on all six surface/theme combinations; 2 ThemeToggle unit tests PASS; full npm run ci PASS (15 files/39 unit tests, audits, typecheck, package/consumer/release, playground and Storybook builds); final build:lib PASS."
-      ],
-      "evidence_required": [
-        "computed-token assertions",
-        "light and dark screenshots for dashboard, case, and platform",
-        "theme persistence and system-mode tests",
-        "WCAG contrast audit"
-      ],
-      "id": "UI-002",
+      "affected_paths": ["ROCKSOUL-REPO.json", "package.json", "package-lock.json", ".github/workflows/ci.yml", "scripts/repository-audit.mjs"]
+    },
+    {
+      "id": "UI-CI-002",
+      "title": "Make asset freshness classification strict and fail-closed",
       "owner": "rocksoul-ui",
-      "phase": "VISUAL-SYSTEM",
-      "priority": "CRITICAL",
-      "risk": "The application reports dark theme while mw-platform overrides its tokens and remains visually light.",
-      "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Separate global theme from operator surface personality"
-    },
-    {
-      "acceptance_criteria": [
-        "ProvenanceRail, status, graph, evidence, and legal consumers use atomic primitives or semantic HTML rather than specimen cards.",
-        "Status labels are data-driven HTML and remain synchronized with accessible names.",
-        "Every production screen declares allowed and required asset families by semantic purpose.",
-        "Dashboard includes bounded evidence-specific visualizations that improve decision making without decorative noise."
-      ],
-      "affected_paths": [
-        "src/components/asset-provider.tsx",
-        "src/components/provenance-rail.tsx",
-        "src/components",
-        "src/screens",
-        "src/contracts"
-      ],
-      "dependencies": [
-        "UI-002",
-        "rocksoul-assets:ASSETS-003"
-      ],
-      "evidence": [
-        "commit 6ce5a66 pushed to origin/main; ProvenanceRail now consumes label-free semantic-primitives URLs instead of correlation specimen cards; added productionScreenAssetMap contract for dashboard/cases/platform/auth and semantic mapping audit; unit tests 16 files/41 tests PASS, typecheck PASS, semantic map audit PASS, browser QA 4 desktop tests PASS with Axe serious/critical zero and no overflow; asset source accepted at rocksoul-assets d577fbd."
-      ],
-      "evidence_required": [
-        "consumer usage inventory",
-        "component tests for label and state synchronization",
-        "rendered provenance/status/dashboard screenshots",
-        "asset mapping contract audit"
-      ],
-      "id": "UI-003",
-      "owner": "rocksoul-ui",
-      "phase": "VISUAL-SYSTEM",
-      "priority": "CRITICAL",
-      "risk": "Full specimen artwork is currently scaled into icon slots and image-based labels can diverge from runtime semantics and accessibility text.",
-      "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Migrate specimen-based consumers to semantic primitives and define screen asset mapping"
-    },
-    {
-      "acceptance_criteria": [
-        "Visual baselines cover landing, dashboard, case, correlation, auth, and platform in light and dark modes.",
-        "Responsive tests cover 390, 640, 768, 1024, and 1440 pixels plus relevant breakpoint boundaries.",
-        "Tests cover 200 percent zoom, reduced motion, high contrast, long content, asset fallback, and horizontal overflow.",
-        "CI publishes diffs on failure without accepting new baselines automatically."
-      ],
-      "affected_paths": [
-        "playwright.config.ts",
-        "tests",
-        ".github/workflows"
-      ],
-      "dependencies": [
-        "UI-002",
-        "UI-003"
-      ],
-      "evidence": [
-        "commit cd3ec9f pushed to origin/main; Playwright visual baselines cover dashboard, MW-0042 case, platform, and authorization in light/dark (8 committed PNG snapshots); responsive overflow matrix covers 390/640/768/1024/1440, tablet project added; 200% zoom, reduced motion, forced-colors, long-content and broken-image checks pass (15/15 desktop tests)."
-      ],
-      "evidence_required": [
-        "Playwright screenshot baseline inventory",
-        "passing desktop/mobile/tablet browser matrix",
-        "intentional visual-diff demonstration",
-        "CI artifact evidence"
-      ],
-      "id": "UI-004",
-      "owner": "rocksoul-ui",
-      "phase": "VISUAL-VERIFICATION",
-      "priority": "HIGH",
-      "risk": "Current browser QA covers only landing and dashboard at 390 and 1440 pixels and has no stable visual snapshots.",
-      "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Establish full visual regression, breakpoint, theme, and zoom coverage"
-    },
-    {
-      "acceptance_criteria": [
-        "Native Penpot components, variants, focus states, typography, contrast, and responsive behavior are reviewed in the live workspace.",
-        "Any deviations are recorded with owner and remediation."
-      ],
-      "affected_paths": [
-        "../rocksoul-assets/penpot",
-        "docs/PENPOT-LIVE-VERIFICATION.md"
-      ],
-      "dependencies": [
-        "UI-004"
-      ],
-      "evidence": [
-        "Deferred by operator: no live Penpot workspace/session or native export with component, font, and interaction metadata is available; repository export is reference-only and cannot prove live acceptance criteria."
-      ],
-      "evidence_required": [
-        "Penpot export/screenshots",
-        "keyboard and focus walkthrough",
-        "contrast review"
-      ],
-      "id": "UI-NEXT-001",
-      "owner": "rocksoul-assets",
-      "phase": "DESIGN-VERIFICATION",
-      "priority": "HIGH",
-      "risk": "Manual workspace gaps can hide component, font, or accessibility drift.",
       "scope": "cross-repository",
-      "status": "DEFERRED",
-      "title": "Complete live Penpot component and accessibility verification"
-    },
-    {
+      "phase": "ASSET-PROVENANCE",
+      "priority": "P0",
+      "risk": "HIGH",
+      "status": "IN_PROGRESS",
       "acceptance_criteria": [
-        "Mobile and tablet browser projects cover all production surfaces in light and dark themes.",
-        "Baselines and diffs are retained in CI artifacts."
+        "Bookkeeping-only upstream metadata cannot block asset freshness",
+        "Runtime asset or manifest drift blocks until explicit UI sync",
+        "Unknown upstream files block by default",
+        "Classification is covered by executable regression tests"
       ],
-      "affected_paths": [
-        "playwright.config.ts",
-        "tests",
-        ".github/workflows"
-      ],
-      "dependencies": [
-        "UI-004"
-      ],
-      "evidence": [
-        "commit dbe8919 pushed; 16 mobile/tablet light-dark snapshots added; Playwright mobile+tablet matrix 30/30 passed including 390/640/768/1024/1440 overflow, zoom, reduced-motion, forced-colors, and broken-image checks."
-      ],
-      "evidence_required": [
-        "Playwright mobile/tablet matrix",
-        "committed snapshots",
-        "CI artifact report"
-      ],
-      "id": "UI-NEXT-002",
-      "owner": "rocksoul-ui",
-      "phase": "VISUAL-VERIFICATION",
-      "priority": "HIGH",
-      "risk": "Desktop-only evidence can miss responsive regressions.",
-      "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Expand browser evidence across mobile and tablet surfaces"
+      "affected_paths": ["scripts/assets-freshness-audit.mjs", "src/contracts/assets-v2.ts"]
     },
     {
-      "acceptance_criteria": [
-        "Runtime font loading matches Penpot families and fallbacks.",
-        "Long-content wrapping and overflow are equivalent under primary and fallback fonts."
-      ],
-      "affected_paths": [
-        "src/styles.css",
-        "src/contracts",
-        "tests"
-      ],
-      "dependencies": [
-        "UI-NEXT-001"
-      ],
-      "evidence": [
-        "Deferred by dependency: typography parity requires the live Penpot source from UI-NEXT-001, which is deferred because no live workspace/session is available."
-      ],
-      "evidence_required": [
-        "font loading inspection",
-        "fallback screenshot comparison",
-        "overflow test"
-      ],
-      "id": "UI-NEXT-003",
-      "owner": "rocksoul-ui",
-      "phase": "TYPOGRAPHY-VERIFICATION",
-      "priority": "MEDIUM",
-      "risk": "Font substitution can change hierarchy and layout.",
-      "scope": "cross-repository",
-      "status": "DEFERRED",
-      "title": "Verify typography parity between Penpot and runtime"
-    },
-    {
-      "acceptance_criteria": [
-        "Generated test output is ignored or removed by documented cleanup policy.",
-        "Working tree remains clean after browser verification."
-      ],
-      "affected_paths": [
-        ".gitignore",
-        "package.json"
-      ],
-      "dependencies": [],
-      "evidence": [
-        "commit bba1383 pushed; .gitignore excludes Playwright test-results and README documents ephemeral local traces with CI-only retention; clean source status after artifact generation."
-      ],
-      "evidence_required": [
-        "clean git status",
-        "browser test rerun"
-      ],
-      "id": "DEV-NEXT-001",
-      "owner": "rocksoul-ui",
-      "phase": "DEVELOPER-EXPERIENCE",
-      "priority": "LOW",
-      "risk": "Temporary artifacts obscure real source changes.",
-      "scope": "repository",
-      "status": "VERIFIED",
-      "title": "Define cleanup policy for browser test artifacts"
-    },
-    {
-      "id": "UI-PRIMITIVES-001",
-      "title": "Complete composable ROCKSOUL UI primitives using owned tokens and assets",
+      "id": "UI-PACKAGE-001",
+      "title": "Eliminate package-manager and release metadata inconsistencies",
       "owner": "rocksoul-ui",
       "scope": "repository",
-      "phase": "UI_FOUNDATIONS",
-      "priority": "HIGH",
+      "phase": "PACKAGE",
+      "priority": "P0",
+      "risk": "HIGH",
+      "status": "IN_PROGRESS",
+      "acceptance_criteria": [
+        "npm is the sole package manager",
+        "package-lock.json is the sole lockfile",
+        "No unused pnpm workspace metadata remains",
+        "Release version is derived dynamically"
+      ],
+      "affected_paths": ["package.json", "package-lock.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", "scripts/release-audit.mjs"]
+    },
+    {
+      "id": "UI-RELEASE-001",
+      "title": "Enforce dynamic version, tag, changelog and dist invariants",
+      "owner": "rocksoul-ui",
+      "scope": "repository",
+      "phase": "RELEASE",
+      "priority": "P1",
+      "risk": "HIGH",
+      "status": "IN_PROGRESS",
+      "acceptance_criteria": [
+        "Release audit derives package version",
+        "Tag equals v<package.version> when tagged",
+        "Changelog has matching release heading before publish",
+        "Tracked dist remains reproducible from source"
+      ],
+      "affected_paths": ["scripts/release-audit.mjs", "CHANGELOG.md", "package.json", "dist"]
+    },
+    {
+      "id": "UI-ARCH-001",
+      "title": "Strengthen layer and public-export consistency checks",
+      "owner": "rocksoul-ui",
+      "scope": "repository",
+      "phase": "ARCHITECTURE",
+      "priority": "P1",
       "risk": "MEDIUM",
-      "status": "VERIFIED",
-      "depends_on": [],
+      "status": "PLANNED",
       "acceptance_criteria": [
-        "Provide a composable components/ui layer with documented coverage",
-        "Use ROCKSOUL tokens and assets while preserving existing public APIs",
-        "Verify types, interactions, package exports and Storybook build"
+        "Every public export maps to one source owner and one dist artifact",
+        "Aliases and barrel re-exports are included in dependency analysis",
+        "Duplicate or orphan component ownership blocks CI"
       ],
-      "affected_paths": [
-        "src/components/ui",
-        "src/hooks/use-mobile.ts",
-        "src/styles.css",
-        "src/index.ts",
-        "vite.lib.config.ts",
-        "package.json",
-        "docs/ui-primitives.md"
-      ],
-      "evidence": [
-        "62 components: 61 upstream registry UI entries plus ROCKSOUL Asset; local icon module uses owned asset geometry and supplementary navigation glyphs.",
-        "npm run typecheck PASS; npm run test:unit PASS (17 files, 46 tests); audit:tokens and audit:a11y PASS.",
-        "npm run build:lib, audit:package, test:consumer, build-storybook PASS. All 63 public TSX subpath imports and declarations resolve.",
-        "Browser visual review not performed; Dark and Light Storybook examples are built for review."
-      ],
-      "evidence_required": [
-        "Typecheck and keyboard/focus interaction tests",
-        "Package import and declaration verification",
-        "Library and Storybook builds"
-      ],
-      "completed_at": "2026-09-10T03:32:01.163Z"
+      "affected_paths": ["scripts/architecture-audit.mjs", "src/components", "package.json", "dist"]
     },
     {
-      "scope": "repository",
-      "phase": "UI_FOUNDATIONS",
-      "priority": "HIGH",
-      "risk": "MEDIUM",
-      "status": "VERIFIED",
-      "acceptance_criteria": [
-        "Use standard component names and public UI imports",
-        "Classify overlaps and share primitive implementations through compatibility adapters",
-        "Verify UI tests and apps/web consumer behavior"
-      ],
-      "evidence": [
-        "UI typecheck PASS; 18 unit-test files / 50 tests PASS; token and accessibility audits PASS; library build, package audit and consumer smoke PASS.",
-        "UI consumer audit PASS: 63 unique TSX modules, 16 classified compatibility exports; no raw form controls or old primitive imports in apps/web.",
-        "apps/web pnpm run ci PASS; local installed UI dist/index.js matches current package build.",
-        "Agent Browser: desktop/mobile public page and /aws render without JavaScript errors; theme toggles, search focus and filtering, case selection, and AWS form tested. Mobile viewport and scroll width both 390px after correcting wrapped list buttons.",
-        "AWS live lookup unavailable without its configured API; live AWS data retrieval was not certified. Screenshots: packages/ui/test-results/web-primitives-mobile.png and web-primitives-desktop.png."
-      ],
-      "evidence_required": [
-        "Typecheck, unit tests and public exports",
-        "Consumer CI and desktop/mobile browser checks"
-      ],
-      "completed_at": "2026-09-10T03:48:17.251Z",
-      "id": "UI-CONSUMER-001",
-      "title": "Consolidate UI compatibility components and document standard consumer usage",
+      "id": "UI-DEPS-001",
+      "title": "Add dependency security, license and provenance gate",
       "owner": "rocksoul-ui",
-      "depends_on": [
-        "UI-PRIMITIVES-001"
+      "scope": "repository",
+      "phase": "SECURITY",
+      "priority": "P1",
+      "risk": "HIGH",
+      "status": "PLANNED",
+      "acceptance_criteria": [
+        "Lockfile integrity is verified",
+        "High or critical dependency findings block release",
+        "License inventory is synchronized with notices",
+        "No undeclared build-time dependency is used by scripts"
       ],
-      "affected_paths": [
-        "src/components",
-        "scripts/ui-consumer-audit.mjs",
-        "src/test/ui-compatibility.test.tsx",
-        "docs/component-usage.md"
-      ]
+      "affected_paths": ["package.json", "package-lock.json", "THIRD-PARTY-NOTICES.md", "scripts"]
+    },
+    {
+      "id": "UI-QA-001",
+      "title": "Make browser QA release-complete and evidence-producing",
+      "owner": "rocksoul-ui",
+      "scope": "repository",
+      "phase": "BROWSER-QA",
+      "priority": "P1",
+      "risk": "HIGH",
+      "status": "PLANNED",
+      "acceptance_criteria": [
+        "All production screens and declared states have executable coverage",
+        "Desktop, tablet and mobile contracts are verified",
+        "Theme, keyboard, reduced motion and forced colors are verified",
+        "Failures produce actionable traces, screenshots and exact assertions"
+      ],
+      "affected_paths": ["tests", "playwright.config.ts", ".github/workflows/ci.yml"]
     }
   ]
 }
