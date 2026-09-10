@@ -91,14 +91,15 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ### Data
 
-- [ ] Build `DataTable` dengan column definitions.
-- [ ] Tambahkan sorting, filtering, row selection, bulk actions, pagination, column visibility, density, dan optional expansion.
+- [x] Build `DataTable` dengan column definitions.
+- [x] Tambahkan sorting dan row selection pada generic organism; filtering, bulk actions, pagination, column visibility, density, dan optional expansion tetap menjadi queued extensions.
 - [ ] Tambahkan loading, empty, error, no-results, keyboard, dan screen-reader states.
 - [ ] Pastikan data fetching tetap di luar organism.
 
 ### Forms and filtering
 
-- [ ] Build `FilterBar`, `FilterGroup`, `DateRangePicker`, `FormSection`, dan `FormFooter`.
+- [x] Build `FilterBar` dengan typed descriptors, active state, reset, actions, dan responsive wrapping.
+- [ ] Build `FilterGroup`, `DateRangePicker`, `FormSection`, dan `FormFooter`.
 - [ ] Definisikan desktop/mobile filter behavior.
 - [ ] Simpan query serialization di `apps/web`.
 
