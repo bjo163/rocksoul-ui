@@ -32,8 +32,14 @@ export interface StatusBadgeProps
   extends HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof statusBadgeVariants> {}
 
+/** @deprecated Use StatusBadgeProps for domain status components. */
+export type BadgeProps = StatusBadgeProps
+
 export function StatusBadge({ className, variant, size, ...props }: StatusBadgeProps) {
   return <PrimitiveBadge variant="outline" className={cn(statusBadgeVariants({ variant, size }), className)} {...props} />
 }
+
+/** @deprecated Use StatusBadge for domain states. */
+export const Badge = StatusBadge
 
 export { statusBadgeVariants }

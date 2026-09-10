@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { Badge, type BadgeProps } from "./compat/badge"
+import { Badge, type BadgeProps } from "./feedback/status-badge"
 import { MoonWitnessAssetImage } from "./asset-provider"
 import { cn } from "../lib/cn"
 

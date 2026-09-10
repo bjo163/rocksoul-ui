@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, type ReactNode } from "react"
-import { Badge } from "./compat/badge"
+import { Badge } from "./feedback/status-badge"
 import { Button } from "./compat/button"
 import { Input, Select, Textarea } from "./compat/form-controls"
 import { Avatar, Drawer } from "./compat/overlays"

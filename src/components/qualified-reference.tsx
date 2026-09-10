@@ -1,4 +1,4 @@
-import { Badge } from "./compat/badge"
+import { Badge } from "./feedback/status-badge"
 import { parseQualifiedReference } from "../contracts/ecosystem-domains"
 import { cn } from "../lib/cn"
 

@@ -1,5 +1,5 @@
 import type { ImgHTMLAttributes } from "react"
-import { Badge } from "./compat/badge"
+import { Badge } from "./feedback/status-badge"
 import { MoonWitnessResilientImage, useMoonWitnessAssetBaseUrl } from "./asset-provider"
 import type { AppCommandAction, AppResource } from "./application-shell"
 import {

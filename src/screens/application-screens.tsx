@@ -8,7 +8,7 @@ import {
   resourceDescriptors,
   type AppNotification,
 } from "../components/application-shell"
-import { Badge } from "../components/compat/badge"
+import { Badge } from "../components/feedback/status-badge"
 import { Button } from "../components/compat/button"
 import { Input, Switch, Textarea } from "../components/compat/form-controls"
 import { MetricTile, StatePanel } from "../components/archive-components"

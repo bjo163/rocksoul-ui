@@ -81,8 +81,8 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ## Phase 5 — Molecules
 
 - [ ] Build `Field` dengan label, control, description, dan error parts.
-- [ ] Build `InputGroup`, `SearchInput`, `PasswordInput`, `FileInput`, dan `DateInput`.
-- [ ] Build `ComboboxField`, `SelectField`, dan `FormActions`.
+- [x] Build `InputGroup`, `SearchInput`, `PasswordInput`, `FileInput`, dan `DateInput`.
+- [x] Build `FormActions`; `ComboboxField` dan `SelectField` tetap menjadi tindak lanjut.
 - [ ] Build `CopyButton`, `SplitButton`, `KeyValue`, `Stat`, `EmptyState`, `InlineMessage`, `StatusBadge`, dan `ProgressIndicator`.
 - [ ] Pastikan molecules tidak fetch API atau memahami route.
 - [ ] Tambahkan validation, error announcement, pending, dan disabled contract.
@@ -176,5 +176,5 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Create `Field` dan `SearchInput` sebagai molecule pertama.
 - [x] Create form molecules: `PasswordInput`, `FileInput`, `DateInput`, and `FormActions`.
 - [x] Create the first reusable organism: generic `DataTable`.
-- [ ] Add one story dan accessibility test untuk masing-masing.
+- [x] Add one story dan accessibility/unit test untuk form molecules.
 - [ ] Run package CI dan web CI.

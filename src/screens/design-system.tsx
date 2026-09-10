@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Badge } from "../components/compat/badge"
+import { Badge } from "../components/feedback/status-badge"
 import { Button } from "../components/compat/button"
 import {
   AuditEventRow,

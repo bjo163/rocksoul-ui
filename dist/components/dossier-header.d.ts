@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { type BadgeProps } from "./compat/badge";
+import { type BadgeProps } from "./feedback/status-badge";
 export interface DossierHeaderProps {
     eyebrow: string;
     title: string;

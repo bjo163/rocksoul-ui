@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Badge } from "../components/compat/badge"
+import { Badge } from "../components/feedback/status-badge"
 import { Button } from "../components/compat/button"
 import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/compat/form-controls"
 import { Avatar, Dialog, Divider, Drawer, IconButton, Skeleton, Tooltip } from "../components/compat/overlays"

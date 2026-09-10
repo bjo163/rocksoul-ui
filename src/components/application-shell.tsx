@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react"
-import { Badge } from "./compat/badge"
+import { Badge } from "./feedback/status-badge"
 import { Button } from "./compat/button"
 import { MoonWitnessBrand } from "./brand"
 import { Input } from "./compat/form-controls"

@@ -1,5 +1,5 @@
 import { useId } from "react"
-import { Badge } from "./compat/badge"
+import { Badge } from "./feedback/status-badge"
 import { cn } from "../lib/cn"
 
 export type RecordDomain = "STORY" | "EVENT" | "PERSON" | "RGBL"

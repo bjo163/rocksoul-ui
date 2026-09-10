@@ -1,2 +1,3 @@
 import { DataTable as e } from "./data-table.js";
-export { e as DataTable };
+import { FilterBar as t } from "./filter-bar.js";
+export { e as DataTable, t as FilterBar };
