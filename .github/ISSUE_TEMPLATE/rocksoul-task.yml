@@ -1,44 +1,57 @@
-name: ROCKSOUL Repository Task
-description: Track repository-owned work with evidence and workspace mapping.
-title: "[TASK] "
+name: ROCKSOUL Task
+description: Track an atomic repository task with executable acceptance criteria
+title: "TASK: "
 labels:
-  - rocksoul-task
+  - task
 body:
   - type: input
-    id: repository-task-id
+    id: task-id
     attributes:
-      label: Repository task ID
-      description: Use the local TODO identifier, for example UI-001 or RUNTIME-046.
-      placeholder: REPO-001
+      label: Task ID
+      description: Unique stable task identifier.
+      placeholder: UI-CONTRACT-001
     validations:
       required: true
   - type: dropdown
-    id: status
+    id: priority
     attributes:
-      label: Status
+      label: Priority
       options:
-        - NOT_STARTED
-        - IN_PROGRESS
-        - WAITING_REVIEW
-        - BLOCKED
-        - VERIFIED
+        - P0
+        - P1
+        - P2
+        - P3
+    validations:
+      required: true
+  - type: input
+    id: scope
+    attributes:
+      label: Scope
+      placeholder: repository / package / ci / assets / runtime
     validations:
       required: true
   - type: textarea
-    id: scope
+    id: acceptance
     attributes:
-      label: Scope and acceptance criteria
-      description: Describe the repository-owned outcome and how it will be verified.
+      label: Acceptance criteria
+      description: Must be executable, deterministic, and evidence-producing. Unknown state must fail closed.
+      placeholder: |
+        - [ ] npm run audit:repository passes
+        - [ ] affected tests pass
+        - [ ] clean git status
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: Evidence
-      description: Add commands, test output, commit, release, or artifact links. Do not add secrets.
-  - type: input
-    id: master-task
+      label: Evidence required
+      description: Exact logs, files, tests, screenshots, or commit references proving completion.
+    validations:
+      required: true
+  - type: textarea
+    id: affected-paths
     attributes:
-      label: Workspace master task
-      description: If this crosses repositories, add the MASTER-TODO task ID.
-      placeholder: TODO-0000
+      label: Affected paths
+      description: Source, generated, contract, CI, and documentation paths touched by the task.
+    validations:
+      required: true
