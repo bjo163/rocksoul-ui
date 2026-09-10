@@ -1,9 +1,17 @@
 {
-  "schema": "rocksoul.repository.v1",
+  "schema": "rocksoul.repository.v2",
   "repository_id": "rocksoul-ui",
   "role": "UI",
   "provider": "github",
   "github_repository": "rocksoul-ui",
+  "governance": {
+    "contract_mode": "strict",
+    "canonical_package_manager": "npm",
+    "canonical_lockfile": "package-lock.json",
+    "dist_is_tracked_delivery": true,
+    "unknown_drift": "block",
+    "release_gate": "all-contracts-green"
+  },
   "tracking": {
     "master_todo": "../../../MASTER-TODO.json"
   },
