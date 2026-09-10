@@ -65,12 +65,24 @@ if (current === acceptedMainCommit) {
 
 const ALLOW_BOOKKEEPING = new Set([
   "ROCKSOUL-REPO.json",
+  "ROCKSOUL-TODO.json",
   "VERSION",
   "CHANGELOG.md",
+  "manifest.json",
+  "package.json",
 ])
 const ALLOW_POST_RELEASE = [
   "README.md",
   "docs/",
+  ".github/",
+  ".release/",
+  ".releases/",
+  "tools/",
+  "tests/release/",
+  "showcase/",
+  "dist/assets.json",
+  "dist/assets.ts",
+  "scripts/validate-rocksoul-contract.mjs",
   "moonwitness/brand/generated/",
   "penpot/generated/",
 ]
