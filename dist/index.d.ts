@@ -1,6 +1,6 @@
 export * from "./tokens";
 export * as UI from "./components/ui";
-export * from "./components/molecules";
+export { SearchInput } from "./components/molecules/search-input";
 export * from "./components/organisms";
 export * from "./contracts/ecosystem-domains";
 export * from "./contracts/ecosystem-links";
