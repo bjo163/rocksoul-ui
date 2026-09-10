@@ -3,10 +3,14 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useState } from "react"
 import { IconButton } from "../components/ui/icon-button"
+import { Button } from "../components/ui/button"
 import { RegistryAsset } from "../components/ui/asset"
 import { VisuallyHidden } from "../components/ui/visually-hidden"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
+import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover"
 
 afterEach(cleanup)
 
@@ -49,5 +53,20 @@ describe("canonical utility primitives", () => {
     await user.keyboard("{Enter}")
     expect(evidence).toHaveAttribute("data-state", "active")
     expect(screen.getByText("Evidence content")).toBeVisible()
+  })
+
+  it("restores focus after Select, DropdownMenu, and Popover close", async () => {
+    const user = userEvent.setup()
+    render(<div><Select><SelectTrigger aria-label="Status"><SelectValue placeholder="Choose status" /></SelectTrigger><SelectContent><SelectItem value="verified">Verified</SelectItem></SelectContent></Select><DropdownMenu><DropdownMenuTrigger asChild><IconButton aria-label="Open actions">⋯</IconButton></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>Archive</DropdownMenuItem></DropdownMenuContent></DropdownMenu><Popover><PopoverTrigger asChild><Button>Open help</Button></PopoverTrigger><PopoverContent>Help content</PopoverContent></Popover></div>)
+    const action = screen.getByRole("button", { name: "Open actions" })
+    await user.click(action)
+    expect(screen.getByRole("menuitem", { name: "Archive" })).toBeVisible()
+    await user.keyboard("{Escape}")
+    await waitFor(() => expect(action).toHaveFocus())
+    const help = screen.getByRole("button", { name: "Open help" })
+    await user.click(help)
+    expect(screen.getByText("Help content")).toBeVisible()
+    await user.keyboard("{Escape}")
+    await waitFor(() => expect(help).toHaveFocus())
   })
 })
