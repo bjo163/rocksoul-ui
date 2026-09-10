@@ -1,8 +1,8 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { ChevronDownIcon as t } from "./icons.js";
-import "react";
 import { jsx as n, jsxs as r } from "react/jsx-runtime";
+import "react";
 import { Accordion as i } from "radix-ui";
 //#region src/components/ui/accordion.tsx
 function a({ ...e }) {

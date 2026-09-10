@@ -1,7 +1,7 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { ChevronRight as t, MoreHorizontal as n } from "./icons.js";
-import "react";
 import { jsx as r, jsxs as i } from "react/jsx-runtime";
+import "react";
 import { Slot as a } from "radix-ui";
 //#region src/components/ui/breadcrumb.tsx
 function o({ ...e }) {

@@ -1,8 +1,8 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { Button as t } from "../ui/button.js";
 import { Card as n, CardContent as r, CardDescription as i, CardHeader as a, CardTitle as o } from "../ui/card.js";
-import "react";
 import { jsx as s, jsxs as c } from "react/jsx-runtime";
+import "react";
 //#region src/components/organisms/detail-panel.tsx
 function l({ title: l, description: u, actions: d, onClose: f, closeLabel: p = "Close", className: m, children: h, ...g }) {
 	return /* @__PURE__ */ c(n, {

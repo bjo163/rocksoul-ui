@@ -1,8 +1,8 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { Button as t } from "../ui/button.js";
-import "react";
 import { jsx as n, jsxs as r } from "react/jsx-runtime";
+import "react";
 //#region src/components/organisms/filter-bar.tsx
 function i({ filters: i, onReset: a, resetLabel: o = "Clear filters", actions: s, label: c = "Filters", className: l }) {
 	let u = i.some((e) => e.active);

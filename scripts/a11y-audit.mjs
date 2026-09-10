@@ -13,6 +13,7 @@ const [
   community,
   publicCase,
   patterns,
+  pagination,
   eventIntelligence,
 ] = await Promise.all([
   read("src/styles.css"),
@@ -23,6 +24,7 @@ const [
   read("src/screens/community.tsx"),
   read("src/screens/mw0042-overview.tsx"),
   read("src/components/compat/patterns.tsx"),
+  read("src/components/ui/pagination.tsx"),
   read("src/components/event-intelligence.tsx"),
 ])
 
@@ -41,7 +43,7 @@ const checks = [
   [legal.includes("not a court judgment"), "legal-analysis guardrail"],
   [community.includes("Community submission ≠ canonical evidence"), "community/canonical separation"],
   [publicCase.includes("EvidenceGridPattern"), "public provenance inspection pattern"],
-  [patterns.includes('aria-label="Pagination"'), "pagination navigation label"],
+  [patterns.includes('aria-label="Pagination"') || pagination.includes('aria-label="Pagination"'), "pagination navigation label"],
   [eventIntelligence.includes("Text equivalent"), "event topology text equivalent"],
   [eventIntelligence.includes('role="progressbar"'), "historicity semantic progress"],
   [eventIntelligence.includes("Confidence is scoped evidence assessment"), "historicity confidence scope guardrail"],

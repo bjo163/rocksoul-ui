@@ -1,8 +1,8 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { CheckIcon as t } from "./icons.js";
-import "react";
 import { jsx as n } from "react/jsx-runtime";
+import "react";
 import { Checkbox as r } from "radix-ui";
 //#region src/components/ui/checkbox.tsx
 function i({ className: i, ...a }) {

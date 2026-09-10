@@ -1,4 +1,5 @@
 export * from "./tokens";
+export { BrandIcon, RockSoulLogo } from "./foundation/brand";
 export * as UI from "./components/ui";
 export { SearchInput } from "./components/molecules/search-input";
 export * from "./components/organisms";

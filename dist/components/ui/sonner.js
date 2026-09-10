@@ -1,12 +1,12 @@
 "use client";
 import { CircleCheckIcon as e, InfoIcon as t, Loader2Icon as n, OctagonXIcon as r, TriangleAlertIcon as i } from "./icons.js";
-import { useEffect as a, useState as o } from "react";
-import { jsx as s } from "react/jsx-runtime";
+import { jsx as a } from "react/jsx-runtime";
+import { useEffect as o, useState as s } from "react";
 import { Toaster as c } from "sonner";
 //#region src/components/ui/sonner.tsx
 var l = ({ ...l }) => {
-	let [u, d] = o("dark");
-	return a(() => {
+	let [u, d] = s("dark");
+	return o(() => {
 		let e = document.documentElement, t = () => d(e.dataset.theme === "light" || e.classList.contains("light") ? "light" : "dark");
 		t();
 		let n = new MutationObserver(t);
@@ -14,15 +14,15 @@ var l = ({ ...l }) => {
 			attributes: !0,
 			attributeFilter: ["data-theme", "class"]
 		}), () => n.disconnect();
-	}, []), /* @__PURE__ */ s(c, {
+	}, []), /* @__PURE__ */ a(c, {
 		theme: u,
 		className: "toaster group",
 		icons: {
-			success: /* @__PURE__ */ s(e, { className: "size-4" }),
-			info: /* @__PURE__ */ s(t, { className: "size-4" }),
-			warning: /* @__PURE__ */ s(i, { className: "size-4" }),
-			error: /* @__PURE__ */ s(r, { className: "size-4" }),
-			loading: /* @__PURE__ */ s(n, { className: "size-4 animate-spin" })
+			success: /* @__PURE__ */ a(e, { className: "size-4" }),
+			info: /* @__PURE__ */ a(t, { className: "size-4" }),
+			warning: /* @__PURE__ */ a(i, { className: "size-4" }),
+			error: /* @__PURE__ */ a(r, { className: "size-4" }),
+			loading: /* @__PURE__ */ a(n, { className: "size-4 animate-spin" })
 		},
 		style: {
 			"--normal-bg": "var(--mw-surface-overlay)",

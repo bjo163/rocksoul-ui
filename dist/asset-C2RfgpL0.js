@@ -1,8 +1,274 @@
 import { t as e } from "./cn-DhjIN-s0.js";
-import { createContext as t, useCallback as n, useContext as r, useEffect as i, useState as a } from "react";
-import { jsx as o, jsxs as s } from "react/jsx-runtime";
-//#region src/contracts/asset-packs.ts
+import { jsx as t, jsxs as n } from "react/jsx-runtime";
+import { createContext as r, useCallback as i, useContext as a, useEffect as o, useState as s } from "react";
+//#region src/contracts/assets-v2.ts
 var c = {
+	repository: "bjo163/rocksoul-assets",
+	ref: "main",
+	commit: "5b035d0d83612f847ccd8b35f2c1b04022500110",
+	acceptedMainCommit: "429b2d5adf50b1d67494e60d96ab274735fc6ce9",
+	manifestSchemaVersion: 3,
+	applicationVersion: "v2",
+	syncedAt: "2026-09-08",
+	assetRelease: "1.3.1",
+	assetReleaseStatus: "released",
+	repositoryAcceptance: "passed",
+	livePenpotVerification: "manual-follow-up",
+	assetPackIndex: "moonwitness/asset-packs.json",
+	developerDistribution: [
+		"dist/assets.json",
+		"dist/assets.ts",
+		"dist/assets.css",
+		"dist/sprite.svg"
+	]
+}, l = {
+	brand: "MoonWitness",
+	ecosystem: "MoonWitness × Rocksoul",
+	tagline: "Truth leaves a trace.",
+	sourceType: "editable-vector"
+}, u = [
+	{
+		id: "dashboard",
+		label: "Dashboard",
+		path: "/",
+		kind: "system",
+		permission: "authenticated"
+	},
+	{
+		id: "cases",
+		label: "Cases",
+		path: "/cases",
+		kind: "resource",
+		resource: "case",
+		permission: "case:read"
+	},
+	{
+		id: "kanban",
+		label: "Kanban",
+		path: "/work/kanban",
+		kind: "workspace",
+		permission: "review:read"
+	},
+	{
+		id: "calendar",
+		label: "Calendar",
+		path: "/work/calendar",
+		kind: "workspace",
+		permission: "review:read"
+	},
+	{
+		id: "chat",
+		label: "Chat",
+		path: "/chat",
+		kind: "workspace",
+		permission: "community:read"
+	},
+	{
+		id: "ai",
+		label: "AI Workspace",
+		path: "/ai",
+		kind: "workspace",
+		permission: "ai:use"
+	},
+	{
+		id: "resources",
+		label: "Resources",
+		path: "/resources",
+		kind: "system",
+		permission: "resource:read"
+	},
+	{
+		id: "profile",
+		label: "Profile",
+		path: "/profile",
+		kind: "account",
+		permission: "authenticated"
+	},
+	{
+		id: "settings",
+		label: "Settings",
+		path: "/settings",
+		kind: "account",
+		permission: "authenticated"
+	}
+], d = [
+	{
+		resource: "case",
+		label: "STORY / Cases",
+		path: "/cases",
+		repo: "rocksoul-mftl"
+	},
+	{
+		resource: "event",
+		label: "EVENT / Events",
+		path: "/events",
+		repo: "rocksoul-legend"
+	},
+	{
+		resource: "person",
+		label: "PERSON / People",
+		path: "/people",
+		repo: "rocksoul-superhero"
+	},
+	{
+		resource: "rgbl",
+		label: "TEXT / RGBL",
+		path: "/sources",
+		repo: "rocksoul-rgbl"
+	},
+	{
+		resource: "aws",
+		label: "LAW / AWS",
+		path: "/aws",
+		repo: "rocksoul-aws"
+	},
+	{
+		resource: "perspective",
+		label: "PERSPECTIVE / Perspectives",
+		path: "/perspectives",
+		repo: "rocksoul-jizz"
+	},
+	{
+		resource: "correlation",
+		label: "RELATIONSHIP / Correlation",
+		path: "/correlation",
+		repo: "rocksoul-correlation"
+	}
+], f = [
+	{
+		id: "17",
+		slug: "dashboard",
+		activeNav: "Dashboard"
+	},
+	{
+		id: "18",
+		slug: "command-palette",
+		activeNav: "Dashboard",
+		overlay: !0
+	},
+	{
+		id: "19",
+		slug: "notifications",
+		activeNav: "Dashboard",
+		overlay: !0
+	},
+	{
+		id: "20",
+		slug: "kanban",
+		activeNav: "Kanban"
+	},
+	{
+		id: "21",
+		slug: "calendar",
+		activeNav: "Calendar"
+	},
+	{
+		id: "22",
+		slug: "chat",
+		activeNav: "Chat"
+	},
+	{
+		id: "23",
+		slug: "ai-workspace",
+		activeNav: "AI Workspace"
+	},
+	{
+		id: "24",
+		slug: "resources",
+		activeNav: "Resources"
+	},
+	{
+		id: "25",
+		slug: "profile-settings",
+		activeNav: "Settings"
+	},
+	{
+		id: "26",
+		slug: "authorization",
+		activeNav: "Settings"
+	},
+	{
+		id: "27",
+		slug: "system-states",
+		activeNav: "Dashboard"
+	}
+], p = {
+	desktop: {
+		width: 1440,
+		sidebar: 220,
+		behavior: "persistent"
+	},
+	tablet: {
+		width: 768,
+		sidebar: 72,
+		behavior: "icon-rail"
+	},
+	mobile: {
+		width: 390,
+		sidebar: 0,
+		behavior: "drawer"
+	},
+	backendStates: [
+		"online",
+		"degraded",
+		"offline"
+	],
+	themeStates: [
+		"light",
+		"dark",
+		"system"
+	],
+	sidebarStates: [
+		"expanded",
+		"compact",
+		"drawer-open",
+		"drawer-closed"
+	],
+	notificationStates: [
+		"empty",
+		"unread",
+		"open"
+	],
+	userMenuStates: ["closed", "open"],
+	accessibility: {
+		skipLink: !0,
+		landmarks: [
+			"navigation",
+			"banner",
+			"main"
+		],
+		keyboardCommandPalette: !0,
+		focusVisible: !0,
+		drawerFocusTrap: !0
+	}
+}, m = {
+	loading: [
+		"skeleton-or-progress",
+		"accessible-busy-state",
+		"reduced-motion-safe"
+	],
+	empty: [
+		"headline",
+		"supporting-copy",
+		"recovery-or-create-action"
+	],
+	error: [
+		"error-summary",
+		"system-context",
+		"retry-or-back-action",
+		"trace-id-when-available"
+	],
+	offline: [
+		"backend-status",
+		"last-known-state",
+		"retry"
+	],
+	forbidden: [
+		"required-permission",
+		"current-role",
+		"request-access-when-available"
+	]
+}, h = {
 	"product-icons": {
 		id: "product-icons",
 		count: 44,
@@ -261,13 +527,13 @@ var c = {
 		root: "community-participation-pack",
 		manifest: "community-participation-pack/manifest.json"
 	}
-}, l = "1.3.1", u = "asset-packs.json";
-function d(e, t) {
-	return `${c[e].root}/${t.replace(/^\/+/, "")}`;
+}, g = "1.3.1", _ = "asset-packs.json";
+function v(e, t) {
+	return `${h[e].root}/${t.replace(/^\/+/, "")}`;
 }
 //#endregion
 //#region src/generated/assets-v1.3.ts
-var f = {
+var y = {
 	schemaVersion: 2,
 	version: "1.3.1",
 	canonicalFormat: "svg",
@@ -2958,284 +3224,18 @@ var f = {
 			lottie: 12
 		}
 	}
-}, p = {
-	repository: "bjo163/rocksoul-assets",
-	ref: "main",
-	commit: "5b035d0d83612f847ccd8b35f2c1b04022500110",
-	acceptedMainCommit: "429b2d5adf50b1d67494e60d96ab274735fc6ce9",
-	manifestSchemaVersion: 3,
-	applicationVersion: "v2",
-	syncedAt: "2026-09-08",
-	assetRelease: "1.3.1",
-	assetReleaseStatus: "released",
-	repositoryAcceptance: "passed",
-	livePenpotVerification: "manual-follow-up",
-	assetPackIndex: "moonwitness/asset-packs.json",
-	developerDistribution: [
-		"dist/assets.json",
-		"dist/assets.ts",
-		"dist/assets.css",
-		"dist/sprite.svg"
-	]
-}, m = {
-	brand: "MoonWitness",
-	ecosystem: "MoonWitness × Rocksoul",
-	tagline: "Truth leaves a trace.",
-	sourceType: "editable-vector"
-}, h = [
-	{
-		id: "dashboard",
-		label: "Dashboard",
-		path: "/",
-		kind: "system",
-		permission: "authenticated"
-	},
-	{
-		id: "cases",
-		label: "Cases",
-		path: "/cases",
-		kind: "resource",
-		resource: "case",
-		permission: "case:read"
-	},
-	{
-		id: "kanban",
-		label: "Kanban",
-		path: "/work/kanban",
-		kind: "workspace",
-		permission: "review:read"
-	},
-	{
-		id: "calendar",
-		label: "Calendar",
-		path: "/work/calendar",
-		kind: "workspace",
-		permission: "review:read"
-	},
-	{
-		id: "chat",
-		label: "Chat",
-		path: "/chat",
-		kind: "workspace",
-		permission: "community:read"
-	},
-	{
-		id: "ai",
-		label: "AI Workspace",
-		path: "/ai",
-		kind: "workspace",
-		permission: "ai:use"
-	},
-	{
-		id: "resources",
-		label: "Resources",
-		path: "/resources",
-		kind: "system",
-		permission: "resource:read"
-	},
-	{
-		id: "profile",
-		label: "Profile",
-		path: "/profile",
-		kind: "account",
-		permission: "authenticated"
-	},
-	{
-		id: "settings",
-		label: "Settings",
-		path: "/settings",
-		kind: "account",
-		permission: "authenticated"
-	}
-], g = [
-	{
-		resource: "case",
-		label: "STORY / Cases",
-		path: "/cases",
-		repo: "rocksoul-mftl"
-	},
-	{
-		resource: "event",
-		label: "EVENT / Events",
-		path: "/events",
-		repo: "rocksoul-legend"
-	},
-	{
-		resource: "person",
-		label: "PERSON / People",
-		path: "/people",
-		repo: "rocksoul-superhero"
-	},
-	{
-		resource: "rgbl",
-		label: "TEXT / RGBL",
-		path: "/sources",
-		repo: "rocksoul-rgbl"
-	},
-	{
-		resource: "aws",
-		label: "LAW / AWS",
-		path: "/aws",
-		repo: "rocksoul-aws"
-	},
-	{
-		resource: "perspective",
-		label: "PERSPECTIVE / Perspectives",
-		path: "/perspectives",
-		repo: "rocksoul-jizz"
-	},
-	{
-		resource: "correlation",
-		label: "RELATIONSHIP / Correlation",
-		path: "/correlation",
-		repo: "rocksoul-correlation"
-	}
-], _ = [
-	{
-		id: "17",
-		slug: "dashboard",
-		activeNav: "Dashboard"
-	},
-	{
-		id: "18",
-		slug: "command-palette",
-		activeNav: "Dashboard",
-		overlay: !0
-	},
-	{
-		id: "19",
-		slug: "notifications",
-		activeNav: "Dashboard",
-		overlay: !0
-	},
-	{
-		id: "20",
-		slug: "kanban",
-		activeNav: "Kanban"
-	},
-	{
-		id: "21",
-		slug: "calendar",
-		activeNav: "Calendar"
-	},
-	{
-		id: "22",
-		slug: "chat",
-		activeNav: "Chat"
-	},
-	{
-		id: "23",
-		slug: "ai-workspace",
-		activeNav: "AI Workspace"
-	},
-	{
-		id: "24",
-		slug: "resources",
-		activeNav: "Resources"
-	},
-	{
-		id: "25",
-		slug: "profile-settings",
-		activeNav: "Settings"
-	},
-	{
-		id: "26",
-		slug: "authorization",
-		activeNav: "Settings"
-	},
-	{
-		id: "27",
-		slug: "system-states",
-		activeNav: "Dashboard"
-	}
-], v = {
-	desktop: {
-		width: 1440,
-		sidebar: 220,
-		behavior: "persistent"
-	},
-	tablet: {
-		width: 768,
-		sidebar: 72,
-		behavior: "icon-rail"
-	},
-	mobile: {
-		width: 390,
-		sidebar: 0,
-		behavior: "drawer"
-	},
-	backendStates: [
-		"online",
-		"degraded",
-		"offline"
-	],
-	themeStates: [
-		"light",
-		"dark",
-		"system"
-	],
-	sidebarStates: [
-		"expanded",
-		"compact",
-		"drawer-open",
-		"drawer-closed"
-	],
-	notificationStates: [
-		"empty",
-		"unread",
-		"open"
-	],
-	userMenuStates: ["closed", "open"],
-	accessibility: {
-		skipLink: !0,
-		landmarks: [
-			"navigation",
-			"banner",
-			"main"
-		],
-		keyboardCommandPalette: !0,
-		focusVisible: !0,
-		drawerFocusTrap: !0
-	}
-}, y = {
-	loading: [
-		"skeleton-or-progress",
-		"accessible-busy-state",
-		"reduced-motion-safe"
-	],
-	empty: [
-		"headline",
-		"supporting-copy",
-		"recovery-or-create-action"
-	],
-	error: [
-		"error-summary",
-		"system-context",
-		"retry-or-back-action",
-		"trace-id-when-available"
-	],
-	offline: [
-		"backend-status",
-		"last-known-state",
-		"retry"
-	],
-	forbidden: [
-		"required-permission",
-		"current-role",
-		"request-access-when-available"
-	]
-}, b = f, x = {
-	repository: p.repository,
-	ref: p.ref,
-	commit: p.commit,
-	version: f.version,
-	packCount: Object.keys(f.packs).length,
-	canonicalAssetCount: f.coverage.extensions.svg,
-	deliveryFileCount: f.coverage.deliveryFiles,
-	coveragePercent: f.coverage.coveragePercent,
-	canonicalFormat: f.canonicalFormat,
-	developerDistribution: p.developerDistribution
-}, S = `https://raw.githubusercontent.com/${p.repository}/${p.commit}`, C = `https://raw.githubusercontent.com/${p.repository}/${p.acceptedMainCommit}`;
+}, b = y, x = {
+	repository: c.repository,
+	ref: c.ref,
+	commit: c.commit,
+	version: y.version,
+	packCount: Object.keys(y.packs).length,
+	canonicalAssetCount: y.coverage.extensions.svg,
+	deliveryFileCount: y.coverage.deliveryFiles,
+	coveragePercent: y.coverage.coveragePercent,
+	canonicalFormat: y.canonicalFormat,
+	developerDistribution: c.developerDistribution
+}, S = `https://raw.githubusercontent.com/${c.repository}/${c.commit}`, C = `https://raw.githubusercontent.com/${c.repository}/${c.acceptedMainCommit}`;
 function w(e) {
 	return e.replace(/\/+$/, "");
 }
@@ -3244,7 +3244,7 @@ function T(e, t) {
 	if (e) return t && e[t] ? e[t] : Object.values(e)[0];
 }
 function E(e, t, n = {}) {
-	let r = f.packs[e];
+	let r = y.packs[e];
 	return T(r[n.format ?? "svg"]?.[t], n.size);
 }
 function D(e, t, n = {}) {
@@ -3258,43 +3258,43 @@ function O(e, t, n = {}) {
 }
 //#endregion
 //#region src/components/asset-provider.tsx
-var k = "/assets", A = t(k);
+var k = "/assets", A = r(k);
 function j(e) {
 	return e.replace(/\/+$/, "");
 }
-function M({ baseUrl: e = k, children: t }) {
-	return /* @__PURE__ */ o(A.Provider, {
+function M({ baseUrl: e = k, children: n }) {
+	return /* @__PURE__ */ t(A.Provider, {
 		value: j(e),
-		children: t
+		children: n
 	});
 }
 function N() {
-	return r(A);
+	return a(A);
 }
 function P(e, t, n) {
-	return `${j(e)}/${d(t, n)}`;
+	return `${j(e)}/${v(t, n)}`;
 }
-function F({ pack: e, file: t, alt: n, ...r }) {
-	let i = N();
-	return /* @__PURE__ */ o("img", {
-		src: P(i, e, t),
-		alt: n,
-		...r
+function F({ pack: e, file: n, alt: r, ...i }) {
+	let a = N();
+	return /* @__PURE__ */ t("img", {
+		src: P(a, e, n),
+		alt: r,
+		...i
 	});
 }
-function I({ pack: e, assetId: t, format: n = "svg", size: r, baseUrl: s = S, rootMode: c = "repository", alt: l, ...u }) {
-	let d = O(e, t, {
-		format: n,
-		size: r,
-		baseUrl: s,
+function I({ pack: e, assetId: n, format: r = "svg", size: i, baseUrl: a = S, rootMode: c = "repository", alt: l, ...u }) {
+	let d = O(e, n, {
+		format: r,
+		size: i,
+		baseUrl: a,
 		rootMode: c
-	}), f = O(e, t, {
-		format: n,
-		size: r,
+	}), f = O(e, n, {
+		format: r,
+		size: i,
 		baseUrl: k,
 		rootMode: c
-	}), [p, m] = a(d);
-	return i(() => m(d), [d]), p ? /* @__PURE__ */ o("img", {
+	}), [p, m] = s(d);
+	return o(() => m(d), [d]), p ? /* @__PURE__ */ t("img", {
 		src: p,
 		alt: l,
 		...u,
@@ -3303,64 +3303,64 @@ function I({ pack: e, assetId: t, format: n = "svg", size: r, baseUrl: s = S, ro
 		}
 	}) : null;
 }
-function L({ src: e, fallbackSrc: t, alt: n, ...r }) {
-	let [s, c] = a(e);
-	return i(() => c(e), [e]), /* @__PURE__ */ o("img", {
-		src: s,
-		alt: n,
-		...r,
+function L({ src: e, fallbackSrc: n, alt: r, ...i }) {
+	let [a, c] = s(e);
+	return o(() => c(e), [e]), /* @__PURE__ */ t("img", {
+		src: a,
+		alt: r,
+		...i,
 		onError: (e) => {
-			t && s !== t && c(t), r.onError?.(e);
+			n && a !== n && c(n), i.onError?.(e);
 		}
 	});
 }
-function R({ status: e, label: t = e, className: n }) {
-	return /* @__PURE__ */ s("span", {
-		className: n,
-		children: [/* @__PURE__ */ o(F, {
+function R({ status: e, label: r = e, className: i }) {
+	return /* @__PURE__ */ n("span", {
+		className: i,
+		children: [/* @__PURE__ */ t(F, {
 			pack: "badge-status",
 			file: `svg/${e}.svg`,
 			alt: "",
 			"aria-hidden": "true"
-		}), /* @__PURE__ */ o("span", {
+		}), /* @__PURE__ */ t("span", {
 			className: "sr-only",
-			children: t
+			children: r
 		})]
 	});
 }
-function z({ alt: e = "Person", className: t }) {
-	return /* @__PURE__ */ o(I, {
+function z({ alt: e = "Person", className: n }) {
+	return /* @__PURE__ */ t(I, {
 		pack: "product-icons",
 		assetId: "person",
 		alt: e,
-		className: t
-	});
-}
-function B({ persona: e, alt: t, className: n }) {
-	return /* @__PURE__ */ o(F, {
-		pack: "persona-avatar",
-		file: `svg/${e}.svg`,
-		alt: t,
 		className: n
 	});
 }
-function V({ enabled: e = !1, volume: t = .35, format: r = "ogg" } = {}) {
-	let i = N();
-	return n((n) => {
+function B({ persona: e, alt: n, className: r }) {
+	return /* @__PURE__ */ t(F, {
+		pack: "persona-avatar",
+		file: `svg/${e}.svg`,
+		alt: n,
+		className: r
+	});
+}
+function V({ enabled: e = !1, volume: t = .35, format: n = "ogg" } = {}) {
+	let r = N();
+	return i((i) => {
 		if (!e || typeof Audio > "u") return;
-		let a = `${j(i)}/sfx/generated/${n}.${r}`, o = new Audio(a);
+		let a = `${j(r)}/sfx/generated/${i}.${n}`, o = new Audio(a);
 		o.volume = Math.max(0, Math.min(1, t)), o.play().catch(() => void 0);
 	}, [
-		i,
-		e,
 		r,
+		e,
+		n,
 		t
 	]);
 }
 var H = {
 	localMirrorBase: k,
 	registryRepositoryBase: S,
-	packCount: Object.keys(c).length,
+	packCount: Object.keys(h).length,
 	preferSvgInProductUi: !0,
 	rasterIsDerivative: !0,
 	runtimeMotionFormats: [
@@ -3373,15 +3373,15 @@ var H = {
 };
 //#endregion
 //#region src/components/ui/asset.tsx
-function U({ className: t, pack: n, file: r, alt: i, ...a }) {
-	return /* @__PURE__ */ o(F, {
+function U({ className: n, pack: r, file: i, alt: a, ...o }) {
+	return /* @__PURE__ */ t(F, {
 		"data-slot": "asset",
-		pack: n,
-		file: r,
-		alt: i,
-		className: e("max-w-full object-contain", t),
-		...a
+		pack: r,
+		file: i,
+		alt: a,
+		className: e("max-w-full object-contain", n),
+		...o
 	});
 }
 //#endregion
-export { d as A, g as C, u as D, y as E, l as O, h as S, v as T, b as _, B as a, p as b, R as c, N as d, V as f, D as g, x as h, z as i, c as k, H as l, S as m, F as n, I as o, C as p, M as r, L as s, U as t, P as u, E as v, _ as w, m as x, O as y };
+export { m as A, v as C, d as D, u as E, f as O, h as S, l as T, b as _, B as a, _ as b, R as c, N as d, V as f, D as g, x as h, z as i, p as k, H as l, S as m, F as n, I as o, C as p, M as r, L as s, U as t, P as u, E as v, c as w, g as x, O as y };

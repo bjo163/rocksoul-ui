@@ -2,8 +2,8 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { ArrowDownIcon as t } from "./icons.js";
 import { Button as n } from "./button.js";
-import "react";
 import { Fragment as r, jsx as i, jsxs as a } from "react/jsx-runtime";
+import "react";
 import { MessageScroller as o, useMessageScroller as s, useMessageScrollerScrollable as c, useMessageScrollerVisibility as l } from "@shadcn/react/message-scroller";
 //#region src/components/ui/message-scroller.tsx
 function u(e) {

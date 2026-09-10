@@ -1,7 +1,7 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
-import "react";
 import { jsx as t } from "react/jsx-runtime";
+import "react";
 import { Progress as n } from "radix-ui";
 //#region src/components/ui/progress.tsx
 function r({ className: r, value: i, ...a }) {

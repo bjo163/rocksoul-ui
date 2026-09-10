@@ -1,13 +1,13 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { ChevronLeftIcon as t, ChevronRight as n, MoreHorizontal as r } from "./icons.js";
 import { buttonVariants as i } from "./button.js";
-import "react";
 import { jsx as a, jsxs as o } from "react/jsx-runtime";
+import "react";
 //#region src/components/ui/pagination.tsx
 function s({ className: t, ...n }) {
 	return /* @__PURE__ */ a("nav", {
 		role: "navigation",
-		"aria-label": "pagination",
+		"aria-label": "Pagination",
 		"data-slot": "pagination",
 		className: e("mx-auto flex w-full justify-center", t),
 		...n

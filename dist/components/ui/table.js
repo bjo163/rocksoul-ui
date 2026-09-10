@@ -1,7 +1,7 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
-import "react";
 import { jsx as t } from "react/jsx-runtime";
+import "react";
 //#region src/components/ui/table.tsx
 function n({ className: n, ...r }) {
 	return /* @__PURE__ */ t("div", {

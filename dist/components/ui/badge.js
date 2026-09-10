@@ -1,6 +1,6 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
-import "react";
 import { jsx as t } from "react/jsx-runtime";
+import "react";
 import { Slot as n } from "radix-ui";
 import { cva as r } from "class-variance-authority";
 //#region src/components/ui/badge.tsx

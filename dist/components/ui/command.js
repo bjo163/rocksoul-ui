@@ -2,8 +2,8 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { SearchIcon as t } from "./icons.js";
 import { Dialog as n, DialogContent as r, DialogDescription as i, DialogHeader as a, DialogTitle as o } from "./dialog.js";
-import "react";
 import { jsx as s, jsxs as c } from "react/jsx-runtime";
+import "react";
 import { Command as l } from "cmdk";
 //#region src/components/ui/command.tsx
 function u({ className: t, ...n }) {

@@ -1,7 +1,7 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { ChevronDownIcon as t } from "./icons.js";
-import "react";
 import { jsx as n, jsxs as r } from "react/jsx-runtime";
+import "react";
 import { NavigationMenu as i } from "radix-ui";
 import { cva as a } from "class-variance-authority";
 //#region src/components/ui/navigation-menu.tsx

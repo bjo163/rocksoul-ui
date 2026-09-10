@@ -1,7 +1,7 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { Attachment as t, AttachmentContent as n, AttachmentDescription as r, AttachmentGroup as i, AttachmentMedia as a, AttachmentTitle as o } from "../ui/attachment.js";
-import "react";
 import { jsx as s, jsxs as c } from "react/jsx-runtime";
+import "react";
 //#region src/components/organisms/attachment-list.tsx
 function l({ items: l, orientation: u = "horizontal", className: d, ...f }) {
 	return /* @__PURE__ */ s(i, {

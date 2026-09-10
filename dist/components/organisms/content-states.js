@@ -2,8 +2,8 @@ import { t as e } from "../../cn-DhjIN-s0.js";
 import { Button as t } from "../ui/button.js";
 import { Empty as n, EmptyContent as r, EmptyDescription as i, EmptyHeader as a, EmptyMedia as o, EmptyTitle as s } from "../ui/empty.js";
 import { Spinner as c } from "../ui/spinner.js";
-import "react";
 import { Fragment as l, jsx as u, jsxs as d } from "react/jsx-runtime";
+import "react";
 //#region src/components/organisms/content-states.tsx
 function f({ title: t, description: c, icon: l, action: f, className: p, ...m }) {
 	return /* @__PURE__ */ d(n, {

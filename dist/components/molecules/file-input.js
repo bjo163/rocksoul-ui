@@ -1,13 +1,13 @@
 import { Input as e } from "../ui/input.js";
-import * as t from "react";
-import { jsx as n } from "react/jsx-runtime";
+import { jsx as t } from "react/jsx-runtime";
+import * as n from "react";
 //#region src/components/molecules/file-input.tsx
-var r = t.forwardRef(({ className: t, accept: r, multiple: i, ...a }, o) => /* @__PURE__ */ n(e, {
+var r = n.forwardRef(({ className: n, accept: r, multiple: i, ...a }, o) => /* @__PURE__ */ t(e, {
 	ref: o,
 	type: "file",
 	accept: r,
 	multiple: i,
-	className: t,
+	className: n,
 	...a
 }));
 r.displayName = "FileInput";

@@ -1,7 +1,7 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
-import "react";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
+import "react";
 //#region src/components/templates/page-layout.tsx
 function r({ title: r, description: i, eyebrow: a, breadcrumbs: o, actions: s, className: c }) {
 	return /* @__PURE__ */ n("header", {

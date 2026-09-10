@@ -2,8 +2,8 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { XIcon as t } from "./icons.js";
 import { Button as n } from "./button.js";
-import "react";
 import { jsx as r, jsxs as i } from "react/jsx-runtime";
+import "react";
 import { Dialog as a } from "radix-ui";
 //#region src/components/ui/dialog.tsx
 function o({ ...e }) {

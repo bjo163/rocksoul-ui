@@ -6,15 +6,15 @@ import { Input as i } from "./components/ui/input.js";
 import { Sheet as a, SheetContent as o, SheetDescription as s, SheetHeader as c, SheetTitle as l } from "./components/ui/sheet.js";
 import { Skeleton as u } from "./components/ui/skeleton.js";
 import { Tooltip as d, TooltipContent as f, TooltipProvider as p, TooltipTrigger as m } from "./components/ui/tooltip.js";
-import * as h from "react";
-import { jsx as g, jsxs as _ } from "react/jsx-runtime";
+import { jsx as h, jsxs as g } from "react/jsx-runtime";
+import * as _ from "react";
 import { Slot as v } from "radix-ui";
 import { cva as y } from "class-variance-authority";
 //#region src/hooks/use-mobile.ts
 var b = 768;
 function x() {
-	let [e, t] = h.useState(void 0);
-	return h.useEffect(() => {
+	let [e, t] = _.useState(void 0);
+	return _.useEffect(() => {
 		let e = window.matchMedia("(max-width: 767px)"), n = () => {
 			t(window.innerWidth < b);
 		};
@@ -23,31 +23,31 @@ function x() {
 }
 //#endregion
 //#region src/components/ui/sidebar.tsx
-var S = "sidebar_state", C = 604800, w = "16rem", T = "18rem", E = "3rem", D = "b", O = h.createContext(null);
+var S = "sidebar_state", C = 604800, w = "16rem", T = "18rem", E = "3rem", D = "b", O = _.createContext(null);
 function k() {
-	let e = h.useContext(O);
+	let e = _.useContext(O);
 	if (!e) throw Error("useSidebar must be used within a SidebarProvider.");
 	return e;
 }
 function A({ defaultOpen: t = !0, open: n, onOpenChange: r, className: i, style: a, children: o, ...s }) {
-	let c = x(), [l, u] = h.useState(!1), [d, f] = h.useState(t), m = n ?? d, _ = h.useCallback((e) => {
+	let c = x(), [l, u] = _.useState(!1), [d, f] = _.useState(t), m = n ?? d, g = _.useCallback((e) => {
 		let t = typeof e == "function" ? e(m) : e;
 		r ? r(t) : f(t), document.cookie = `${S}=${t}; path=/; max-age=${C}`;
-	}, [r, m]), v = h.useCallback(() => c ? u((e) => !e) : _((e) => !e), [
+	}, [r, m]), v = _.useCallback(() => c ? u((e) => !e) : g((e) => !e), [
 		c,
-		_,
+		g,
 		u
 	]);
-	h.useEffect(() => {
+	_.useEffect(() => {
 		let e = (e) => {
 			e.key === D && (e.metaKey || e.ctrlKey) && (e.preventDefault(), v());
 		};
 		return window.addEventListener("keydown", e), () => window.removeEventListener("keydown", e);
 	}, [v]);
-	let y = m ? "expanded" : "collapsed", b = h.useMemo(() => ({
+	let y = m ? "expanded" : "collapsed", b = _.useMemo(() => ({
 		state: y,
 		open: m,
-		setOpen: _,
+		setOpen: g,
 		isMobile: c,
 		openMobile: l,
 		setOpenMobile: u,
@@ -55,17 +55,17 @@ function A({ defaultOpen: t = !0, open: n, onOpenChange: r, className: i, style:
 	}), [
 		y,
 		m,
-		_,
+		g,
 		c,
 		l,
 		u,
 		v
 	]);
-	return /* @__PURE__ */ g(O.Provider, {
+	return /* @__PURE__ */ h(O.Provider, {
 		value: b,
-		children: /* @__PURE__ */ g(p, {
+		children: /* @__PURE__ */ h(p, {
 			delayDuration: 0,
-			children: /* @__PURE__ */ g("div", {
+			children: /* @__PURE__ */ h("div", {
 				"data-slot": "sidebar-wrapper",
 				style: {
 					"--sidebar-width": w,
@@ -80,46 +80,46 @@ function A({ defaultOpen: t = !0, open: n, onOpenChange: r, className: i, style:
 	});
 }
 function j({ side: t = "left", variant: n = "sidebar", collapsible: r = "offcanvas", className: i, children: u, ...d }) {
-	let { isMobile: f, state: p, openMobile: m, setOpenMobile: h } = k();
-	return r === "none" ? /* @__PURE__ */ g("div", {
+	let { isMobile: f, state: p, openMobile: m, setOpenMobile: _ } = k();
+	return r === "none" ? /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar",
 		className: e("flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground", i),
 		...d,
 		children: u
-	}) : f ? /* @__PURE__ */ g(a, {
+	}) : f ? /* @__PURE__ */ h(a, {
 		open: m,
-		onOpenChange: h,
+		onOpenChange: _,
 		...d,
-		children: /* @__PURE__ */ _(o, {
+		children: /* @__PURE__ */ g(o, {
 			"data-sidebar": "sidebar",
 			"data-slot": "sidebar",
 			"data-mobile": "true",
 			className: "w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden",
 			style: { "--sidebar-width": T },
 			side: t,
-			children: [/* @__PURE__ */ _(c, {
+			children: [/* @__PURE__ */ g(c, {
 				className: "sr-only",
-				children: [/* @__PURE__ */ g(l, { children: "Sidebar" }), /* @__PURE__ */ g(s, { children: "Displays the mobile sidebar." })]
-			}), /* @__PURE__ */ g("div", {
+				children: [/* @__PURE__ */ h(l, { children: "Sidebar" }), /* @__PURE__ */ h(s, { children: "Displays the mobile sidebar." })]
+			}), /* @__PURE__ */ h("div", {
 				className: "flex h-full w-full flex-col",
 				children: u
 			})]
 		})
-	}) : /* @__PURE__ */ _("div", {
+	}) : /* @__PURE__ */ g("div", {
 		className: "group peer hidden text-sidebar-foreground md:block",
 		"data-state": p,
 		"data-collapsible": p === "collapsed" ? r : "",
 		"data-variant": n,
 		"data-side": t,
 		"data-slot": "sidebar",
-		children: [/* @__PURE__ */ g("div", {
+		children: [/* @__PURE__ */ h("div", {
 			"data-slot": "sidebar-gap",
 			className: e("relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear", "group-data-[collapsible=offcanvas]:w-0", "group-data-[side=right]:rotate-180", n === "floating" || n === "inset" ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]" : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)")
-		}), /* @__PURE__ */ g("div", {
+		}), /* @__PURE__ */ h("div", {
 			"data-slot": "sidebar-container",
 			className: e("fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex", t === "left" ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]" : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]", n === "floating" || n === "inset" ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]" : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l", i),
 			...d,
-			children: /* @__PURE__ */ g("div", {
+			children: /* @__PURE__ */ h("div", {
 				"data-sidebar": "sidebar",
 				"data-slot": "sidebar-inner",
 				className: "flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-none group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm",
@@ -130,7 +130,7 @@ function j({ side: t = "left", variant: n = "sidebar", collapsible: r = "offcanv
 }
 function M({ className: r, onClick: i, ...a }) {
 	let { toggleSidebar: o } = k();
-	return /* @__PURE__ */ _(n, {
+	return /* @__PURE__ */ g(n, {
 		"data-sidebar": "trigger",
 		"data-slot": "sidebar-trigger",
 		variant: "ghost",
@@ -140,7 +140,7 @@ function M({ className: r, onClick: i, ...a }) {
 			i?.(e), o();
 		},
 		...a,
-		children: [/* @__PURE__ */ g(t, {}), /* @__PURE__ */ g("span", {
+		children: [/* @__PURE__ */ h(t, {}), /* @__PURE__ */ h("span", {
 			className: "sr-only",
 			children: "Toggle Sidebar"
 		})]
@@ -148,7 +148,7 @@ function M({ className: r, onClick: i, ...a }) {
 }
 function N({ className: t, ...n }) {
 	let { toggleSidebar: r } = k();
-	return /* @__PURE__ */ g("button", {
+	return /* @__PURE__ */ h("button", {
 		"data-sidebar": "rail",
 		"data-slot": "sidebar-rail",
 		"aria-label": "Toggle Sidebar",
@@ -160,14 +160,14 @@ function N({ className: t, ...n }) {
 	});
 }
 function P({ className: t, ...n }) {
-	return /* @__PURE__ */ g("main", {
+	return /* @__PURE__ */ h("main", {
 		"data-slot": "sidebar-inset",
 		className: e("relative flex w-full flex-1 flex-col bg-background", "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-none md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2", t),
 		...n
 	});
 }
 function F({ className: t, ...n }) {
-	return /* @__PURE__ */ g(i, {
+	return /* @__PURE__ */ h(i, {
 		"data-slot": "sidebar-input",
 		"data-sidebar": "input",
 		className: e("h-8 w-full bg-background shadow-none", t),
@@ -175,7 +175,7 @@ function F({ className: t, ...n }) {
 	});
 }
 function I({ className: t, ...n }) {
-	return /* @__PURE__ */ g("div", {
+	return /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar-header",
 		"data-sidebar": "header",
 		className: e("flex flex-col gap-2 p-2", t),
@@ -183,7 +183,7 @@ function I({ className: t, ...n }) {
 	});
 }
 function L({ className: t, ...n }) {
-	return /* @__PURE__ */ g("div", {
+	return /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar-footer",
 		"data-sidebar": "footer",
 		className: e("flex flex-col gap-2 p-2", t),
@@ -191,7 +191,7 @@ function L({ className: t, ...n }) {
 	});
 }
 function R({ className: t, ...n }) {
-	return /* @__PURE__ */ g(r, {
+	return /* @__PURE__ */ h(r, {
 		"data-slot": "sidebar-separator",
 		"data-sidebar": "separator",
 		className: e("mx-2 w-auto bg-sidebar-border", t),
@@ -199,7 +199,7 @@ function R({ className: t, ...n }) {
 	});
 }
 function z({ className: t, ...n }) {
-	return /* @__PURE__ */ g("div", {
+	return /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar-content",
 		"data-sidebar": "content",
 		className: e("flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden", t),
@@ -207,7 +207,7 @@ function z({ className: t, ...n }) {
 	});
 }
 function B({ className: t, ...n }) {
-	return /* @__PURE__ */ g("div", {
+	return /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar-group",
 		"data-sidebar": "group",
 		className: e("relative flex w-full min-w-0 flex-col p-2", t),
@@ -216,7 +216,7 @@ function B({ className: t, ...n }) {
 }
 function V({ className: t, asChild: n = !1, ...r }) {
 	let i = n ? v.Root : "div";
-	return /* @__PURE__ */ g(i, {
+	return /* @__PURE__ */ h(i, {
 		"data-slot": "sidebar-group-label",
 		"data-sidebar": "group-label",
 		className: e("flex h-8 shrink-0 items-center rounded-none px-2 text-xs font-medium text-sidebar-foreground/70 ring-sidebar-ring outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0", "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0", t),
@@ -225,7 +225,7 @@ function V({ className: t, asChild: n = !1, ...r }) {
 }
 function H({ className: t, asChild: n = !1, ...r }) {
 	let i = n ? v.Root : "button";
-	return /* @__PURE__ */ g(i, {
+	return /* @__PURE__ */ h(i, {
 		"data-slot": "sidebar-group-action",
 		"data-sidebar": "group-action",
 		className: e("absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-none p-0 text-sidebar-foreground ring-sidebar-ring outline-hidden transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0", "after:absolute after:-inset-2 md:after:hidden", "group-data-[collapsible=icon]:hidden", t),
@@ -233,7 +233,7 @@ function H({ className: t, asChild: n = !1, ...r }) {
 	});
 }
 function U({ className: t, ...n }) {
-	return /* @__PURE__ */ g("div", {
+	return /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar-group-content",
 		"data-sidebar": "group-content",
 		className: e("w-full text-sm", t),
@@ -241,7 +241,7 @@ function U({ className: t, ...n }) {
 	});
 }
 function W({ className: t, ...n }) {
-	return /* @__PURE__ */ g("ul", {
+	return /* @__PURE__ */ h("ul", {
 		"data-slot": "sidebar-menu",
 		"data-sidebar": "menu",
 		className: e("flex w-full min-w-0 flex-col gap-1", t),
@@ -249,7 +249,7 @@ function W({ className: t, ...n }) {
 	});
 }
 function G({ className: t, ...n }) {
-	return /* @__PURE__ */ g("li", {
+	return /* @__PURE__ */ h("li", {
 		"data-slot": "sidebar-menu-item",
 		"data-sidebar": "menu-item",
 		className: e("group/menu-item relative", t),
@@ -274,7 +274,7 @@ var K = y("peer/menu-button flex w-full items-center gap-2 overflow-hidden round
 	}
 });
 function q({ asChild: t = !1, isActive: n = !1, variant: r = "default", size: i = "default", tooltip: a, className: o, ...s }) {
-	let c = t ? v.Root : "button", { isMobile: l, state: u } = k(), p = /* @__PURE__ */ g(c, {
+	let c = t ? v.Root : "button", { isMobile: l, state: u } = k(), p = /* @__PURE__ */ h(c, {
 		"data-slot": "sidebar-menu-button",
 		"data-sidebar": "menu-button",
 		"data-size": i,
@@ -285,10 +285,10 @@ function q({ asChild: t = !1, isActive: n = !1, variant: r = "default", size: i 
 		}), o),
 		...s
 	});
-	return a ? (typeof a == "string" && (a = { children: a }), /* @__PURE__ */ _(d, { children: [/* @__PURE__ */ g(m, {
+	return a ? (typeof a == "string" && (a = { children: a }), /* @__PURE__ */ g(d, { children: [/* @__PURE__ */ h(m, {
 		asChild: !0,
 		children: p
-	}), /* @__PURE__ */ g(f, {
+	}), /* @__PURE__ */ h(f, {
 		side: "right",
 		align: "center",
 		hidden: u !== "collapsed" || l,
@@ -297,7 +297,7 @@ function q({ asChild: t = !1, isActive: n = !1, variant: r = "default", size: i 
 }
 function J({ className: t, asChild: n = !1, showOnHover: r = !1, ...i }) {
 	let a = n ? v.Root : "button";
-	return /* @__PURE__ */ g(a, {
+	return /* @__PURE__ */ h(a, {
 		"data-slot": "sidebar-menu-action",
 		"data-sidebar": "menu-action",
 		className: e("absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-none p-0 text-sidebar-foreground ring-sidebar-ring outline-hidden transition-transform peer-hover/menu-button:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0", "after:absolute after:-inset-2 md:after:hidden", "peer-data-[size=sm]/menu-button:top-1", "peer-data-[size=default]/menu-button:top-1.5", "peer-data-[size=lg]/menu-button:top-2.5", "group-data-[collapsible=icon]:hidden", r && "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground data-[state=open]:opacity-100 md:opacity-0", t),
@@ -305,7 +305,7 @@ function J({ className: t, asChild: n = !1, showOnHover: r = !1, ...i }) {
 	});
 }
 function Y({ className: t, ...n }) {
-	return /* @__PURE__ */ g("div", {
+	return /* @__PURE__ */ h("div", {
 		"data-slot": "sidebar-menu-badge",
 		"data-sidebar": "menu-badge",
 		className: e("pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-none px-1 text-xs font-medium text-sidebar-foreground tabular-nums select-none", "peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground", "peer-data-[size=sm]/menu-button:top-1", "peer-data-[size=default]/menu-button:top-1.5", "peer-data-[size=lg]/menu-button:top-2.5", "group-data-[collapsible=icon]:hidden", t),
@@ -313,15 +313,15 @@ function Y({ className: t, ...n }) {
 	});
 }
 function X({ className: t, showIcon: n = !1, ...r }) {
-	return /* @__PURE__ */ _("div", {
+	return /* @__PURE__ */ g("div", {
 		"data-slot": "sidebar-menu-skeleton",
 		"data-sidebar": "menu-skeleton",
 		className: e("flex h-8 items-center gap-2 rounded-none px-2", t),
 		...r,
-		children: [n && /* @__PURE__ */ g(u, {
+		children: [n && /* @__PURE__ */ h(u, {
 			className: "size-4 rounded-none",
 			"data-sidebar": "menu-skeleton-icon"
-		}), /* @__PURE__ */ g(u, {
+		}), /* @__PURE__ */ h(u, {
 			className: "h-4 max-w-(--skeleton-width) flex-1",
 			"data-sidebar": "menu-skeleton-text",
 			style: { "--skeleton-width": "70%" }
@@ -329,7 +329,7 @@ function X({ className: t, showIcon: n = !1, ...r }) {
 	});
 }
 function Z({ className: t, ...n }) {
-	return /* @__PURE__ */ g("ul", {
+	return /* @__PURE__ */ h("ul", {
 		"data-slot": "sidebar-menu-sub",
 		"data-sidebar": "menu-sub",
 		className: e("mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5", "group-data-[collapsible=icon]:hidden", t),
@@ -337,7 +337,7 @@ function Z({ className: t, ...n }) {
 	});
 }
 function Q({ className: t, ...n }) {
-	return /* @__PURE__ */ g("li", {
+	return /* @__PURE__ */ h("li", {
 		"data-slot": "sidebar-menu-sub-item",
 		"data-sidebar": "menu-sub-item",
 		className: e("group/menu-sub-item relative", t),
@@ -346,7 +346,7 @@ function Q({ className: t, ...n }) {
 }
 function $({ asChild: t = !1, size: n = "md", isActive: r = !1, className: i, ...a }) {
 	let o = t ? v.Root : "a";
-	return /* @__PURE__ */ g(o, {
+	return /* @__PURE__ */ h(o, {
 		"data-slot": "sidebar-menu-sub-button",
 		"data-sidebar": "menu-sub-button",
 		"data-size": n,

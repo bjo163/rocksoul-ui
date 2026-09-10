@@ -4,3 +4,5 @@ export * from "./detail-panel";
 export * from "./content-states";
 export * from "./timeline";
 export * from "./attachment-list";
+export * from "./form-section";
+export * from "./form-footer";

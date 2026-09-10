@@ -1,7 +1,7 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { Button as t } from "./button.js";
-import "react";
 import { jsx as n } from "react/jsx-runtime";
+import "react";
 import { Slot as r } from "radix-ui";
 import { cva as i } from "class-variance-authority";
 //#region src/components/ui/attachment.tsx

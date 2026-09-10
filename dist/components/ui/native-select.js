@@ -1,7 +1,7 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { ChevronDownIcon as t } from "./icons.js";
-import "react";
 import { jsx as n, jsxs as r } from "react/jsx-runtime";
+import "react";
 //#region src/components/ui/native-select.tsx
 function i({ className: i, size: a = "default", ...o }) {
 	return /* @__PURE__ */ r("div", {

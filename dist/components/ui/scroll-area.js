@@ -1,7 +1,7 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
-import "react";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
+import "react";
 import { ScrollArea as r } from "radix-ui";
 //#region src/components/ui/scroll-area.tsx
 function i({ className: i, children: o, ...s }) {

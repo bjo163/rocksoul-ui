@@ -1,8 +1,8 @@
 "use client";
 import { t as e } from "../../cn-DhjIN-s0.js";
 import { CheckIcon as t, ChevronDownIcon as n, ChevronUpIcon as r } from "./icons.js";
-import "react";
 import { jsx as i, jsxs as a } from "react/jsx-runtime";
+import "react";
 import { Select as o } from "radix-ui";
 //#region src/components/ui/select.tsx
 function s({ ...e }) {

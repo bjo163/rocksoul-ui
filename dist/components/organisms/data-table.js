@@ -4,13 +4,13 @@ import { ArrowDownIcon as t, ChevronDownIcon as n, ChevronUpIcon as r } from "..
 import { Button as i } from "../ui/button.js";
 import { Checkbox as a } from "../ui/checkbox.js";
 import { Table as o, TableBody as s, TableCell as c, TableHead as l, TableHeader as u, TableRow as d } from "../ui/table.js";
-import * as f from "react";
-import { jsx as p, jsxs as m } from "react/jsx-runtime";
+import { jsx as f, jsxs as p } from "react/jsx-runtime";
+import * as m from "react";
 //#region src/components/organisms/data-table.tsx
 function h({ data: h, columns: g, getRowId: _ = (e, t) => String(t), selectable: v = !1, selectedRowIds: y, onSelectedRowIdsChange: b, emptyState: x = "No results.", caption: S, className: C }) {
-	let [w, T] = f.useState(null), [E, D] = f.useState([]), O = y ?? E, k = (e) => {
+	let [w, T] = m.useState(null), [E, D] = m.useState([]), O = y ?? E, k = (e) => {
 		y === void 0 && D(e), b?.(e);
-	}, A = f.useMemo(() => {
+	}, A = m.useMemo(() => {
 		if (!w) return h;
 		let e = g.find((e) => e.id === w.id);
 		return e?.sortValue ? [...h].sort((t, n) => {
@@ -34,51 +34,51 @@ function h({ data: h, columns: g, getRowId: _ = (e, t) => String(t), selectable:
 			direction: "asc"
 		});
 	};
-	return /* @__PURE__ */ p("div", {
+	return /* @__PURE__ */ f("div", {
 		"data-slot": "data-table",
 		className: e("w-full", C),
-		children: /* @__PURE__ */ m(o, { children: [
-			S ? /* @__PURE__ */ p("caption", {
+		children: /* @__PURE__ */ p(o, { children: [
+			S ? /* @__PURE__ */ f("caption", {
 				className: "sr-only",
 				children: S
 			}) : null,
-			/* @__PURE__ */ p(u, { children: /* @__PURE__ */ m(d, { children: [v ? /* @__PURE__ */ p(l, {
+			/* @__PURE__ */ f(u, { children: /* @__PURE__ */ p(d, { children: [v ? /* @__PURE__ */ f(l, {
 				className: "w-10",
-				children: /* @__PURE__ */ p(a, {
+				children: /* @__PURE__ */ f(a, {
 					"aria-label": "Select all rows",
 					checked: M,
 					onCheckedChange: () => k(M ? O.filter((e) => !j.includes(e)) : [.../* @__PURE__ */ new Set([...O, ...j])])
 				})
-			}) : null, g.map((e) => /* @__PURE__ */ p(l, {
+			}) : null, g.map((e) => /* @__PURE__ */ f(l, {
 				className: e.className,
-				children: e.sortable && e.sortValue ? /* @__PURE__ */ m(i, {
+				children: e.sortable && e.sortValue ? /* @__PURE__ */ p(i, {
 					variant: "ghost",
 					size: "sm",
 					className: "-ml-3",
 					onClick: () => N(e),
 					children: [
 						e.header,
-						w?.id === e.id ? w.direction === "asc" ? /* @__PURE__ */ p(r, { "aria-hidden": "true" }) : /* @__PURE__ */ p(t, { "aria-hidden": "true" }) : /* @__PURE__ */ p(n, { "aria-hidden": "true" }),
-						/* @__PURE__ */ m("span", {
+						w?.id === e.id ? w.direction === "asc" ? /* @__PURE__ */ f(r, { "aria-hidden": "true" }) : /* @__PURE__ */ f(t, { "aria-hidden": "true" }) : /* @__PURE__ */ f(n, { "aria-hidden": "true" }),
+						/* @__PURE__ */ p("span", {
 							className: "sr-only",
 							children: ["Sort by ", String(e.header)]
 						})
 					]
 				}) : e.header
 			}, e.id))] }) }),
-			/* @__PURE__ */ p(s, { children: A.length === 0 ? /* @__PURE__ */ p(d, { children: /* @__PURE__ */ p(c, {
+			/* @__PURE__ */ f(s, { children: A.length === 0 ? /* @__PURE__ */ f(d, { children: /* @__PURE__ */ f(c, {
 				colSpan: g.length + +!!v,
 				className: "h-24 text-center",
 				children: x
 			}) }) : A.map((e, t) => {
 				let n = _(e, t);
-				return /* @__PURE__ */ m(d, {
+				return /* @__PURE__ */ p(d, {
 					"data-state": O.includes(n) ? "selected" : void 0,
-					children: [v ? /* @__PURE__ */ p(c, { children: /* @__PURE__ */ p(a, {
+					children: [v ? /* @__PURE__ */ f(c, { children: /* @__PURE__ */ f(a, {
 						"aria-label": `Select row ${n}`,
 						checked: O.includes(n),
 						onCheckedChange: () => k(O.includes(n) ? O.filter((e) => e !== n) : [...O, n])
-					}) }) : null, g.map((t) => /* @__PURE__ */ p(c, {
+					}) }) : null, g.map((t) => /* @__PURE__ */ f(c, {
 						className: t.className,
 						children: t.accessor ? t.accessor(e) : null
 					}, t.id))]

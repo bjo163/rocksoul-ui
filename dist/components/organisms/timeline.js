@@ -1,6 +1,6 @@
 import { t as e } from "../../cn-DhjIN-s0.js";
-import "react";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
+import "react";
 //#region src/components/organisms/timeline.tsx
 function r({ items: r, className: i, ...a }) {
 	return /* @__PURE__ */ t("ol", {
