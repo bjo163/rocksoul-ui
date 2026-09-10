@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover"
+import { DataTable } from "../components/organisms/data-table"
 
 afterEach(cleanup)
 
@@ -68,5 +69,17 @@ describe("canonical utility primitives", () => {
     expect(screen.getByText("Help content")).toBeVisible()
     await user.keyboard("{Escape}")
     await waitFor(() => expect(help).toHaveFocus())
+  })
+
+  it("supports DataTable keyboard row selection and expansion", async () => {
+    const user = userEvent.setup()
+    const rows = [{ id: "a", name: "Alpha" }]
+    render(<DataTable data={rows} selectable columns={[{ id: "name", header: "Name", accessor: (row) => row.name }]} getRowId={(row) => row.id} renderExpanded={(row) => <span>Details for {row.name}</span>} />)
+    const checkbox = screen.getByRole("checkbox", { name: "Select row a" })
+    await user.click(checkbox)
+    expect(checkbox).toBeChecked()
+    const expand = screen.getByRole("button", { name: /expand/i })
+    await user.click(expand)
+    expect(screen.getByText("Details for Alpha")).toBeVisible()
   })
 })
