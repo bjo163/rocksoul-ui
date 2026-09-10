@@ -38,8 +38,24 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
       # prepare/build runs during npm ci; tracked dist must already match that deterministic output.
+      - name: Check tracked dist reproducibility
+        id: dist_check
+        continue-on-error: true
+        run: |
+          git diff --stat -- dist
+          git diff -- dist
+          git diff --exit-code -- dist
+      - name: Upload generated dist on drift
+        if: ${{ steps.dist_check.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: generated-dist-${{ github.run_id }}
+          path: dist/**
+          if-no-files-found: error
+          retention-days: 3
       - name: Enforce tracked dist reproducibility
-        run: git diff --exit-code -- dist
+        if: ${{ steps.dist_check.outcome == 'failure' }}
+        run: exit 1
       - name: Strict repository consistency audit
         run: npm run audit:repository
       - name: Run canonical repository CI contract
