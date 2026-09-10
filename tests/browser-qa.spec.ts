@@ -1,12 +1,12 @@
 import AxeBuilder from "@axe-core/playwright"
-import { expect, test } from "@playwright/test"
+import { expect, test, type Page } from "@playwright/test"
 
 const screens = [
   "dashboard", "kanban", "calendar", "chat", "ai", "resources", "profile",
   "authorization", "states", "notifications", "platform", "mw0042",
 ] as const
 
-async function assertSurface(page: Parameters<Parameters<typeof test>[2]>[0]["page"]) {
+async function assertSurface(page: Page) {
   await expect(page.locator("h1").first()).toBeVisible()
 
   const accessibility = await new AxeBuilder({ page })
