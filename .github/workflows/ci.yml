@@ -40,6 +40,8 @@ jobs:
       # prepare/build runs during npm ci; tracked dist must already match that deterministic output.
       - name: Enforce tracked dist reproducibility
         run: git diff --exit-code -- dist
+      - name: Strict repository consistency audit
+        run: npm run audit:repository
       - name: Run canonical repository CI contract
         run: npm run ci
       - name: Upload Quanta audit evidence
