@@ -6,6 +6,7 @@ import { IconButton } from "../components/ui/icon-button"
 import { RegistryAsset } from "../components/ui/asset"
 import { VisuallyHidden } from "../components/ui/visually-hidden"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 
 afterEach(cleanup)
 
@@ -38,5 +39,15 @@ describe("canonical utility primitives", () => {
     await user.keyboard("{Escape}")
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
     expect(trigger).toHaveFocus()
+  })
+
+  it("supports keyboard activation and controlled content for canonical tabs", async () => {
+    const user = userEvent.setup()
+    render(<Tabs defaultValue="overview"><TabsList aria-label="Sections"><TabsTrigger value="overview">Overview</TabsTrigger><TabsTrigger value="evidence">Evidence</TabsTrigger></TabsList><TabsContent value="overview">Overview content</TabsContent><TabsContent value="evidence">Evidence content</TabsContent></Tabs>)
+    const evidence = screen.getByRole("tab", { name: "Evidence" })
+    evidence.focus()
+    await user.keyboard("{Enter}")
+    expect(evidence).toHaveAttribute("data-state", "active")
+    expect(screen.getByText("Evidence content")).toBeVisible()
   })
 })

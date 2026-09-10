@@ -76,7 +76,7 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ### Overlay and navigation primitives
 
 - [x] Canonicalize `Tooltip`, `Popover`, `HoverCard`, `Dialog`, `AlertDialog`, `Sheet`, `Drawer`, `DropdownMenu`, `ContextMenu`, `Menubar`, `Command`, `Tabs`, `Breadcrumb`, `NavigationMenu`, `Accordion`, `Collapsible`, dan `Calendar`.
-- [x] Extract generic `SimplePagination` molecule; keep the legacy application callback adapter only in `compat/patterns` until all pattern consumers migrate.
+- [x] Extract generic `SimplePagination` molecule; product patterns now live under `components/patterns` and compose canonical primitives.
 - [x] Uji focus return, escape, nesting, mobile behavior, dan reduced motion; outside interaction is covered by the Radix overlay contract and browser visual smoke flow.
 
 ## Phase 5 — Molecules
@@ -130,12 +130,12 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Replace feature-local duplicate variants.
 - [x] Move route/API-aware components ke `apps/web/src/features`.
 - [x] Adopt organisms hanya setelah ada minimal dua consumer or a documented composition proof; generic organisms remain route/data agnostic.
-- [x] Block new imports ke `compat`.
+- [x] Block new imports ke removed compatibility layers.
 - [x] Add consumer smoke tests dan visual regression.
 
 ## Phase 10 — Compat removal
 
-- [x] List every remaining `compat` import; package production no longer imports it.
+- [x] List every former compatibility import; package production no longer imports legacy adapters.
 - [x] Migrate legacy stories, tests, dan fixtures. Package screens sudah memakai canonical domain patterns.
 - [x] Remove compatibility exports dan files.
 - [x] Remove adapter audit exceptions.

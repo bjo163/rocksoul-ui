@@ -29,5 +29,5 @@ Use this checklist for any component, token, export, or asset change.
 ## Review
 
 - [ ] The appropriate layer owner has reviewed the change.
-- [ ] No new import from `components/compat` is introduced.
+- [ ] No compatibility folder or legacy adapter import is introduced.
 - [ ] No duplicate implementation is added to `apps/web`.

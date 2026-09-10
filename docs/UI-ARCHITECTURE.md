@@ -128,7 +128,7 @@ Each public component has one canonical owner and one canonical import path. A n
 5. A template defines layout and slots only. It does not decide business permissions or render feature-specific data.
 6. `apps/web/src/features` owns queries, mutations, route state, permissions, and feature-specific components.
 7. New generic controls use existing `components/ui` primitives until the target folders are introduced. No new compatibility adapter is permitted.
-8. `compat` is internal. It must have a deprecation marker, cannot receive new imports from `apps/web`, and must not be part of a new public API.
+8. Compatibility adapters are removed. A compatibility folder must not be recreated or added to a new public API.
 9. Do not use `common`, `shared`, `misc`, `helpers`, or `widgets` as component ownership folders.
 10. New visual values must use tokens. Raw hexadecimal colors, arbitrary shadows, and arbitrary radii require a token proposal first.
 11. Each public component needs a story, keyboard behavior where interactive, and an empty/loading/error treatment where applicable.
@@ -142,6 +142,6 @@ Each public component has one canonical owner and one canonical import path. A n
 4. Promote repeated compositions into molecules, then organisms only after a second consumer exists.
 5. Move page frames into templates.
 6. Move route-aware code into `apps/web/src/features`.
-7. Replace and delete every module in `compat`.
+7. Replace and delete every legacy compatibility module.
 
 No broad file move is accepted without a classification decision, an updated public export, consumer migration, and typecheck/build verification.

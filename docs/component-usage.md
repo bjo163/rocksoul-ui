@@ -29,6 +29,10 @@ Use `Asset` when a feature owns an explicit file from a local pack. Use `Registr
 
 The historical primitive adapters have been removed. Domain patterns live under `src/components/patterns`; all supported consumers and stories use canonical primitives. `components/compat` is a deletion-complete path and must not be recreated.
 
+## API stability
+
+Modules under `components/ui`, `components/molecules`, `components/organisms`, and `components/templates` are the supported public API. Product-specific patterns and candidate asset aliases are migration surfaces; new code should use the canonical primitive or registry API directly. A component is promoted to stable only after it has a public usage entry, an accessibility contract test, and a consumer audit entry.
+
 | Compatibility API | Owner / replacement | Why it remains temporarily |
 | --- | --- | --- |
 | Button, buttonVariants | ui/button | Preserves primary/danger variants, leading/trailing content and loading props |

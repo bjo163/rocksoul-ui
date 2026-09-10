@@ -31,7 +31,7 @@ This checklist is required for a new component, a component move, or a public AP
 | a reusable screen area with local UI state | `organisms` |
 | generic page frame and slots | `templates` |
 | API calls, route state, permissions, or business entities | `apps/web/src/features` |
-| legacy conversion only | `compat` |
+| legacy conversion only | migration work outside the public component tree |
 
 ## Public API rules
 

@@ -109,8 +109,9 @@ export function WebStats({
           setData(json)
           setError(null)
         }
-      } catch (err: any) {
-        if (isMounted) setError(err.message || "Failed to load telemetry")
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Failed to load telemetry"
+        if (isMounted) setError(message)
       } finally {
         if (isMounted) setLoading(false)
       }

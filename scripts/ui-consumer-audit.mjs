@@ -72,4 +72,4 @@ if (failures.length) {
   console.error(failures.join("\n"))
   process.exit(1)
 }
-console.log(`UI consumer audit passed: ${hashes.size} unique modules, ${overlaps.length} classified compatibility exports, apps/web uses public primitives.`)
+console.log(`UI consumer audit passed: ${hashes.size} unique modules, ${overlaps.length} classified public overlaps, apps/web uses public primitives.`)
