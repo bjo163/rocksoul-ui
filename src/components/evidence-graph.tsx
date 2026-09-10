@@ -1,5 +1,6 @@
 import { useId, useState } from "react"
 import { StatusBadge } from "./feedback/status-badge"
+import { Button } from "./ui/button"
 import type { RecordDomain, RecordSummary } from "./four-record-summary"
 import type { ResearchDomain } from "../contracts/ecosystem-domains"
 import { cn } from "../lib/cn"
@@ -162,7 +163,7 @@ export function GraphNode({
   onSelect?: () => void
 }) {
   return (
-    <button
+    <Button
       type="button"
       className={cn(
         "flex min-h-11 min-w-11 flex-col items-center justify-center rounded-full border-2 bg-card p-2 text-center transition-[border-color,background-color,opacity] hover:border-foreground hover:bg-panel",
@@ -182,6 +183,6 @@ export function GraphNode({
       <span className="font-mono text-[10px] font-bold uppercase">{label}</span>
       <span className="mt-1 font-mono text-[10px] uppercase text-muted-foreground">{status}</span>
       <span className="sr-only">{relationCount} relationships</span>
-    </button>
+    </Button>
   )
 }

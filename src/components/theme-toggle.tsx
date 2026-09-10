@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Button } from "./ui/button"
 
 export type ThemePreference = "light" | "dark" | "system"
 type EffectiveTheme = "light" | "dark"
@@ -47,7 +48,7 @@ export function ThemeToggle() {
   const next = preferenceOrder[(currentIndex + 1) % preferenceOrder.length]
 
   return (
-    <button
+    <Button
       type="button"
       className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-[16px] border border-border bg-background px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-muted"
       aria-label={`Theme ${preference}, currently ${effective}. Switch to ${next}.`}
@@ -59,6 +60,6 @@ export function ThemeToggle() {
       }}
     >
       {preference}
-    </button>
+    </Button>
   )
 }
