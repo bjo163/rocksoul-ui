@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Badge } from "../components/feedback/status-badge"
-import { Button } from "../components/compat/button"
+import { Button } from "../components/ui/button"
 import {
   AuditEventRow,
   Citation,
@@ -11,9 +11,23 @@ import {
   StatePanel,
   SubmissionCard,
 } from "../components/archive-components"
-import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/compat/form-controls"
-import { Dialog, Divider, Skeleton } from "../components/compat/overlays"
-import { Tabs } from "../components/compat/tabs"
+import { Checkbox } from "../components/ui/checkbox"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
+import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
+import { Separator } from "../components/ui/separator"
+import { Skeleton } from "../components/ui/skeleton"
+import { Switch } from "../components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
+import { Textarea } from "../components/ui/textarea"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../components/ui/dialog"
 import { AssetExplorer } from "../components/asset-explorer"
 import { ROCKSOUL_ASSETS_REGISTRY } from "../contracts/assets-registry"
 
@@ -66,8 +80,8 @@ export function DesignSystemScreen() {
           <Button>Primary</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="ghost">Ghost</Button>
-          <Button variant="danger">Danger</Button>
-          <Button loading>Loading</Button>
+          <Button variant="destructive">Danger</Button>
+          <Button disabled>Loading</Button>
           <Button disabled>Disabled</Button>
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
@@ -78,22 +92,19 @@ export function DesignSystemScreen() {
 
         <div className="mt-8 grid gap-5 lg:grid-cols-2">
           <div className="grid gap-4">
-            <Input label="Input" placeholder="Source ID" />
-            <Input label="Error" error="Source locator is required." />
-            <Textarea label="Textarea" maxLength={120} characterCount defaultValue="Not enough yet." />
-            <Select label="Select" options={[{ label: "Supported", value: "supported" }, { label: "Unresolved", value: "unresolved" }]} />
+            <div className="grid gap-2"><Label htmlFor="demo-input">Input</Label><Input id="demo-input" placeholder="Source ID" /></div>
+            <div className="grid gap-2"><Label htmlFor="demo-error">Error</Label><Input id="demo-error" aria-invalid placeholder="Source ID" /><p className="text-sm text-destructive">Source locator is required.</p></div>
+            <div className="grid gap-2"><Label htmlFor="demo-textarea">Textarea</Label><Textarea id="demo-textarea" maxLength={120} defaultValue="Not enough yet." /><p className="text-xs text-muted-foreground">0 / 120</p></div>
+            <div className="grid gap-2"><Label htmlFor="demo-select">Select</Label><Select defaultValue="supported"><SelectTrigger id="demo-select"><SelectValue placeholder="Select status" /></SelectTrigger><SelectContent><SelectItem value="supported">Supported</SelectItem><SelectItem value="unresolved">Unresolved</SelectItem></SelectContent></Select></div>
           </div>
           <div>
-            <Checkbox label="Checkbox" description="Labels activate the control." defaultChecked />
-            <Radio name="demo-radio" label="Radio A" defaultChecked />
-            <Radio name="demo-radio" label="Radio B" />
-            <Switch label="Switch" description="Binary states only." defaultChecked />
+            <div className="flex items-start gap-2"><Checkbox id="demo-checkbox" defaultChecked /><div className="grid gap-1"><Label htmlFor="demo-checkbox">Checkbox</Label><p className="text-sm text-muted-foreground">Labels activate the control.</p></div></div>
+            <RadioGroup defaultValue="a" className="mt-4"><div className="flex items-center gap-2"><RadioGroupItem value="a" id="demo-radio-a" /><Label htmlFor="demo-radio-a">Radio A</Label></div><div className="flex items-center gap-2"><RadioGroupItem value="b" id="demo-radio-b" /><Label htmlFor="demo-radio-b">Radio B</Label></div></RadioGroup>
+            <div className="mt-4 flex items-start gap-2"><Switch id="demo-switch" defaultChecked /><div className="grid gap-1"><Label htmlFor="demo-switch">Switch</Label><p className="text-sm text-muted-foreground">Binary states only.</p></div></div>
             <Button className="mt-5" variant="secondary" onClick={() => setDialogOpen(true)}>Open dialog</Button>
           </div>
         </div>
-        <Dialog open={dialogOpen} title="Accessible dialog" onClose={() => setDialogOpen(false)}>
-          <p className="text-sm leading-6 text-muted-foreground">Native modal behavior, Escape close, and focus restoration are part of the contract.</p>
-        </Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}><DialogContent><DialogHeader><DialogTitle>Accessible dialog</DialogTitle><DialogDescription>Native modal behavior, Escape close, and focus restoration are part of the contract.</DialogDescription></DialogHeader></DialogContent></Dialog>
       </div>
 
       <div className="mw-section">
@@ -114,8 +125,8 @@ export function DesignSystemScreen() {
           <StatePanel state="error" />
         </div>
         <div className="mt-6 grid gap-3">
-          <Skeleton variant="text" />
-          <Skeleton variant="table-row" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-10 w-full" />
         </div>
       </div>
 
@@ -138,13 +149,9 @@ export function DesignSystemScreen() {
       <div className="mw-section">
         <h2 className="text-2xl font-bold">Tabs / compact platform rows</h2>
         <div className="mt-5">
-          <Tabs items={[
-            { id: "evidence", label: "Evidence", content: <p className="text-sm">Evidence remains independently inspectable.</p> },
-            { id: "correlation", label: "Correlation", content: <p className="text-sm">Score never hides its explanation.</p> },
-            { id: "legal", label: "Legal", content: <p className="text-sm">Source law and review stay distinct.</p> },
-          ]} />
+          <Tabs defaultValue="evidence"><TabsList><TabsTrigger value="evidence">Evidence</TabsTrigger><TabsTrigger value="correlation">Correlation</TabsTrigger><TabsTrigger value="legal">Legal</TabsTrigger></TabsList><TabsContent value="evidence"><p className="text-sm">Evidence remains independently inspectable.</p></TabsContent><TabsContent value="correlation"><p className="text-sm">Score never hides its explanation.</p></TabsContent><TabsContent value="legal"><p className="text-sm">Source law and review stay distinct.</p></TabsContent></Tabs>
         </div>
-        <Divider />
+        <Separator />
         <div className="mw-platform mt-6 border border-border bg-background p-4 text-foreground">
           <RepositoryHealthRow repo="rocksoul-superhero" status="degraded" queue={1} />
           <AuditEventRow timestamp="05:31" actor="reviewer" action="context.requested" resource="SUB-0042-01" result="pending" traceId="TRACE-0042-B" />

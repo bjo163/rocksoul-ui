@@ -40,6 +40,7 @@ export const moonWitnessAssetPacks = {
   "jurisdiction-locale": { id: "jurisdiction-locale", count: 16, root: "jurisdiction-locale-pack", manifest: "jurisdiction-locale-pack/manifest.json" },
   "cinematic-hero": { id: "cinematic-hero", count: 12, root: "cinematic-hero-pack", manifest: "cinematic-hero-pack/manifest.json" },
   "runtime-motion": { id: "runtime-motion", count: 12, root: "runtime-motion-pack", manifest: "runtime-motion-pack/manifest.json" },
+  "semantic-primitives": { id: "semantic-primitives", count: 16, root: "semantic-primitives-pack", manifest: "semantic-primitives-pack/manifest.json" },
   "developer-distribution": { id: "developer-distribution", count: 4, root: "developer-pack", manifest: "developer-pack/manifest.json" },
   "community-participation": { id: "community-participation", count: 8, root: "community-participation-pack", manifest: "community-participation-pack/manifest.json" },
 } as const

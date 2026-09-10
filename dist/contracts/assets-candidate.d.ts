@@ -1,2 +1,0 @@
-export { ROCKSOUL_ASSETS_REGISTRY as ROCKSOUL_ASSETS_CANDIDATE, moonWitnessAssets as moonWitnessCandidateAssets, moonWitnessRegistryAssetPath as moonWitnessCandidateAssetPath, hasMoonWitnessRegistryAsset as hasMoonWitnessCandidateAsset, } from "./assets-registry";
-export type { MoonWitnessAssetRegistryPackId as MoonWitnessCandidatePackId, MoonWitnessAssetRegistryFormat as MoonWitnessCandidateFormat, } from "./assets-registry";

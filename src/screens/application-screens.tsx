@@ -9,11 +9,50 @@ import {
   type AppNotification,
 } from "../components/application-shell"
 import { Badge } from "../components/feedback/status-badge"
-import { Button } from "../components/compat/button"
-import { Input, Switch, Textarea } from "../components/compat/form-controls"
+import { Button } from "../components/ui/button"
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field"
+import { Input } from "../components/ui/input"
+import { Switch } from "../components/ui/switch"
+import { Textarea } from "../components/ui/textarea"
 import { MetricTile, StatePanel } from "../components/archive-components"
 import { ThemeToggle } from "../components/theme-toggle"
 import type { ApplicationActions } from "../contracts/interactions"
+
+function LabeledInput({ label, helper, id, ...props }: React.ComponentProps<typeof Input> & { label: string; helper?: string; id: string }) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <FieldContent>
+        <Input id={id} {...props} />
+        {helper ? <FieldDescription>{helper}</FieldDescription> : null}
+      </FieldContent>
+    </Field>
+  )
+}
+
+function LabeledTextarea({ label, id, helper, ...props }: React.ComponentProps<typeof Textarea> & { label: string; helper?: string; id: string }) {
+  return (
+    <Field>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <FieldContent>
+        <Textarea id={id} {...props} />
+        {helper ? <FieldDescription>{helper}</FieldDescription> : null}
+      </FieldContent>
+    </Field>
+  )
+}
+
+function LabeledSwitch({ label, id, description, ...props }: React.ComponentProps<typeof Switch> & { label: string; id: string; description?: string }) {
+  return (
+    <Field orientation="horizontal">
+      <FieldContent>
+        <FieldLabel htmlFor={id}>{label}</FieldLabel>
+        {description ? <FieldDescription>{description}</FieldDescription> : null}
+      </FieldContent>
+      <Switch id={id} {...props} />
+    </Field>
+  )
+}
 
 export const applicationNotifications: AppNotification[] = [
   { id: "N-1", title: "MW-0042 review changed", body: "Person identity remains incomplete.", state: "unread", variant: "review" },
@@ -170,7 +209,7 @@ export function ChatScreen({ actions }: { actions?: ApplicationActions } = {}) {
             <article><strong className="text-sm">Mira</strong><p className="mt-2 text-sm">I linked the source fragment. Provenance is complete.</p></article>
           </div>
           <form className="border-t border-border p-4" onSubmit={(event) => { event.preventDefault(); if (!message.trim()) return; void actions?.onChatSend?.({ channel, message: message.trim() }); setMessage("") }}>
-            <Textarea label={`Message ${channel}…`} value={message} onChange={(event) => setMessage(event.currentTarget.value)} maxLength={800} characterCount placeholder={`Message ${channel}…`} />
+            <LabeledTextarea id="chat-message" label={`Message ${channel}…`} value={message} onChange={(event) => setMessage(event.currentTarget.value)} maxLength={800} placeholder={`Message ${channel}…`} />
             <div className="mt-3 flex justify-end"><Button type="submit" disabled={!message.trim()}>Send</Button></div>
           </form>
         </section>
@@ -191,7 +230,7 @@ export function AIWorkspaceScreen({ actions }: { actions?: ApplicationActions } 
           <article className="mt-6 border-l-2 border-info pl-4"><p className="mw-meta text-info">You</p><p className="mt-2 text-sm">Why is MW-0042 still unresolved?</p></article>
           <article className="mt-6 border-l-2 border-primary pl-4"><p className="mw-meta text-primary">MoonWitness AI</p><p className="mt-2 text-sm leading-7">Temporal and motif signals are strong, but identity remains partial.</p><p className="mt-2 text-sm leading-7">The legal layer also has unresolved jurisdiction.</p><div className="mt-5 border-t border-border pt-4"><p className="mw-meta text-muted-foreground">Citations</p><p className="mt-2 font-mono text-xs">EVENT-0042-A · PERSON-0042-A · AWS-0042-A</p></div><p className="mw-meta mt-5 border-l-2 border-warning pl-3 text-warning">Correlation supports investigation, not closure.</p></article>
           <form className="mt-auto border-t border-border pt-4" onSubmit={(event) => { event.preventDefault(); if (!prompt.trim()) return; void actions?.onAIAsk?.({ caseId: "MW-0042", prompt: prompt.trim() }); setPrompt("") }}>
-            <Textarea label="Ask with case context…" value={prompt} onChange={(event) => setPrompt(event.currentTarget.value)} maxLength={1200} characterCount placeholder="Ask with case context…" />
+            <LabeledTextarea id="ai-prompt" label="Ask with case context…" value={prompt} onChange={(event) => setPrompt(event.currentTarget.value)} maxLength={1200} placeholder="Ask with case context…" />
             <Button className="mt-3" type="submit" disabled={!prompt.trim()}>Ask</Button>
           </form>
         </section>
@@ -265,16 +304,16 @@ export function ProfileSettingsScreen({ actions }: { actions?: ApplicationAction
         <section className="border border-border bg-card p-6">
           <h2 className="text-xl font-bold">{section}</h2>
           {section === "Profile" ? (
-            <div className="mt-6 grid max-w-xl gap-5"><Input label="Display name" value={displayName} onChange={(event) => setDisplayName(event.currentTarget.value)} /><Input label="Role" readOnly value="researcher" /><Button onClick={() => void actions?.onSaveProfile?.({ displayName })}>Save profile</Button></div>
+            <div className="mt-6 grid max-w-xl gap-5"><LabeledInput id="profile-display-name" label="Display name" value={displayName} onChange={(event) => setDisplayName(event.currentTarget.value)} /><LabeledInput id="profile-role" label="Role" readOnly value="researcher" /><Button onClick={() => void actions?.onSaveProfile?.({ displayName })}>Save profile</Button></div>
           ) : null}
           {section === "Appearance" ? (
             <div className="mt-6"><p className="mw-meta text-muted-foreground">Theme / Light · Dark · System</p><div className="mt-4"><ThemeToggle /></div></div>
           ) : null}
           {section === "Notifications" ? (
-            <div className="mt-6 max-w-xl"><Switch label="Case updates" defaultChecked /><Switch label="Mentions and review assignments" defaultChecked /></div>
+            <div className="mt-6 max-w-xl"><LabeledSwitch id="notifications-case-updates" label="Case updates" defaultChecked /><LabeledSwitch id="notifications-mentions" label="Mentions and review assignments" defaultChecked /></div>
           ) : null}
           {section === "Security" ? (
-            <div className="mt-6 grid max-w-xl gap-4"><Input label="Current session" readOnly value="Current browser / fixture" /><Button variant="danger" onClick={() => void actions?.onSignOutOtherSessions?.()}>Sign out other sessions</Button></div>
+            <div className="mt-6 grid max-w-xl gap-4"><LabeledInput id="security-current-session" label="Current session" readOnly value="Current browser / fixture" /><Button variant="destructive" onClick={() => void actions?.onSignOutOtherSessions?.()}>Sign out other sessions</Button></div>
           ) : null}
           {section === "API / Integrations" ? (
             <div className="mt-6 grid max-w-xl gap-4"><StatePanel state="empty" /><Button variant="secondary" onClick={() => void actions?.onAddIntegration?.()}>Add integration</Button></div>
@@ -314,7 +353,7 @@ export function AuthorizationScreen({ actions }: { actions?: ApplicationActions 
             <p className="mw-meta text-primary">Action blocked</p>
             <h3 className="mt-4 text-lg font-bold">You can’t publish this decision.</h3>
             <p className="mt-3 text-sm text-muted-foreground">Legal Reviewer or Admin is required.</p>
-            <Button className="mt-6" variant="danger" onClick={() => void actions?.onRequestAccess?.({ permission: "legal:publish", currentRole: "researcher" })}>Request access</Button>
+            <Button className="mt-6" variant="destructive" onClick={() => void actions?.onRequestAccess?.({ permission: "legal:publish", currentRole: "researcher" })}>Request access</Button>
           </div>
         </div>
       </section>
