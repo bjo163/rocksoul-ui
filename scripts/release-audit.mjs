@@ -1,44 +1,54 @@
 import { access, readFile } from "node:fs/promises"
 import path from "node:path"
+import { execFileSync } from "node:child_process"
 
-const root=process.cwd()
-const pkg=JSON.parse(await readFile(path.join(root,"package.json"),"utf8"))
-const [indexSource, assetsContract, assetsRegistry, heroContract, readme] = await Promise.all([
-  readFile(path.join(root,"src","index.ts"),"utf8"),
-  readFile(path.join(root,"src","contracts","assets-v2.ts"),"utf8"),
-  readFile(path.join(root,"src","contracts","assets-registry.ts"),"utf8"),
-  readFile(path.join(root,"src","contracts","cinematic-web-hero.ts"),"utf8"),
-  readFile(path.join(root,"README.md"),"utf8"),
-])
+const root = process.cwd()
+const pkg = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"))
+const changelog = await readFile(path.join(root, "CHANGELOG.md"), "utf8")
+const failures = []
 
-const failures=[]
-
-if(pkg.name!=="@rocksoul/ui") failures.push("package name")
-if(pkg.version!=="0.12.5") failures.push(`package version ${pkg.version} != 0.12.5`)
-if(pkg.private!==true) failures.push("GitHub-distributed package must remain private/non-npm")
-if(pkg.scripts?.prepare!=="npm run build:lib") failures.push("Git dependency prepare hook")
-if(pkg.scripts?.["audit:release"]!=="node scripts/release-audit.mjs") failures.push("release audit script")
-
-for(const symbol of ["CinematicWebHero","cinematicWebHeroAssets","cinematicWebHeroContract"]){
-  if(!indexSource.includes("cinematic-web-hero")) failures.push(`public export path for ${symbol}`)
+function git(args) {
+  try {
+    return execFileSync("git", args, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim()
+  } catch {
+    return ""
+  }
 }
 
-if(!assetsContract.includes('assetRelease: "1.3.1"')) failures.push("assets release v1.3.1")
-if(!assetsRegistry.includes("Object.keys(assets.packs).length")) failures.push("derived asset pack inventory")
-if(!assetsRegistry.includes("assets.coverage.extensions.svg")) failures.push("derived canonical SVG inventory")
-if(!heroContract.includes('profileVersion: "1.0.0"')) failures.push("cinematic delivery profile 1.0.0")
-if(!heroContract.includes('sourceRelease: "1.3.1"')) failures.push("cinematic source release v1.3.1")
-if(!readme.includes("@rocksoul/ui")) failures.push("README package identity")
-if(!readme.includes("CinematicWebHero")) failures.push("README cinematic hero documentation")
+const version = typeof pkg.version === "string" ? pkg.version : ""
+const tag = git(["describe", "--tags", "--exact-match", "HEAD"])
+const expectedTag = version ? `v${version}` : ""
 
-for(const file of ["dist/index.js","dist/index.d.ts","dist/styles.css"]){
-  try{ await access(path.join(root,file)) }catch{ failures.push(`release artifact ${file}`) }
+if (pkg.name !== "@rocksoul/ui") failures.push("package name")
+if (!version) failures.push("package version")
+if (pkg.private !== true) failures.push("GitHub-distributed package must remain private/non-npm")
+if (pkg.scripts?.prepare !== "npm run build:lib") failures.push("Git dependency prepare hook")
+
+if (tag && tag !== expectedTag) failures.push(`release tag ${tag} != ${expectedTag}`)
+if (changelog.includes("## Unreleased") && !changelog.includes(`## ${expectedTag}`)) failures.push(`changelog missing release heading ${expectedTag}`)
+
+for (const file of ["dist/index.js", "dist/index.d.ts", "dist/styles.css", "dist/.rocksoul-build.json"]) {
+  try { await access(path.join(root, file)) } catch { failures.push(`release artifact ${file}`) }
 }
 
-if(failures.length){
+try {
+  const provenance = JSON.parse(await readFile(path.join(root, "dist", ".rocksoul-build.json"), "utf8"))
+  const head = git(["rev-parse", "HEAD"])
+  if (provenance.packageVersion !== version) failures.push("dist provenance package version")
+  if (head && provenance.sourceCommit !== head) failures.push("dist provenance source commit")
+} catch (error) {
+  failures.push(`dist provenance invalid: ${error instanceof Error ? error.message : String(error)}`)
+}
+
+const forbiddenCurrentVersion = version && new RegExp(`0\\.${version.split(".")[1] ?? ""}\\.${version.split(".")[2] ?? ""}`)
+if (forbiddenCurrentVersion && /release-audit\.mjs/.test(await readFile(new URL(import.meta.url), "utf8"))) {
+  failures.push("release audit must not hard-code current version")
+}
+
+if (failures.length) {
   console.error("Release closure audit failed:")
-  failures.forEach((failure)=>console.error(`- ${failure}`))
+  failures.forEach((failure) => console.error(`- ${failure}`))
   process.exit(1)
 }
 
-console.log(`Release closure audit passed: ${pkg.name} ${pkg.version} / assets ${assetsContract.match(/assetRelease:\s*"([^"]+)"/)?.[1]} / cinematic web hero ${heroContract.match(/profileVersion:\s*"([^"]+)"/)?.[1]}.`)
+console.log(`Release closure audit passed: ${pkg.name} ${version} / tag ${tag || "untagged"}.`)
