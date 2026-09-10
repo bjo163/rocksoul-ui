@@ -1,0 +1,48 @@
+name: Sync generated dist
+
+on:
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - "dist/**"
+      - "**/*.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-generated-dist-dev
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: dev
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Check generated dist
+        run: git diff --exit-code -- dist
+      - name: Commit generated dist
+        if: ${{ failure() && steps.check_dist.outcome == 'failure' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(dist): synchronize generated delivery artifacts"
+          git push origin HEAD:dev
