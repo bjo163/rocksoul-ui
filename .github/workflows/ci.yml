@@ -77,3 +77,13 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Browser accessibility + responsive QA
         run: npm run test:browser
+      - name: Upload browser QA evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-qa-${{ github.run_id }}
+          path: |
+            test-results/**
+            playwright-report/**
+          if-no-files-found: warn
+          retention-days: 14
