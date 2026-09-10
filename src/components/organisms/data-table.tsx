@@ -1,112 +1,47 @@
 "use client"
-
 import * as React from "react"
-import { ArrowDownIcon, ChevronDownIcon, ChevronUpIcon } from "../ui/icons"
+import { ArrowDownIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "../ui/icons"
 import { Button } from "../ui/button"
 import { Checkbox } from "../ui/checkbox"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table"
+import { Input } from "../ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { cn } from "../../lib/cn"
 
-export type DataTableColumn<T> = {
-  id: string
-  header: React.ReactNode
-  accessor?: (row: T) => React.ReactNode
-  sortValue?: (row: T) => string | number | null | undefined
-  className?: string
-  sortable?: boolean
-}
-
-export type DataTableProps<T> = {
-  data: T[]
-  columns: DataTableColumn<T>[]
-  getRowId?: (row: T, index: number) => string
-  selectable?: boolean
-  selectedRowIds?: string[]
-  onSelectedRowIdsChange?: (rowIds: string[]) => void
-  emptyState?: React.ReactNode
-  caption?: string
-  className?: string
-}
-
+export type DataTableDensity = "compact" | "comfortable" | "spacious"
+export type DataTableColumn<T> = { id: string; header: React.ReactNode; accessor?: (row: T) => React.ReactNode; sortValue?: (row: T) => string | number | boolean | null | undefined; filterValue?: (row: T) => string | number | boolean | null | undefined; className?: string; sortable?: boolean; filterable?: boolean; visible?: boolean }
+export type DataTableBulkAction = { label: React.ReactNode; onSelect: (rowIds: string[]) => void; disabled?: boolean; variant?: React.ComponentProps<typeof Button>["variant"] }
+export type DataTableProps<T> = { data: T[]; columns: DataTableColumn<T>[]; getRowId?: (row: T, index: number) => string; selectable?: boolean; selectedRowIds?: string[]; onSelectedRowIdsChange?: (rowIds: string[]) => void; emptyState?: React.ReactNode; noResultsState?: React.ReactNode; loading?: boolean; loadingState?: React.ReactNode; error?: React.ReactNode; caption?: string; className?: string; toolbar?: React.ReactNode; filter?: string; onFilterChange?: (value: string) => void; filterPlaceholder?: string; bulkActions?: DataTableBulkAction[]; page?: number; defaultPage?: number; pageSize?: number; defaultPageSize?: number; pageCount?: number; onPageChange?: (page: number) => void; onPageSizeChange?: (size: number) => void; pageSizeOptions?: number[]; density?: DataTableDensity; onDensityChange?: (density: DataTableDensity) => void; visibleColumnIds?: string[]; onVisibleColumnIdsChange?: (ids: string[]) => void; renderExpanded?: (row: T) => React.ReactNode; expandedRowIds?: string[]; onExpandedRowIdsChange?: (ids: string[]) => void }
 type SortState = { id: string; direction: "asc" | "desc" } | null
 
-function DataTable<T>({
-  data,
-  columns,
-  getRowId = (_row, index) => String(index),
-  selectable = false,
-  selectedRowIds,
-  onSelectedRowIdsChange,
-  emptyState = "No results.",
-  caption,
-  className,
-}: DataTableProps<T>) {
-  const [sort, setSort] = React.useState<SortState>(null)
-  const [internalSelected, setInternalSelected] = React.useState<string[]>([])
-  const selected = selectedRowIds ?? internalSelected
-  const setSelected = (next: string[]) => {
-    if (selectedRowIds === undefined) setInternalSelected(next)
-    onSelectedRowIdsChange?.(next)
-  }
-  const rows = React.useMemo(() => {
-    if (!sort) return data
-    const column = columns.find(item => item.id === sort.id)
-    if (!column?.sortValue) return data
-    return [...data].sort((a, b) => {
-      const left = column.sortValue?.(a)
-      const right = column.sortValue?.(b)
-      if (left === right) return 0
-      if (left == null) return 1
-      if (right == null) return -1
-      const result = left < right ? -1 : 1
-      return sort.direction === "asc" ? result : -result
-    })
-  }, [columns, data, sort])
-  const ids = rows.map(getRowId)
-  const allSelected = ids.length > 0 && ids.every(id => selected.includes(id))
-  const toggleSort = (column: DataTableColumn<T>) => {
-    if (!column.sortable || !column.sortValue) return
-    setSort(current => current?.id !== column.id
-      ? { id: column.id, direction: "asc" }
-      : current.direction === "asc" ? { id: column.id, direction: "desc" } : null)
-  }
-  const toggleAll = () => setSelected(allSelected ? selected.filter(id => !ids.includes(id)) : [...new Set([...selected, ...ids])])
-
-  return (
-    <div data-slot="data-table" className={cn("w-full", className)}>
-      <Table>
-        {caption ? <caption className="sr-only">{caption}</caption> : null}
-        <TableHeader>
-          <TableRow>
-            {selectable ? <TableHead className="w-10"><Checkbox aria-label="Select all rows" checked={allSelected} onCheckedChange={toggleAll} /></TableHead> : null}
-            {columns.map(column => <TableHead key={column.id} className={column.className}>
-              {column.sortable && column.sortValue ? <Button variant="ghost" size="sm" className="-ml-3" onClick={() => toggleSort(column)}>
-                {column.header}
-                {sort?.id === column.id ? (sort.direction === "asc" ? <ChevronUpIcon aria-hidden="true" /> : <ArrowDownIcon aria-hidden="true" />) : <ChevronDownIcon aria-hidden="true" />}
-                <span className="sr-only">Sort by {String(column.header)}</span>
-              </Button> : column.header}
-            </TableHead>)}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.length === 0 ? <TableRow><TableCell colSpan={columns.length + (selectable ? 1 : 0)} className="h-24 text-center">{emptyState}</TableCell></TableRow> : rows.map((row, index) => {
-            const id = getRowId(row, index)
-            return <TableRow key={id} data-state={selected.includes(id) ? "selected" : undefined}>
-              {selectable ? <TableCell><Checkbox aria-label={`Select row ${id}`} checked={selected.includes(id)} onCheckedChange={() => setSelected(selected.includes(id) ? selected.filter(item => item !== id) : [...selected, id])} /></TableCell> : null}
-              {columns.map(column => <TableCell key={column.id} className={column.className}>{column.accessor ? column.accessor(row) : null}</TableCell>)}
-            </TableRow>
-          })}
-        </TableBody>
-      </Table>
-    </div>
-  )
+function DataTable<T>(props: DataTableProps<T>) {
+  const { data, columns, getRowId = (_row, index) => String(index), selectable = false, selectedRowIds, onSelectedRowIdsChange, emptyState = "No results.", noResultsState = "No matching results.", loading = false, loadingState = "Loading…", error, caption, className, toolbar, filter, onFilterChange, filterPlaceholder = "Filter results…", bulkActions, page: controlledPage, defaultPage = 1, pageSize: controlledPageSize, defaultPageSize = 10, pageCount, onPageChange, onPageSizeChange, pageSizeOptions = [10, 25, 50], density = "comfortable", onDensityChange, visibleColumnIds, onVisibleColumnIdsChange, renderExpanded, expandedRowIds, onExpandedRowIdsChange } = props
+  const [sort, setSort] = React.useState<SortState>(null), [internalSelected, setInternalSelected] = React.useState<string[]>([]), [internalFilter, setInternalFilter] = React.useState(""), [internalPage, setInternalPage] = React.useState(defaultPage), [internalPageSize, setInternalPageSize] = React.useState(defaultPageSize), [internalVisible, setInternalVisible] = React.useState(() => columns.filter(c => c.visible !== false).map(c => c.id)), [internalExpanded, setInternalExpanded] = React.useState<string[]>([])
+  const selected = selectedRowIds ?? internalSelected, query = filter ?? internalFilter, page = controlledPage ?? internalPage, pageSize = controlledPageSize ?? internalPageSize, visible = visibleColumnIds ?? internalVisible, expanded = expandedRowIds ?? internalExpanded
+  const setSelected = (next: string[]) => { if (selectedRowIds === undefined) setInternalSelected(next); onSelectedRowIdsChange?.(next) }
+  const setQuery = (value: string) => { if (filter === undefined) setInternalFilter(value); onFilterChange?.(value); if (controlledPage === undefined) setInternalPage(1) }
+  const setPage = (value: number) => { if (controlledPage === undefined) setInternalPage(value); onPageChange?.(value) }
+  const setPageSize = (value: number) => { if (controlledPageSize === undefined) setInternalPageSize(value); onPageSizeChange?.(value); setPage(1) }
+  const setExpanded = (next: string[]) => { if (expandedRowIds === undefined) setInternalExpanded(next); onExpandedRowIdsChange?.(next) }
+  const activeColumns = columns.filter(c => visible.includes(c.id))
+  const filtered = React.useMemo(() => { const term = query.trim().toLowerCase(); if (!term) return data; return data.filter(row => activeColumns.some(column => { if (column.filterable === false) return false; const value = column.filterValue ? column.filterValue(row) : column.sortValue?.(row); return String(value ?? "").toLowerCase().includes(term) })) }, [activeColumns, data, query])
+  const sorted = React.useMemo(() => { if (!sort) return filtered; const column = columns.find(item => item.id === sort.id); if (!column?.sortValue) return filtered; return [...filtered].sort((a, b) => { const left = column.sortValue?.(a), right = column.sortValue?.(b); if (left === right) return 0; if (left == null) return 1; if (right == null) return -1; const result = left < right ? -1 : 1; return sort.direction === "asc" ? result : -result }) }, [columns, filtered, sort])
+  const totalPages = Math.max(1, pageCount ?? Math.ceil(sorted.length / pageSize)), rows = pageCount === undefined ? sorted.slice((page - 1) * pageSize, page * pageSize) : sorted, ids = rows.map(getRowId), allSelected = ids.length > 0 && ids.every(id => selected.includes(id))
+  const toggleSort = (column: DataTableColumn<T>) => { if (!column.sortable || !column.sortValue) return; setSort(current => current?.id !== column.id ? { id: column.id, direction: "asc" } : current.direction === "asc" ? { id: column.id, direction: "desc" } : null) }
+  const toggleVisible = (id: string) => { const next = visible.includes(id) ? visible.filter(item => item !== id) : [...visible, id]; if (!next.length) return; if (visibleColumnIds === undefined) setInternalVisible(next); onVisibleColumnIdsChange?.(next) }
+  const toggleExpanded = (id: string) => setExpanded(expanded.includes(id) ? expanded.filter(item => item !== id) : [...expanded, id])
+  const cellSpan = activeColumns.length + (selectable ? 1 : 0) + (renderExpanded ? 1 : 0), rowHeight = density === "compact" ? "[&_td]:py-1 [&_th]:h-8" : density === "spacious" ? "[&_td]:py-4 [&_th]:h-12" : ""
+  return <div data-slot="data-table" className={cn("w-full space-y-3", className)}>
+    {(toolbar || onFilterChange || bulkActions?.length || onDensityChange || onVisibleColumnIdsChange) ? <div className="flex flex-wrap items-center gap-2" data-slot="data-table-toolbar">
+      {onFilterChange ? <Input value={query} onChange={e => setQuery(e.target.value)} placeholder={filterPlaceholder} aria-label="Filter table" className="max-w-xs" /> : null}{toolbar}
+      {bulkActions?.map((action, index) => <Button key={index} size="sm" variant={action.variant ?? "outline"} disabled={action.disabled || selected.length === 0} onClick={() => action.onSelect(selected)}>{action.label}</Button>)}
+      {onDensityChange ? <div className="ml-auto flex gap-1" role="group" aria-label="Table density">{(["compact", "comfortable", "spacious"] as const).map(value => <Button key={value} size="sm" variant={density === value ? "secondary" : "ghost"} onClick={() => onDensityChange(value)}>{value}</Button>)}</div> : null}
+      {onVisibleColumnIdsChange ? <div className="flex gap-1" role="group" aria-label="Visible columns">{columns.map(column => <Button key={column.id} size="sm" variant={visible.includes(column.id) ? "secondary" : "ghost"} aria-pressed={visible.includes(column.id)} onClick={() => toggleVisible(column.id)}>{column.id}</Button>)}</div> : null}
+    </div> : null}
+    <Table>{caption ? <caption className="sr-only">{caption}</caption> : null}<TableHeader><TableRow className={rowHeight}>
+      {selectable ? <TableHead className="w-10"><Checkbox aria-label="Select all rows" checked={allSelected ? true : ids.some(id => selected.includes(id)) ? "indeterminate" : false} onCheckedChange={() => setSelected(allSelected ? selected.filter(id => !ids.includes(id)) : [...new Set([...selected, ...ids])])} /></TableHead> : null}{renderExpanded ? <TableHead className="w-10"><span className="sr-only">Expand</span></TableHead> : null}
+      {activeColumns.map(column => <TableHead key={column.id} className={column.className} aria-sort={sort?.id === column.id ? sort.direction === "asc" ? "ascending" : "descending" : undefined}>{column.sortable && column.sortValue ? <Button variant="ghost" size="sm" className="-ml-3" onClick={() => toggleSort(column)}>{column.header}{sort?.id === column.id ? (sort.direction === "asc" ? <ChevronUpIcon aria-hidden="true" /> : <ArrowDownIcon aria-hidden="true" />) : <ChevronDownIcon aria-hidden="true" />}<span className="sr-only">Sort by {String(column.header)}</span></Button> : column.header}</TableHead>)}</TableRow></TableHeader>
+      <TableBody className={rowHeight}>{loading ? <TableRow><TableCell colSpan={cellSpan} className="h-24 text-center" aria-live="polite">{loadingState}</TableCell></TableRow> : error ? <TableRow><TableCell colSpan={cellSpan} className="h-24 text-center text-destructive" role="alert">{error}</TableCell></TableRow> : rows.length === 0 ? <TableRow><TableCell colSpan={cellSpan} className="h-24 text-center">{query ? noResultsState : emptyState}</TableCell></TableRow> : rows.map((row, index) => { const id = getRowId(row, index), isExpanded = expanded.includes(id); return <React.Fragment key={id}><TableRow data-state={selected.includes(id) ? "selected" : undefined} aria-expanded={renderExpanded ? isExpanded : undefined}>{selectable ? <TableCell><Checkbox aria-label={`Select row ${id}`} checked={selected.includes(id)} onCheckedChange={() => setSelected(selected.includes(id) ? selected.filter(item => item !== id) : [...selected, id])} /></TableCell> : null}{renderExpanded ? <TableCell><Button variant="ghost" size="icon" aria-label={isExpanded ? `Collapse row ${id}` : `Expand row ${id}`} aria-expanded={isExpanded} onClick={() => toggleExpanded(id)}>{isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}</Button></TableCell> : null}{activeColumns.map(column => <TableCell key={column.id} className={column.className}>{column.accessor ? column.accessor(row) : null}</TableCell>)}</TableRow>{renderExpanded && isExpanded ? <TableRow><TableCell colSpan={cellSpan}>{renderExpanded(row)}</TableCell></TableRow> : null}</React.Fragment>})}</TableBody></Table>
+    {totalPages > 1 || onPageSizeChange ? <div className="flex flex-wrap items-center justify-between gap-2 text-sm" data-slot="data-table-pagination" aria-label="Table pagination"><span>Page {Math.min(page, totalPages)} of {totalPages}</span><div className="flex items-center gap-1"><Button variant="outline" size="icon" aria-label="Previous page" disabled={page <= 1} onClick={() => setPage(Math.max(1, page - 1))}><ChevronLeftIcon /></Button><Button variant="outline" size="icon" aria-label="Next page" disabled={page >= totalPages} onClick={() => setPage(Math.min(totalPages, page + 1))}><ChevronRightIcon /></Button>{onPageSizeChange ? <select aria-label="Rows per page" value={pageSize} onChange={e => setPageSize(Number(e.target.value))} className="h-9 border bg-transparent px-2">{pageSizeOptions.map(size => <option key={size} value={size}>{size} / page</option>)}</select> : null}</div></div> : null}
+  </div>
 }
-
 export { DataTable }
