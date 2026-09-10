@@ -36,9 +36,11 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
       - name: Check generated dist
+        id: check_dist
+        continue-on-error: true
         run: git diff --exit-code -- dist
       - name: Commit generated dist
-        if: ${{ failure() && steps.check_dist.outcome == 'failure' }}
+        if: ${{ steps.check_dist.outcome == 'failure' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -46,3 +48,6 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "chore(dist): synchronize generated delivery artifacts"
           git push origin HEAD:dev
+      - name: Fail when synchronization was not possible
+        if: ${{ steps.check_dist.outcome == 'failure' && success() }}
+        run: git diff --exit-code -- dist
