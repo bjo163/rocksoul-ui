@@ -3,7 +3,7 @@ import { useApplicationActions, type AuthSubmitPayload } from "../../contracts/i
 import { Badge } from "./badge"
 import { Checkbox, Input } from "./form-controls"
 import { Button } from "./button"
-import { Pagination as PrimitivePagination } from "../ui/pagination"
+import { SimplePagination } from "../molecules/pagination"
 
 /** @deprecated Product patterns are kept for existing screens; compose primitives for new screens. */
 import { CorrelationScore, type CorrelationScoreProps } from "../correlation-score"
@@ -35,13 +35,7 @@ export function Pagination({
 }) {
   const actions = useApplicationActions()
   const changePage = onPageChange ?? actions.onPageChange
-  return (
-    <PrimitivePagination aria-label="Pagination" className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-      <Button variant="ghost" disabled={page <= 1} onClick={() => void changePage?.(page - 1)}>Previous</Button>
-      <span className="mw-meta text-muted-foreground">Page {page} / {pages}</span>
-      <Button variant="ghost" disabled={page >= pages} onClick={() => void changePage?.(page + 1)}>Next</Button>
-    </PrimitivePagination>
-  )
+  return <SimplePagination page={page} pages={pages} onPageChange={changePage} />
 }
 
 export function EvidenceGridPattern({

@@ -41,7 +41,7 @@ The root package no longer exports the historical primitive adapters. Compatibil
 | Tooltip | ui/tooltip | Converts label/shortcut props to tooltip parts |
 | Avatar | ui/avatar | Preserves initials and presence status |
 | Skeleton | ui/skeleton | Preserves named dimensions |
-| Pagination | ui/pagination + Button | Preserves page state and application callbacks |
+| Pagination | molecules/pagination + ui/pagination | Generic `SimplePagination` owns layout; app callbacks stay in the consumer |
 
 IconButton composes ui/button. Divider composes ui/separator. Native Radio remains a labelled native input adapter; RadioGroup is the standard choice for new grouped selection. `Asset` reuses the current asset provider and URL resolver. New consumers cannot import these compatibility files through package exports.
 

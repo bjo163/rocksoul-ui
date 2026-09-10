@@ -121,6 +121,14 @@
     "./components/organisms/*": {
       "types": "./dist/components/organisms/*.d.ts",
       "import": "./dist/components/organisms/*.js"
+    },
+    "./components/templates": {
+      "types": "./dist/components/templates/index.d.ts",
+      "import": "./dist/components/templates/index.js"
+    },
+    "./components/templates/*": {
+      "types": "./dist/components/templates/*.d.ts",
+      "import": "./dist/components/templates/*.js"
     }
   },
   "sideEffects": [

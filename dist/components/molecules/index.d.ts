@@ -4,3 +4,4 @@ export * from "./password-input";
 export * from "./file-input";
 export * from "./date-input";
 export * from "./form-actions";
+export * from "./pagination";

@@ -4,4 +4,5 @@ import { PasswordInput as s } from "./password-input.js";
 import { FileInput as c } from "./file-input.js";
 import { DateInput as l } from "./date-input.js";
 import { FormActions as u } from "./form-actions.js";
-export { l as DateInput, c as FileInput, u as FormActions, e as InputGroup, t as InputGroupAddon, n as InputGroupButton, r as InputGroupInput, i as InputGroupText, a as InputGroupTextarea, s as PasswordInput, o as SearchInput };
+import { SimplePagination as d } from "./pagination.js";
+export { l as DateInput, c as FileInput, u as FormActions, e as InputGroup, t as InputGroupAddon, n as InputGroupButton, r as InputGroupInput, i as InputGroupText, a as InputGroupTextarea, s as PasswordInput, o as SearchInput, d as SimplePagination };

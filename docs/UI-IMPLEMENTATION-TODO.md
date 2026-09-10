@@ -75,7 +75,8 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 
 ### Overlay and navigation primitives
 
-- [ ] Canonicalize `Tooltip`, `Popover`, `HoverCard`, `Dialog`, `AlertDialog`, `Sheet`, `Drawer`, `DropdownMenu`, `ContextMenu`, `Menubar`, `Command`, `Tabs`, `Breadcrumb`, `Pagination`, `NavigationMenu`, `Accordion`, `Collapsible`, dan `Calendar`.
+- [ ] Canonicalize `Tooltip`, `Popover`, `HoverCard`, `Dialog`, `AlertDialog`, `Sheet`, `Drawer`, `DropdownMenu`, `ContextMenu`, `Menubar`, `Command`, `Tabs`, `Breadcrumb`, `NavigationMenu`, `Accordion`, `Collapsible`, dan `Calendar`.
+- [x] Extract generic `SimplePagination` molecule; keep the legacy application callback adapter only in `compat/patterns` until all pattern consumers migrate.
 - [ ] Uji focus return, escape, outside interaction, nesting, mobile behavior, dan reduced motion.
 
 ## Phase 5 — Molecules
