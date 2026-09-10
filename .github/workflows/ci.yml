@@ -31,9 +31,12 @@ jobs:
           package-manager-cache: false
       - name: Upgrade npm
         run: npm install --global npm@11.6.0
-
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
+      - name: Enforce tracked dist reproducibility
+        run: git diff --exit-code -- dist
+      - name: Strict repository consistency audit
+        run: npm run audit:repository
       - name: Design contract audit
         run: npm run audit:tokens
       - name: Accessibility contract audit
@@ -44,7 +47,6 @@ jobs:
         run: npm run audit:domains
       - name: Rocksoul assets v2 sync audit
         run: npm run audit:assets-sync
-
       - name: Rocksoul assets remote freshness
         run: npm run audit:assets-freshness
       - name: MoonWitness asset registry v1.3
