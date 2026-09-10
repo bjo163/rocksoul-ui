@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "audit:repository": "node scripts/repository-audit.mjs",
     "audit:tokens": "node scripts/token-audit.mjs",
     "audit:styles": "node scripts/style-token-audit.mjs",
     "audit:api-stability": "node scripts/api-stability-audit.mjs",
@@ -22,22 +23,22 @@
     "audit:application": "node scripts/application-audit.mjs",
     "audit:semantic-map": "node scripts/semantic-asset-map-audit.mjs",
     "audit:package": "node scripts/package-audit.mjs",
-    "ci": "npm run audit:tokens && npm run audit:styles && npm run audit:api-stability && npm run audit:interaction && npm run audit:foundation && npm run audit:architecture && npm run audit:a11y && npm run audit:research-visuals && npm run audit:domains && npm run audit:assets-sync && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:platform-admin && npm run audit:application && npm run audit:semantic-map && npm run typecheck && npm run test:unit && npm run build:lib && npm run audit:package && npm run test:consumer && npm run audit:release && npm run build:playground && npm run build-storybook",
-    "prepare": "npm run build:lib",
     "audit:assets-sync": "node scripts/assets-sync-audit.mjs",
     "audit:assets-freshness": "node scripts/assets-freshness-audit.mjs",
+    "audit:assets-registry": "node scripts/assets-registry-audit.mjs",
+    "audit:assets-integrity": "node scripts/assets-integrity-audit.mjs",
+    "audit:platform-admin": "node scripts/platform-admin-audit.mjs",
+    "audit:research-visuals": "node scripts/research-visual-contract-audit.mjs",
+    "audit:release": "node scripts/release-audit.mjs",
+    "audit:consumer": "node scripts/ui-consumer-audit.mjs",
+    "audit:adapters": "node scripts/adapter-audit.mjs",
+    "ci": "npm run audit:repository && npm run audit:tokens && npm run audit:styles && npm run audit:api-stability && npm run audit:interaction && npm run audit:foundation && npm run audit:architecture && npm run audit:a11y && npm run audit:research-visuals && npm run audit:domains && npm run audit:assets-sync && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:platform-admin && npm run audit:application && npm run audit:semantic-map && npm run typecheck && npm run test:unit && npm run build:lib && npm run audit:package && npm run test:consumer && npm run audit:release && npm run build:playground && npm run build-storybook",
+    "prepare": "npm run build:lib",
     "test:unit": "vitest run",
     "test:browser": "playwright test",
     "test:consumer": "node scripts/consumer-smoke.mjs",
-    "audit:assets-integrity": "node scripts/assets-integrity-audit.mjs",
-    "audit:release": "node scripts/release-audit.mjs",
-    "audit:assets-registry": "node scripts/assets-registry-audit.mjs",
-    "audit:platform-admin": "node scripts/platform-admin-audit.mjs",
-    "audit:research-visuals": "node scripts/research-visual-contract-audit.mjs",
     "test:browser:desktop": "playwright test --project=desktop-chromium",
-    "test:browser:mobile": "playwright test --project=mobile-chromium",
-    "audit:consumer": "node scripts/ui-consumer-audit.mjs",
-    "audit:adapters": "node scripts/adapter-audit.mjs"
+    "test:browser:mobile": "playwright test --project=mobile-chromium"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
@@ -83,65 +84,27 @@
     "vite": "8.2.2",
     "vitest": "^4.0.0"
   },
-  "engines": {
-    "node": ">=22",
-    "npm": ">=11.6.0"
-  },
-  "files": [
-    "dist",
-    "THIRD-PARTY-NOTICES.md"
-  ],
+  "engines": { "node": ">=22", "npm": ">=11.6.0" },
+  "files": ["dist", "THIRD-PARTY-NOTICES.md"],
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json",
     "./brand/*": "./dist/brand/*",
     "./assets/*": "./dist/assets/*",
-    "./components/ui": {
-      "types": "./dist/components/ui/index.d.ts",
-      "import": "./dist/components/ui/index.js"
-    },
-    "./components/ui/*": {
-      "types": "./dist/components/ui/*.d.ts",
-      "import": "./dist/components/ui/*.js"
-    },
-    "./components/molecules": {
-      "types": "./dist/components/molecules/index.d.ts",
-      "import": "./dist/components/molecules/index.js"
-    },
-    "./components/molecules/*": {
-      "types": "./dist/components/molecules/*.d.ts",
-      "import": "./dist/components/molecules/*.js"
-    },
-    "./components/organisms": {
-      "types": "./dist/components/organisms/index.d.ts",
-      "import": "./dist/components/organisms/index.js"
-    },
-    "./components/organisms/*": {
-      "types": "./dist/components/organisms/*.d.ts",
-      "import": "./dist/components/organisms/*.js"
-    },
-    "./components/templates": {
-      "types": "./dist/components/templates/index.d.ts",
-      "import": "./dist/components/templates/index.js"
-    },
-    "./components/templates/*": {
-      "types": "./dist/components/templates/*.d.ts",
-      "import": "./dist/components/templates/*.js"
-    }
+    "./components/ui": { "types": "./dist/components/ui/index.d.ts", "import": "./dist/components/ui/index.js" },
+    "./components/ui/*": { "types": "./dist/components/ui/*.d.ts", "import": "./dist/components/ui/*.js" },
+    "./components/molecules": { "types": "./dist/components/molecules/index.d.ts", "import": "./dist/components/molecules/index.js" },
+    "./components/molecules/*": { "types": "./dist/components/molecules/*.d.ts", "import": "./dist/components/molecules/*.js" },
+    "./components/organisms": { "types": "./dist/components/organisms/index.d.ts", "import": "./dist/components/organisms/index.js" },
+    "./components/organisms/*": { "types": "./dist/components/organisms/*.d.ts", "import": "./dist/components/organisms/*.js" },
+    "./components/templates": { "types": "./dist/components/templates/index.d.ts", "import": "./dist/components/templates/index.js" },
+    "./components/templates/*": { "types": "./dist/components/templates/*.d.ts", "import": "./dist/components/templates/*.js" }
   },
-  "sideEffects": [
-    "./dist/styles.css"
-  ],
-  "peerDependencies": {
-    "react": ">=19",
-    "react-dom": ">=19"
-  },
+  "sideEffects": ["./dist/styles.css"],
+  "peerDependencies": { "react": ">=19", "react-dom": ">=19" },
   "main": "./dist/index.js",
   "style": "./dist/styles.css"
 }
