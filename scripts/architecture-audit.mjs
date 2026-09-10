@@ -50,7 +50,7 @@ function levelFor(file) {
 }
 
 function normalizeSpecifier(specifier) {
-  return specifier.replace(/\\/g, "/").replace(/^@\/ ?/, "@/")
+  return specifier.replace(/\\/g, "/")
 }
 
 async function resolveSource(from, specifier, aliases) {
@@ -58,35 +58,44 @@ async function resolveSource(from, specifier, aliases) {
   const candidates = []
   if (raw.startsWith(".")) candidates.push(path.resolve(path.dirname(from), raw))
   for (const [alias, targets] of aliases) {
-    if (!raw.startsWith(alias.replace("/*", ""))) continue
-    const suffix = raw.slice(alias.replace("/*", "").length).replace(/^\//, "")
+    const prefix = alias.replace("/*", "")
+    if (!raw.startsWith(prefix)) continue
+    const suffix = raw.slice(prefix.length).replace(/^\//, "")
     for (const target of targets) candidates.push(path.resolve(root, target.replace("/*", ""), suffix))
   }
   for (const candidate of candidates) {
-    for (const extension of [".ts", ".tsx", ".js", ".jsx", ".mjs"])
+    for (const extension of [".ts", ".tsx", ".js", ".jsx", ".mjs"]) {
       if (await exists(`${candidate}${extension}`)) return `${candidate}${extension}`
-    for (const extension of [".ts", ".tsx", ".js", ".jsx", ".mjs"])
-      if (await exists(path.join(candidate, `index${extension}`))) return path.join(candidate, `index${extension}`)
+    }
+    for (const extension of [".ts", ".tsx", ".js", ".jsx", ".mjs"]) {
+      const index = path.join(candidate, `index${extension}`)
+      if (await exists(index)) return index
+    }
   }
   return null
 }
 
-const tsconfigPath = path.join(root, "tsconfig.json")
-const tsconfig = JSON.parse(await readFile(tsconfigPath, "utf8"))
+const tsconfig = JSON.parse(await readFile(path.join(root, "tsconfig.json"), "utf8"))
+const inventoryPath = path.join(root, "docs/ui-component-inventory.json")
+const inventory = JSON.parse(await readFile(inventoryPath, "utf8"))
 const aliases = new Map(Object.entries(tsconfig.compilerOptions?.paths ?? {}))
+const documentedOverlap = JSON.stringify(inventory.overlapDecisions ?? [])
+
 await walk(sourceRoot)
 
 for (const [name, owners] of basenameOwners) {
   const uniqueLayers = new Set(owners.map(file => file.split("/")[0]))
-  if (owners.length > 1 && uniqueLayers.size > 1) failures.push(`${owners.join(", ")}: duplicate component basename across layers`)
+  const explicitlyDocumented = owners.every(file => documentedOverlap.includes(file))
+  if (owners.length > 1 && uniqueLayers.size > 1 && !explicitlyDocumented) {
+    failures.push(`${owners.join(", ")}: duplicate component basename across layers without overlap decision`)
+  }
 }
 
-for (const [key, file] of sourceFiles) {
+for (const file of sourceFiles.values()) {
   const source = await readFile(file, "utf8")
   const ownerLevel = levelFor(file)
   if (ownerLevel === undefined) continue
-  const imports = source.matchAll(/(?:from|import)\s*["']([^"']+)["']/g)
-  for (const match of imports) {
+  for (const match of source.matchAll(/(?:from|import)\s*["']([^"']+)["']/g)) {
     const dependency = await resolveSource(file, match[1], aliases)
     if (!dependency || !dependency.startsWith(sourceRoot)) continue
     const dependencyLevel = levelFor(dependency)
@@ -101,8 +110,8 @@ for (const [key, file] of sourceFiles) {
 }
 
 const pkg = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"))
-const staticExports = Object.entries(pkg.exports ?? {}).filter(([key]) => !key.includes("*"))
-for (const [key, value] of staticExports) {
+for (const [key, value] of Object.entries(pkg.exports ?? {})) {
+  if (key.includes("*")) continue
   if (key === "./package.json") continue
   const entries = typeof value === "string" ? { import: value } : value
   for (const target of Object.values(entries)) {
@@ -114,8 +123,7 @@ for (const [key, value] of staticExports) {
   }
 }
 
-const sourceIndex = sourceFiles.has("index") || await exists(path.join(sourceRoot, "index.ts"))
-if (!sourceIndex) failures.push("src/index.ts: missing canonical package source entry")
+if (!(await exists(path.join(sourceRoot, "index.ts")))) failures.push("src/index.ts: missing canonical package source entry")
 if (!(await exists(path.join(distRoot, "index.js")))) failures.push("dist/index.js: missing generated package entry")
 if (!(await exists(path.join(distRoot, "index.d.ts")))) failures.push("dist/index.d.ts: missing generated type entry")
 
@@ -128,4 +136,4 @@ if (failures.length) {
   process.exit(1)
 }
 
-console.log(`Architecture audit passed: ${sourceFiles.size} source entries, ${basenameOwners.size} owned component names, alias/barrel graph clean, package exports resolvable.`)
+console.log(`Architecture audit passed: ${sourceFiles.size} source entries, ${basenameOwners.size} owned component names, aliases/barrels/export map clean.`)
