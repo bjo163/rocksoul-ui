@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { cn } from "../lib/cn"
 
 export interface CaseHeaderProps {
@@ -45,7 +45,7 @@ export function CaseHeader({
           {summary}
         </p>
         <div className="mt-5 flex flex-wrap items-center gap-2">
-          <Badge variant={status}>{status}</Badge>
+          <StatusBadge variant={status}>{status}</StatusBadge>
           {metadata.map((item) => (
             <span key={item.label} className="mw-meta text-muted-foreground">
               {item.label}: <span className="text-foreground">{item.value}</span>

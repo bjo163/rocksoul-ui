@@ -1,4 +1,4 @@
-import { Badge } from "../components/feedback/status-badge"
+import { StatusBadge } from "../components/feedback/status-badge"
 import { AWSBoundary, EvidenceCard, SourceBlock, TimelineEntry } from "../components/archive-components"
 import { LegalStatus } from "../components/legal-status"
 import { mw0042 } from "../fixtures/mw0042"
@@ -52,7 +52,7 @@ function DomainDetail({ domain }: { domain: RecordDomain }) {
           {rows.map(([label, matched]) => (
             <div key={label} className="flex items-center justify-between border-b border-border py-3">
               <dt className="mw-meta text-muted-foreground">{label}</dt>
-              <dd><Badge variant={matched ? "supported" : "partial"}>{matched ? "MATCH" : "NOT VERIFIED"}</Badge></dd>
+              <dd><StatusBadge variant={matched ? "supported" : "partial"}>{matched ? "MATCH" : "NOT VERIFIED"}</StatusBadge></dd>
             </div>
           ))}
         </dl>
@@ -151,8 +151,8 @@ export function DomainScreen({ domain }: { domain: RecordDomain | "AWS" }) {
           <h2 className="mw-display mt-4 text-5xl font-black uppercase leading-[0.94] sm:text-7xl">{record.title}</h2>
           <p className="mw-reading mt-6 text-lg leading-8 text-muted-foreground">{config.statement}</p>
           <div className="mt-6 flex flex-wrap gap-2">
-            <Badge variant={record.status}>{record.status}</Badge>
-            <Badge variant={detail.independent ? "verified" : "unresolved"}>{detail.independent ? "independent source" : "dependency unknown"}</Badge>
+            <StatusBadge variant={record.status}>{record.status}</StatusBadge>
+            <StatusBadge variant={detail.independent ? "verified" : "unresolved"}>{detail.independent ? "independent source" : "dependency unknown"}</StatusBadge>
           </div>
           <dl className="mw-meta mt-6 grid gap-2 border-t border-border pt-4 text-muted-foreground">
             <div className="flex justify-between gap-3"><dt>Source type</dt><dd className="text-right text-foreground">{detail.sourceType}</dd></div>

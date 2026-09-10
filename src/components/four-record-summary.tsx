@@ -1,5 +1,5 @@
 import { useId } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { cn } from "../lib/cn"
 
 export type RecordDomain = "STORY" | "EVENT" | "PERSON" | "RGBL"
@@ -44,7 +44,7 @@ export function FourRecordSummary({ records, compact = false }: { records: Recor
               <article key={domain} className={cn("flex flex-col border border-dashed border-border bg-card p-4 opacity-70", compact ? "min-h-[92px]" : "min-h-44")}>
                 <div className="flex items-start justify-between gap-3">
                   <span className={cn("mw-eyebrow", domainClass[domain])}>{domain}</span>
-                  <Badge variant="unresolved">missing</Badge>
+                  <StatusBadge variant="unresolved">missing</StatusBadge>
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground">No linked record yet.</p>
               </article>
@@ -59,7 +59,7 @@ export function FourRecordSummary({ records, compact = false }: { records: Recor
             >
               <div className="flex items-start justify-between gap-3">
                 <span className={cn("mw-eyebrow", domainClass[record.domain])}>{record.domain}</span>
-                <Badge variant={record.status}>{record.status}</Badge>
+                <StatusBadge variant={record.status}>{record.status}</StatusBadge>
               </div>
               {!compact ? <p className="mw-meta mt-4 text-muted-foreground">{record.recordId}</p> : null}
               <h4 className={cn("font-semibold leading-5", compact ? "mt-3 text-sm" : "mt-2 text-base")}>{record.title}</h4>

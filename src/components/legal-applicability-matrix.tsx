@@ -1,5 +1,5 @@
 import { useId } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { cn } from "../lib/cn"
 import {
   legalApplicabilityAxes,
@@ -84,7 +84,7 @@ export function LegalApplicabilityMatrix({
             {description}
           </p>
         </div>
-        <Badge variant="unresolved">{legalIntelligenceContract.principle}</Badge>
+        <StatusBadge variant="unresolved">{legalIntelligenceContract.principle}</StatusBadge>
       </div>
 
       <div className="mt-5 grid gap-3 md:grid-cols-2" role="list" aria-label="Applicability axes">
@@ -102,7 +102,7 @@ export function LegalApplicabilityMatrix({
                   <p className="mw-meta text-primary">{axis.id}</p>
                   <h4 className="mt-1 font-bold text-foreground">{axis.label}</h4>
                 </div>
-                <Badge variant={assessmentBadge[assessment.state]}>{assessment.state}</Badge>
+                <StatusBadge variant={assessmentBadge[assessment.state]}>{assessment.state}</StatusBadge>
               </div>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{axis.question}</p>
               <div className="mt-4 border-t border-border pt-3">
@@ -124,9 +124,9 @@ export function LegalApplicabilityMatrix({
           <p className="mw-meta text-muted-foreground">Reviewed result vocabulary</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {legalResultVocabulary.map((state) => (
-              <Badge key={state.id} variant={legalResultBadge[state.id as keyof typeof legalResultBadge] ?? "neutral"}>
+              <StatusBadge key={state.id} variant={legalResultBadge[state.id as keyof typeof legalResultBadge] ?? "neutral"}>
                 {state.label}
-              </Badge>
+              </StatusBadge>
             ))}
           </div>
           <p className="mt-3 text-xs leading-5 text-muted-foreground">

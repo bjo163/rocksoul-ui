@@ -1,5 +1,5 @@
 import type { ImgHTMLAttributes } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { MoonWitnessResilientImage, useMoonWitnessAssetBaseUrl } from "./asset-provider"
 import type { AppCommandAction, AppResource } from "./application-shell"
 import {
@@ -66,7 +66,7 @@ export function PlatformRoleMatrix({
               <th className="p-4 text-sm">{capability.label}</th>
               {platformAdminContract.roles.map((role) => {
                 const access = capability[role.id] as PlatformCapabilityAccess
-                return <td key={role.id} className="p-4"><Badge variant={accessVariant[access]}>{access}</Badge></td>
+                return <td key={role.id} className="p-4"><StatusBadge variant={accessVariant[access]}>{access}</StatusBadge></td>
               })}
             </tr>
           ))}
@@ -102,7 +102,7 @@ export function PlatformBackendBoundary({
               : "Runtime state comes from the Platform API, not from baked UI fixtures.")}
           </p>
         </div>
-        <Badge variant={runtimeVariant[state]}>{state}</Badge>
+        <StatusBadge variant={runtimeVariant[state]}>{state}</StatusBadge>
       </div>
     </section>
   )
@@ -135,7 +135,7 @@ export function PlatformServiceRegistry({
               <p className="mt-1 font-mono text-[10px] text-muted-foreground">{service.repository ?? service.kind}</p>
             </div>
             <span className="text-xs text-muted-foreground">{status.detail ?? "Runtime status unavailable."}</span>
-            <Badge variant={runtimeVariant[status.state]}>{status.state}</Badge>
+            <StatusBadge variant={runtimeVariant[status.state]}>{status.state}</StatusBadge>
           </div>
         )
       })}

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useEffect, useMemo, useState, type ReactNode } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { SurfaceButton as Button, SurfaceInput as Input, SurfaceAvatar as Avatar, SurfaceDialog as Dialog, SurfaceDrawer as Drawer } from "./patterns/surface-primitives"
 import { MoonWitnessBrand } from "./brand"
 import { Button as PrimitiveButton } from "./ui/button"
@@ -115,7 +115,7 @@ export function Breadcrumbs({ items }: { items: Array<{ label: string; href?: st
 
 export function BackendStatus({ state, label = "Backend" }: { state: BackendState; label?: string }) {
   const variant = state === "online" ? "supported" : state === "degraded" ? "partial" : "contested"
-  return <Badge variant={variant}>{label}: {state}</Badge>
+  return <StatusBadge variant={variant}>{label}: {state}</StatusBadge>
 }
 
 export function AutoMenu({
@@ -196,7 +196,7 @@ export function NotificationsPanel({
           <article key={item.id} className={cn("border-b border-border p-4", item.state === "unread" && "bg-panel")}>
             <div className="flex items-center justify-between gap-3">
               <strong className="text-sm">{item.title}</strong>
-              <Badge variant={item.state === "unread" ? "info" : "neutral"}>{item.variant}</Badge>
+              <StatusBadge variant={item.state === "unread" ? "info" : "neutral"}>{item.variant}</StatusBadge>
             </div>
             <p className="mt-2 text-xs leading-5 text-muted-foreground">{item.body}</p>
             <p className="mw-meta mt-3 text-muted-foreground">{item.state}</p>

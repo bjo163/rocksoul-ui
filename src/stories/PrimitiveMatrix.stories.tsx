@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Badge } from "../components/feedback/status-badge"
+import { StatusBadge } from "../components/feedback/status-badge"
 import { Button } from "../components/ui/button"
 import { Checkbox } from "../components/ui/checkbox"
 import { Input } from "../components/ui/input"
@@ -17,7 +17,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const ButtonsAndBadges: Story = {
-  render: () => <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground"><p className="mw-eyebrow text-primary">Buttons / variants / sizes / states</p><div className="mt-4 flex flex-wrap gap-3">{(["default", "secondary", "ghost", "destructive"] as const).map((variant) => <Button key={variant} variant={variant}>{variant}</Button>)}<Button size="sm">small</Button><Button size="lg">large</Button><Button disabled>disabled</Button></div><p className="mw-eyebrow mt-10 text-primary">Badges</p><div className="mt-4 flex flex-wrap gap-2">{(["supported", "verified", "contested", "partial", "unresolved", "restricted", "prohibited", "info", "neutral"] as const).map((state) => <Badge key={state} variant={state}>{state}</Badge>)}</div></div>,
+  render: () => <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground"><p className="mw-eyebrow text-primary">Buttons / variants / sizes / states</p><div className="mt-4 flex flex-wrap gap-3">{(["default", "secondary", "ghost", "destructive"] as const).map((variant) => <Button key={variant} variant={variant}>{variant}</Button>)}<Button size="sm">small</Button><Button size="lg">large</Button><Button disabled>disabled</Button></div><p className="mw-eyebrow mt-10 text-primary">Badges</p><div className="mt-4 flex flex-wrap gap-2">{(["supported", "verified", "contested", "partial", "unresolved", "restricted", "prohibited", "info", "neutral"] as const).map((state) => <StatusBadge key={state} variant={state}>{state}</StatusBadge>)}</div></div>,
 }
 
 export const FieldsAndSelection: Story = {

@@ -1,4 +1,4 @@
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { parseQualifiedReference } from "../contracts/ecosystem-domains"
 import { cn } from "../lib/cn"
 
@@ -13,7 +13,7 @@ export function QualifiedReferenceView({ value, href, compact = false, className
   const parsed = parseQualifiedReference(value)
   const content = (
     <span className={cn("inline-grid gap-1", compact ? "grid-cols-[auto_1fr] items-center gap-x-2" : "", className)}>
-      {parsed ? <Badge variant="info">{parsed.domain}</Badge> : <Badge variant="neutral">REFERENCE</Badge>}
+      {parsed ? <StatusBadge variant="info">{parsed.domain}</StatusBadge> : <StatusBadge variant="neutral">REFERENCE</StatusBadge>}
       <code className="break-all text-[10px] text-foreground">{value}</code>
       {!compact && parsed ? (
         <small className="font-mono text-[9px] uppercase tracking-[0.08em] text-muted-foreground">

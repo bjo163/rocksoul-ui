@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { Badge, type BadgeProps } from "./feedback/status-badge"
+import { StatusBadge, type StatusBadgeProps } from "./feedback/status-badge"
 import { MoonWitnessAssetImage } from "./asset-provider"
 import { cn } from "../lib/cn"
 
@@ -8,7 +8,7 @@ export interface DossierHeaderProps {
   title: string
   summary?: string
   recordId?: string
-  status?: { label: string; variant?: BadgeProps["variant"] }
+  status?: { label: string; variant?: StatusBadgeProps["variant"] }
   metadata?: Array<{ label: string; value: string }>
   actions?: ReactNode
   variant?: "compact" | "cinematic"
@@ -69,7 +69,7 @@ export function DossierHeader({
 
         {(status || metadata.length) ? (
           <aside className="border border-border bg-background/70 p-4 backdrop-blur-md" aria-label="Dossier metadata">
-            {status ? <Badge variant={status.variant ?? "neutral"}>{status.label}</Badge> : null}
+            {status ? <StatusBadge variant={status.variant ?? "neutral"}>{status.label}</StatusBadge> : null}
             <dl className="mt-4 grid gap-3">
               {metadata.map((item) => (
                 <div key={item.label} className="grid gap-1 border-b border-border pb-3 last:border-b-0 last:pb-0">

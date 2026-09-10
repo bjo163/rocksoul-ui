@@ -1,5 +1,5 @@
 import { useId, useState } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import type { RecordDomain, RecordSummary } from "./four-record-summary"
 import type { ResearchDomain } from "../contracts/ecosystem-domains"
 import { cn } from "../lib/cn"
@@ -54,7 +54,7 @@ export function EvidenceGraph({ records, score }: EvidenceGraphProps) {
           <p className="mw-meta text-muted-foreground">Relationship graph</p>
           <h3 id={headingId} className="mw-display mt-2 text-2xl font-bold">Separate records. Shared correlation layer.</h3>
         </div>
-        <Badge variant="unresolved">not causation</Badge>
+        <StatusBadge variant="unresolved">not causation</StatusBadge>
       </div>
 
       <div className="relative mx-auto mt-6 aspect-square w-full max-w-[430px]" aria-label="Interactive case relationship graph">

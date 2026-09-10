@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Badge } from "../components/feedback/status-badge"
+import { StatusBadge } from "../components/feedback/status-badge"
 import { Button } from "../components/ui/button"
 import {
   AuditEventRow,
@@ -86,7 +86,7 @@ export function DesignSystemScreen() {
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
           {(["supported", "verified", "contested", "partial", "unresolved", "restricted", "prohibited", "info", "neutral"] as const).map((state) => (
-            <Badge key={state} variant={state}>{state}</Badge>
+            <StatusBadge key={state} variant={state}>{state}</StatusBadge>
           ))}
         </div>
 
@@ -140,7 +140,7 @@ export function DesignSystemScreen() {
               Released upstream visual language. The registry, runtime motion, and developer distribution are now stable UI contracts.
             </p>
           </div>
-          <Badge variant="verified">STABLE · {ROCKSOUL_ASSETS_REGISTRY.commit.slice(0, 8)}</Badge>
+          <StatusBadge variant="verified">STABLE · {ROCKSOUL_ASSETS_REGISTRY.commit.slice(0, 8)}</StatusBadge>
         </div>
         <div className="mt-6"><AssetExplorer initialCategory="Investigation" limit={6} compact /></div>
 

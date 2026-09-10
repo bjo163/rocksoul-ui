@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, type ReactNode } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 import { SurfaceButton as Button, SurfaceInput as Input, SurfaceSelect as Select, SurfaceTextarea as Textarea, SurfaceAvatar as Avatar, SurfaceDrawer as Drawer } from "./patterns/surface-primitives"
 export { SurfaceButton as Button, SurfaceInput as Input, SurfaceSelect as Select, SurfaceTextarea as Textarea, SurfaceAvatar as Avatar, SurfaceDrawer as Drawer } from "./patterns/surface-primitives"
 import { ThemeToggle } from "./theme-toggle"
@@ -164,7 +164,7 @@ export function EvidenceCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span className={cn("mw-eyebrow", domainTone[domain])}>{domain}</span>
-        <Badge variant={status}>{status}</Badge>
+        <StatusBadge variant={status}>{status}</StatusBadge>
       </div>
       <p className="mw-meta mt-4 text-muted-foreground">{recordId}</p>
       <p className="mt-3 text-base font-bold">{claim}</p>
@@ -206,7 +206,7 @@ export function RepositoryCard({
           <p className="mw-eyebrow text-muted-foreground">{domain}</p>
           <h3 className={cn("mt-2 font-bold", variant === "platform" ? "text-sm" : "text-base")}>{repo}</h3>
         </div>
-        <Badge variant={tone}>{status}</Badge>
+        <StatusBadge variant={tone}>{status}</StatusBadge>
       </div>
       <dl className="mw-meta mt-6 grid gap-2 text-muted-foreground">
         <div className="flex justify-between"><dt>Records</dt><dd className="text-foreground">{records}</dd></div>
@@ -243,7 +243,7 @@ export function SourceBlock({
     >
       <figcaption className="flex flex-wrap items-center justify-between gap-3">
         <span className="mw-eyebrow text-muted-foreground">{sourceId}</span>
-        <Badge variant={variant === "legal-instrument" ? "contested" : "info"}>{verification}</Badge>
+        <StatusBadge variant={variant === "legal-instrument" ? "contested" : "info"}>{verification}</StatusBadge>
       </figcaption>
       <h3 className="mt-4 text-lg font-bold">{title}</h3>
       <blockquote className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">{excerpt}</blockquote>
@@ -356,7 +356,7 @@ export function DiscussionItem({
   if (state === "hidden") {
     return (
       <article className="border-b border-border py-5 opacity-70" data-state="hidden">
-        <Badge variant="unresolved">hidden</Badge>
+        <StatusBadge variant="unresolved">hidden</StatusBadge>
         <p className="mt-3 text-sm text-muted-foreground">This item is hidden by moderation.</p>
       </article>
     )
@@ -366,8 +366,8 @@ export function DiscussionItem({
       <div className="flex flex-wrap items-center gap-2">
         <Avatar label={author} size="sm" />
         <strong className="text-sm">{author}</strong>
-        <Badge variant={variant}>{kind}</Badge>
-        {state !== "default" ? <Badge variant={state === "reported" ? "contested" : "neutral"}>{state}</Badge> : null}
+        <StatusBadge variant={variant}>{kind}</StatusBadge>
+        {state !== "default" ? <StatusBadge variant={state === "reported" ? "contested" : "neutral"}>{state}</StatusBadge> : null}
       </div>
       <p className="mt-4 max-w-3xl text-sm leading-6">{body}</p>
       <div className="mw-meta mt-4 flex flex-wrap items-center gap-3 text-muted-foreground">
@@ -410,7 +410,7 @@ export function SubmissionCard({
     <article className={cn("border bg-card p-4", state === "needs-context" ? "border-warning" : "border-border")} data-state={state}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="mw-meta text-muted-foreground">{id}</p>
-        <Badge variant={tone}>{state.replace("-", " ")}</Badge>
+        <StatusBadge variant={tone}>{state.replace("-", " ")}</StatusBadge>
       </div>
       <h3 className="mt-4 text-sm font-bold">{title}</h3>
       <p className="mt-2 text-sm leading-6 text-muted-foreground">{body}</p>
@@ -440,7 +440,7 @@ export function NotificationItem({
     <article className={cn("border-b border-border p-4", unread && "bg-panel")} data-variant={variant} data-state={unread ? "unread" : "read"}>
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-bold">{title}</p>
-        <Badge variant={unread ? "info" : "neutral"}>{variant}</Badge>
+        <StatusBadge variant={unread ? "info" : "neutral"}>{variant}</StatusBadge>
       </div>
       <p className="mt-1 text-xs leading-5 text-muted-foreground">{body}</p>
       <p className="mw-meta mt-2 text-muted-foreground">{unread ? "Unread" : "Read"}</p>
@@ -473,14 +473,14 @@ export function RepositoryHealthRow({
   return (
     <div className="grid min-h-11 grid-cols-[1.5fr_auto] items-center gap-3 border-b border-border bg-card px-3 py-2 md:grid-cols-[1.5fr_.8fr_.7fr_.6fr_.6fr_.6fr_.8fr_auto_auto]">
       <span className="mw-meta">{repo}</span>
-      <span className="md:hidden"><Badge variant={tone}>{status}</Badge></span>
+      <span className="md:hidden"><StatusBadge variant={tone}>{status}</StatusBadge></span>
       <span className="mw-meta hidden text-muted-foreground md:block">{commit}</span>
       <span className="mw-meta hidden text-muted-foreground md:block">{schema}</span>
       <span className="mw-meta hidden text-muted-foreground md:block">{records}</span>
       <span className="mw-meta hidden text-muted-foreground md:block">Q {queue}</span>
       <span className="mw-meta hidden text-muted-foreground md:block">E {errors}</span>
       <span className="mw-meta hidden text-muted-foreground md:block">{lastSync}</span>
-      <span className="hidden md:block"><Badge variant={tone}>{status}</Badge></span>
+      <span className="hidden md:block"><StatusBadge variant={tone}>{status}</StatusBadge></span>
       <span className="hidden md:block">{action}</span>
     </div>
   )
@@ -604,7 +604,7 @@ export function SearchFilters({
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
-          {chips.map((chip) => <Badge key={chip} variant="neutral">{chip}</Badge>)}
+          {chips.map((chip) => <StatusBadge key={chip} variant="neutral">{chip}</StatusBadge>)}
         </div>
         <p className="mw-meta text-muted-foreground">{resultCount} results</p>
       </div>
@@ -708,7 +708,7 @@ export function CaseCard({
     >
       <div className="flex items-center justify-between gap-3">
         <span className="mw-meta text-muted-foreground">CASE / {caseId}</span>
-        <Badge variant={status}>{status}</Badge>
+        <StatusBadge variant={status}>{status}</StatusBadge>
       </div>
       <h3 className={cn("mw-display mt-5 font-black uppercase", variant === "compact" ? "text-lg" : "text-2xl")}>{title}</h3>
       {variant !== "compact" ? <p className="mt-3 text-sm leading-6 text-muted-foreground">{summary}</p> : null}
@@ -768,7 +768,7 @@ export function AWSBoundary({
     <section className={cn("border-t-2 pt-5", active ? "border-primary" : "border-border")} aria-label="AWS legal boundary">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className={cn("mw-eyebrow", active ? "text-primary" : "text-muted-foreground")}>THE BOUNDARY / AWS</p>
-        <Badge variant={active ? "disputed" : "unresolved"}>{legalState}</Badge>
+        <StatusBadge variant={active ? "disputed" : "unresolved"}>{legalState}</StatusBadge>
       </div>
       {children ? <div className="mt-4">{children}</div> : null}
     </section>
@@ -795,7 +795,7 @@ export function CaseTimeline({
     <section aria-label="Case timeline">
       <div className="mb-3 flex flex-wrap gap-2" aria-label="Timeline filters">
         {["all", "event", "source", "decision", "community"].map((item) => (
-          <Badge key={item} variant={item === filter ? "info" : "neutral"}>{item}</Badge>
+          <StatusBadge key={item} variant={item === filter ? "info" : "neutral"}>{item}</StatusBadge>
         ))}
       </div>
       <div className="border-t border-border">

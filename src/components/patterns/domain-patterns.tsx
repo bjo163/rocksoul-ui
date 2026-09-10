@@ -1,6 +1,6 @@
 import { useState, type FormEvent, type ReactNode } from "react"
 import { useApplicationActions, type AuthSubmitPayload } from "../../contracts/interactions"
-import { Badge } from "../feedback/status-badge"
+import { StatusBadge } from "../feedback/status-badge"
 import { Checkbox } from "../ui/checkbox"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
@@ -209,7 +209,7 @@ export function RepositoryMonitor({
     <section aria-labelledby="repository-monitor-heading">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div><p className="mw-meta text-muted-foreground">Repository monitor</p><h3 id="repository-monitor-heading" className="mt-2 text-lg font-bold">Source-layer health</h3></div>
-        <div className="flex gap-2"><Badge variant="info">job: idle</Badge><Button variant="secondary" size="sm" onClick={() => void syncAll?.()}>Sync all</Button></div>
+        <div className="flex gap-2"><StatusBadge variant="info">job: idle</StatusBadge><Button variant="secondary" size="sm" onClick={() => void syncAll?.()}>Sync all</Button></div>
       </div>
       <div className="mt-4 border border-border">
         {repositories.map((item) => (
@@ -241,7 +241,7 @@ export function ModerationQueue({
     <section aria-labelledby="moderation-queue-heading">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div><p className="mw-meta text-muted-foreground">Moderation queue</p><h3 id="moderation-queue-heading" className="mt-2 text-lg font-bold">Community submissions stay non-canonical until reviewed.</h3></div>
-        <div className="flex gap-2"><Badge variant="neutral">filter: needs context</Badge><Button variant="ghost" size="sm" onClick={() => void (onSelectAll ?? actions.onModerationSelectAll)?.()}>Select all</Button></div>
+        <div className="flex gap-2"><StatusBadge variant="neutral">filter: needs context</StatusBadge><Button variant="ghost" size="sm" onClick={() => void (onSelectAll ?? actions.onModerationSelectAll)?.()}>Select all</Button></div>
       </div>
       <div className="mt-4">
         <SubmissionCard {...submission} canonicalEvidence={false} source="provenance incomplete" reviewer="unassigned"

@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Badge } from "../components/feedback/status-badge"
+import { StatusBadge } from "../components/feedback/status-badge"
 
 const meta = {
   title: "Primitives/Badge",
-  component: Badge,
+  component: StatusBadge,
   args: {
     children: "unresolved",
   },
-} satisfies Meta<typeof Badge>
+} satisfies Meta<typeof StatusBadge>
 
 export default meta
 type Story = StoryObj<typeof meta>

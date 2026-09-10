@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "../lib/cn"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 
 export type TextualTraceState = "available" | "partial" | "missing" | "restricted" | "candidate" | "unresolved"
 
@@ -52,7 +52,7 @@ export function TextualHierarchyTrace({
             <li key={item.id} className="relative min-w-0 border-b border-border p-4 md:border-r xl:min-h-44">
               <div className="flex items-center justify-between gap-3">
                 <span className="mw-meta text-muted-foreground">{String(index + 1).padStart(2, "0")} / {item.kind.replaceAll("_", " ")}</span>
-                <Badge variant={badgeVariant(item.state)}>{item.state ?? "record"}</Badge>
+                <StatusBadge variant={badgeVariant(item.state)}>{item.state ?? "record"}</StatusBadge>
               </div>
               <strong className="mt-4 block break-words text-base leading-5 text-foreground">{item.label ?? item.id}</strong>
               <code className="mt-2 block break-all font-mono text-[10px] leading-4 text-primary">{item.id}</code>
@@ -121,9 +121,9 @@ export function ParallelTextLanes({
             <article key={lane.id} className="border border-border bg-background">
               <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant={badgeVariant(state)}>{state}</Badge>
-                  <Badge variant="neutral">{lane.language}</Badge>
-                  <Badge variant="info">{lane.representation}</Badge>
+                  <StatusBadge variant={badgeVariant(state)}>{state}</StatusBadge>
+                  <StatusBadge variant="neutral">{lane.language}</StatusBadge>
+                  <StatusBadge variant="info">{lane.representation}</StatusBadge>
                 </div>
                 <span className="mw-meta text-muted-foreground">{lane.script ?? "script n/a"}</span>
               </header>
@@ -186,7 +186,7 @@ export function SourceRightsSummary({
         {records.map((record) => (
           <article key={record.id} className="min-w-0 border-b border-border p-4 md:border-r">
             <div className="flex items-center justify-between gap-3">
-              <Badge variant={badgeVariant(record.state)}>{record.state ?? "declared"}</Badge>
+              <StatusBadge variant={badgeVariant(record.state)}>{record.state ?? "declared"}</StatusBadge>
               <span className="mw-meta text-muted-foreground">{record.availability ?? "availability n/a"}</span>
             </div>
             <strong className="mt-4 block text-sm text-foreground">{record.label ?? record.id}</strong>
@@ -247,8 +247,8 @@ export function TextualRelationTrace({
         {relations.map((relation) => (
           <article key={relation.id} className="border border-border bg-background p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant={badgeVariant(relation.state)}>{relation.state ?? "asserted"}</Badge>
-              <Badge variant="info">{relation.relation.replaceAll("_", " ")}</Badge>
+              <StatusBadge variant={badgeVariant(relation.state)}>{relation.state ?? "asserted"}</StatusBadge>
+              <StatusBadge variant="info">{relation.relation.replaceAll("_", " ")}</StatusBadge>
             </div>
             <div className="mt-4 grid items-center gap-3 md:grid-cols-[1fr_auto_1fr]">
               <code className="break-all border border-border p-3 font-mono text-[10px] leading-4 text-foreground">{relation.subject}</code>

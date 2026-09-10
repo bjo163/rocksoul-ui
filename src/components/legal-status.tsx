@@ -1,5 +1,5 @@
 import { useId } from "react"
-import { Badge } from "./feedback/status-badge"
+import { StatusBadge } from "./feedback/status-badge"
 
 export type LegalState = "permitted" | "restricted" | "prohibited" | "disputed" | "unresolved"
 
@@ -33,15 +33,15 @@ export function LegalStatus({ status, jurisdiction, review, prompt, basis = "fix
       <dl className="mt-5 grid gap-2 text-sm">
         <div className="flex flex-wrap items-center gap-2">
           <dt className="mw-meta text-muted-foreground">Legal state</dt>
-          <dd><Badge variant={badgeVariant[status]}>{status}</Badge></dd>
+          <dd><StatusBadge variant={badgeVariant[status]}>{status}</StatusBadge></dd>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <dt className="mw-meta text-muted-foreground">Jurisdiction</dt>
-          <dd><Badge variant="unresolved">{jurisdiction}</Badge></dd>
+          <dd><StatusBadge variant="unresolved">{jurisdiction}</StatusBadge></dd>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <dt className="mw-meta text-muted-foreground">Review</dt>
-          <dd><Badge variant="info">{review}</Badge></dd>
+          <dd><StatusBadge variant="info">{review}</StatusBadge></dd>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <dt className="mw-meta text-muted-foreground">Basis</dt>

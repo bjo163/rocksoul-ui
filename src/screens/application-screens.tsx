@@ -8,7 +8,7 @@ import {
   resourceDescriptors,
   type AppNotification,
 } from "../components/application-shell"
-import { Badge } from "../components/feedback/status-badge"
+import { StatusBadge } from "../components/feedback/status-badge"
 import { Button } from "../components/ui/button"
 import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field"
 import { Input } from "../components/ui/input"
@@ -150,7 +150,7 @@ export function KanbanScreen({ actions }: { actions?: ApplicationActions } = {})
           <section key={column.title} className="min-h-[540px] border border-border bg-panel p-4">
             <div className="flex items-center justify-between">
               <h2 className="mw-meta">{column.title} / {column.count}</h2>
-              <Badge variant={column.tone}>{column.count}</Badge>
+              <StatusBadge variant={column.tone}>{column.count}</StatusBadge>
             </div>
             <article className="mt-5 border border-border bg-background p-4"><p className="mw-meta text-primary">{column.id}</p><p className="mt-3 text-sm font-bold">{column.item}</p><p className="mw-meta mt-3 text-muted-foreground">{column.meta}</p><Button className="mt-4" size="sm" variant="ghost" onClick={() => void actions?.onKanbanMove?.({ itemId: column.id, from: column.title, to: column.title === "DONE" ? "DONE" : "IN REVIEW" })}>Move next</Button></article>
           </section>
@@ -198,7 +198,7 @@ export function ChatScreen({ actions }: { actions?: ApplicationActions } = {}) {
           <p className="mw-meta text-muted-foreground">Channels</p>
           {["# mw-0042", "# research", "# legal-review"].map((item, index) => (
             <button key={item} type="button" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
-              {item}{index === 0 ? <Badge variant="info">3</Badge> : null}
+              {item}{index === 0 ? <StatusBadge variant="info">3</StatusBadge> : null}
             </button>
           ))}
         </aside>
@@ -267,7 +267,7 @@ export function ResourcesScreen() {
                   <th className="p-4 text-sm">{item.label}</th>
                   <td className="p-4 font-mono text-xs">{item.path}</td>
                   <td className="p-4 font-mono text-xs text-muted-foreground">{item.repo}</td>
-                  <td className="p-4"><Badge variant={item.resource === "aws" ? "partial" : item.resource === "correlation" || item.resource === "perspective" ? "info" : "verified"}>{resourceAccess[item.resource]}</Badge></td>
+                  <td className="p-4"><StatusBadge variant={item.resource === "aws" ? "partial" : item.resource === "correlation" || item.resource === "perspective" ? "info" : "verified"}>{resourceAccess[item.resource]}</StatusBadge></td>
                 </tr>
               ))}
             </tbody>
@@ -345,7 +345,7 @@ export function AuthorizationScreen({ actions }: { actions?: ApplicationActions 
             <div className="grid grid-cols-[1fr_180px] border-b border-border py-3 mw-meta text-muted-foreground"><span>Capability</span><span>Access</span></div>
             {capabilities.map(([capability, access, tone]) => (
               <div key={capability} className="grid grid-cols-[1fr_180px] items-center border-b border-border py-4 text-sm">
-                <span>{capability}</span><Badge variant={tone}>{access}</Badge>
+                <span>{capability}</span><StatusBadge variant={tone}>{access}</StatusBadge>
               </div>
             ))}
           </div>
