@@ -16,6 +16,9 @@ export default defineConfig({
         ...Object.fromEntries(readdirSync(resolve(import.meta.dirname, "src/components/molecules"))
           .filter(name => /\.(ts|tsx)$/.test(name))
           .map(name => [`components/molecules/${name.replace(/\.tsx?$/, "")}`, resolve(import.meta.dirname, "src/components/molecules", name)])),
+        ...Object.fromEntries(readdirSync(resolve(import.meta.dirname, "src/components/organisms"))
+          .filter(name => /\.(ts|tsx)$/.test(name))
+          .map(name => [`components/organisms/${name.replace(/\.tsx?$/, "")}`, resolve(import.meta.dirname, "src/components/organisms", name)])),
       },
       formats: ["es"],
       fileName: (_format, name) => `${name}.js`,

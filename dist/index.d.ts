@@ -27,7 +27,7 @@ export * from "./components/evidence-graph";
 export * from "./components/four-record-summary";
 export * from "./components/legal-status";
 export * from "./components/platform-admin";
-export { StatusBadge } from "./components/compat/badge";
+export * from "./components/feedback";
 export * from "./components/compat/patterns";
 export * from "./components/theme-toggle";
 export * from "./contracts/semantic-asset-map";

@@ -172,7 +172,9 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [ ] Produce canonical ownership map.
 - [ ] Resolve duplicate primitive APIs.
 - [ ] Extract token layers tanpa mengubah visual output.
-- [ ] Move `StatusBadge` out of `compat`.
-- [ ] Create `Field` dan `SearchInput` sebagai molecule pertama.
+- [x] Move `StatusBadge` out of `compat`.
+- [x] Create `Field` dan `SearchInput` sebagai molecule pertama.
+- [x] Create form molecules: `PasswordInput`, `FileInput`, `DateInput`, and `FormActions`.
+- [x] Create the first reusable organism: generic `DataTable`.
 - [ ] Add one story dan accessibility test untuk masing-masing.
 - [ ] Run package CI dan web CI.

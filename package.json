@@ -113,6 +113,14 @@
     "./components/molecules/*": {
       "types": "./dist/components/molecules/*.d.ts",
       "import": "./dist/components/molecules/*.js"
+    },
+    "./components/organisms": {
+      "types": "./dist/components/organisms/index.d.ts",
+      "import": "./dist/components/organisms/index.js"
+    },
+    "./components/organisms/*": {
+      "types": "./dist/components/organisms/*.d.ts",
+      "import": "./dist/components/organisms/*.js"
     }
   },
   "sideEffects": [
