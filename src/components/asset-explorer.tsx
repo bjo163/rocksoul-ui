@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { Button } from "./ui/button"
-import { Dialog } from "./compat/overlays"
+import { Input } from "./ui/input"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 import { MoonWitnessResilientImage } from "./asset-provider"
 import {
   MOONWITNESS_STABLE_REPOSITORY_BASE,
@@ -78,7 +79,7 @@ export function AssetExplorer({
       <div className="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto]">
         <label className="grid gap-2 text-sm font-medium">
           <span className="sr-only">Search asset packs</span>
-          <input
+          <Input
             value={query}
             onChange={(event)=>setQuery(event.target.value)}
             placeholder="Search packs or asset names…"
@@ -135,12 +136,10 @@ export function AssetExplorer({
         </div>
       ) : null}
 
-      <Dialog
-        open={Boolean(selected)}
-        title={selected ? prettify(selected) : "Asset pack"}
-        size="lg"
-        onClose={()=>setSelected(null)}
-      >
+      <Dialog open={Boolean(selected)} onOpenChange={(open) => { if (!open) setSelected(null) }}>
+        <DialogContent className="bg-card p-0 text-foreground sm:max-w-[960px]" aria-describedby={undefined}>
+          <DialogHeader className="border-b border-border p-4"><DialogTitle>{selected ? prettify(selected) : "Asset pack"}</DialogTitle></DialogHeader>
+          <div className="p-5">
         {selected && selectedPack ? (
           <div>
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
@@ -159,7 +158,7 @@ export function AssetExplorer({
             </div>
             <label className="mt-4 grid gap-2">
               <span className="mw-meta text-muted-foreground">Filter assets</span>
-              <input
+              <Input
                 value={assetQuery}
                 onChange={(event)=>setAssetQuery(event.target.value)}
                 placeholder="Search inside this pack…"
@@ -196,6 +195,8 @@ export function AssetExplorer({
             </div>
           </div>
         ) : null}
+          </div>
+        </DialogContent>
       </Dialog>
     </section>
   )
