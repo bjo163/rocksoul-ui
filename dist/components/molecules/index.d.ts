@@ -10,4 +10,6 @@ export * from "./stat";
 export * from "./inline-message";
 export * from "./progress-indicator";
 export * from "./filter-group";
+export * from "./split-button";
+export * from "./date-range-picker";
 export * from "./pagination";

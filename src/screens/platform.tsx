@@ -1,5 +1,5 @@
 import { ApplicationShell, type AppNotification } from "../components/application-shell"
-import { Button } from "../components/compat/button"
+import { Button } from "../components/ui/button"
 import { AuditEventRow, MetricTile } from "../components/archive-components"
 import { CaseHeader } from "../components/case-header"
 import { AWSLegalSummaryPattern, ModerationQueue, RepositoryMonitor } from "../components/compat/patterns"
@@ -100,7 +100,7 @@ export function PlatformScreen({ actions }: { actions?: ApplicationActions } = {
         </section>
 
         <div className="sticky bottom-0 mt-6 flex flex-wrap gap-2 border-t border-border bg-background/95 py-3 backdrop-blur md:static md:bg-transparent">
-          <Button variant="danger" onClick={() => void actions?.onPlatformAction?.({ action: "request-context", resource: mw0042.caseId })}>Request context</Button>
+          <Button variant="destructive" onClick={() => void actions?.onPlatformAction?.({ action: "request-context", resource: mw0042.caseId })}>Request context</Button>
           <Button variant="secondary" onClick={() => void actions?.onPlatformAction?.({ action: "flag-record", resource: mw0042.caseId })}>Flag record</Button>
           <Button variant="secondary" onClick={() => void actions?.onPlatformAction?.({ action: "keep-unresolved", resource: mw0042.caseId })}>Keep case unresolved</Button>
           <Button variant="ghost" onClick={() => void actions?.onPlatformAction?.({ action: "return-to-queue", resource: mw0042.caseId })}>Return to queue</Button>

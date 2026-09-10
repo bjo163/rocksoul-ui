@@ -7041,7 +7041,7 @@ function _i({ actions: e } = {}) {
 						label: "review",
 						value: "needs-review"
 					}],
-					actions: /* @__PURE__ */ T(R, {
+					actions: /* @__PURE__ */ T(C, {
 						variant: "secondary",
 						onClick: () => void e?.onPlatformAction?.({
 							action: "keep-unresolved",
@@ -7163,15 +7163,15 @@ function _i({ actions: e } = {}) {
 				/* @__PURE__ */ E("div", {
 					className: "sticky bottom-0 mt-6 flex flex-wrap gap-2 border-t border-border bg-background/95 py-3 backdrop-blur md:static md:bg-transparent",
 					children: [
-						/* @__PURE__ */ T(R, {
-							variant: "danger",
+						/* @__PURE__ */ T(C, {
+							variant: "destructive",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "request-context",
 								resource: J.caseId
 							}),
 							children: "Request context"
 						}),
-						/* @__PURE__ */ T(R, {
+						/* @__PURE__ */ T(C, {
 							variant: "secondary",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "flag-record",
@@ -7179,7 +7179,7 @@ function _i({ actions: e } = {}) {
 							}),
 							children: "Flag record"
 						}),
-						/* @__PURE__ */ T(R, {
+						/* @__PURE__ */ T(C, {
 							variant: "secondary",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "keep-unresolved",
@@ -7187,7 +7187,7 @@ function _i({ actions: e } = {}) {
 							}),
 							children: "Keep case unresolved"
 						}),
-						/* @__PURE__ */ T(R, {
+						/* @__PURE__ */ T(C, {
 							variant: "ghost",
 							onClick: () => void e?.onPlatformAction?.({
 								action: "return-to-queue",

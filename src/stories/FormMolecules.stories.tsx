@@ -9,6 +9,8 @@ import {
   InputGroupInput,
   InputGroupText,
   PasswordInput,
+  DateRangePicker,
+  SplitButton,
 } from "../components/molecules"
 
 const meta = {
@@ -48,4 +50,12 @@ export const InputGroupExample: Story = {
       <InputGroupInput aria-label="Website address" placeholder="example.com" />
     </InputGroup>
   ),
+}
+
+export const Split: Story = {
+  render: () => <SplitButton items={[{ label: "Save as draft" }, { label: "Save and close" }]}>Save</SplitButton>,
+}
+
+export const DateRange: Story = {
+  render: () => <DateRangePicker />,
 }

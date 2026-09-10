@@ -84,7 +84,7 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [ ] Build `Field` dengan label, control, description, dan error parts.
 - [x] Build `InputGroup`, `SearchInput`, `PasswordInput`, `FileInput`, dan `DateInput`.
 - [x] Build `FormActions`; `ComboboxField` dan `SelectField` tetap menjadi tindak lanjut.
-- [x] Build `CopyButton`, `KeyValue`, `Stat`, `InlineMessage`, `StatusBadge`, dan `ProgressIndicator`. `SplitButton` dan `EmptyState` tetap menjadi tindak lanjut.
+- [x] Build `CopyButton`, `KeyValue`, `Stat`, `InlineMessage`, `StatusBadge`, `ProgressIndicator`, dan `SplitButton`. `EmptyState` tetap menjadi tindak lanjut.
 - [ ] Pastikan molecules tidak fetch API atau memahami route.
 - [ ] Tambahkan validation, error announcement, pending, dan disabled contract.
 
@@ -100,7 +100,7 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ### Forms and filtering
 
 - [x] Build `FilterBar` dengan typed descriptors, active state, reset, actions, dan responsive wrapping.
-- [x] Build generic `FilterGroup`; `DateRangePicker`, `FormSection`, dan `FormFooter` tetap menjadi organism tindak lanjut.
+- [x] Build generic `FilterGroup` dan `DateRangePicker`; `FormSection` dan `FormFooter` tetap menjadi organism tindak lanjut.
 - [ ] Definisikan desktop/mobile filter behavior.
 - [ ] Simpan query serialization di `apps/web`.
 
