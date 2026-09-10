@@ -6,10 +6,6 @@ import os from "node:os"
 const FETCH_TIMEOUT_MS = 60_000
 const gitOptions = { timeout: FETCH_TIMEOUT_MS, killSignal: "SIGTERM" }
 
-function fetchWithTimeout(url) {
-  return fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) })
-}
-
 const root = process.cwd()
 const [contract, localIndex] = await Promise.all([
   readFile(path.join(root, "src", "contracts", "assets-v2.ts"), "utf8"),
@@ -63,27 +59,18 @@ if (current === acceptedMainCommit) {
   process.exit(0)
 }
 
-const ALLOW_BOOKKEEPING = new Set([
-  "ROCKSOUL-REPO.json",
-])
-const ALLOW_POST_RELEASE = [
-  "README.md",
-  "docs/",
-  "moonwitness/brand/generated/",
-  "penpot/generated/",
-]
-
+const ALLOW_BOOKKEEPING = new Set(["ROCKSOUL-REPO.json"])
+const ALLOW_POST_RELEASE = ["README.md", "docs/", "moonwitness/brand/generated/", "penpot/generated/"]
 function classify(file) {
   if (ALLOW_BOOKKEEPING.has(file)) return "ALLOW_BOOKKEEPING"
   if (ALLOW_POST_RELEASE.some((prefix) => file === prefix || file.startsWith(prefix))) return "ALLOW_POST_RELEASE"
-  if (/^(VERSION|moonwitness\/asset-packs\.json)$/.test(file)) return "BLOCK_RUNTIME"
   return "UNKNOWN_BLOCK"
 }
 
 try {
   const [versionResponse, packsResponse] = await Promise.all([
-    fetchWithTimeout(`${rawBase}/VERSION`),
-    fetchWithTimeout(`${rawBase}/moonwitness/asset-packs.json`),
+    fetch(`${rawBase}/VERSION`, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) }),
+    fetch(`${rawBase}/moonwitness/asset-packs.json`, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) }),
   ])
   if (!versionResponse.ok || !packsResponse.ok) throw new Error("upstream release metadata unavailable")
 
@@ -116,16 +103,11 @@ try {
     await rm(worktree, { recursive: true, force: true }).catch(() => undefined)
   }
 
-  if (changedFiles.length === 0) {
-    console.warn(`Assets main advanced without a file diff: ${acceptedMainCommit} -> ${current}`)
-    process.exit(0)
-  }
-
   console.log(`Assets freshness classification: ${acceptedMainCommit} -> ${current}`)
   const classified = changedFiles.map((file) => ({ file, class: classify(file) }))
   classified.forEach(({ file, class: classification }) => console.log(`- ${classification}: ${file}`))
 
-  const blockers = classified.filter(({ class: classification }) => classification !== "ALLOW_BOOKKEEPING" && classification !== "ALLOW_POST_RELEASE")
+  const blockers = classified.filter(({ class: classification }) => classification === "UNKNOWN_BLOCK")
   if (blockers.length) {
     console.error("Assets freshness audit failed: upstream drift contains runtime or unknown changes.")
     blockers.forEach(({ file, class: classification }) => console.error(`- ${classification}: ${file}`))
