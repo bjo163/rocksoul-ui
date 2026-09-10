@@ -35,7 +35,10 @@ for (const file of await readdir(directory)) {
   }
 }
 
-const consumer = path.resolve(process.cwd(), "../../apps/web/src")
+const consumers = [
+  path.resolve(process.cwd(), "../../apps/web/src"),
+  path.resolve(process.cwd(), "../../apps/community/src"),
+]
 async function walk(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name)
@@ -62,7 +65,9 @@ async function walk(directory) {
     visit(source)
   }
 }
-await walk(consumer)
+for (const dir of consumers) {
+  await walk(dir)
+}
 if (failures.length) {
   console.error(failures.join("\n"))
   process.exit(1)

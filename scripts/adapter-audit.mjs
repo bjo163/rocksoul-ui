@@ -9,7 +9,10 @@ for (const name of adapters) {
   const source = await readFile(path.join(root, "src/components/compat", name), "utf8")
   if (!source.includes("@deprecated") && !source.includes("deprecated")) failures.push(`${name}: compatibility adapter needs a deprecation marker`)
 }
-const consumerRoot = path.resolve(root, "../../apps/web/src")
+const consumerRoots = [
+  path.resolve(root, "../../apps/web/src"),
+  path.resolve(root, "../../apps/community/src"),
+]
 async function walk(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name)
@@ -20,7 +23,9 @@ async function walk(directory) {
     }
   }
 }
-await walk(consumerRoot)
+for (const dir of consumerRoots) {
+  await walk(dir)
+}
 const productionRoots = [path.join(root, "src/screens"), path.join(root, "src/components")]
 for (const directory of productionRoots) {
   async function scanProduction(current) {
