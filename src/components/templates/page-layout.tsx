@@ -26,6 +26,18 @@ function PageHeader({ title, description, eyebrow, breadcrumbs, actions, classNa
   )
 }
 
+export type PageSectionProps = React.ComponentProps<"section"> & {
+  title?: React.ReactNode
+  description?: React.ReactNode
+}
+
+function PageSection({ title, description, children, className, ...props }: PageSectionProps) {
+  return <section data-slot="page-section" className={cn("grid gap-4", className)} {...props}>
+    {(title || description) ? <div className="grid gap-1"><h2 className="text-lg font-semibold">{title}</h2>{description ? <p className="text-sm text-muted-foreground">{description}</p> : null}</div> : null}
+    {children}
+  </section>
+}
+
 export type AppShellProps = {
   header?: React.ReactNode
   sidebar?: React.ReactNode
@@ -49,4 +61,4 @@ function AppShell({ header, sidebar, children, footer, className, contentClassNa
   )
 }
 
-export { AppShell, PageHeader }
+export { AppShell, PageHeader, PageSection }

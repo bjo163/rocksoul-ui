@@ -1,13 +1,14 @@
-import { readFile, readdir } from "node:fs/promises"
+import { readFile, readdir, access } from "node:fs/promises"
 import path from "node:path"
 
 const root = process.cwd()
-const adapters = ["button.tsx", "badge.tsx", "form-controls.tsx", "overlays.tsx", "tabs.tsx"]
 const failures = []
 const productionCompat = []
-for (const name of adapters) {
-  const source = await readFile(path.join(root, "src/components/compat", name), "utf8")
-  if (!source.includes("@deprecated") && !source.includes("deprecated")) failures.push(`${name}: compatibility adapter needs a deprecation marker`)
+try {
+  await access(path.join(root, "src/components/compat"))
+  failures.push("src/components/compat: compatibility adapters must be removed")
+} catch {
+  // Canonical layer is the only supported primitive owner.
 }
 const consumerRoots = [
   path.resolve(root, "../../apps/web/src"),
@@ -34,7 +35,7 @@ for (const directory of productionRoots) {
       if (entry.isDirectory()) await scanProduction(file)
       else if (/\.tsx?$/.test(file)) {
         const source = await readFile(file, "utf8")
-        for (const adapter of ["compat/button", "compat/form-controls", "compat/overlays", "compat/tabs"]) {
+        for (const adapter of ["compat/button", "compat/form-controls", "compat/overlays", "compat/tabs", "compat/patterns"]) {
           if (source.includes(`components/${adapter}`)) productionCompat.push(`${path.relative(root, file)} -> ${adapter}`)
         }
       }
@@ -43,8 +44,6 @@ for (const directory of productionRoots) {
   await scanProduction(directory)
 }
 if (failures.length) { console.error(failures.join("\n")); process.exit(1) }
-if (productionCompat.length) {
-  console.warn("Remaining production compatibility imports (migration inventory):")
-  productionCompat.forEach((item) => console.warn(`- ${item}`))
-}
-console.log("Adapter audit passed: compatibility adapters remain internal; all audited consumers use standard public primitives.")
+if (productionCompat.length) failures.push(...productionCompat)
+if (failures.length) { console.error(failures.join("\n")); process.exit(1) }
+console.log("Adapter audit passed: compatibility adapter directory removed; all audited consumers use standard public primitives.")

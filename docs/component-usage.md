@@ -27,7 +27,7 @@ Use `Asset` when a feature owns an explicit file from a local pack. Use `Registr
 
 ## Ownership and compatibility
 
-The root package no longer exports the historical primitive adapters. Compatibility files live under `src/components/compat` and are now limited to legacy stories and regression tests. Domain patterns live under `src/components/patterns`. Compatibility files are not part of the public package contract and are not available to consumers.
+The historical primitive adapters have been removed. Domain patterns live under `src/components/patterns`; all supported consumers and stories use canonical primitives. `components/compat` is a deletion-complete path and must not be recreated.
 
 | Compatibility API | Owner / replacement | Why it remains temporarily |
 | --- | --- | --- |

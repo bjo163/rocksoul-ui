@@ -76,48 +76,18 @@ for (let index = 1; index <= 16; index += 1) {
 }
 
 const sourceText = (await Promise.all(files.map((file) => readFile(file, "utf8")))).join("\n")
+const uiIndex = await readFile(path.join(src, "components", "ui", "index.ts"), "utf8")
 const requiredComponents = [
-  "MWHeader",
-  "PlatformSidebar",
-  "CaseHeader",
-  "CaseCard",
-  "FourRecordSummary",
-  "EvidenceCard",
-  "RepositoryCard",
-  "SourceBlock",
-  "Citation",
-  "CorrelationScore",
-  "EvidenceGraph",
-  "GraphNode",
-  "GraphEdge",
-  "TimelineEntry",
-  "LegalStatus",
-  "AWSBoundary",
-  "DiscussionItem",
-  "SubmissionCard",
-  "NotificationItem",
-  "RepositoryHealthRow",
-  "AuditEventRow",
-  "MetricTile",
-  "Button",
-  "IconButton",
-  "Input",
-  "Textarea",
-  "Select",
-  "Checkbox",
-  "Radio",
-  "Switch",
-  "Badge",
-  "Tabs",
-  "Tooltip",
-  "Dialog",
-  "Drawer",
-  "Avatar",
-  "Divider",
-  "Skeleton",
+  "MWHeader", "PlatformSidebar", "CaseHeader", "CaseCard", "FourRecordSummary", "EvidenceCard", "RepositoryCard", "SourceBlock", "Citation", "CorrelationScore", "EvidenceGraph", "GraphNode", "GraphEdge", "TimelineEntry", "LegalStatus", "AWSBoundary", "DiscussionItem", "SubmissionCard", "NotificationItem", "RepositoryHealthRow", "AuditEventRow", "MetricTile",
+]
+const requiredPrimitiveModules = [
+  "button", "icon-button", "input", "textarea", "select", "native-select", "checkbox", "radio-group", "switch", "badge", "tabs", "tooltip", "dialog", "drawer", "avatar", "separator", "skeleton",
 ]
 for (const component of requiredComponents) {
   if (!sourceText.includes(`export function ${component}`) && !sourceText.includes(`export const ${component} =`)) violations.push(`component inventory: missing export ${component}`)
+}
+for (const module of requiredPrimitiveModules) {
+  if (!uiIndex.includes(`./${module}`)) violations.push(`primitive inventory: missing canonical ui/${module}`)
 }
 
 

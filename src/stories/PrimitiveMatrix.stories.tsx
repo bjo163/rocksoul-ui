@@ -1,117 +1,33 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Badge } from "../components/feedback/status-badge"
-import { Button } from "../components/compat/button"
-import { Checkbox, Input, Radio, Select, Switch, Textarea } from "../components/compat/form-controls"
-import { Avatar, Dialog, Divider, Drawer, IconButton, Skeleton, Tooltip } from "../components/compat/overlays"
-import { Tabs } from "../components/compat/tabs"
+import { Button } from "../components/ui/button"
+import { Checkbox } from "../components/ui/checkbox"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
+import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group"
+import { Separator } from "../components/ui/separator"
+import { Skeleton } from "../components/ui/skeleton"
+import { Switch } from "../components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
+import { SurfaceAvatar, SurfaceDialog, SurfaceDrawer, SurfaceInput, SurfaceSelect, SurfaceTextarea } from "../components/patterns/surface-primitives"
 
-const meta = {
-  title: "QA/Primitive Contract Matrix",
-  parameters: { layout: "fullscreen" },
-} satisfies Meta
-
+const meta = { title: "QA/Primitive Contract Matrix", parameters: { layout: "fullscreen" } } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const ButtonsAndBadges: Story = {
-  render: () => (
-    <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground">
-      <p className="mw-eyebrow text-primary">Buttons / variants / sizes / states</p>
-      <div className="mt-4 flex flex-wrap gap-3">
-        {(["primary","secondary","ghost","danger"] as const).map((variant) => (
-          <Button key={variant} variant={variant}>{variant}</Button>
-        ))}
-        <Button size="sm">small</Button>
-        <Button size="md">medium</Button>
-        <Button size="lg">large</Button>
-        <Button loading>loading</Button>
-        <Button disabled>disabled</Button>
-      </div>
-      <p className="mw-eyebrow mt-10 text-primary">Icon button</p>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <IconButton label="Ghost action" variant="ghost">G</IconButton>
-        <IconButton label="Outline action" variant="outline">O</IconButton>
-        <IconButton label="Danger action" variant="danger">D</IconButton>
-        <IconButton label="Loading action" loading>L</IconButton>
-        <IconButton label="Disabled action" disabled>X</IconButton>
-      </div>
-      <p className="mw-eyebrow mt-10 text-primary">Badges</p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {(["supported","verified","contested","partial","unresolved","restricted","prohibited","info","neutral"] as const).map((state) => (
-          <Badge key={state} variant={state}>{state}</Badge>
-        ))}
-      </div>
-    </div>
-  ),
+  render: () => <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground"><p className="mw-eyebrow text-primary">Buttons / variants / sizes / states</p><div className="mt-4 flex flex-wrap gap-3">{(["default", "secondary", "ghost", "destructive"] as const).map((variant) => <Button key={variant} variant={variant}>{variant}</Button>)}<Button size="sm">small</Button><Button size="lg">large</Button><Button disabled>disabled</Button></div><p className="mw-eyebrow mt-10 text-primary">Badges</p><div className="mt-4 flex flex-wrap gap-2">{(["supported", "verified", "contested", "partial", "unresolved", "restricted", "prohibited", "info", "neutral"] as const).map((state) => <Badge key={state} variant={state}>{state}</Badge>)}</div></div>,
 }
 
 export const FieldsAndSelection: Story = {
-  render: () => (
-    <div className="mw-shell-wide grid min-h-screen gap-6 bg-background py-10 text-foreground lg:grid-cols-2">
-      <div className="grid content-start gap-4">
-        <Input label="Default input" placeholder="Record ID" />
-        <Input label="Search input" variant="search" size="lg" placeholder="Search source…" />
-        <Input label="Filled" defaultValue="SRC-STORY-0042-A" />
-        <Input label="Error" error="Source locator is required." />
-        <Input label="Disabled" disabled defaultValue="Locked" />
-        <Input label="Read only" readOnly defaultValue="Canonical" />
-        <Textarea label="Textarea" maxLength={80} characterCount defaultValue="Not enough yet." />
-        <Textarea label="Textarea error" error="Context is required." />
-        <Select label="Select" options={[{label:"Supported",value:"supported"},{label:"Partial",value:"partial"}]} />
-        <Select label="Disabled select" disabled options={[{label:"Locked",value:"locked"}]} />
-      </div>
-      <div className="content-start">
-        <Checkbox label="Unchecked" />
-        <Checkbox label="Checked" defaultChecked />
-        <Checkbox label="Indeterminate" indeterminate />
-        <Checkbox label="Disabled" disabled />
-        <Radio name="matrix-radio" label="Radio A" defaultChecked />
-        <Radio name="matrix-radio" label="Radio B" />
-        <Switch label="Off" />
-        <Switch label="On" defaultChecked />
-        <Switch label="Disabled" disabled />
-      </div>
-    </div>
-  ),
+  render: () => <div className="mw-shell-wide grid min-h-screen gap-6 bg-background py-10 text-foreground lg:grid-cols-2"><div className="grid content-start gap-4"><SurfaceInput label="Default input" placeholder="Record ID" /><SurfaceInput label="Filled" defaultValue="SRC-STORY-0042-A" /><SurfaceTextarea label="Textarea" defaultValue="Not enough yet." /><SurfaceSelect aria-label="Select" label="Select" options={[{ label: "Supported", value: "supported" }, { label: "Partial", value: "partial" }]} /></div><div className="grid content-start gap-4"><Label htmlFor="matrix-email">Email</Label><Input id="matrix-email" type="email" /><label className="flex items-center gap-2"><Checkbox aria-label="Keep me signed in" />Keep me signed in</label><RadioGroup defaultValue="a" aria-label="Matrix radio"><label className="flex items-center gap-2"><RadioGroupItem value="a" />Radio A</label><label className="flex items-center gap-2"><RadioGroupItem value="b" />Radio B</label></RadioGroup><label className="flex items-center gap-2"><Switch aria-label="Notifications" />Notifications</label></div></div>,
 }
 
 function OverlayDemo() {
-  const [dialog, setDialog] = useState<"sm"|"md"|"lg"|null>(null)
-  const [drawer, setDrawer] = useState<"left"|"right"|"bottom-mobile"|null>(null)
-  return (
-    <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground">
-      <div className="flex flex-wrap gap-3">
-        {(["sm","md","lg"] as const).map((size) => <Button key={size} variant="secondary" onClick={()=>setDialog(size)}>Dialog {size}</Button>)}
-        {(["left","right","bottom-mobile"] as const).map((position) => <Button key={position} variant="ghost" onClick={()=>setDrawer(position)}>Drawer {position}</Button>)}
-        <Tooltip label="Non-essential helper" shortcut="⌘K"><Button variant="secondary">Tooltip</Button></Tooltip>
-      </div>
-      <div className="mt-8 flex items-center gap-4">
-        <Avatar label="Initial User" size="xs" />
-        <Avatar label="Initial User" size="sm" status="online" />
-        <Avatar label="Initial User" size="md" status="away" />
-        <Avatar size="lg" status="offline" />
-      </div>
-      <div className="mt-8 grid gap-4">
-        <Divider />
-        <Divider variant="soft" />
-        <Divider variant="legal-boundary" />
-        <Skeleton variant="text" />
-        <Skeleton variant="card" />
-        <Skeleton variant="table-row" />
-        <Skeleton variant="graph-node" />
-      </div>
-      <div className="mt-8">
-        <Tabs variant="archive" items={[
-          {id:"one",label:"One",content:<p>First panel</p>},
-          {id:"two",label:"Two",content:<p>Second panel</p>},
-          {id:"three",label:"Disabled",content:<p>Disabled</p>,disabled:true},
-        ]} />
-      </div>
-      {dialog ? <Dialog open title={`Dialog ${dialog}`} size={dialog} onClose={()=>setDialog(null)} actions={<Button variant="primary" onClick={()=>setDialog(null)}>Confirm</Button>}><p>Accessible modal state.</p></Dialog> : null}
-      {drawer ? <Drawer open title={`Drawer ${drawer}`} position={drawer} onClose={()=>setDrawer(null)} footer={<Button variant="secondary" onClick={()=>setDrawer(null)}>Close</Button>}><p>Accessible drawer state.</p></Drawer> : null}
-    </div>
-  )
+  const [dialog, setDialog] = useState(false)
+  const [drawer, setDrawer] = useState(false)
+  return <div className="mw-shell-wide min-h-screen bg-background py-10 text-foreground"><div className="flex flex-wrap gap-3"><Button variant="secondary" onClick={() => setDialog(true)}>Open dialog</Button><Button variant="ghost" onClick={() => setDrawer(true)}>Open drawer</Button></div><div className="mt-8 flex items-center gap-4"><SurfaceAvatar label="Initial User" size="sm" /><SurfaceAvatar label="Initial User" size="lg" /></div><div className="mt-8 grid gap-4"><Separator /><Skeleton className="h-4 w-48" /><Skeleton className="h-24 w-full" /></div><div className="mt-8"><Tabs defaultValue="one"><TabsList><TabsTrigger value="one">One</TabsTrigger><TabsTrigger value="two">Two</TabsTrigger></TabsList><TabsContent value="one">First panel</TabsContent><TabsContent value="two">Second panel</TabsContent></Tabs></div>{dialog ? <SurfaceDialog open title="Details" onClose={() => setDialog(false)} actions={<Button onClick={() => setDialog(false)}>Confirm</Button>}>Accessible modal state.</SurfaceDialog> : null}{drawer ? <SurfaceDrawer open title="Navigation" onClose={() => setDrawer(false)} footer={<Button onClick={() => setDrawer(false)}>Close</Button>}>Accessible drawer state.</SurfaceDrawer> : null}</div>
 }
 
 export const OverlaysAndUtility: Story = { render: () => <OverlayDemo /> }

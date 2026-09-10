@@ -6,7 +6,7 @@
     "foundation": ["tokens.ts", "styles.css", "lib/cn.ts"],
     "subPrimitives": ["components/ui/form.tsx", "components/ui/input-group.tsx"],
     "atoms": [
-      "components/ui/button.tsx", "components/ui/badge.tsx", "components/ui/input.tsx",
+      "components/ui/button.tsx", "components/ui/icon-button.tsx", "components/ui/badge.tsx", "components/ui/input.tsx",
       "components/ui/textarea.tsx", "components/ui/checkbox.tsx", "components/ui/radio-group.tsx",
       "components/ui/switch.tsx", "components/ui/slider.tsx", "components/ui/select.tsx",
       "components/ui/native-select.tsx", "components/ui/input-otp.tsx", "components/ui/label.tsx",
@@ -18,27 +18,23 @@
       "components/ui/drawer.tsx", "components/ui/dropdown-menu.tsx", "components/ui/context-menu.tsx",
       "components/ui/command.tsx", "components/ui/tabs.tsx", "components/ui/accordion.tsx",
       "components/ui/collapsible.tsx", "components/ui/calendar.tsx", "components/ui/table.tsx",
-      "components/ui/pagination.tsx", "components/ui/breadcrumb.tsx", "components/ui/sidebar.tsx"
+      "components/ui/pagination.tsx", "components/ui/breadcrumb.tsx", "components/ui/sidebar.tsx", "components/ui/visually-hidden.tsx"
     ],
     "molecules": [],
     "organisms": [],
     "templates": [],
     "features": "apps/web/src/features"
   },
-  "compatibility": [
-    "components/compat/button.tsx", "components/compat/badge.tsx",
-    "components/compat/form-controls.tsx", "components/compat/overlays.tsx",
-    "components/compat/tabs.tsx", "components/compat/patterns.tsx"
-  ],
+  "compatibility": [],
   "domainComponents": "components/*.tsx",
   "screens": "screens/*.tsx",
   "overlapDecisions": [
-    { "behavior": "Button", "owner": "components/ui/button.tsx", "legacy": "components/compat/button.tsx", "action": "migrate then delete compat" },
-    { "behavior": "Badge", "owner": "components/ui/badge.tsx", "legacy": "components/compat/badge.tsx", "action": "keep StatusBadge as domain wrapper; do not export generic Badge from compat" },
-    { "behavior": "Input/Textarea/Select/Checkbox/Radio/Switch", "owner": "components/ui/*", "legacy": "components/compat/form-controls.tsx", "action": "replace with Field + canonical controls" },
-    { "behavior": "Dialog/Drawer/Tooltip/Avatar/Skeleton", "owner": "components/ui/*", "legacy": "components/compat/overlays.tsx", "action": "replace legacy APIs and delete compat" },
-    { "behavior": "Tabs", "owner": "components/ui/tabs.tsx", "legacy": "components/compat/tabs.tsx", "action": "migrate item-array consumers" },
-    { "behavior": "Pagination", "owner": "components/ui/pagination.tsx", "legacy": "components/compat/patterns.tsx", "action": "remove duplicate export" }
+    { "behavior": "Button and IconButton", "owner": "components/ui/button.tsx + components/ui/icon-button.tsx", "legacy": null, "action": "canonical" },
+    { "behavior": "Badge", "owner": "components/ui/badge.tsx + components/feedback/status-badge.tsx", "legacy": null, "action": "generic and domain owners are explicit" },
+    { "behavior": "Input/Textarea/Select/Checkbox/Radio/Switch", "owner": "components/ui/*", "legacy": null, "action": "canonical controls composed with Field" },
+    { "behavior": "Dialog/Drawer/Tooltip/Avatar/Skeleton", "owner": "components/ui/*", "legacy": null, "action": "canonical" },
+    { "behavior": "Tabs", "owner": "components/ui/tabs.tsx", "legacy": null, "action": "canonical parts API" },
+    { "behavior": "Pagination", "owner": "components/molecules/pagination.tsx + components/ui/pagination.tsx", "legacy": null, "action": "canonical composition" }
   ],
   "promotionQueue": [
     { "name": "Field", "level": "molecule", "source": "components/ui/form.tsx + components/ui/field.tsx" },

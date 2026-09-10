@@ -1,6 +1,6 @@
 # RockSoul UI deprecation policy
 
-`components/ui`, `components/molecules`, `components/organisms`, and `components/templates` are the supported public import surfaces. Files under `src/components/compat` are private migration adapters and must not receive new consumers.
+`components/ui`, `components/molecules`, `components/organisms`, and `components/templates` are the supported public import surfaces. The former `src/components/compat` migration adapters have been removed; new compatibility folders are prohibited.
 
 ## Process
 

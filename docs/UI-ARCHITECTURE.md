@@ -66,7 +66,7 @@ src/
   hooks/
   lib/
   types/
-  compat/                    # private migration code; deletion target
+  patterns/                  # reusable domain compositions built from canonical primitives
 ```
 
 The current `src/components/ui` directory is the implementation of `atoms` plus generic `primitives` during migration. It remains the stable public shadcn-style import surface until files are deliberately moved. No consumer should import package source paths directly.

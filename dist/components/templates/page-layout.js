@@ -33,7 +33,24 @@ function r({ title: r, description: i, eyebrow: a, breadcrumbs: o, actions: s, c
 		}) : null]
 	});
 }
-function i({ header: r, sidebar: i, children: a, footer: o, className: s, contentClassName: c }) {
+function i({ title: r, description: i, children: a, className: o, ...s }) {
+	return /* @__PURE__ */ n("section", {
+		"data-slot": "page-section",
+		className: e("grid gap-4", o),
+		...s,
+		children: [r || i ? /* @__PURE__ */ n("div", {
+			className: "grid gap-1",
+			children: [/* @__PURE__ */ t("h2", {
+				className: "text-lg font-semibold",
+				children: r
+			}), i ? /* @__PURE__ */ t("p", {
+				className: "text-sm text-muted-foreground",
+				children: i
+			}) : null]
+		}) : null, a]
+	});
+}
+function a({ header: r, sidebar: i, children: a, footer: o, className: s, contentClassName: c }) {
 	return /* @__PURE__ */ n("div", {
 		"data-slot": "app-shell",
 		className: e("min-h-screen bg-background text-foreground", s),
@@ -64,4 +81,4 @@ function i({ header: r, sidebar: i, children: a, footer: o, className: s, conten
 	});
 }
 //#endregion
-export { i as AppShell, r as PageHeader };
+export { a as AppShell, r as PageHeader, i as PageSection };

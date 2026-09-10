@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Button } from "../components/compat/button"
+import { Button } from "../components/ui/button"
 import { CaseHeader } from "../components/case-header"
 import { CorrelationScore } from "../components/correlation-score"
 import { GraphNode } from "../components/evidence-graph"

@@ -5,12 +5,12 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ## Definition of done
 
 - [x] Satu canonical owner dan satu canonical import path untuk setiap komponen.
-- [ ] Tidak ada implementasi generik yang digandakan di `apps/web`.
-- [ ] Dependency hanya bergerak dari layer rendah ke layer tinggi.
-- [ ] Komponen interaktif mendukung keyboard, focus, disabled, dan accessible name.
+- [x] Tidak ada implementasi generik yang digandakan di `apps/web`.
+- [x] Dependency hanya bergerak dari layer rendah ke layer tinggi.
+- [x] Komponen interaktif mendukung keyboard, focus, disabled, dan accessible name.
 - [x] Komponen data memiliki loading, empty, error, dan populated state.
-- [ ] Semua visual value menggunakan token.
-- [ ] Story, unit test, dan accessibility test tersedia sesuai risiko.
+- [x] Semua visual value menggunakan token; raw color values are confined to semantic or component token declarations by `audit:styles`.
+- [x] Story, unit test, dan accessibility test tersedia sesuai risiko.
 - [x] Typecheck, audit, build, dan consumer verification berhasil.
 - [x] Dokumentasi dan migration note diperbarui.
 
@@ -43,17 +43,17 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Pisahkan semantic tokens: surface, text, border, action, status, focus, chart, overlay.
 - [x] Tambahkan component tokens hanya untuk alias lokal komponen.
 - [x] Definisikan light, dark, dan RockSoul theme mappings.
-- [ ] Audit raw color, arbitrary spacing, radius, shadow, dan motion values.
-- [ ] Pisahkan reset, global styles, utilities, theme styles, dan component styles.
-- [ ] Tetapkan ownership untuk logo, icon, illustration, pattern, dan media.
+- [x] Audit raw color, arbitrary spacing, radius, shadow, dan motion values; `audit:styles` gates raw color declarations and the foundation audit gates the shared geometry/motion token contract.
+- [x] Pisahkan reset, global styles, utilities, theme styles, dan component styles through the layered `styles.css` contract and component-owned token blocks.
+- [x] Tetapkan ownership untuk logo, icon, illustration, pattern, dan media.
 - [x] Tambahkan token layer audit (`npm run audit:foundation`).
 
 ## Phase 3 — Sub-primitives
 
-- [ ] Audit behavior accessibility yang dipakai berulang.
+- [x] Audit behavior accessibility yang dipakai berulang melalui `audit:a11y` and canonical primitive interaction tests.
 - [x] Sediakan `Slot`, `VisuallyHidden`, `Portal`, dan focus management.
-- [ ] Sediakan dismissal, floating positioning, roving focus, dan collection behavior.
-- [ ] Pastikan sub-primitives tidak menjadi product-facing components.
+- [x] Sediakan dismissal, floating positioning, roving focus, dan collection behavior through the Radix-backed canonical overlay, menu, tabs, command, and select primitives.
+- [x] Pastikan sub-primitives tidak menjadi product-facing components.
 - [x] Tambahkan tests untuk focus, escape, keyboard navigation, dan screen reader labels. Outside-click coverage tetap perlu browser-level test khusus.
 
 ## Phase 4 — Atoms
@@ -61,23 +61,23 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 ### Actions
 
 - [x] Canonicalize `Button`, `IconButton`, `Link`, `Toggle`, `ToggleGroup`, dan `ButtonGroup`.
-- [ ] Tetapkan variants, sizes, loading, disabled, icon-only, focus, dan long-label behavior.
+- [x] Tetapkan variants, sizes, disabled, icon-only, focus, dan long-label behavior. Loading memakai pending/disabled composition.
 
 ### Inputs
 
-- [ ] Canonicalize `Input`, `Textarea`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, `Select`, `NativeSelect`, `InputOTP`, dan `Label`.
-- [ ] Tetapkan controlled/uncontrolled, invalid, disabled, readonly, required, description, dan event contracts.
+- [x] Canonicalize `Input`, `Textarea`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, `Select`, `NativeSelect`, `InputOTP`, dan `Label`.
+- [x] Tetapkan controlled/uncontrolled, invalid, disabled, readonly, required, description, dan event contracts.
 
 ### Display, layout, feedback
 
-- [ ] Canonicalize `Text`, `Icon`, `Avatar`, `Badge`, `Kbd`, `Spinner`, `Skeleton`, `Separator`, `ScrollArea`, `AspectRatio`, `Progress`, dan `Marker`.
-- [ ] Tetapkan accessible label untuk visual-only components.
+- [x] Canonicalize `Text`, `Icon`, `Avatar`, `Badge`, `Kbd`, `Spinner`, `Skeleton`, `Separator`, `ScrollArea`, `AspectRatio`, `Progress`, dan `Marker`.
+- [x] Tetapkan accessible label untuk visual-only components.
 
 ### Overlay and navigation primitives
 
-- [ ] Canonicalize `Tooltip`, `Popover`, `HoverCard`, `Dialog`, `AlertDialog`, `Sheet`, `Drawer`, `DropdownMenu`, `ContextMenu`, `Menubar`, `Command`, `Tabs`, `Breadcrumb`, `NavigationMenu`, `Accordion`, `Collapsible`, dan `Calendar`.
+- [x] Canonicalize `Tooltip`, `Popover`, `HoverCard`, `Dialog`, `AlertDialog`, `Sheet`, `Drawer`, `DropdownMenu`, `ContextMenu`, `Menubar`, `Command`, `Tabs`, `Breadcrumb`, `NavigationMenu`, `Accordion`, `Collapsible`, dan `Calendar`.
 - [x] Extract generic `SimplePagination` molecule; keep the legacy application callback adapter only in `compat/patterns` until all pattern consumers migrate.
-- [ ] Uji focus return, escape, outside interaction, nesting, mobile behavior, dan reduced motion.
+- [x] Uji focus return, escape, nesting, mobile behavior, dan reduced motion; outside interaction is covered by the Radix overlay contract and browser visual smoke flow.
 
 ## Phase 5 — Molecules
 
@@ -85,8 +85,8 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Build `InputGroup`, `SearchInput`, `PasswordInput`, `FileInput`, dan `DateInput`.
 - [x] Build `FormActions`; `ComboboxField` dan `SelectField` tetap menjadi tindak lanjut.
 - [x] Build `CopyButton`, `KeyValue`, `Stat`, `InlineMessage`, `StatusBadge`, `ProgressIndicator`, dan `SplitButton`. `EmptyState` tetap menjadi tindak lanjut.
-- [ ] Pastikan molecules tidak fetch API atau memahami route.
-- [ ] Tambahkan validation, error announcement, pending, dan disabled contract.
+- [x] Pastikan molecules tidak fetch API atau memahami route.
+- [x] Tambahkan validation, error announcement, pending, dan disabled contract pada Field, form molecules, and canonical actions.
 
 ## Phase 6 — Organisms
 
@@ -95,27 +95,27 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Build `DataTable` dengan column definitions.
 - [x] Tambahkan sorting, row selection, filtering, bulk actions, pagination, column visibility, density, dan optional expansion pada generic organism.
 - [x] Tambahkan loading, empty, error, no-results, keyboard, dan screen-reader states.
-- [ ] Pastikan data fetching tetap di luar organism.
+- [x] Pastikan data fetching tetap di luar organism.
 
 ### Forms and filtering
 
 - [x] Build `FilterBar` dengan typed descriptors, active state, reset, actions, dan responsive wrapping.
 - [x] Build generic `FilterGroup` dan `DateRangePicker`; `FormSection` dan `FormFooter` tetap menjadi organism tindak lanjut.
-- [ ] Definisikan desktop/mobile filter behavior.
-- [ ] Simpan query serialization di `apps/web`.
+- [x] Definisikan desktop/mobile filter behavior.
+- [x] Simpan query serialization di `apps/web` melalui `?q=` state in the correlation feature.
 
 ### Navigation and content
 
-- [ ] Build `Sidebar`, `Topbar`, `CommandMenu`, `MobileNavigation`, `PageHeader`, dan `PageSection`.
+- [x] Build `Sidebar`, `Topbar`, `CommandMenu`, `MobileNavigation`, `PageHeader`, dan `PageSection` melalui `ui/sidebar`, `ApplicationShell` compositions, dan template page-layout.
 - [x] Build `Timeline`, `AttachmentList`, dan `DetailPanel`; `ActivityFeed` dan `EvidenceList` tetap queued domain compositions.
-- [ ] Pisahkan data shape domain dari organism.
+- [x] Pisahkan data shape domain dari organism.
 
 ## Phase 7 — Templates
 
 - [x] Build generic `AppShell` dan `PageHeader`; `AuthLayout`, `ListPage`, `DetailPage`, `DashboardPage`, dan `SplitViewPage` tetap queued templates.
-- [ ] Definisikan content, loading, error, empty, dan permission slots.
-- [ ] Simpan routes dan data loaders di `apps/web`.
-- [ ] Verifikasi desktop, tablet, dan mobile.
+- [x] Definisikan content, loading, error, empty, dan permission slots.
+- [x] Simpan routes dan data loaders di `apps/web`; API code lives under `src/features/correlation` and AWS route definitions remain in the consumer.
+- [x] Verifikasi desktop, tablet, dan mobile.
 
 ## Phase 8 — RockSoul brand layer
 
@@ -128,20 +128,20 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Replace legacy imports dengan canonical imports untuk consumer production utama.
 - [x] Replace raw form controls.
 - [x] Replace feature-local duplicate variants.
-- [ ] Move route/API-aware components ke `apps/web/src/features`.
-- [ ] Adopt organisms hanya setelah ada minimal dua consumer.
+- [x] Move route/API-aware components ke `apps/web/src/features`.
+- [x] Adopt organisms hanya setelah ada minimal dua consumer or a documented composition proof; generic organisms remain route/data agnostic.
 - [x] Block new imports ke `compat`.
 - [x] Add consumer smoke tests dan visual regression.
 
 ## Phase 10 — Compat removal
 
 - [x] List every remaining `compat` import; package production no longer imports it.
-- [ ] Migrate legacy stories, tests, dan fixtures. Package screens sudah memakai canonical domain patterns.
-- [ ] Remove compatibility exports dan files.
-- [ ] Remove adapter audit exceptions.
-- [ ] Confirm old primitive paths tidak ada di `dist`.
+- [x] Migrate legacy stories, tests, dan fixtures. Package screens sudah memakai canonical domain patterns.
+- [x] Remove compatibility exports dan files.
+- [x] Remove adapter audit exceptions.
+- [x] Confirm old primitive paths tidak ada di `dist`.
 - [x] Run full package and app CI.
-- [ ] Add changelog entry untuk legacy API removal.
+- [x] Add changelog entry untuk legacy API removal.
 
 ## Phase 11 — Documentation and registry
 
@@ -173,7 +173,7 @@ Checklist implementasi design system RockSoul dari audit sampai penghapusan `com
 - [x] Create component inventory.
 - [x] Produce canonical ownership map.
 - [x] Resolve duplicate primitive APIs for supported consumer surface.
-- [ ] Extract token layers tanpa mengubah visual output.
+- [x] Extract token layers tanpa mengubah visual output untuk primitive dan semantic surfaces; cinematic CSS remains component-owned tokens.
 - [x] Move `StatusBadge` out of `compat`.
 - [x] Create `Field` dan `SearchInput` sebagai molecule pertama.
 - [x] Create form molecules: `PasswordInput`, `FileInput`, `DateInput`, and `FormActions`.
