@@ -49,8 +49,11 @@ const notes = subjects.slice(0, 30).map((subject) => `- ${subject}`).join("\n")
 const changelog = readFileSync(changelogPath, "utf8")
 const marker = "## Unreleased"
 if (!changelog.includes(marker)) throw new Error("CHANGELOG.md is missing the Unreleased section")
-const insertion = `${marker}\n\nChanges targeting the next release only. Release-specific changes move here automatically when the version is cut.\n\n## ${nextTag}\n\n${notes}\n`
-const updatedChangelog = changelog.replace(/^## Unreleased[\s\S]*?(?=\n## v|\Z)/m, insertion)
+const sectionEnd = changelog.indexOf("\n## ", changelog.indexOf(marker) + marker.length)
+const prefixEnd = sectionEnd === -1 ? changelog.length : sectionEnd
+const unreleasedBody = changelog.slice(changelog.indexOf(marker) + marker.length, prefixEnd).trim()
+const newSection = `## ${nextTag}\n\n${notes || unreleasedBody}`
+const updatedChangelog = `${changelog.slice(0, changelog.indexOf(marker))}${marker}\n\nChanges targeting the next release only. Release-specific changes move here automatically when the version is cut.\n\n${newSection}\n${changelog.slice(prefixEnd)}`
 writeFileSync(changelogPath, updatedChangelog)
 
 console.log(`Auto release candidate: ${current.version} -> ${next}`)
