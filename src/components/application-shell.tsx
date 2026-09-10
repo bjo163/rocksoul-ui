@@ -1,14 +1,18 @@
+import * as React from "react"
 import { useEffect, useMemo, useState, type ReactNode } from "react"
 import { Badge } from "./feedback/status-badge"
-import { Button } from "./compat/button"
+import { SurfaceButton as Button, SurfaceInput as Input, SurfaceAvatar as Avatar, SurfaceDialog as Dialog, SurfaceDrawer as Drawer } from "./patterns/surface-primitives"
 import { MoonWitnessBrand } from "./brand"
-import { Input } from "./compat/form-controls"
-import { Avatar, Dialog, Drawer, IconButton } from "./compat/overlays"
+import { Button as PrimitiveButton } from "./ui/button"
 import { ThemeToggle } from "./theme-toggle"
 import { cn } from "../lib/cn"
 import { v2NavigationItems, v2ResourceDescriptors } from "../contracts/assets-v2"
 import { useApplicationActions } from "../contracts/interactions"
 import { NavigationLink } from "./navigation"
+
+function IconButton({ label, children, ...props }: React.ComponentProps<typeof PrimitiveButton> & { label: string }) {
+  return <PrimitiveButton variant="ghost" size="icon" aria-label={label} title={label} {...props}>{children}</PrimitiveButton>
+}
 
 export type BackendState = "online" | "degraded" | "offline"
 export type ResourceGroup = "System" | "Resource" | "Workspace" | "Account"
