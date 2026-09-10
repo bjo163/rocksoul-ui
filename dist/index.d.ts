@@ -14,8 +14,6 @@ export * from "./contracts/platform-admin";
 export * from "./contracts/cinematic-web-hero";
 export * from "./components/navigation";
 export * from "./components/brand";
-export { Button, buttonVariants, type ButtonProps } from "./components/compat/button";
-export { Input, Textarea, Checkbox, Switch, Select, type InputProps, type TextareaProps, type SelectProps, type CheckboxProps } from "./components/compat/form-controls";
 export { StatusBadge, Badge, statusBadgeVariants, type StatusBadgeProps, type BadgeProps } from "./components/feedback";
 export * from "./components/asset-provider";
 export * from "./components/community-participation";
