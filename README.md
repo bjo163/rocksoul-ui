@@ -24,6 +24,22 @@ Production-oriented, code-first UI system for the **MoonWitness × Rocksoul** pr
 
 > **`rocksoul-assets` defines the visual truth. `@rocksoul/ui` turns that truth into reusable production code. Applications consume it; they do not fork it.**
 
+## Canonical execution SOT
+
+**GitHub Issue #86 — UI-SOT-001** is the canonical execution/release control plane for this repository.
+
+```text
+GitHub Issues / PRs
+        ↓
+#86 UI-SOT-001
+        ↓
+ROCKSOUL-TODO.json / docs / checklists
+        ↓
+CI artifacts / release evidence
+```
+
+`ROCKSOUL-TODO.json` is a deterministic machine-readable projection. It is not an independent source of truth.
+
 ## Canonical chain
 
 ```mermaid
@@ -58,6 +74,7 @@ flowchart LR
 - Unknown contract drift blocks CI.
 - Release metadata is derived from `package.json`.
 - Asset freshness distinguishes approved bookkeeping-only metadata from runtime/asset drift; unknown upstream files block.
+- Branch/release governance and release readiness are tracked through GitHub SOT #86.
 
 Run `npm run audit:repository` to verify repository-level invariants.
 
@@ -128,4 +145,4 @@ Resource navigation is data-driven through `applicationResources` and AutoMenu. 
 
 Playwright output under `test-results/` is ephemeral and ignored. CI retains it only as failure artifacts; never commit local traces or screenshots from this directory.
 
-Use the repository contract, architecture rules, package exports, and Storybook stories as the executable source of truth for UI changes.
+Use the repository contract, architecture rules, package exports, Storybook stories, and GitHub SOT #86 as the executable source of truth for UI changes.
