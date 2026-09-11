@@ -4791,6 +4791,7 @@ function Fr({ actions: e } = {}) {
 					"# legal-review"
 				].map((e, r) => /* @__PURE__ */ O(b, {
 					type: "button",
+					variant: "ghost",
 					onClick: () => n(e),
 					className: `mw-link mt-2 w-full px-3 text-left text-sm ${t === e ? "bg-card font-bold text-primary" : "text-muted-foreground"}`,
 					children: [e, r === 0 ? /* @__PURE__ */ D(R, {
@@ -5090,6 +5091,7 @@ function zr({ actions: e } = {}) {
 						"API / Integrations"
 					].map((e) => /* @__PURE__ */ D(b, {
 						type: "button",
+						variant: "ghost",
 						onClick: () => n(e),
 						className: `mw-link w-full px-3 text-left text-sm ${t === e ? "font-bold text-primary" : "text-muted-foreground"}`,
 						children: e
