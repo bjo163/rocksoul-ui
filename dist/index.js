@@ -8222,13 +8222,49 @@ function Qi({ className: t, title: n = "Research domain ownership", description:
 			]
 		}), /* @__PURE__ */ O("figcaption", {
 			className: "mt-4 border-t border-border pt-4",
-			children: [/* @__PURE__ */ D("p", {
-				className: "mw-meta text-foreground",
-				children: "Text equivalent"
-			}), /* @__PURE__ */ D("p", {
-				className: "mt-2 text-sm leading-6 text-muted-foreground",
-				children: r
-			})]
+			children: [
+				/* @__PURE__ */ D("p", {
+					className: "mw-meta text-foreground",
+					children: "Text equivalent"
+				}),
+				/* @__PURE__ */ D("p", {
+					className: "mt-2 text-sm leading-6 text-muted-foreground",
+					children: r
+				}),
+				/* @__PURE__ */ O("ul", {
+					className: "mt-3 grid gap-2 md:grid-cols-2",
+					children: [Zi.map((e) => {
+						let t = N[e];
+						return /* @__PURE__ */ O("li", {
+							className: "border border-border bg-background p-3 text-xs leading-5",
+							children: [/* @__PURE__ */ D("strong", {
+								className: "text-foreground",
+								children: e
+							}), /* @__PURE__ */ O("span", {
+								className: "block text-muted-foreground",
+								children: [
+									t.repository,
+									" · ",
+									t.prefix
+								]
+							})]
+						}, e);
+					}), /* @__PURE__ */ O("li", {
+						className: "border border-primary bg-background p-3 text-xs leading-5",
+						children: [/* @__PURE__ */ D("strong", {
+							className: "text-foreground",
+							children: "RELATIONSHIP"
+						}), /* @__PURE__ */ O("span", {
+							className: "block text-muted-foreground",
+							children: [
+								s.repository,
+								" · ",
+								s.prefix
+							]
+						})]
+					})]
+				})
+			]
 		})]
 	});
 }
