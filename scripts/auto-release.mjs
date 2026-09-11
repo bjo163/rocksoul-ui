@@ -23,7 +23,8 @@ if (subjects.length === 0) {
 const breaking = /(^|\n)\s*(BREAKING CHANGE|BREAKING-CHANGE)\s*:/m.test(body) || subjects.some((s) => /^[a-z]+(?:\([^)]*\))?!:/.test(s))
 const minor = subjects.some((s) => /^feat(?:\([^)]*\))?:/.test(s))
 const current = JSON.parse(readFileSync(packagePath, "utf8"))
-const [major, minorVersion, patch] = String(current.version).split("-")[0].split(".").map(Number)
+const previousVersion = String(current.version)
+const [major, minorVersion, patch] = previousVersion.split("-")[0].split(".").map(Number)
 let next
 if (breaking) next = `${major + 1}.0.0`
 else if (minor) next = `${major}.${minorVersion + 1}.0`
@@ -31,7 +32,7 @@ else next = `${major}.${minorVersion}.${patch + 1}`
 
 const nextTag = `v${next}`
 try {
-  run("git", ["rev-parse", "--verify", `refs/tags/${nextTag}`])
+  execFileSync("git", ["rev-parse", "--verify", `refs/tags/${nextTag}`], { stdio: "ignore" })
   console.error(`Release ${nextTag} already exists.`)
   process.exit(1)
 } catch {}
@@ -40,8 +41,9 @@ current.version = next
 writeFileSync(packagePath, `${JSON.stringify(current, null, 2)}\n`)
 
 const lock = JSON.parse(readFileSync(lockPath, "utf8"))
-if (lock.version !== 3) throw new Error(`Unsupported package-lock version: ${lock.version}`)
+if (lock.lockfileVersion !== 3) throw new Error(`Unsupported package-lock lockfileVersion: ${lock.lockfileVersion}`)
 if (!lock.packages || !lock.packages[""]) throw new Error("package-lock root package metadata missing")
+lock.version = next
 lock.packages[""].version = next
 writeFileSync(lockPath, `${JSON.stringify(lock, null, 2)}\n`)
 
@@ -56,6 +58,6 @@ const newSection = `## ${nextTag}\n\n${notes || unreleasedBody}`
 const updatedChangelog = `${changelog.slice(0, changelog.indexOf(marker))}${marker}\n\nChanges targeting the next release only. Release-specific changes move here automatically when the version is cut.\n\n${newSection}\n${changelog.slice(prefixEnd)}`
 writeFileSync(changelogPath, updatedChangelog)
 
-console.log(`Auto release candidate: ${current.version} -> ${next}`)
+console.log(`Auto release candidate: ${previousVersion} -> ${next}`)
 console.log(`Tag: ${nextTag}`)
 console.log(`Commits considered: ${subjects.length}`)
