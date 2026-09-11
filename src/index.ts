@@ -64,3 +64,4 @@ export * from "./components/perspective-intelligence"
 
 export * from "./components/web-stats"
 export * from "./components/observatory-footer"
+export * from "./contracts/semantic-composer"
