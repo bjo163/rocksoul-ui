@@ -62,7 +62,13 @@ function sortLifecycle(a: VisualSystemV2LifecycleStatus, b: VisualSystemV2Lifecy
   return lifecyclePriority[b] - lifecyclePriority[a]
 }
 
+const visualSemanticStateKeys = new Set(["chart", "density", "graphEdge", "graphNode", "lifecycle", "surface", "typography"])
+
 export function parseVisualSemanticState(input: Readonly<Record<string, string | undefined>>): VisualSemanticState {
+  for (const key of Object.keys(input)) {
+    if (!visualSemanticStateKeys.has(key)) throw new Error(`Unsupported V2 semantic dimension: ${key}`)
+  }
+
   const output: {
     chart?: VisualSystemV2ChartId
     density?: VisualSystemV2DensityMode
