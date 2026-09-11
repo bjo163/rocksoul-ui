@@ -4,10 +4,10 @@ import "react";
 import { Slot as n } from "radix-ui";
 import { cva as r } from "class-variance-authority";
 //#region src/components/ui/button.tsx
-var i = r("inline-flex shrink-0 items-center justify-center gap-2 rounded-none text-sm font-mono font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4", {
+var i = r("inline-flex shrink-0 items-center justify-center gap-2 rounded-none text-sm font-mono font-bold uppercase tracking-widest whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4", {
 	variants: {
 		variant: {
-			default: "bg-primary text-primary-foreground !text-primary-foreground hover:bg-primary/90",
+			default: "bg-primary text-primary-foreground hover:bg-primary/90",
 			destructive: "bg-destructive text-[var(--mw-neutral-000)] !text-[var(--mw-neutral-000)] hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
 			outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
 			secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -29,21 +29,20 @@ var i = r("inline-flex shrink-0 items-center justify-center gap-2 rounded-none t
 		variant: "default",
 		size: "default"
 	}
-});
-function a({ className: r, variant: a = "default", size: o = "default", asChild: s = !1, type: c, ...l }) {
-	let u = s ? n.Root : "button";
-	return /* @__PURE__ */ t(u, {
+}), a = /(?:^|\s)bg-(?:background|card|panel)(?:\s|$)/;
+function o({ className: r, variant: o = "default", size: s = "default", asChild: c = !1, type: l, ...u }) {
+	let d = c ? n.Root : "button", f = o === "default" && a.test(r ?? "");
+	return /* @__PURE__ */ t(d, {
 		"data-slot": "button",
-		"data-variant": a,
-		"data-size": o,
-		type: c ?? (s ? void 0 : "button"),
+		"data-variant": o,
+		"data-size": s,
+		type: l ?? (c ? void 0 : "button"),
 		className: e(i({
-			variant: a,
-			size: o,
-			className: r
-		})),
-		...l
+			variant: o,
+			size: s
+		}), f && "text-foreground", r),
+		...u
 	});
 }
 //#endregion
-export { a as Button, i as buttonVariants };
+export { o as Button, i as buttonVariants };
