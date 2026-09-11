@@ -42,8 +42,8 @@ for (const [key, expected] of Object.entries(exact)) {
 if (!assetSync.includes('repository: "bjo163/rocksoul-assets"')) failures.push("runtime asset source repository drift")
 if (!assetSync.includes('applicationVersion: "v2"')) failures.push("runtime asset application version is not V2")
 if (!assetSync.includes('repositoryAcceptance: "passed"')) failures.push("runtime asset delivery is not repository-accepted")
-if (!/commit:\\s*"[0-9a-f]{40}"/.test(assetSync)) failures.push("runtime delivery commit is not immutable")
-if (!/acceptedMainCommit:\\s*"[0-9a-f]{40}"/.test(assetSync)) failures.push("accepted runtime delivery commit is not immutable")
+if (!/commit:\s*"[0-9a-f]{40}"/.test(assetSync)) failures.push("runtime delivery commit is not immutable")
+if (!/acceptedMainCommit:\s*"[0-9a-f]{40}"/.test(assetSync)) failures.push("accepted runtime delivery commit is not immutable")
 
 for (const needle of [
   'import compatibilityProjection from "./visual-system-v2.compatibility.json"',
