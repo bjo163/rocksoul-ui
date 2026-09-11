@@ -6,7 +6,7 @@ const root=process.cwd();const failures=[];const warnings=[]
 const exists=async p=>{try{await access(path.join(root,p));return true}catch{return false}}
 const read=async p=>readFile(path.join(root,p),"utf8")
 const git=args=>{try{return execFileSync("git",args,{cwd:root,encoding:"utf8",stdio:["ignore","pipe","pipe"]}).trim()}catch{return ""}}
-const pkg=JSON.parse(await read("package.json"));const lock=JSON.parse(await read("package-lock.json"));const repo=JSON.parse(await read("ROCKSOUL-REPO.json"));const changelog=await read("CHANGELOG.md");const releaseAudit=await read("scripts/release-audit.mjs");const ci=await read(".github/workflows/ci.yml")
+const pkg=JSON.parse(await read("package.json"));const lock=JSON.parse(await read("package-lock.json"));const repo=JSON.parse(await read("ROCKSOUL-REPO.json"));const changelog=await read("CHANGELOG.md");const releaseAudit=await read("scripts/release-audit.mjs");const ci=await read(".github/workflows/ci.yml");const promote=await read(".github/workflows/promote-dev.yml")
 if(repo.schema!=="rocksoul.repository.v2")failures.push(`ROCKSOUL-REPO schema: ${repo.schema}`)
 if(repo.repository_id!=="rocksoul-ui")failures.push(`repository identity: ${repo.repository_id}`)
 if(repo.github_repository!=="rocksoul-ui")failures.push(`github repository identity: ${repo.github_repository}`)
@@ -28,5 +28,8 @@ const exactHeadTag=git(["describe","--tags","--exact-match","HEAD"]);if(exactHea
 if(!changelog.includes(`## v${pkg.version}`))warnings.push(`CHANGELOG has no v${pkg.version} heading yet`)
 for(const required of ["ROCKSOUL-REPO.json","ROCKSOUL-TODO.json","README.md","CHANGELOG.md",".github/workflows/ci.yml","docs/UI-ARCHITECTURE.md","docs/UI-ARCHITECTURE-RULES.md","docs/ui-component-inventory.json"]){if(!(await exists(required)))failures.push(`missing governance file: ${required}`)}
 for(const requiredStep of ["npm ci --no-audit --no-fund","git diff --exit-code -- dist","npm run audit:repository"]){if(!ci.includes(requiredStep))failures.push(`CI missing strict gate: ${requiredStep}`)}
+if(!ci.includes("workflow_dispatch:"))failures.push("CI must support explicit workflow_dispatch for promoted main verification")
+for(const requiredStep of ["actions: write","VALIDATED_SHA","git merge-base --is-ancestor","gh workflow run ci.yml --ref main"]){if(!promote.includes(requiredStep))failures.push(`promotion workflow missing release-chain contract: ${requiredStep}`)}
+if(promote.includes("git push --force")||promote.includes("git push -f"))failures.push("promotion workflow must never force-push main")
 if(failures.length){console.error("Strict repository audit failed:");failures.forEach(f=>console.error(`- ${f}`));warnings.forEach(w=>console.error(`WARN: ${w}`));process.exit(1)}
 console.log(`Strict repository audit passed: ${pkg.name}@${pkg.version}`);console.log("- package manager: npm");console.log("- lockfile: package-lock.json");console.log(`- HEAD tag: ${exactHeadTag||"untagged"}`);warnings.forEach(w=>console.warn(`WARN: ${w}`))

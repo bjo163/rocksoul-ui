@@ -7,6 +7,7 @@ on:
     branches: [dev]
 
 permissions:
+  actions: write
   contents: write
 
 concurrency:
@@ -26,6 +27,7 @@ jobs:
           fetch-depth: 0
 
       - name: Fast-forward exact validated dev head
+        id: promote
         shell: bash
         env:
           VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
@@ -37,6 +39,7 @@ jobs:
           dev_sha="$(git rev-parse origin/dev)"
 
           if [ "$dev_sha" != "$VALIDATED_SHA" ]; then
+            echo "dispatch_main_ci=false" >> "$GITHUB_OUTPUT"
             echo "Successful UI CI run is stale: validated=$VALIDATED_SHA current-dev=$dev_sha"
             echo "A newer dev head must pass UI CI before promotion."
             exit 0
@@ -44,6 +47,7 @@ jobs:
 
           if [ "$main_sha" = "$dev_sha" ]; then
             echo "main and dev are already synchronized at $dev_sha"
+            echo "dispatch_main_ci=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -55,3 +59,10 @@ jobs:
 
           git checkout --detach "$dev_sha"
           git push origin HEAD:main
+          echo "dispatch_main_ci=true" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch exact main UI CI
+        if: steps.promote.outputs.dispatch_main_ci == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref main
