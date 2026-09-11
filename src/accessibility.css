@@ -1,0 +1,19 @@
+/* Accessibility overrides for authored interactive surfaces. */
+[data-slot="button"].bg-panel {
+  color: var(--mw-text-primary);
+}
+
+@media (forced-colors: active) {
+  [data-slot="button"][data-variant="default"],
+  [data-slot="button"][data-variant="destructive"] {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    forced-color-adjust: none;
+  }
+
+  [data-slot="button"]:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

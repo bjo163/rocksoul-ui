@@ -16,6 +16,7 @@ const [
   patterns,
   pagination,
   eventIntelligence,
+  themeToggle,
 ] = await Promise.all([
   read("src/styles.css"),
   read("src/components/evidence-graph.tsx"),
@@ -28,6 +29,7 @@ const [
   read("src/components/patterns/domain-patterns.tsx"),
   read("src/components/ui/pagination.tsx"),
   read("src/components/event-intelligence.tsx"),
+  read("src/components/theme-toggle.tsx"),
 ])
 
 const checks = [
@@ -48,6 +50,8 @@ const checks = [
   [eventIntelligence.includes("Text equivalent"), "event topology text equivalent"],
   [eventIntelligence.includes('role="progressbar"'), "historicity semantic progress"],
   [eventIntelligence.includes("Confidence is scoped evidence assessment"), "historicity confidence scope guardrail"],
+  [eventIntelligence.includes("var(--mw-brand-crimson-ui)"), "event topology status foreground uses accessible semantic token"],
+  [themeToggle.includes("text-foreground"), "theme toggle foreground uses semantic token"],
 ]
 
 const failures = checks.filter(([ok]) => !ok).map(([, label]) => label)

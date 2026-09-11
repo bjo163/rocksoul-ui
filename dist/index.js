@@ -1876,7 +1876,11 @@ function Sn({ activeResource: t, breadcrumbs: n, children: r, backendState: i = 
 			(e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k" && (e.preventDefault(), m(!0));
 		};
 		return window.addEventListener("keydown", e), () => window.removeEventListener("keydown", e);
-	}, []), /* @__PURE__ */ O("div", {
+	}, []), k(() => {
+		document.querySelectorAll(".overflow-x-auto").forEach((e) => {
+			e.scrollWidth <= e.clientWidth + 1 || (e.tabIndex = 0, e.getAttribute("role") || e.setAttribute("role", "region"), e.getAttribute("aria-label") || e.setAttribute("aria-label", "Horizontally scrollable content"));
+		});
+	}), /* @__PURE__ */ O("div", {
 		className: "mw-platform min-h-screen bg-background text-foreground",
 		"data-surface-personality": u,
 		children: [
@@ -2995,7 +2999,7 @@ function Bn({ caseId: t, eyebrow: n, title: r, summary: i, status: a, variant: o
 		}), /* @__PURE__ */ O("div", {
 			className: e("mt-7", o === "platform" ? "max-w-4xl" : "max-w-5xl"),
 			children: [
-				/* @__PURE__ */ D("h2", {
+				/* @__PURE__ */ D("h1", {
 					className: e("mw-display text-balance font-black uppercase", o === "platform" ? "text-[clamp(2.5rem,5vw,4rem)] leading-[0.95]" : "text-[clamp(3rem,8vw,5.25rem)] leading-[0.92]"),
 					children: r
 				}),
@@ -7431,14 +7435,14 @@ function Mi({ nodes: t, edges: n, className: r, title: i = "Event intelligence t
 									height: "52",
 									rx: "6",
 									fill: "var(--mw-surface-page)",
-									stroke: n ? "var(--mw-brand-crimson)" : "var(--mw-border-strong)",
+									stroke: n ? "var(--mw-brand-crimson-ui)" : "var(--mw-border-strong)",
 									strokeWidth: n ? "2" : "1",
 									strokeDasharray: e.external ? "5 4" : void 0
 								}),
 								/* @__PURE__ */ D("text", {
 									x: "10",
 									y: "17",
-									fill: n ? "var(--mw-brand-crimson)" : "var(--mw-text-secondary)",
+									fill: n ? "var(--mw-brand-crimson-ui)" : "var(--mw-text-secondary)",
 									fontSize: "8",
 									fontFamily: "IBM Plex Mono, monospace",
 									children: e.kind.toUpperCase()

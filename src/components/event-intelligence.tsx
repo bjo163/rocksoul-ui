@@ -128,11 +128,11 @@ export function EventTopologyGraph({
                   height="52"
                   rx="6"
                   fill="var(--mw-surface-page)"
-                  stroke={isEvent ? "var(--mw-brand-crimson)" : "var(--mw-border-strong)"}
+                  stroke={isEvent ? "var(--mw-brand-crimson-ui)" : "var(--mw-border-strong)"}
                   strokeWidth={isEvent ? "2" : "1"}
                   strokeDasharray={node.external ? "5 4" : undefined}
                 />
-                <text x="10" y="17" fill={isEvent ? "var(--mw-brand-crimson)" : "var(--mw-text-secondary)"} fontSize="8" fontFamily="IBM Plex Mono, monospace">
+                <text x="10" y="17" fill={isEvent ? "var(--mw-brand-crimson-ui)" : "var(--mw-text-secondary)"} fontSize="8" fontFamily="IBM Plex Mono, monospace">
                   {node.kind.toUpperCase()}
                 </text>
                 <text x="10" y="34" fill="var(--mw-text-primary)" fontSize="9" fontFamily="IBM Plex Mono, monospace">
