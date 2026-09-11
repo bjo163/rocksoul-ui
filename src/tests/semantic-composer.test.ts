@@ -48,8 +48,8 @@ describe("semantic composer foundation", () => {
     const second = composeVisualSemanticState(state, "graph")
 
     expect(first).toEqual(second)
-    expect(first.accessibilityDescription).toContain("canonical")
-    expect(first.accessibilityDescription).toContain("canonical-record")
-    expect(first.accessibilityDescription).toContain("provenance")
+    expect(first.accessibilityDescription).toBe(
+      "Semantic entity: canonical, canonical-record, provenance, forensic.",
+    )
   })
 })
