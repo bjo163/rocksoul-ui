@@ -2,14 +2,14 @@
   "schemaVersion": 3,
   "scope": "mirrored-core-and-runtime-packs",
   "sourceRepository": "bjo163/rocksoul-assets",
-  "sourceCommit": "ce46a35d904ae3d4f5338c5193e5c78a8ea9ec2f",
-  "release": "1.3.1",
+  "sourceCommit": "fd6a545160312bfe4b3419d846961abbcd7bfabd",
+  "release": "1.7.0",
   "files": [
     {
       "source": "moonwitness/dashboard-pack/dashboard-pack.json",
       "path": "public/assets/dashboard-pack/dashboard-pack.json",
-      "blob": "aee2c60c6ea9d9cc1f1327174bf903d5cde03760",
-      "size": 627
+      "blob": "5627f9d01949669436049d5333deeecaf73e3a3a",
+      "size": 910
     },
     {
       "source": "moonwitness/dashboard-pack/widgets/ai-summary.svg",
@@ -134,128 +134,128 @@
     {
       "source": "moonwitness/data-viz/charts/activity-sparkline.svg",
       "path": "public/assets/data-viz/charts/activity-sparkline.svg",
-      "blob": "8baaa5d34520c41b22a82312711d1e1c9f26469c",
-      "size": 674
+      "blob": "25b339c2d23a08e09ff34f3efafe10e240080e92",
+      "size": 1375
     },
     {
       "source": "moonwitness/data-viz/charts/annotation-tools.svg",
       "path": "public/assets/data-viz/charts/annotation-tools.svg",
-      "blob": "28265f4d3305f392c2d0e7e3be871d5075fbb1d3",
-      "size": 985
+      "blob": "493e339c0b8f0c440579a1cea17c8ce4b55b6d1c",
+      "size": 1438
     },
     {
       "source": "moonwitness/data-viz/charts/confidence-trend.svg",
       "path": "public/assets/data-viz/charts/confidence-trend.svg",
-      "blob": "2e0db7cd9edc4f6b433922c61964513ca4b474e4",
-      "size": 616
+      "blob": "410f2b01775f8e270feb7f5c54eb58d001465a2a",
+      "size": 1434
     },
     {
       "source": "moonwitness/data-viz/charts/cross-domain-relations.svg",
       "path": "public/assets/data-viz/charts/cross-domain-relations.svg",
-      "blob": "8ba135de60470a7d6f1fe4fb123a58ba5754a04e",
-      "size": 1802
+      "blob": "e3b7150d32eeb62630063051811d2e591e6c6d85",
+      "size": 3941
     },
     {
       "source": "moonwitness/data-viz/charts/edge-styles.svg",
       "path": "public/assets/data-viz/charts/edge-styles.svg",
-      "blob": "811126e721283b976a115255ca75c9df67034fa5",
-      "size": 1003
+      "blob": "aae01c3561ba4acfe229dbbf86d61a9c155b1871",
+      "size": 3622
     },
     {
       "source": "moonwitness/data-viz/charts/event-frequency.svg",
       "path": "public/assets/data-viz/charts/event-frequency.svg",
-      "blob": "9568205209b6751cb3c250a568acaa45f2351f18",
-      "size": 718
+      "blob": "271879c1706f30084ad34a2e22ccafe6aab39303",
+      "size": 1642
     },
     {
       "source": "moonwitness/data-viz/charts/event-topology.svg",
       "path": "public/assets/data-viz/charts/event-topology.svg",
-      "blob": "294256ff2690d14a93b0bb83797e0de5d3acdce8",
-      "size": 2263
+      "blob": "f158d641ad984ff242bd41f6c7b457ada8367320",
+      "size": 3889
     },
     {
       "source": "moonwitness/data-viz/charts/event-type-distribution.svg",
       "path": "public/assets/data-viz/charts/event-type-distribution.svg",
-      "blob": "66327f862ea78af5f205a4c2a964f463c9322b44",
-      "size": 1105
+      "blob": "547500a26742b8db261c2d07f76e75aafc2caa6f",
+      "size": 2139
     },
     {
       "source": "moonwitness/data-viz/charts/evidence-matrix.svg",
       "path": "public/assets/data-viz/charts/evidence-matrix.svg",
-      "blob": "5495d53d55490de5c1232d72295a12e29fd4e8b7",
-      "size": 1180
+      "blob": "dc8e5bd287cd2a17a350696ed411a7d00ee4f6fa",
+      "size": 1640
     },
     {
       "source": "moonwitness/data-viz/charts/evidence-timeline.svg",
       "path": "public/assets/data-viz/charts/evidence-timeline.svg",
-      "blob": "31f07b6301609cb183cff39118fe3d68725cc2c0",
-      "size": 1388
+      "blob": "1acaee86c1b26db90735849fc47ed643ed9baabf",
+      "size": 2144
     },
     {
       "source": "moonwitness/data-viz/charts/geographic-heatmap.svg",
       "path": "public/assets/data-viz/charts/geographic-heatmap.svg",
-      "blob": "5f221ab5b0f247ca39139640c51e2ab56db95549",
-      "size": 1160
+      "blob": "8610dd60a875e6d9f8629007f0ce793f5f7591b8",
+      "size": 5201
     },
     {
       "source": "moonwitness/data-viz/charts/graph-nodes.svg",
       "path": "public/assets/data-viz/charts/graph-nodes.svg",
-      "blob": "7da357f9566e051a606192db797ac887a0d56d53",
-      "size": 1208
+      "blob": "34e4258741f0dee3727f7360555d1a3c7e1a003f",
+      "size": 3561
     },
     {
       "source": "moonwitness/data-viz/charts/historicity-band.svg",
       "path": "public/assets/data-viz/charts/historicity-band.svg",
-      "blob": "08fb7c0cc3e6a7c881e4e30dd986eb6fd036eaab",
-      "size": 2009
+      "blob": "d177f6163f2f5fde2c14f935ecc8d785ebc209ca",
+      "size": 1468
     },
     {
       "source": "moonwitness/data-viz/charts/legend-styles.svg",
       "path": "public/assets/data-viz/charts/legend-styles.svg",
-      "blob": "f0db49df30106204a63c5bfa85e4fc98850c33fc",
-      "size": 1587
+      "blob": "1fd2d94e1b3e63726b1c5076a49912a9ac12e400",
+      "size": 3573
     },
     {
       "source": "moonwitness/data-viz/charts/metric-counters.svg",
       "path": "public/assets/data-viz/charts/metric-counters.svg",
-      "blob": "90836b33866cfff8bc8185c4373148bcaae7d08f",
-      "size": 1493
+      "blob": "408969da7cacc2d0ead17b0d1f627343806ff3cb",
+      "size": 1937
     },
     {
       "source": "moonwitness/data-viz/charts/node-link-correlation.svg",
       "path": "public/assets/data-viz/charts/node-link-correlation.svg",
-      "blob": "dd2e873bf4f0a01eb507d6ebea94a8226d3c2a00",
-      "size": 950
+      "blob": "4f571d2e32498a4ae8a2203d0a302f7e22487fdf",
+      "size": 3935
     },
     {
       "source": "moonwitness/data-viz/charts/place-material-context.svg",
       "path": "public/assets/data-viz/charts/place-material-context.svg",
-      "blob": "76b3bef881e1eba74b8114dc413fa9a372f0dfb7",
-      "size": 1646
+      "blob": "0a9d6cb28fd20f1e06a7ba716559e5adef40f5f7",
+      "size": 5229
     },
     {
       "source": "moonwitness/data-viz/charts/provenance-chain.svg",
       "path": "public/assets/data-viz/charts/provenance-chain.svg",
-      "blob": "306a328b63b57330b655171bda90e76037beb392",
-      "size": 1427
+      "blob": "88d30c9ce01e0946e6cd4f203490a12a880ac233",
+      "size": 2796
     },
     {
       "source": "moonwitness/data-viz/charts/repository-health.svg",
       "path": "public/assets/data-viz/charts/repository-health.svg",
-      "blob": "d207807c261a1dc24c6e43ffb83ce0644f6b8c0e",
-      "size": 1762
+      "blob": "f68ea49eb1d337965bf4441f8089878b1bdc950c",
+      "size": 1654
     },
     {
       "source": "moonwitness/data-viz/charts/status-ring.svg",
       "path": "public/assets/data-viz/charts/status-ring.svg",
-      "blob": "c94252d2cf0b72fcbf290baa3e7d22f1bf57b485",
-      "size": 753
+      "blob": "faae20e25b7d7983bb59039d0f060fbb71acdcd0",
+      "size": 1601
     },
     {
       "source": "moonwitness/data-viz/data-viz.json",
       "path": "public/assets/data-viz/data-viz.json",
-      "blob": "c2053f9269b03d5d98602a88b489e84efcb86d34",
-      "size": 703
+      "blob": "1c4e7ef65760901dd09aecd575b5ac5795ff66e5",
+      "size": 1011
     },
     {
       "source": "moonwitness/hero-backgrounds/backgrounds.json",
@@ -314,272 +314,272 @@
     {
       "source": "moonwitness/icons/icons.json",
       "path": "public/assets/icons/icons.json",
-      "blob": "4d5e4e4075ca79d7b49f4499b43e7f4892d6152e",
-      "size": 423
+      "blob": "0e4de09e48656f987d3b0a01fa684696812a4787",
+      "size": 749
     },
     {
       "source": "moonwitness/icons/svg/actions/add.svg",
       "path": "public/assets/icons/svg/actions/add.svg",
-      "blob": "d844a1fe4cd12c1851b7379c4ec787cba28fd0e8",
-      "size": 220
+      "blob": "91227126e0ae286541fee0d1f715b0dcb0935087",
+      "size": 218
     },
     {
       "source": "moonwitness/icons/svg/actions/bookmark.svg",
       "path": "public/assets/icons/svg/actions/bookmark.svg",
-      "blob": "ddd0e53bc29e599adbcda65c94b453ccce38753e",
-      "size": 229
+      "blob": "4b0fea65c95cf41101f6f544c063b2cebdf89f73",
+      "size": 227
     },
     {
       "source": "moonwitness/icons/svg/actions/chat.svg",
       "path": "public/assets/icons/svg/actions/chat.svg",
-      "blob": "52fdd8c89d3113f4f50cff826f9b928cbeeed209",
-      "size": 223
+      "blob": "c2a44def43db327986e4ca5073800b44438edf49",
+      "size": 221
     },
     {
       "source": "moonwitness/icons/svg/actions/command.svg",
       "path": "public/assets/icons/svg/actions/command.svg",
-      "blob": "35a666ea7485a0bf292234a4f32cd299ea70f930",
-      "size": 271
+      "blob": "d686cd8aeea1623864b38af86821fcbeaf0560a9",
+      "size": 269
     },
     {
       "source": "moonwitness/icons/svg/actions/copy.svg",
       "path": "public/assets/icons/svg/actions/copy.svg",
-      "blob": "5d56eb3f9147c6a63f4b10e3b2e88580d5882ba2",
-      "size": 268
+      "blob": "dd8adfa02a89bedbc500fb9d1967dd3129e0350d",
+      "size": 266
     },
     {
       "source": "moonwitness/icons/svg/actions/delete.svg",
       "path": "public/assets/icons/svg/actions/delete.svg",
-      "blob": "1043cb59556e516700af4c8aa2de311c8c450d83",
-      "size": 240
+      "blob": "4c43482e3b9d40d322564319189814f211c102e0",
+      "size": 238
     },
     {
       "source": "moonwitness/icons/svg/actions/download.svg",
       "path": "public/assets/icons/svg/actions/download.svg",
-      "blob": "0b3bb5096924f5fac6283b81f05b13f6b4490f5a",
-      "size": 250
+      "blob": "f87e545488719d9564cfde2e2bcc6135c7a380a6",
+      "size": 248
     },
     {
       "source": "moonwitness/icons/svg/actions/edit.svg",
       "path": "public/assets/icons/svg/actions/edit.svg",
-      "blob": "4f268e60de4716462593202223e1f2455eddf95d",
-      "size": 251
+      "blob": "0094b1ae477913dd6da4e2b99fe621c19bebc663",
+      "size": 249
     },
     {
       "source": "moonwitness/icons/svg/actions/external-link.svg",
       "path": "public/assets/icons/svg/actions/external-link.svg",
-      "blob": "57dff4d33b3ca1f2814fb4e8d98cbd80825f5e8f",
-      "size": 259
+      "blob": "aa0999af3d145b9edb714ba8219468a09339b586",
+      "size": 257
     },
     {
       "source": "moonwitness/icons/svg/actions/save.svg",
       "path": "public/assets/icons/svg/actions/save.svg",
-      "blob": "37a301716156cc28830cce1d1fdb099d67148d50",
-      "size": 256
+      "blob": "829abb79dee642b434f10f795c2f554beb1aff78",
+      "size": 254
     },
     {
       "source": "moonwitness/icons/svg/actions/share.svg",
       "path": "public/assets/icons/svg/actions/share.svg",
-      "blob": "03b67847918fee3b19936acee5b2ec44c9181b88",
-      "size": 315
+      "blob": "2a4dc1c5c908eba0820581bbcf3868d078e3257b",
+      "size": 313
     },
     {
       "source": "moonwitness/icons/svg/actions/upload.svg",
       "path": "public/assets/icons/svg/actions/upload.svg",
-      "blob": "b88a937f3dcdd12e97065f14d91da447b2aa9df1",
-      "size": 253
+      "blob": "135ba455ad5d83d793ab315afaa7439b1914fa21",
+      "size": 251
     },
     {
       "source": "moonwitness/icons/svg/domain/ai.svg",
       "path": "public/assets/icons/svg/domain/ai.svg",
-      "blob": "46ba8b15a8439683b554a1aeb9f45f441484f1e5",
-      "size": 327
+      "blob": "6dccd6e7d5146b2f97cc37bdd0ba5cce0a830e3c",
+      "size": 325
     },
     {
       "source": "moonwitness/icons/svg/domain/correlation.svg",
       "path": "public/assets/icons/svg/domain/correlation.svg",
-      "blob": "e5b15282856f5c297424cc56409a2e850194095a",
-      "size": 261
+      "blob": "e13935a6be5ae3db377264d543efb423375a3b2d",
+      "size": 259
     },
     {
       "source": "moonwitness/icons/svg/domain/evidence.svg",
       "path": "public/assets/icons/svg/domain/evidence.svg",
-      "blob": "b240d6d9eaf8ddf5a3bba756da57a5c245ca2487",
-      "size": 250
+      "blob": "b61291e94ba232e87440b90da9c8d6a3541181eb",
+      "size": 248
     },
     {
       "source": "moonwitness/icons/svg/domain/graph-node.svg",
       "path": "public/assets/icons/svg/domain/graph-node.svg",
-      "blob": "4b7318485b29e529e502f70c42982b2640939433",
-      "size": 330
+      "blob": "4bd3238b481bd02b4d0d2a284d117b8fbc854373",
+      "size": 328
     },
     {
       "source": "moonwitness/icons/svg/domain/legal.svg",
       "path": "public/assets/icons/svg/domain/legal.svg",
-      "blob": "cc358fa29ba66b30d48ad772c33746c8c4ca5c68",
-      "size": 245
+      "blob": "158d2b807cf741360770c41fd89261b86cb16eed",
+      "size": 243
     },
     {
       "source": "moonwitness/icons/svg/domain/source.svg",
       "path": "public/assets/icons/svg/domain/source.svg",
-      "blob": "43bf9d760d2c1ca74137ded0c1bf0747f76c8ad9",
-      "size": 258
+      "blob": "798fd0130dc0b5d9f756f52aaf5a9a919f0f7a59",
+      "size": 256
     },
     {
       "source": "moonwitness/icons/svg/domain/timeline.svg",
       "path": "public/assets/icons/svg/domain/timeline.svg",
-      "blob": "b9561cf4c031cbaed9161dcd0508214fba5018d1",
-      "size": 309
+      "blob": "18892b119d4071a6209bfd2d9c27e67a44483057",
+      "size": 307
     },
     {
       "source": "moonwitness/icons/svg/domain/trace.svg",
       "path": "public/assets/icons/svg/domain/trace.svg",
-      "blob": "85045b0216d4965eb921a1e785f22a3b8961c987",
-      "size": 309
+      "blob": "73c9d13a45bc5331ea62bf986b1a6fd26f6d6f88",
+      "size": 307
     },
     {
       "source": "moonwitness/icons/svg/navigation/case.svg",
       "path": "public/assets/icons/svg/navigation/case.svg",
-      "blob": "458c98c351118b16bce4390d115a847443bf5656",
-      "size": 247
+      "blob": "829c13bd211dc061977f04edf91045a474ebbd40",
+      "size": 245
     },
     {
       "source": "moonwitness/icons/svg/navigation/dashboard.svg",
       "path": "public/assets/icons/svg/navigation/dashboard.svg",
-      "blob": "480bebb30aa9f736082b62a5ca0661057bc7ca24",
-      "size": 267
+      "blob": "c7940dc370f20e25ce15b83cfd63d9be21c30e9d",
+      "size": 265
     },
     {
       "source": "moonwitness/icons/svg/navigation/event.svg",
       "path": "public/assets/icons/svg/navigation/event.svg",
-      "blob": "72109ae77e766d7979b8cdadedcc5283f8253e60",
-      "size": 276
+      "blob": "f9496f17cdf9697a4654822b892bf88ee2c71f80",
+      "size": 274
     },
     {
       "source": "moonwitness/icons/svg/navigation/explore.svg",
       "path": "public/assets/icons/svg/navigation/explore.svg",
-      "blob": "99759bbf05d9ef732ff0b2ee40cffedca441fb44",
-      "size": 257
+      "blob": "4eede4edbca246005409a0c6ff7cc8204046265d",
+      "size": 255
     },
     {
       "source": "moonwitness/icons/svg/navigation/filter.svg",
       "path": "public/assets/icons/svg/navigation/filter.svg",
-      "blob": "1f8f8b558fdad5eb40154a4694330825b1e111d1",
-      "size": 230
+      "blob": "dbe95c10199f97b9500406cfb9f5f38c6e877f5c",
+      "size": 228
     },
     {
       "source": "moonwitness/icons/svg/navigation/globe.svg",
       "path": "public/assets/icons/svg/navigation/globe.svg",
-      "blob": "01426f4c2d1d3d7c793a29d88e1be565b0dfac5a",
-      "size": 289
+      "blob": "2ca22b4b135a56363dc336abd1fe13ba6620717f",
+      "size": 287
     },
     {
       "source": "moonwitness/icons/svg/navigation/kanban.svg",
       "path": "public/assets/icons/svg/navigation/kanban.svg",
-      "blob": "c72614702222aff10170df450af706c0a3bc16c8",
-      "size": 292
+      "blob": "201f680b9d77956645fe419d3e03bc5c9cc89575",
+      "size": 290
     },
     {
       "source": "moonwitness/icons/svg/navigation/map-pin.svg",
       "path": "public/assets/icons/svg/navigation/map-pin.svg",
-      "blob": "90c9bc6f4db0f8b93019db49188e212ccced8360",
-      "size": 285
+      "blob": "6ff9df162b06ea584b8a9cbb5da28bb6a2a87224",
+      "size": 283
     },
     {
       "source": "moonwitness/icons/svg/navigation/person.svg",
       "path": "public/assets/icons/svg/navigation/person.svg",
-      "blob": "3d7ae62095ba8b635cde753c3b30d89d0f541771",
-      "size": 257
+      "blob": "4b4714801b430cba678b0b196028752fa35ef896",
+      "size": 255
     },
     {
       "source": "moonwitness/icons/svg/navigation/search.svg",
       "path": "public/assets/icons/svg/navigation/search.svg",
-      "blob": "ec3ad967430e405ba3ac54ad6490aefe9b9e4444",
-      "size": 248
+      "blob": "aae463ce3c0df79b472eaffdf8597f25e83a814a",
+      "size": 246
     },
     {
       "source": "moonwitness/icons/svg/navigation/story.svg",
       "path": "public/assets/icons/svg/navigation/story.svg",
-      "blob": "763f6917bc336ceb3433d61f4e08d4703b25b83f",
-      "size": 300
+      "blob": "b4fd57a661fa361777828d1174f3677a1bc75a7a",
+      "size": 298
     },
     {
       "source": "moonwitness/icons/svg/navigation/users.svg",
       "path": "public/assets/icons/svg/navigation/users.svg",
-      "blob": "faded1e655198c206309323cceb4a07e02a66d6d",
-      "size": 289
+      "blob": "70bc7006801f72083f919b75875c8fd1c089dba2",
+      "size": 287
     },
     {
       "source": "moonwitness/icons/svg/status/check.svg",
       "path": "public/assets/icons/svg/status/check.svg",
-      "blob": "15903ed4bd05412956aff3988c9441f61234f937",
-      "size": 250
+      "blob": "eee41a02110b076ffa8b66dcb64b7f811537cd19",
+      "size": 248
     },
     {
       "source": "moonwitness/icons/svg/status/error.svg",
       "path": "public/assets/icons/svg/status/error.svg",
-      "blob": "c77db6115f178080cda80e78be4c9286759a4d19",
-      "size": 253
+      "blob": "6803a0b953dd096e651c8747e214044f59eb254e",
+      "size": 251
     },
     {
       "source": "moonwitness/icons/svg/status/eye-off.svg",
       "path": "public/assets/icons/svg/status/eye-off.svg",
-      "blob": "91d973594e43b136ad1dea52dc7ac9cc5516c567",
-      "size": 327
+      "blob": "b06be0adc63ac4c66fd8f3db8116aa1129b54bd9",
+      "size": 325
     },
     {
       "source": "moonwitness/icons/svg/status/eye.svg",
       "path": "public/assets/icons/svg/status/eye.svg",
-      "blob": "514aeadb668ef37d2ca9eec0e7ddddd332838535",
-      "size": 279
+      "blob": "625a0b9e55f57c75d724c792f823eace416f0cea",
+      "size": 277
     },
     {
       "source": "moonwitness/icons/svg/status/info.svg",
       "path": "public/assets/icons/svg/status/info.svg",
-      "blob": "3d5d3bf90e1f68469a617d561d22a3efb56d297f",
-      "size": 253
+      "blob": "2dafcde56276eef6e3ea2b27388f68d39422f0b3",
+      "size": 251
     },
     {
       "source": "moonwitness/icons/svg/status/loading.svg",
       "path": "public/assets/icons/svg/status/loading.svg",
-      "blob": "aa94866aca643598b6d0eef89fd52f5099460dd8",
-      "size": 250
+      "blob": "e3b9d460c09f1bb106ecf0ebe3ef78367f7bfe9f",
+      "size": 248
     },
     {
       "source": "moonwitness/icons/svg/status/lock.svg",
       "path": "public/assets/icons/svg/status/lock.svg",
-      "blob": "68ebd833f8196900aae7addcbf84479af35e23a7",
-      "size": 278
+      "blob": "bf37d89b0885d926b3b1c889f430e3c283728506",
+      "size": 276
     },
     {
       "source": "moonwitness/icons/svg/status/offline.svg",
       "path": "public/assets/icons/svg/status/offline.svg",
-      "blob": "c2f788a2e5848eb208317cbf56a99b31def53994",
-      "size": 250
+      "blob": "0b6bf45d539f300f4d4ae7d3ae7c25e2e093eff4",
+      "size": 248
     },
     {
       "source": "moonwitness/icons/svg/status/online.svg",
       "path": "public/assets/icons/svg/status/online.svg",
-      "blob": "b88fc81d84cc5c4e9729f7314d234e65f4fda21a",
-      "size": 257
+      "blob": "943e1152fcd357611eaf42783eda86a186ea0873",
+      "size": 255
     },
     {
       "source": "moonwitness/icons/svg/status/sync.svg",
       "path": "public/assets/icons/svg/status/sync.svg",
-      "blob": "97611560d2fc02f391eec99010419a79ad1b7df4",
-      "size": 277
+      "blob": "e84a5d294b16da75214079355f3cfad2847452a7",
+      "size": 275
     },
     {
       "source": "moonwitness/icons/svg/status/unlock.svg",
       "path": "public/assets/icons/svg/status/unlock.svg",
-      "blob": "54ebf27c4076dc3439aa75c34d1ec6bf892d0116",
-      "size": 278
+      "blob": "3816fe7b93fd4b78ad65adf426d52c0fa0bdb011",
+      "size": 276
     },
     {
       "source": "moonwitness/icons/svg/status/warning.svg",
       "path": "public/assets/icons/svg/status/warning.svg",
-      "blob": "9881bdbe2c901f44f381b9fde223f44824341b59",
-      "size": 249
+      "blob": "4c4de898f9f7435a60beee510a5991cb6b8af41c",
+      "size": 247
     },
     {
       "source": "moonwitness/motion/motion.json",
@@ -614,14 +614,14 @@
     {
       "source": "moonwitness/motion/svg/drawer-open.svg",
       "path": "public/assets/motion/svg/drawer-open.svg",
-      "blob": "06eac0d44e264eaa3da5cb52d7620b5db632b1b4",
-      "size": 492
+      "blob": "337c6f9fb1c7dc5f1fb0b970e6543df91744fbb8",
+      "size": 493
     },
     {
       "source": "moonwitness/motion/svg/loading-trace.svg",
       "path": "public/assets/motion/svg/loading-trace.svg",
-      "blob": "9315dd9154f2b3bb29ba23158d75e5801a71b73f",
-      "size": 494
+      "blob": "16f2b5a5affdd70f0c50fef3e19a6a19d3fffd4a",
+      "size": 495
     },
     {
       "source": "moonwitness/motion/svg/logo-reveal.svg",
@@ -632,8 +632,8 @@
     {
       "source": "moonwitness/motion/svg/notification-pulse.svg",
       "path": "public/assets/motion/svg/notification-pulse.svg",
-      "blob": "28ee728f0b07e692a0e89dc9a6b813c7670d4b7a",
-      "size": 569
+      "blob": "a46d20b25f5e90abdc403fadd1b419213054417e",
+      "size": 570
     },
     {
       "source": "moonwitness/motion/svg/observatory-ring.svg",
@@ -740,8 +740,8 @@
     {
       "source": "moonwitness/runtime-motion-pack/manifest.json",
       "path": "public/assets/runtime-motion-pack/manifest.json",
-      "blob": "b81074f2b6597a39f70e3d3d59824bd6450826f7",
-      "size": 1493
+      "blob": "6f5b56f6e9ce45d03185f1489929e6239cd3eaa3",
+      "size": 1953
     },
     {
       "source": "moonwitness/runtime-motion-pack/png/ai-orbit.png",
@@ -816,6 +816,12 @@
       "size": 9441
     },
     {
+      "source": "moonwitness/runtime-motion-pack/README.md",
+      "path": "public/assets/runtime-motion-pack/README.md",
+      "blob": "99946e1b38b95ef6921b1d4dd5a8ed29294c4fa1",
+      "size": 200
+    },
+    {
       "source": "moonwitness/runtime-motion-pack/svg/ai-orbit.svg",
       "path": "public/assets/runtime-motion-pack/svg/ai-orbit.svg",
       "blob": "6e3fd9c6bb34f4ec53ead4ea584ba03872e6997d",
@@ -860,8 +866,8 @@
     {
       "source": "moonwitness/runtime-motion-pack/svg/loading-trace.svg",
       "path": "public/assets/runtime-motion-pack/svg/loading-trace.svg",
-      "blob": "f0584f7f4b0f475327fbc896acbc1311fbc4471a",
-      "size": 339
+      "blob": "203b77276cc6db6bd8bcb485909c2acc800a8a16",
+      "size": 340
     },
     {
       "source": "moonwitness/runtime-motion-pack/svg/notification-in.svg",
@@ -872,8 +878,8 @@
     {
       "source": "moonwitness/runtime-motion-pack/svg/pulse-alert.svg",
       "path": "public/assets/runtime-motion-pack/svg/pulse-alert.svg",
-      "blob": "0f61716a4afab97768e89974d228eac05552ad6d",
-      "size": 462
+      "blob": "64f61874d467f6e00dfb0169e7c24b7d0feadec5",
+      "size": 463
     },
     {
       "source": "moonwitness/runtime-motion-pack/svg/sync-spin.svg",
@@ -890,73 +896,73 @@
     {
       "source": "moonwitness/runtime-motion-pack/webm/ai-orbit.webm",
       "path": "public/assets/runtime-motion-pack/webm/ai-orbit.webm",
-      "blob": "120dd24ba18e65e10d464c1b16e367db4b0d4cc8",
+      "blob": "e7b32bd61acf5bac103d368f82866a82cf24e5a7",
       "size": 3376
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/backend-reconnect.webm",
       "path": "public/assets/runtime-motion-pack/webm/backend-reconnect.webm",
-      "blob": "48862852f8a7199542ab6e31e91f2b6c492f43a0",
+      "blob": "cac6694459562a59670b0fe253a147eb2a2b4fb8",
       "size": 5501
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/case-resolved.webm",
       "path": "public/assets/runtime-motion-pack/webm/case-resolved.webm",
-      "blob": "fe713c4e04a3b89335f7c99b0a65292be308de04",
+      "blob": "f9ae944a70cb821cae15b8fb1fc0eec4290f47a2",
       "size": 5375
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/drawer-open.webm",
       "path": "public/assets/runtime-motion-pack/webm/drawer-open.webm",
-      "blob": "428a0e9edf713c3a4ac96716dc3bdf62c85a9d01",
+      "blob": "82cd39d01d0eefb0d43984a68b3a3dd865a6a2f2",
       "size": 3313
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/evidence-linked.webm",
       "path": "public/assets/runtime-motion-pack/webm/evidence-linked.webm",
-      "blob": "15e3a46371d4945cc07e6034f2fabf9b2033b0f1",
+      "blob": "c83422d82504d7a06fe4ca583eb8053b8fbdf3b6",
       "size": 3745
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/focus-ring.webm",
       "path": "public/assets/runtime-motion-pack/webm/focus-ring.webm",
-      "blob": "36f071c53020de66b0d74b00075f1ed9e5091066",
+      "blob": "7b370b18e022248712b992ad6fcab79a97a195b5",
       "size": 8391
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/graph-connect.webm",
       "path": "public/assets/runtime-motion-pack/webm/graph-connect.webm",
-      "blob": "7effc48e668659f22daff997089bd3d6c84caa42",
+      "blob": "89774ebd8f2f5071eb7e22a5a06b2a3cddb37c4f",
       "size": 3534
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/loading-trace.webm",
       "path": "public/assets/runtime-motion-pack/webm/loading-trace.webm",
-      "blob": "f2c6a32e3d6fe53fd3fe03cb8e713bfd2437bd18",
+      "blob": "38d558e0397dc9f7f2476e2a8f344d05c3bc1002",
       "size": 4130
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/notification-in.webm",
       "path": "public/assets/runtime-motion-pack/webm/notification-in.webm",
-      "blob": "1e9dd696a50c1288e6227d5a1af93e4754b7a425",
+      "blob": "4ebd462fdfd415d329fd30d5731901ff295f7677",
       "size": 3378
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/pulse-alert.webm",
       "path": "public/assets/runtime-motion-pack/webm/pulse-alert.webm",
-      "blob": "1cb52d668459bebfec7eb940138c66ef99c5b51e",
+      "blob": "9498a88e1e275fc113120ca7160b02a61e1f6fbb",
       "size": 8765
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/sync-spin.webm",
       "path": "public/assets/runtime-motion-pack/webm/sync-spin.webm",
-      "blob": "974afed41808a29a28d95d4b60e4627a98437593",
+      "blob": "b9773889fc0a82e9a10e859907dd41fd9b655eab",
       "size": 3399
     },
     {
       "source": "moonwitness/runtime-motion-pack/webm/upload-rise.webm",
       "path": "public/assets/runtime-motion-pack/webm/upload-rise.webm",
-      "blob": "5a975787974c44f37718aef8b4f38501a111cd35",
+      "blob": "9d48a5bdf2bd5b0e2c6a72f694bca5c2618aae77",
       "size": 2384
     },
     {
