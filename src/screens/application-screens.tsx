@@ -197,7 +197,7 @@ export function ChatScreen({ actions }: { actions?: ApplicationActions } = {}) {
         <aside className="border border-border bg-panel p-4">
           <p className="mw-meta text-muted-foreground">Channels</p>
           {["# mw-0042", "# research", "# legal-review"].map((item, index) => (
-            <Button key={item} type="button" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
+            <Button key={item} type="button" variant="ghost" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
               {item}{index === 0 ? <StatusBadge variant="info">3</StatusBadge> : null}
             </Button>
           ))}
@@ -297,7 +297,7 @@ export function ProfileSettingsScreen({ actions }: { actions?: ApplicationAction
             <div><strong>Rocksoul</strong><p className="mw-meta mt-1 text-muted-foreground">researcher</p></div>
           </div>
           <nav className="mt-5 grid">
-            {sections.map((item) => <Button key={item} type="button" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</Button>)}
+            {sections.map((item) => <Button key={item} type="button" variant="ghost" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</Button>)}
           </nav>
         </aside>
 
