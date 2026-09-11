@@ -1,21 +1,26 @@
 import assert from "node:assert/strict"
 import test from "node:test"
-import { apiSignature } from "./api-stability-audit.mjs"
+import { declarationPathForSource, declarationSignature } from "./api-stability-audit.mjs"
 
-test("API signature ignores function implementation-only changes", () => {
-  const before = `function Button(props: { disabled?: boolean }): JSX.Element { return <button /> }\nexport { Button }`
-  const after = `function Button(props: { disabled?: boolean }): JSX.Element { return <button data-slot="button" /> }\nexport { Button }`
-  assert.deepEqual(apiSignature(before, "button.tsx"), apiSignature(after, "button.tsx"))
+test("declaration signature ignores formatting-only differences", () => {
+  const before = `export declare function Button(props: { disabled?: boolean }): JSX.Element;\n`
+  const after = `export declare function Button( props: { disabled?: boolean } ): JSX.Element;`
+  assert.equal(declarationSignature(before), declarationSignature(after))
 })
 
-test("API signature detects bottom-exported component prop changes", () => {
-  const before = `function Button(props: { size?: "sm" | "md" }): JSX.Element { return <button /> }\nexport { Button }`
-  const after = `function Button(props: { size?: "sm" | "md" | "lg" }): JSX.Element { return <button /> }\nexport { Button }`
-  assert.notDeepEqual(apiSignature(before, "button.tsx"), apiSignature(after, "button.tsx"))
+test("declaration signature detects component prop changes", () => {
+  const before = `export declare function Button(props: { size?: "sm" | "md" }): JSX.Element;`
+  const after = `export declare function Button(props: { size?: "sm" | "md" | "lg" }): JSX.Element;`
+  assert.notEqual(declarationSignature(before), declarationSignature(after))
 })
 
-test("API signature detects exported type changes", () => {
-  const before = `export type Status = "ready" | "error"`
-  const after = `export type Status = "ready" | "error" | "loading"`
-  assert.notDeepEqual(apiSignature(before), apiSignature(after))
+test("declaration signature detects exported type changes", () => {
+  const before = `export type Status = "ready" | "error";`
+  const after = `export type Status = "ready" | "error" | "loading";`
+  assert.notEqual(declarationSignature(before), declarationSignature(after))
+})
+
+test("public source paths map to generated declaration paths", () => {
+  assert.equal(declarationPathForSource("src/components/ui/button.tsx"), "dist/components/ui/button.d.ts")
+  assert.equal(declarationPathForSource("src/index.ts"), "dist/index.d.ts")
 })
