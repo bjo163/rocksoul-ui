@@ -11,6 +11,8 @@ export const ROCKSOUL_ASSETS_SYNC = {
   repositoryAcceptance: "passed",
   livePenpotVerification: "manual-follow-up",
   assetPackIndex: "moonwitness/asset-packs.json",
+  visualContractPath: "moonwitness/visual-system-v2.json",
+  visualContractBlobSha: "08807bee3984f10e9bf59f291987cff727b05657",
   developerDistribution: ["dist/assets.json", "dist/assets.ts", "dist/assets.css", "dist/sprite.svg"],
 } as const
 
