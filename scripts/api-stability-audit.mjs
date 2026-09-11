@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process"
 import { readFile, readdir } from "node:fs/promises"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
-import ts from "typescript"
+import * as ts from "typescript"
 
 const ROOT = process.cwd()
 const PUBLIC_DIRS = [
