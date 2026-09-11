@@ -24,6 +24,11 @@ function sameSet(actual, expected) {
     && expected.every((value) => actual.includes(value))
 }
 
+function readString(source, key) {
+  const match = source.match(new RegExp(`${key}:\\s*"([^"]+)"`))
+  return match?.[1] ?? null
+}
+
 if (projection.schemaVersion !== 1) failures.push("compatibility projection schemaVersion must remain 1")
 if (projection.visualSystemVersion !== 2) failures.push("visualSystemVersion must remain 2")
 if (projection.status !== "frozen-specification") failures.push("Visual System V2 specification must remain frozen")
@@ -39,11 +44,18 @@ for (const [key, expected] of Object.entries(exact)) {
   if (!sameSet(projection[key], expected)) failures.push(key + " drifted from the frozen upstream projection")
 }
 
-if (!assetSync.includes('repository: "bjo163/rocksoul-assets"')) failures.push("runtime asset source repository drift")
-if (!assetSync.includes('applicationVersion: "v2"')) failures.push("runtime asset application version is not V2")
-if (!assetSync.includes('repositoryAcceptance: "passed"')) failures.push("runtime asset delivery is not repository-accepted")
-if (!/commit:\s*"[0-9a-f]{40}"/.test(assetSync)) failures.push("runtime delivery commit is not immutable")
-if (!/acceptedMainCommit:\s*"[0-9a-f]{40}"/.test(assetSync)) failures.push("accepted runtime delivery commit is not immutable")
+const assetRepository = readString(assetSync, "repository")
+const assetCommit = readString(assetSync, "commit")
+const acceptedMainCommit = readString(assetSync, "acceptedMainCommit")
+const contractPath = readString(assetSync, "visualContractPath")
+const contractBlobSha = readString(assetSync, "visualContractBlobSha")
+
+if (assetRepository !== "bjo163/rocksoul-assets") failures.push("runtime asset source repository drift")
+if (!assetCommit || !/^[0-9a-f]{40}$/.test(assetCommit)) failures.push("runtime delivery commit is not immutable")
+if (!acceptedMainCommit || !/^[0-9a-f]{40}$/.test(acceptedMainCommit)) failures.push("accepted runtime delivery commit is not immutable")
+if (assetCommit !== acceptedMainCommit) failures.push("accepted runtime delivery commit differs from runtime delivery commit")
+if (contractPath !== "moonwitness/visual-system-v2.json") failures.push("runtime visual contract path drift")
+if (!contractBlobSha || !/^[0-9a-f]{40}$/.test(contractBlobSha)) failures.push("runtime visual contract blob SHA is not immutable")
 
 for (const needle of [
   'import compatibilityProjection from "./visual-system-v2.compatibility.json"',
@@ -66,10 +78,62 @@ if (failures.length) {
   process.exit(1)
 }
 
+const apiUrl = `https://api.github.com/repos/${assetRepository}/contents/${contractPath}?ref=${assetCommit}`
+try {
+  const response = await fetch(apiUrl, {
+    headers: {
+      accept: "application/vnd.github+json",
+      "user-agent": "rocksoul-ui-visual-contract-audit",
+    },
+  })
+  if (!response.ok) throw new Error(`GitHub API ${response.status}`)
+  const payload = await response.json()
+
+  if (payload.sha !== contractBlobSha) {
+    throw new Error(`upstream contract blob SHA mismatch: expected ${contractBlobSha}, received ${payload.sha ?? "missing"}`)
+  }
+
+  if (payload.encoding !== "base64" || typeof payload.content !== "string") {
+    throw new Error("upstream contract response is not base64 content")
+  }
+
+  const upstream = JSON.parse(Buffer.from(payload.content.replace(/\\s/g, ""), "base64").toString("utf8"))
+  const upstreamProjection = {
+    schemaVersion: upstream.schemaVersion,
+    status: upstream.status,
+    typographyRoles: upstream.typography?.roles?.map(({ id }) => id),
+    densityModes: Object.keys(upstream.densityModes ?? {}),
+    surfacePersonalities: Object.keys(upstream.surfacePersonalities ?? {}),
+    graphNodeIds: upstream.graphGrammar?.nodes?.map(({ id }) => id),
+    graphEdgeIds: upstream.graphGrammar?.edges?.map(({ id }) => id),
+    chartIds: upstream.dataVizGrammar?.charts?.map(({ id }) => id),
+    lifecycleStatuses: upstream.lifecycle?.statuses,
+  }
+
+  if (upstream.schemaVersion !== 1) failures.push("upstream visual contract schemaVersion is unsupported")
+  if (upstream.status !== "foundation") failures.push("upstream visual contract status is unsupported")
+
+  for (const key of Object.keys(exact)) {
+    if (!sameSet(upstreamProjection[key], projection[key])) {
+      failures.push(`upstream ${key} does not match the UI frozen projection`)
+    }
+  }
+} catch (error) {
+  failures.push(`fail-closed upstream contract handshake: ${error instanceof Error ? error.message : String(error)}`)
+}
+
+if (failures.length) {
+  console.error("Visual System V2 compatibility audit failed:")
+  failures.forEach((failure) => console.error("- " + failure))
+  process.exit(1)
+}
+
 console.log(JSON.stringify({
   status: "PASS",
   visualSystemVersion: projection.visualSystemVersion,
   foundationRelease: projection.authority.foundationRelease,
+  upstreamCommit: assetCommit,
+  upstreamContractBlobSha: contractBlobSha,
   personalities: projection.surfacePersonalities.length,
   graphNodes: projection.graphNodeIds.length,
   graphEdges: projection.graphEdgeIds.length,
