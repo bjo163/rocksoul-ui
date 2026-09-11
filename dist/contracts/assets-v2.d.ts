@@ -11,6 +11,8 @@ export declare const ROCKSOUL_ASSETS_SYNC: {
     readonly repositoryAcceptance: "passed";
     readonly livePenpotVerification: "manual-follow-up";
     readonly assetPackIndex: "moonwitness/asset-packs.json";
+    readonly visualContractPath: "moonwitness/visual-system-v2.json";
+    readonly visualContractBlobSha: "08807bee3984f10e9bf59f291987cff727b05657";
     readonly developerDistribution: readonly ["dist/assets.json", "dist/assets.ts", "dist/assets.css", "dist/sprite.svg"];
 };
 export declare const moonWitnessBrandContract: {
