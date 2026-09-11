@@ -5,6 +5,7 @@ const root = process.cwd()
 const packagePath = `${root}/package.json`
 const lockPath = `${root}/package-lock.json`
 const changelogPath = `${root}/CHANGELOG.md`
+const planOnly = process.argv.includes("--plan")
 
 const run = (command, args, options = {}) => execFileSync(command, args, { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"], ...options }).trim()
 const latestTag = (() => {
@@ -15,20 +16,37 @@ const range = latestTag ? `${latestTag}..HEAD` : "HEAD"
 const subjects = run("git", ["log", "--format=%s", range]).split(/\r?\n/).map((s) => s.trim()).filter(Boolean)
 const body = run("git", ["log", "--format=%B%x00", range]).split("\0").map((s) => s.trim()).filter(Boolean).join("\n")
 
+const current = JSON.parse(readFileSync(packagePath, "utf8"))
+const previousVersion = String(current.version)
+const parts = previousVersion.split("-")[0].split(".").map(Number)
+if (parts.length !== 3 || parts.some((part) => !Number.isInteger(part) || part < 0)) {
+  throw new Error(`Invalid semantic package version: ${previousVersion}`)
+}
+const [major, minorVersion, patch] = parts
+
 if (subjects.length === 0) {
-  console.log("No commits since latest release; nothing to release.")
+  if (planOnly) {
+    console.log("release=false")
+  } else {
+    console.log("No commits since latest release; nothing to release.")
+  }
   process.exit(0)
 }
 
 const breaking = /(^|\n)\s*(BREAKING CHANGE|BREAKING-CHANGE)\s*:/m.test(body) || subjects.some((s) => /^[a-z]+(?:\([^)]*\))?!:/.test(s))
 const minor = subjects.some((s) => /^feat(?:\([^)]*\))?:/.test(s))
-const current = JSON.parse(readFileSync(packagePath, "utf8"))
-const previousVersion = String(current.version)
-const [major, minorVersion, patch] = previousVersion.split("-")[0].split(".").map(Number)
 let next
-if (breaking) next = `${major + 1}.0.0`
-else if (minor) next = `${major}.${minorVersion + 1}.0`
-else next = `${major}.${minorVersion}.${patch + 1}`
+let bump
+if (breaking) {
+  bump = "major"
+  next = `${major + 1}.0.0`
+} else if (minor) {
+  bump = "minor"
+  next = `${major}.${minorVersion + 1}.0`
+} else {
+  bump = "patch"
+  next = `${major}.${minorVersion}.${patch + 1}`
+}
 
 const nextTag = `v${next}`
 try {
@@ -36,6 +54,15 @@ try {
   console.error(`Release ${nextTag} already exists.`)
   process.exit(1)
 } catch {}
+
+if (planOnly) {
+  console.log(`release=true`)
+  console.log(`current=${previousVersion}`)
+  console.log(`next=${next}`)
+  console.log(`tag=${nextTag}`)
+  console.log(`bump=${bump}`)
+  process.exit(0)
+}
 
 current.version = next
 writeFileSync(packagePath, `${JSON.stringify(current, null, 2)}\n`)
