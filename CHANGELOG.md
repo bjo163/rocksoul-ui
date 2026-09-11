@@ -4,6 +4,10 @@
 
 Changes targeting the next release only. Release-specific changes move here automatically when the version is cut.
 
+## v0.14.0
+
+- feat(visual-v2): merge compatibility foundation
+
 ## v0.13.0
 
 - fix(ci): repair promotion and automatic release
