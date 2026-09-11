@@ -1,7 +1,6 @@
 import { access, readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
-import * as ts from "typescript"
 
 const ROOT = process.cwd()
 const SOURCE_ROOT = path.join(ROOT, "src")
@@ -36,17 +35,17 @@ export function dependencyDirectionViolation(ownerLevel, dependencyLevel) {
   return ownerLevel !== undefined && dependencyLevel !== undefined && dependencyLevel > ownerLevel
 }
 
-function importSpecifiers(source, fileName) {
-  const kind = fileName.endsWith(".tsx") ? ts.ScriptKind.TSX : fileName.endsWith(".jsx") ? ts.ScriptKind.JSX : ts.ScriptKind.TS
-  const sourceFile = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, kind)
-  const imports = []
-  for (const statement of sourceFile.statements) {
-    if (ts.isImportDeclaration(statement) || ts.isExportDeclaration(statement)) {
-      const specifier = statement.moduleSpecifier
-      if (specifier && ts.isStringLiteral(specifier)) imports.push(specifier.text)
-    }
+export function importSpecifiers(source) {
+  const imports = new Set()
+  const patterns = [
+    /\bimport\s+(?:type\s+)?(?:[^"'`;]+?\s+from\s+)?["']([^"']+)["']/g,
+    /\bexport\s+(?:type\s+)?(?:\*|\{[^}]*\})\s+from\s+["']([^"']+)["']/g,
+    /\bimport\s*\(\s*["']([^"']+)["']\s*\)/g,
+  ]
+  for (const pattern of patterns) {
+    for (const match of source.matchAll(pattern)) imports.add(match[1])
   }
-  return imports
+  return [...imports]
 }
 
 async function walk(directory) {
@@ -151,7 +150,7 @@ export async function runArchitectureAudit() {
     const source = await readFile(file, "utf8")
     const ownerLevel = levelForPath(file)
     if (ownerLevel === undefined) continue
-    for (const specifier of importSpecifiers(source, file)) {
+    for (const specifier of importSpecifiers(source)) {
       const dependency = await resolveSource(file, specifier, aliases)
       if (!dependency || !dependency.startsWith(SOURCE_ROOT)) continue
       const dependencyLevel = levelForPath(dependency)
