@@ -12,6 +12,9 @@ describe("semantic composer foundation", () => {
     expect(() => parseVisualSemanticState({ surface: "hud" })).toThrow(
       "Unsupported V2 surface personality: hud",
     )
+    expect(() => parseVisualSemanticState({ unknownDimension: "value" })).toThrow(
+      "Unsupported V2 semantic dimension: unknownDimension",
+    )
   })
 
   it("keeps interaction state orthogonal to semantic priority", () => {
