@@ -29,7 +29,7 @@ const ARBITRARY_PREFIXES = [
 
 const COLOR_RE = /(?:#[0-9a-fA-F]{3,8}\b|(?:rgb|rgba|hsl|hsla|oklch|color)\s*\()/g
 const MW_VAR_USE_RE = /var\(\s*(--mw-[\w-]+)\b/g
-const MW_VAR_DECL_RE = /(--mw-[\w-]+)\s*:/g
+const MW_VAR_DECL_RE = /["']?(--mw-[\w-]+)["']?\s*:/g
 
 function normalize(file) {
   return file.split(path.sep).join("/")
@@ -203,7 +203,7 @@ export function applyPolicy(findings, { strictPaths = new Set(), exceptions = []
   })
 }
 
-async function walk(directory, output = []) {
+async function walk(directory, output = [], { includeJson = false } = {}) {
   let entries
   try {
     entries = await readdir(directory, { withFileTypes: true })
@@ -215,8 +215,8 @@ async function walk(directory, output = []) {
     const rel = normalize(path.relative(ROOT, full))
     if (entry.isDirectory()) {
       if (rel === "node_modules" || rel === "dist" || rel.startsWith("artifacts/")) continue
-      await walk(full, output)
-    } else if (/\.(?:css|svg|[cm]?[jt]sx?)$/.test(entry.name)) {
+      await walk(full, output, { includeJson })
+    } else if (/\.(?:css|svg|[cm]?[jt]sx?)$/.test(entry.name) || (includeJson && /\.json$/.test(entry.name))) {
       output.push(rel)
     }
   }
@@ -244,7 +244,8 @@ async function loadJson(relativePath) {
 async function validateGeneratedRegistry(registry) {
   const findings = []
   const registered = new Map((registry.files ?? []).map((entry) => [normalize(entry.path), entry]))
-  const generatedFiles = (await walk(path.join(ROOT, "src/generated"))).filter((file) => file.startsWith("src/generated/"))
+  const generatedFiles = (await walk(path.join(ROOT, "src/generated"), [], { includeJson: true }))
+    .filter((file) => file.startsWith("src/generated/"))
   for (const file of generatedFiles) {
     const entry = registered.get(file)
     if (!entry) {
