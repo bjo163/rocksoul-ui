@@ -148,11 +148,11 @@ export function composeVisualSemanticState(
     semanticState.surface,
   ].filter((value): value is string => value !== undefined)
 
-  const accessibilityParts = [
+  const accessibilityParts = [...new Set([
     primaryRole,
     ...secondaryMarks,
     ...tertiaryMetadata,
-  ].filter((value): value is string => value !== null)
+  ].filter((value): value is string => value !== null))]
 
   return {
     primaryRole,
