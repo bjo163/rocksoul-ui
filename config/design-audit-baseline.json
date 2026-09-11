@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "baselineCommit": "261a343e0b82fa6140dd5288a5a7d8cb8e2d72f1",
+  "baselineCommit": "39ba533aa9784e5a2ba2d3da07ebdb2fa6e1d05a",
   "createdAt": "2026-09-11",
   "policy": "Existing design-value debt is visible but grandfathered only while its source file remains untouched. New or touched source is fail-closed."
 }
