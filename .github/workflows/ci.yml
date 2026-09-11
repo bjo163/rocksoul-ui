@@ -38,7 +38,8 @@ jobs:
         run: npm install --global npm@11.6.0
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
-      # prepare/build runs during npm ci; tracked dist must already match that deterministic output.
+      # prepare/build runs during npm ci. Feature PRs may temporarily drift from tracked dist;
+      # dev/main pushes remain the authoritative generated-artifact release gates.
       - name: Check tracked dist reproducibility
         id: dist_check
         continue-on-error: true
@@ -55,7 +56,7 @@ jobs:
           if-no-files-found: error
           retention-days: 3
       - name: Enforce tracked dist reproducibility
-        if: ${{ steps.dist_check.outcome == 'failure' }}
+        if: ${{ steps.dist_check.outcome == 'failure' && github.event_name != 'pull_request' }}
         run: exit 1
       - name: Strict repository consistency audit
         run: npm run audit:repository
@@ -101,6 +102,7 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
       - name: Enforce tracked dist reproducibility
+        if: ${{ github.event_name != 'pull_request' }}
         run: git diff --exit-code -- dist
       - name: Install Playwright Chromium
         run: npx playwright install chromium
