@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "visualSystemVersion": 2,
+  "status": "frozen-specification",
+  "authority": {
+    "repository": "bjo163/rocksoul-assets",
+    "freezeIssue": 90,
+    "foundationRelease": "1.6.0",
+    "foundationCommit": "b77105a6ea528ee456dbde54070fb8f609effa9b",
+    "contractPath": "moonwitness/visual-system-v2.json"
+  },
+  "compatibilityPolicy": "frozen-foundation-plus-pinned-runtime-delivery",
+  "layers": {
+    "moonwitness": "rigorous-system",
+    "rocksoul": "human-intervention"
+  },
+  "typographyRoles": ["display", "body", "mono", "archive-serif"],
+  "densityModes": ["compact", "comfortable", "editorial"],
+  "surfacePersonalities": ["operator", "forensic", "editorial", "archive", "cinematic", "community"],
+  "graphNodeIds": ["canonical-record", "evidence", "source", "person", "event", "story", "rgbl-text", "legal-state", "external-reference", "unresolved-record", "inferred-candidate-record", "missing-record", "system-provider-resource"],
+  "graphEdgeIds": ["supports", "contradicts", "references", "temporal", "identity", "legal", "provenance", "dependency", "routes-to", "unresolved-candidate"],
+  "chartIds": ["line", "area", "bar", "stacked-bar", "heat-strip", "donut", "time-series", "threshold-boundary", "confidence-uncertainty"],
+  "lifecycleStatuses": ["canonical", "active", "legacy", "frozen-reference", "deprecated", "experimental"]
+}
