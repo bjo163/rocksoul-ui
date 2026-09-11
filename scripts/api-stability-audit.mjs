@@ -2,7 +2,6 @@ import { execFileSync } from "node:child_process"
 import { readFile, readdir } from "node:fs/promises"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
-import * as ts from "typescript"
 
 const ROOT = process.cwd()
 const PUBLIC_DIRS = [
@@ -29,72 +28,18 @@ function baselineText(commit, file) {
   }
 }
 
-function hasExportModifier(node) {
-  return node.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword || modifier.kind === ts.SyntaxKind.DefaultKeyword)
+export function declarationPathForSource(sourcePath) {
+  return normalize(sourcePath)
+    .replace(/^src\//, "dist/")
+    .replace(/\.(?:tsx?|jsx?)$/, ".d.ts")
 }
 
-function compact(text) {
-  return text.replace(/\s+/g, " ").trim()
-}
-
-function declarationName(statement, sourceFile) {
-  if (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isEnumDeclaration(statement)) {
-    return statement.name?.getText(sourceFile) ?? null
-  }
-  return null
-}
-
-function declarationSignature(statement, sourceFile, localExportNames) {
-  if (ts.isExportAssignment(statement)) return compact(statement.getText(sourceFile))
-  if (ts.isExportDeclaration(statement)) return compact(statement.getText(sourceFile))
-
-  const name = declarationName(statement, sourceFile)
-  const directlyExported = hasExportModifier(statement)
-  const exportedAtBottom = name ? localExportNames.has(name) : false
-
-  if (ts.isVariableStatement(statement)) {
-    const exportedVariable = directlyExported || statement.declarationList.declarations.some((declaration) => {
-      return ts.isIdentifier(declaration.name) && localExportNames.has(declaration.name.text)
-    })
-    if (!exportedVariable) return null
-    // Exported inferred values can define public types through their initializer (for example CVA variants),
-    // so keep the full exported statement in the API fingerprint.
-    return compact(statement.getText(sourceFile))
-  }
-
-  if (!directlyExported && !exportedAtBottom) return null
-
-  if (ts.isFunctionDeclaration(statement)) {
-    const functionName = statement.name?.getText(sourceFile) ?? "default"
-    const typeParameters = statement.typeParameters?.map((item) => item.getText(sourceFile)).join(",") ?? ""
-    const parameters = statement.parameters.map((item) => item.getText(sourceFile)).join(",")
-    const returnType = statement.type?.getText(sourceFile) ?? ""
-    return compact(`function ${functionName}<${typeParameters}>(${parameters}):${returnType}`)
-  }
-
-  if (ts.isClassDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isEnumDeclaration(statement)) {
-    return compact(statement.getText(sourceFile))
-  }
-
-  return compact(statement.getText(sourceFile))
-}
-
-export function apiSignature(source, fileName = "source.ts") {
-  const kind = fileName.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS
-  const sourceFile = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, kind)
-  const localExportNames = new Set()
-
-  for (const statement of sourceFile.statements) {
-    if (!ts.isExportDeclaration(statement) || statement.moduleSpecifier || !statement.exportClause || !ts.isNamedExports(statement.exportClause)) continue
-    for (const element of statement.exportClause.elements) {
-      localExportNames.add((element.propertyName ?? element.name).text)
-    }
-  }
-
-  return sourceFile.statements
-    .map((statement) => declarationSignature(statement, sourceFile, localExportNames))
-    .filter(Boolean)
-    .sort()
+export function declarationSignature(text) {
+  return text
+    .replace(/\r\n/g, "\n")
+    .replace(/^\s*\/\/\# sourceMappingURL=.*$/gm, "")
+    .replace(/\s+/g, " ")
+    .trim()
 }
 
 async function currentPublicFiles() {
@@ -161,23 +106,29 @@ export async function runApiStabilityAudit() {
 
   for (const file of allFiles) {
     if (approvedApiException(file, exceptions)) continue
-    const oldText = baselineText(baseline.baselineCommit, file)
-    let newText = null
-    try {
-      newText = await readFile(path.join(ROOT, file), "utf8")
-    } catch {
-      // absence is part of the comparison
-    }
-
-    if (oldText === null || newText === null) {
-      failures.push(`${file}: public path ${oldText === null ? "added" : "removed"} since baseline; classify as an intentional API change before merging`)
+    const existedBefore = baselineFiles.includes(file)
+    const existsNow = currentFiles.includes(file)
+    if (!existedBefore || !existsNow) {
+      failures.push(`${file}: public path ${!existedBefore ? "added" : "removed"} since baseline; classify as an intentional API change before merging`)
       continue
     }
 
-    const oldSignature = apiSignature(oldText, file)
-    const newSignature = apiSignature(newText, file)
-    if (JSON.stringify(oldSignature) !== JSON.stringify(newSignature)) {
-      failures.push(`${file}: exported declaration/prop/type contract drifted from baseline ${baseline.baselineCommit}`)
+    const declarationPath = declarationPathForSource(file)
+    const oldDeclaration = baselineText(baseline.baselineCommit, declarationPath)
+    let newDeclaration = null
+    try {
+      newDeclaration = await readFile(path.join(ROOT, declarationPath), "utf8")
+    } catch {
+      // absence is a contract failure below
+    }
+
+    if (oldDeclaration === null || newDeclaration === null) {
+      failures.push(`${file}: public declaration artifact ${declarationPath} ${oldDeclaration === null ? "missing from baseline" : "missing from current build"}`)
+      continue
+    }
+
+    if (declarationSignature(oldDeclaration) !== declarationSignature(newDeclaration)) {
+      failures.push(`${file}: generated public declaration contract drifted from baseline ${baseline.baselineCommit}`)
     }
   }
 
@@ -199,7 +150,7 @@ export async function runApiStabilityAudit() {
     console.error(failures.join("\n"))
     process.exitCode = 1
   } else {
-    console.log("API stability audit passed: public paths, exports, props/types, and package exports match the Phase 1 baseline.")
+    console.log("API stability audit passed: public paths, generated declarations, and package exports match the Phase 1 baseline.")
   }
 }
 
