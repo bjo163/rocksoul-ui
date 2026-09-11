@@ -1,4 +1,5 @@
 {
+  "repository_id": "rocksoul-ui",
   "schema": "rocksoul.todo.v2",
   "authority": {
     "type": "github-issues",
@@ -9,7 +10,7 @@
   },
   "projection": {
     "generated_from": "github issue graph",
-    "generated_at": "2026-09-11T23:40:00Z",
+    "generated_at": "2026-09-12T00:00:00Z",
     "rule": "No task is authoritative unless it maps to an existing GitHub issue/PR.",
     "status_values": ["PLANNED", "READY", "IN_PROGRESS", "BLOCKED", "VERIFYING", "VERIFIED", "CLOSED"]
   },
