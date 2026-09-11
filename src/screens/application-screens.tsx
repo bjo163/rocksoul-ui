@@ -90,7 +90,7 @@ function Shell({
 export function DashboardScreen() {
   return (
     <Shell activeResource="dashboard" section="HOME" title="Dashboard">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Good morning, Rocksoul.</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">Good morning, Rocksoul.</h1>
       <p className="mt-3 text-sm text-muted-foreground">What changed, what needs attention, and what can wait.</p>
 
       <div className="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -142,12 +142,12 @@ const kanbanColumns = [
 export function KanbanScreen({ actions }: { actions?: ApplicationActions } = {}) {
   return (
     <Shell activeResource="kanban" section="WORK" title="Kanban">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Review workflow</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">Review workflow</h1>
       <p className="mt-3 text-sm text-muted-foreground">Move work, not evidence. Status changes are audited.</p>
 
       <div className="mt-10 grid gap-4 xl:grid-cols-4">
         {kanbanColumns.map((column) => (
-          <section key={column.title} className="min-h-[540px] border border-border bg-panel p-4">
+          <section key={column.title} className="min-h-135 border border-border bg-panel p-4">
             <div className="flex items-center justify-between">
               <h2 className="mw-meta">{column.title} / {column.count}</h2>
               <StatusBadge variant={column.tone}>{column.count}</StatusBadge>
@@ -164,7 +164,7 @@ export function CalendarScreen({ actions }: { actions?: ApplicationActions } = {
   const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
   return (
     <Shell activeResource="calendar" section="WORK" title="Calendar">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">September 2026</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">September 2026</h1>
       <p className="mt-3 text-sm text-muted-foreground">Reviews, releases, and research checkpoints.</p>
 
       <div className="mt-8 grid grid-cols-7 border border-border bg-card">
@@ -176,7 +176,7 @@ export function CalendarScreen({ actions }: { actions?: ApplicationActions } = {
               <span className="mw-meta text-muted-foreground">{day <= 30 ? day : ""}</span>
               {day === 8 ? (
                 <div className="mt-2 grid gap-1">
-                  <Button type="button" className="border-l-2 border-primary bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "mw-0042-review", title: "MW-0042 REVIEW", date: "2026-09-08" })}>MW-0042 REVIEW</Button><Button type="button" className="border-l-2 border-success bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "source-sync", title: "SOURCE SYNC", date: "2026-09-08" })}>SOURCE SYNC</Button><Button type="button" className="border-l-2 border-info bg-panel p-2 text-left text-[10px]" onClick={() => void actions?.onCalendarEventSelect?.({ id: "release-gate", title: "RELEASE GATE", date: "2026-09-08" })}>RELEASE GATE</Button>
+                  <Button type="button" className="border-l-2 border-primary bg-panel p-2 text-left text-xs" onClick={() => void actions?.onCalendarEventSelect?.({ id: "mw-0042-review", title: "MW-0042 REVIEW", date: "2026-09-08" })}>MW-0042 REVIEW</Button><Button type="button" className="border-l-2 border-success bg-panel p-2 text-left text-xs" onClick={() => void actions?.onCalendarEventSelect?.({ id: "source-sync", title: "SOURCE SYNC", date: "2026-09-08" })}>SOURCE SYNC</Button><Button type="button" className="border-l-2 border-info bg-panel p-2 text-left text-xs" onClick={() => void actions?.onCalendarEventSelect?.({ id: "release-gate", title: "RELEASE GATE", date: "2026-09-08" })}>RELEASE GATE</Button>
                 </div>
               ) : null}
             </div>
@@ -192,12 +192,12 @@ export function ChatScreen({ actions }: { actions?: ApplicationActions } = {}) {
   const [message, setMessage] = useState("")
   return (
     <Shell activeResource="chat" section="WORK" title="Chat">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Case conversations</h1>
-      <div className="mt-8 grid min-h-[640px] gap-5 lg:grid-cols-[280px_1fr]">
+      <h1 className="mw-display text-4xl font-black uppercase">Case conversations</h1>
+      <div className="mt-8 grid min-h-160 gap-5 lg:grid-cols-[280px_1fr]">
         <aside className="border border-border bg-panel p-4">
           <p className="mw-meta text-muted-foreground">Channels</p>
           {["# mw-0042", "# research", "# legal-review"].map((item, index) => (
-            <Button key={item} type="button" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
+            <Button key={item} type="button" variant="ghost" onClick={() => setChannel(item)} className={`mw-link mt-2 w-full px-3 text-left text-sm ${channel === item ? "bg-card font-bold text-primary" : "text-muted-foreground"}`}>
               {item}{index === 0 ? <StatusBadge variant="info">3</StatusBadge> : null}
             </Button>
           ))}
@@ -222,10 +222,10 @@ export function AIWorkspaceScreen({ actions }: { actions?: ApplicationActions } 
   const [prompt, setPrompt] = useState("")
   return (
     <Shell activeResource="ai" section="WORK" title="AI Workspace">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">AI Workspace</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">AI Workspace</h1>
       <p className="mt-3 text-sm text-muted-foreground">Ask across records. Keep citations visible. Never collapse uncertainty.</p>
       <div className="mt-8 grid gap-5 xl:grid-cols-[1.35fr_.65fr]">
-        <section className="flex min-h-[620px] flex-col border border-border bg-card p-5">
+        <section className="flex min-h-155 flex-col border border-border bg-card p-5">
           <p className="mw-meta text-muted-foreground">Conversation</p>
           <article className="mt-6 border-l-2 border-info pl-4"><p className="mw-meta text-info">You</p><p className="mt-2 text-sm">Why is MW-0042 still unresolved?</p></article>
           <article className="mt-6 border-l-2 border-primary pl-4"><p className="mw-meta text-primary">MoonWitness AI</p><p className="mt-2 text-sm leading-7">Temporal and motif signals are strong, but identity remains partial.</p><p className="mt-2 text-sm leading-7">The legal layer also has unresolved jurisdiction.</p><div className="mt-5 border-t border-border pt-4"><p className="mw-meta text-muted-foreground">Citations</p><p className="mt-2 font-mono text-xs">EVENT-0042-A · PERSON-0042-A · AWS-0042-A</p></div><p className="mw-meta mt-5 border-l-2 border-warning pl-3 text-warning">Correlation supports investigation, not closure.</p></article>
@@ -253,13 +253,13 @@ const resourceAccess: Record<string, string> = {
 export function ResourcesScreen() {
   return (
     <Shell activeResource="resources" section="DATA" title="Resources">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Resource navigation</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">Resource navigation</h1>
       <p className="mt-3 text-sm text-muted-foreground">AutoMenu-driven. Routes are generated from resource descriptors and permissions.</p>
 
       <section className="mt-8 border border-border bg-card p-5">
         <p className="mw-meta text-primary">Auto Menu</p>
         <div className="mt-5 overflow-x-auto">
-          <table className="w-full min-w-[680px] border-collapse text-left">
+          <table className="w-full min-w-170 border-collapse text-left">
             <thead><tr className="border-b border-border">{["Resource","Route","Repository","Access"].map((head)=><th key={head} className="p-3 mw-meta text-muted-foreground">{head}</th>)}</tr></thead>
             <tbody>
               {resourceDescriptors.map((item) => (
@@ -288,7 +288,7 @@ export function ProfileSettingsScreen({ actions }: { actions?: ApplicationAction
   const sections = ["Profile", "Appearance", "Notifications", "Security", "API / Integrations"]
   return (
     <Shell activeResource="settings" section="ACCOUNT" title="Profile / Settings">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Profile & Settings</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">Profile & Settings</h1>
 
       <div className="mt-8 grid gap-5 lg:grid-cols-[330px_1fr]">
         <aside className="border border-border bg-card p-6">
@@ -297,7 +297,7 @@ export function ProfileSettingsScreen({ actions }: { actions?: ApplicationAction
             <div><strong>Rocksoul</strong><p className="mw-meta mt-1 text-muted-foreground">researcher</p></div>
           </div>
           <nav className="mt-5 grid">
-            {sections.map((item) => <Button key={item} type="button" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</Button>)}
+            {sections.map((item) => <Button key={item} type="button" variant="ghost" onClick={() => setSection(item)} className={`mw-link w-full px-3 text-left text-sm ${section === item ? "font-bold text-primary" : "text-muted-foreground"}`}>{item}</Button>)}
           </nav>
         </aside>
 
@@ -333,7 +333,7 @@ export function AuthorizationScreen({ actions }: { actions?: ApplicationActions 
   ]
   return (
     <Shell activeResource="settings" section="SECURITY" title="Authorization UX">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Authorization UX</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">Authorization UX</h1>
       <p className="mt-3 text-sm text-muted-foreground">Permissions are explained before actions fail.</p>
 
       <section className="mt-8 border border-border bg-card p-6">
@@ -364,7 +364,7 @@ export function AuthorizationScreen({ actions }: { actions?: ApplicationActions 
 export function ApplicationStatesScreen() {
   return (
     <Shell activeResource="dashboard" section="SYSTEM" title="System States" backendState="offline">
-      <h1 className="mw-display text-4xl font-black uppercase sm:text-[38px]">Error / Empty / Loading / Offline / Forbidden</h1>
+      <h1 className="mw-display text-4xl font-black uppercase">Error / Empty / Loading / Offline / Forbidden</h1>
       <p className="mt-3 text-sm text-muted-foreground">One recovery language across every resource.</p>
       <div className="mt-8 grid gap-4 lg:grid-cols-2 xl:grid-cols-5">
         <StatePanel state="error" traceId="TRACE-0042-QUERY" />

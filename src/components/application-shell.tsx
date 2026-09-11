@@ -358,6 +358,16 @@ export function ApplicationShell({
     return () => window.removeEventListener("keydown", openPalette)
   }, [])
 
+  useEffect(() => {
+    const scrollRegions = document.querySelectorAll<HTMLElement>(".overflow-x-auto")
+    scrollRegions.forEach((region) => {
+      if (region.scrollWidth <= region.clientWidth + 1) return
+      region.tabIndex = 0
+      if (!region.getAttribute("role")) region.setAttribute("role", "region")
+      if (!region.getAttribute("aria-label")) region.setAttribute("aria-label", "Horizontally scrollable content")
+    })
+  })
+
   return (
     <div className="mw-platform min-h-screen bg-background text-foreground" data-surface-personality={surfacePersonality}>
       <a href="#mw-main-content" className="fixed left-3 top-3 z-50 -translate-y-20 bg-primary px-4 py-3 text-sm font-bold text-primary-foreground focus:translate-y-0">Skip to main content</a>

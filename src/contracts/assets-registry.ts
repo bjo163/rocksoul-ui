@@ -1,7 +1,7 @@
 import { assets } from "../generated/assets-v1.3"
 import { ROCKSOUL_ASSETS_SYNC } from "./assets-v2"
 
-export const moonWitnessAssets = assets
+export const moonWitnessAssets: typeof assets = assets
 export const ROCKSOUL_ASSETS_REGISTRY = {
   repository: ROCKSOUL_ASSETS_SYNC.repository,
   ref: ROCKSOUL_ASSETS_SYNC.ref,

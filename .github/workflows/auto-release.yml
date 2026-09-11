@@ -1,0 +1,104 @@
+name: Automatic Release
+
+on:
+  workflow_run:
+    workflows: ["UI CI"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: automatic-release-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Determine next release
+        id: version
+        shell: bash
+        run: |
+          current="$(node -p 'require("./package.json").version')"
+          before="$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)"
+          range="HEAD"
+          if [ -n "$before" ]; then range="$before..HEAD"; fi
+          subjects="$(git log --format=%s $range)"
+          if [ -z "$subjects" ]; then
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if printf '%s\n' "$subjects" | grep -Eq '(^|:)BREAKING CHANGE|^[a-z]+(\([^)]*\))?!:'; then
+            bump="major"
+          elif printf '%s\n' "$subjects" | grep -Eq '^feat(\([^)]*\))?:'; then
+            bump="minor"
+          else
+            bump="patch"
+          fi
+          next="$(node -e 'const [M,m,p]=process.argv[1].split(".").map(Number); const b=process.argv[2]; console.log(b==="major"?`${M+1}.0.0`:b==="minor"?`${M}.${m+1}.0`:`${M}.${m}.${p+1}`)' "$current" "$bump")"
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "next=$next" >> "$GITHUB_OUTPUT"
+          echo "tag=v$next" >> "$GITHUB_OUTPUT"
+          echo "release=true" >> "$GITHUB_OUTPUT"
+          echo "bump=$bump" >> "$GITHUB_OUTPUT"
+
+      - name: Apply release version
+        if: steps.version.outputs.release == 'true'
+        env:
+          NEXT_VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          node scripts/auto-release.mjs
+          npm run build:lib
+          npm run audit:repository
+          npm run audit:package
+          npm run audit:release
+          git diff --check
+          git diff --exit-code -- dist
+
+      - name: Commit release
+        if: steps.version.outputs.release == 'true'
+        env:
+          NEXT_VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json CHANGELOG.md dist
+          git commit -m "chore(release): v$NEXT_VERSION [skip ci]"
+          git push origin HEAD:main
+
+      - name: Create tag
+        if: steps.version.outputs.release == 'true'
+        env:
+          TAG: v${{ steps.version.outputs.next }}
+        run: |
+          git tag -a "$TAG" -m "@rocksoul/ui $TAG"
+          git push origin "$TAG"
+
+      - name: Create GitHub release
+        if: steps.version.outputs.release == 'true'
+        env:
+          TAG: v${{ steps.version.outputs.next }}
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$TAG" --title "@rocksoul/ui $TAG" --generate-notes --verify-tag "$TAG"

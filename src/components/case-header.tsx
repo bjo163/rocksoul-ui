@@ -31,7 +31,7 @@ export function CaseHeader({
       </div>
 
       <div className={cn("mt-7", variant === "platform" ? "max-w-4xl" : "max-w-5xl")}>
-        <h2
+        <h1
           className={cn(
             "mw-display text-balance font-black uppercase",
             variant === "platform"
@@ -40,7 +40,7 @@ export function CaseHeader({
           )}
         >
           {title}
-        </h2>
+        </h1>
         <p className="mw-reading mt-6 text-pretty text-base leading-7 text-muted-foreground sm:text-lg">
           {summary}
         </p>

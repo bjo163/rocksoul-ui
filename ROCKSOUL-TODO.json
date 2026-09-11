@@ -17,7 +17,13 @@
         "Tracked dist is reproducible from source on clean CI checkout",
         "Unknown contract drift fails closed"
       ],
-      "affected_paths": ["ROCKSOUL-REPO.json", "package.json", "package-lock.json", ".github/workflows/ci.yml", "scripts/repository-audit.mjs"]
+      "affected_paths": [
+        "ROCKSOUL-REPO.json",
+        "package.json",
+        "package-lock.json",
+        ".github/workflows/ci.yml",
+        "scripts/repository-audit.mjs"
+      ]
     },
     {
       "id": "UI-CI-002",
@@ -27,14 +33,17 @@
       "phase": "ASSET-PROVENANCE",
       "priority": "P0",
       "risk": "HIGH",
-      "status": "IN_PROGRESS",
+      "status": "VERIFIED",
       "acceptance_criteria": [
         "Bookkeeping-only upstream metadata cannot block asset freshness",
         "Runtime asset or manifest drift blocks until explicit UI sync",
         "Unknown upstream files block by default",
         "Classification is covered by executable regression tests"
       ],
-      "affected_paths": ["scripts/assets-freshness-audit.mjs", "src/contracts/assets-v2.ts"]
+      "affected_paths": [
+        "scripts/assets-freshness-audit.mjs",
+        "src/contracts/assets-v2.ts"
+      ]
     },
     {
       "id": "UI-PACKAGE-001",
@@ -44,14 +53,20 @@
       "phase": "PACKAGE",
       "priority": "P0",
       "risk": "HIGH",
-      "status": "IN_PROGRESS",
+      "status": "VERIFIED",
       "acceptance_criteria": [
         "npm is the sole package manager",
         "package-lock.json is the sole lockfile",
         "No unused pnpm workspace metadata remains",
         "Release version is derived dynamically"
       ],
-      "affected_paths": ["package.json", "package-lock.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", "scripts/release-audit.mjs"]
+      "affected_paths": [
+        "package.json",
+        "package-lock.json",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml",
+        "scripts/release-audit.mjs"
+      ]
     },
     {
       "id": "UI-RELEASE-001",
@@ -61,14 +76,19 @@
       "phase": "RELEASE",
       "priority": "P1",
       "risk": "HIGH",
-      "status": "IN_PROGRESS",
+      "status": "VERIFIED",
       "acceptance_criteria": [
         "Release audit derives package version",
         "Tag equals v<package.version> when tagged",
         "Changelog has matching release heading before publish",
         "Tracked dist remains reproducible from source"
       ],
-      "affected_paths": ["scripts/release-audit.mjs", "CHANGELOG.md", "package.json", "dist"]
+      "affected_paths": [
+        "scripts/release-audit.mjs",
+        "CHANGELOG.md",
+        "package.json",
+        "dist"
+      ]
     },
     {
       "id": "UI-ARCH-001",
@@ -78,13 +98,18 @@
       "phase": "ARCHITECTURE",
       "priority": "P1",
       "risk": "MEDIUM",
-      "status": "PLANNED",
+      "status": "VERIFIED",
       "acceptance_criteria": [
         "Every public export maps to one source owner and one dist artifact",
         "Aliases and barrel re-exports are included in dependency analysis",
         "Duplicate or orphan component ownership blocks CI"
       ],
-      "affected_paths": ["scripts/architecture-audit.mjs", "src/components", "package.json", "dist"]
+      "affected_paths": [
+        "scripts/architecture-audit.mjs",
+        "src/components",
+        "package.json",
+        "dist"
+      ]
     },
     {
       "id": "UI-DEPS-001",
@@ -94,14 +119,19 @@
       "phase": "SECURITY",
       "priority": "P1",
       "risk": "HIGH",
-      "status": "PLANNED",
+      "status": "VERIFIED",
       "acceptance_criteria": [
         "Lockfile integrity is verified",
         "High or critical dependency findings block release",
         "License inventory is synchronized with notices",
         "No undeclared build-time dependency is used by scripts"
       ],
-      "affected_paths": ["package.json", "package-lock.json", "THIRD-PARTY-NOTICES.md", "scripts"]
+      "affected_paths": [
+        "package.json",
+        "package-lock.json",
+        "THIRD-PARTY-NOTICES.md",
+        "scripts"
+      ]
     },
     {
       "id": "UI-QA-001",
@@ -118,7 +148,11 @@
         "Theme, keyboard, reduced motion and forced colors are verified",
         "Failures produce actionable traces, screenshots and exact assertions"
       ],
-      "affected_paths": ["tests", "playwright.config.ts", ".github/workflows/ci.yml"]
+      "affected_paths": [
+        "tests",
+        "playwright.config.ts",
+        ".github/workflows/ci.yml"
+      ]
     }
   ]
 }

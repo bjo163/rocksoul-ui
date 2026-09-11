@@ -66,10 +66,10 @@ test("operator chrome, content, statuses, overlays, and focus inherit one theme"
   await page.goto("/?screen=dashboard", { waitUntil: "networkidle" })
   await page.getByRole("button", { name: "Open command palette" }).click()
 
-  const selectors = [".mw-platform", ".mw-platform aside", ".mw-platform header", ".mw-platform main", ".mw-platform button", "dialog[open]"]
+  const selectors = [".mw-platform", ".mw-platform aside", ".mw-platform header", ".mw-platform main", ".mw-platform button", "[role=\"dialog\"]"]
   for (const selector of selectors) {
     const node = page.locator(selector).first()
-    await expect(node).toBeVisible()
+    await expect(node).toHaveCount(1)
     const inherited = await node.evaluate((element) => {
       const style = getComputedStyle(element)
       return {

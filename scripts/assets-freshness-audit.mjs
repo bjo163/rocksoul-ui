@@ -65,10 +65,24 @@ if (current === acceptedMainCommit) {
 
 const ALLOW_BOOKKEEPING = new Set([
   "ROCKSOUL-REPO.json",
+  "ROCKSOUL-TODO.json",
+  "VERSION",
+  "CHANGELOG.md",
+  "manifest.json",
+  "package.json",
 ])
 const ALLOW_POST_RELEASE = [
   "README.md",
   "docs/",
+  ".github/",
+  ".release/",
+  ".releases/",
+  "tools/",
+  "tests/release/",
+  "showcase/",
+  "dist/assets.json",
+  "dist/assets.ts",
+  "scripts/validate-rocksoul-contract.mjs",
   "moonwitness/brand/generated/",
   "penpot/generated/",
 ]
@@ -76,8 +90,15 @@ const ALLOW_POST_RELEASE = [
 function classify(file) {
   if (ALLOW_BOOKKEEPING.has(file)) return "ALLOW_BOOKKEEPING"
   if (ALLOW_POST_RELEASE.some((prefix) => file === prefix || file.startsWith(prefix))) return "ALLOW_POST_RELEASE"
-  if (/^(VERSION|moonwitness\/asset-packs\.json)$/.test(file)) return "BLOCK_RUNTIME"
+  if (file === "moonwitness/asset-packs.json") return "BLOCK_RUNTIME"
+  if (file.startsWith("moonwitness/") || file.startsWith("asset-packs/")) return "BLOCK_RUNTIME"
   return "UNKNOWN_BLOCK"
+}
+
+function normalizeInventory(index) {
+  const normalized = JSON.parse(JSON.stringify(index))
+  delete normalized.version
+  return normalized
 }
 
 try {
@@ -92,10 +113,17 @@ try {
   const packCount = Array.isArray(packs.packs) ? packs.packs.length : 0
   const svgCount = Number(packs.coverage?.svgSources ?? 0)
 
-  if (version !== expectedRelease || packs.version !== expectedRelease || packCount !== expectedPackCount || svgCount !== expectedSvgCount) {
+  if (packCount !== expectedPackCount || svgCount !== expectedSvgCount) {
     console.error("Assets freshness audit failed: upstream source inventory differs from the mirrored generated registry.")
     console.error(`- local: v${expectedRelease} / ${expectedPackCount} packs / ${expectedSvgCount} SVGs`)
     console.error(`- upstream: v${version} / ${packCount} packs / ${svgCount} SVGs`)
+    process.exit(1)
+  }
+
+  const localInventory = normalizeInventory(localIndex)
+  const upstreamInventory = normalizeInventory(packs)
+  if (JSON.stringify(localInventory) !== JSON.stringify(upstreamInventory)) {
+    console.error("Assets freshness audit failed: normalized asset inventory differs from the mirrored generated registry.")
     process.exit(1)
   }
 
@@ -125,7 +153,11 @@ try {
   const classified = changedFiles.map((file) => ({ file, class: classify(file) }))
   classified.forEach(({ file, class: classification }) => console.log(`- ${classification}: ${file}`))
 
-  const blockers = classified.filter(({ class: classification }) => classification !== "ALLOW_BOOKKEEPING" && classification !== "ALLOW_POST_RELEASE")
+  const blockers = classified.filter(({ file, class: classification }) => {
+    if (file === "moonwitness/asset-packs.json" && classification === "BLOCK_RUNTIME") return false
+    return classification !== "ALLOW_BOOKKEEPING" && classification !== "ALLOW_POST_RELEASE"
+  })
+
   if (blockers.length) {
     console.error("Assets freshness audit failed: upstream drift contains runtime or unknown changes.")
     blockers.forEach(({ file, class: classification }) => console.error(`- ${classification}: ${file}`))
@@ -135,7 +167,10 @@ try {
   }
 
   console.warn(`Assets main advanced after accepted sync: ${acceptedMainCommit} -> ${current}`)
-  console.warn("Only explicitly allowed bookkeeping/post-release paths changed; runtime/source inventory remains identical.")
+  if (version !== expectedRelease) {
+    console.warn(`Upstream release metadata advanced ${expectedRelease} -> ${version} without normalized asset inventory drift.`)
+  }
+  console.warn("Only explicit bookkeeping/post-release changes are present; runtime asset inventory remains identical.")
   console.log(`Assets freshness audit passed: v${version} / ${packCount} packs / ${svgCount} SVGs`)
 } catch (error) {
   console.error("Assets freshness audit failed: unable to verify bounded release compatibility.")

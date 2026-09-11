@@ -9,6 +9,8 @@ on:
     branches:
       - dev
       - main
+  schedule:
+    - cron: "17 3 * * 1"
 
 permissions:
   contents: read
@@ -24,6 +26,70 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      # prepare/build runs during npm ci; tracked dist must already match that deterministic output.
+      - name: Check tracked dist reproducibility
+        id: dist_check
+        continue-on-error: true
+        run: |
+          git diff --stat -- dist
+          git diff -- dist
+          git diff --exit-code -- dist
+      - name: Upload generated dist on drift
+        if: ${{ steps.dist_check.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: generated-dist-${{ github.run_id }}
+          path: dist/**
+          if-no-files-found: error
+          retention-days: 3
+      - name: Enforce tracked dist reproducibility
+        if: ${{ steps.dist_check.outcome == 'failure' }}
+        run: exit 1
+      - name: Strict repository consistency audit
+        run: npm run audit:repository
+      - name: Run canonical repository CI contract
+        run: npm run ci
+      - name: Upload Quanta audit evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: quanta-audit-${{ github.run_id }}
+          path: artifacts/audit/**
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser accessibility + responsive QA
+        run: npm run test:browser
+      - name: Upload browser QA evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-qa-${{ github.run_id }}
+          path: |
+            test-results/**
+            playwright-report/**
+          if-no-files-found: warn
+          retention-days: 14
+
+  visual-regression:
+    needs: verify
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - name: Setup Node
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -35,53 +101,15 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Enforce tracked dist reproducibility
         run: git diff --exit-code -- dist
-      - name: Strict repository consistency audit
-        run: npm run audit:repository
-      - name: Design contract audit
-        run: npm run audit:tokens
-      - name: Accessibility contract audit
-        run: npm run audit:a11y
-      - name: Research visual contract audit
-        run: npm run audit:research-visuals
-      - name: Domain contract audit
-        run: npm run audit:domains
-      - name: Rocksoul assets v2 sync audit
-        run: npm run audit:assets-sync
-      - name: Rocksoul assets remote freshness
-        run: npm run audit:assets-freshness
-      - name: MoonWitness asset registry v1.3
-        run: npm run audit:assets-registry
-      - name: Asset pack byte integrity
-        run: npm run audit:assets-integrity
-      - name: Platform/Admin contract audit
-        run: npm run audit:platform-admin
-      - name: Application framework audit
-        run: npm run audit:application
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Unit tests
-        run: npm run test:unit
-      - name: Build consumable library
-        run: npm run build:lib
-      - name: Package artifact audit
-        run: npm run audit:package
-      - name: Consumer package smoke
-        run: npm run test:consumer
-      - name: Release closure audit
-        run: npm run audit:release
-      - name: Build playground
-        run: npm run build:playground
-      - name: Build Storybook
-        run: npm run build-storybook
       - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
-      - name: Browser accessibility + responsive QA
-        run: npm run test:browser
-      - name: Upload browser QA evidence
+        run: npx playwright install chromium
+      - name: Visual snapshot gate
+        run: npm run test:visual
+      - name: Upload visual evidence
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: browser-qa-${{ github.run_id }}
+          name: visual-regression-${{ github.run_id }}
           path: |
             test-results/**
             playwright-report/**
