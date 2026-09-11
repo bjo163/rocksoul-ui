@@ -2,7 +2,7 @@ export const ROCKSOUL_ASSETS_SYNC = {
   repository: "bjo163/rocksoul-assets",
   ref: "main",
   commit: "ce46a35d904ae3d4f5338c5193e5c78a8ea9ec2f",
-  acceptedMainCommit: "ce46a35d904ae3d4f5338c5193e5c78a8ea9ec2f",
+  acceptedMainCommit: "b77105a6ea528ee456dbde54070fb8f609effa9b",
   manifestSchemaVersion: 3,
   applicationVersion: "v2",
   syncedAt: "2026-09-08",
