@@ -1,0 +1,53 @@
+name: Refresh visual baselines
+
+on:
+  push:
+    branches:
+      - chore/quanta-foundation-guardrails
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-visual-baselines-quanta
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: chore/quanta-foundation-guardrails
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Enforce tracked dist reproducibility
+        run: git diff --exit-code -- dist
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+      - name: Refresh canonical Windows snapshots
+        run: npm run test:visual -- --update-snapshots
+      - name: Verify snapshot-only change
+        shell: pwsh
+        run: |
+          $changed = git diff --name-only
+          if (-not $changed) { throw "No snapshot updates were produced." }
+          $bad = $changed | Where-Object { $_ -notlike "tests/visual-regression.spec.ts-snapshots/*" }
+          if ($bad) { Write-Host ($bad -join "`n"); throw "Unexpected non-snapshot changes." }
+      - name: Commit refreshed snapshots
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/visual-regression.spec.ts-snapshots
+          git commit -m "test(visual): refresh intentional Quanta baselines"
+          git push origin "HEAD:chore/quanta-foundation-guardrails"
