@@ -51,7 +51,7 @@ export type MoonWitnessSfxId =
   | "success" | "warning" | "error" | "evidence-linked" | "trace-found"
   | "ai-complete" | "upload-complete" | "case-open" | "case-resolved" | "ai-start"
 
-export const moonWitnessAssetPackVersion = "1.3.1" as const
+export const moonWitnessAssetPackVersion = "1.7.0" as const
 export const moonWitnessAssetPackIndexPath = "asset-packs.json" as const
 
 export function moonWitnessAssetRelativePath(pack: MoonWitnessAssetPackId, file: string) {

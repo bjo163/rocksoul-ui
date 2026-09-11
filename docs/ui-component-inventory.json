@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-10",
+  "generatedAt": "2026-09-11",
   "scope": "packages/ui/src",
   "canonicalSurfaces": {
     "foundation": ["tokens.ts", "styles.css", "lib/cn.ts"],
@@ -20,9 +20,36 @@
       "components/ui/collapsible.tsx", "components/ui/calendar.tsx", "components/ui/table.tsx",
       "components/ui/pagination.tsx", "components/ui/breadcrumb.tsx", "components/ui/sidebar.tsx", "components/ui/visually-hidden.tsx"
     ],
-    "molecules": [],
-    "organisms": [],
-    "templates": [],
+    "molecules": [
+      "components/molecules/copy-button.tsx",
+      "components/molecules/date-input.tsx",
+      "components/molecules/date-range-picker.tsx",
+      "components/molecules/file-input.tsx",
+      "components/molecules/filter-group.tsx",
+      "components/molecules/form-actions.tsx",
+      "components/molecules/inline-message.tsx",
+      "components/molecules/key-value.tsx",
+      "components/molecules/pagination.tsx",
+      "components/molecules/password-input.tsx",
+      "components/molecules/progress-indicator.tsx",
+      "components/molecules/search-input.tsx",
+      "components/molecules/split-button.tsx",
+      "components/molecules/stat.tsx"
+    ],
+    "organisms": [
+      "components/organisms/attachment-list.tsx",
+      "components/organisms/content-states.tsx",
+      "components/organisms/data-table.tsx",
+      "components/organisms/detail-panel.tsx",
+      "components/organisms/filter-bar.tsx",
+      "components/organisms/form-footer.tsx",
+      "components/organisms/form-section.tsx",
+      "components/organisms/timeline.tsx"
+    ],
+    "templates": [
+      "components/templates/page-layout.tsx",
+      "components/templates/page-templates.tsx"
+    ],
     "features": "apps/web/src/features"
   },
   "compatibility": [],

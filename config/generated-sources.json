@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "src/generated/assets-v1.3.ts",
+      "source": "public/assets/developer-v1.3/assets.json",
+      "generator": "external:rocksoul-assets sync",
+      "owner": "asset-pipeline"
+    },
+    {
+      "path": "src/generated/legal-intelligence.json",
+      "source": "rocksoul-assets:moonwitness/ui/v2/legal-intelligence.json",
+      "generator": "external:rocksoul-assets sync",
+      "owner": "asset-pipeline"
+    },
+    {
+      "path": "src/generated/research-domains.json",
+      "source": "rocksoul-assets:moonwitness/ui/v2/research-domains.json",
+      "generator": "external:rocksoul-assets sync",
+      "owner": "asset-pipeline"
+    },
+    {
+      "path": "src/generated/status-semantics.json",
+      "source": "rocksoul-assets:moonwitness/ui/v2/status-semantics.json",
+      "generator": "external:rocksoul-assets sync",
+      "owner": "asset-pipeline"
+    }
+  ]
+}

@@ -46,7 +46,7 @@ export function ResearchDomainOwnershipMap({
         <desc id={descriptionId}>{description}</desc>
         <defs>
           <pattern id={`${id}-grid`} width="32" height="32" patternUnits="userSpaceOnUse">
-            <path d="M32 0H0V32" fill="none" stroke="var(--mw-border)" strokeWidth="1" />
+            <path d="M32 0H0V32" fill="none" stroke="var(--mw-border-default)" strokeWidth="1" />
           </pattern>
         </defs>
         <rect width="960" height="540" fill="var(--mw-surface-page)" />

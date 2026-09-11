@@ -81,6 +81,30 @@ Foundation has three token levels. A component must consume semantic or componen
 | Semantic token | `action.primary`, `text.muted`, `surface.raised` | all components |
 | Component token | `button.primary.background` | the owning component only |
 
+### Quanta and design-value ownership
+
+**Quanta** are the lowest reusable design values: color swatches, spacing, line widths, radii, opacity, type scale, motion, easing, breakpoints, z-index, grid units, and reusable geometry dimensions. Quanta carry no product or component meaning. They belong to the existing primitive-token foundation; they are not a second theme or token system.
+
+Ownership flows in one direction:
+
+```text
+QUANTA / PRIMITIVE TOKENS
+          ↓
+    SEMANTIC TOKENS
+          ↓
+    COMPONENT TOKENS
+```
+
+A normal component consumes semantic or component ownership. Raw literals are permitted only where their ownership is explicit, such as canonical token declarations, intrinsic/generated assets, derived runtime geometry, or a narrow reviewed exception.
+
+`npm run audit:design-values` enforces this contract across source. It produces machine-readable evidence in `artifacts/audit/design-values.json`, validates `--mw-*` references, classifies generated/asset sources, inventories repeated candidate values, and fails new unexplained visual decisions. The Phase 1 baseline in `config/design-audit-baseline.json` is an immutable ratchet: untouched legacy debt remains visible as warnings; a touched source file must satisfy current rules. Used-but-undefined CSS variables and invalid generated provenance always fail closed.
+
+Exceptions live only in `config/design-audit-exceptions.json`. They require an exact path, rule, reason, and owner; broad globs are forbidden. Generated ownership lives in `config/generated-sources.json`. Do not edit generated artifacts merely to satisfy an audit.
+
+The source tree is canonical truth. `docs/ui-component-inventory.json` is derived evidence and `npm run audit:architecture` rejects drift between that inventory and the current molecule/organism/template source tree. Public API stability is independently compared to the Phase 1 baseline by `npm run audit:api-stability`.
+
+Phase 1 does not introduce HUD-specific component families, token namespaces, slot names, or a parallel primitive architecture. Future visual personalities must evolve the existing owners.
+
 Sub-primitives provide behavior or a component part, not a product-facing visual component. Examples are `Portal`, `FocusTrap`, `VisuallyHidden`, `Slot`, keyboard navigation, and dismissal behavior. They may be implemented with Radix or Base UI and are normally not exported to applications. An atom may use them; an application must not compose a new dialog from them.
 
 ## Component classification
