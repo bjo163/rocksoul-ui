@@ -1,7 +1,7 @@
 import { access, readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
-import ts from "typescript"
+import * as ts from "typescript"
 
 const ROOT = process.cwd()
 const SOURCE_ROOT = path.join(ROOT, "src")
