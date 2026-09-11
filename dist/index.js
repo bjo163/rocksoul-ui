@@ -4485,7 +4485,7 @@ function jr() {
 		title: "Dashboard",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "Good morning, Rocksoul."
 			}),
 			/* @__PURE__ */ D("p", {
@@ -4637,7 +4637,7 @@ function Nr({ actions: e } = {}) {
 		title: "Kanban",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "Review workflow"
 			}),
 			/* @__PURE__ */ D("p", {
@@ -4647,7 +4647,7 @@ function Nr({ actions: e } = {}) {
 			/* @__PURE__ */ D("div", {
 				className: "mt-10 grid gap-4 xl:grid-cols-4",
 				children: Mr.map((t) => /* @__PURE__ */ O("section", {
-					className: "min-h-[540px] border border-border bg-panel p-4",
+					className: "min-h-135 border border-border bg-panel p-4",
 					children: [/* @__PURE__ */ O("div", {
 						className: "flex items-center justify-between",
 						children: [/* @__PURE__ */ O("h2", {
@@ -4701,7 +4701,7 @@ function Pr({ actions: e } = {}) {
 		title: "Calendar",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "September 2026"
 			}),
 			/* @__PURE__ */ D("p", {
@@ -4733,7 +4733,7 @@ function Pr({ actions: e } = {}) {
 							children: [
 								/* @__PURE__ */ D(b, {
 									type: "button",
-									className: "border-l-2 border-primary bg-panel p-2 text-left text-[10px]",
+									className: "border-l-2 border-primary bg-panel p-2 text-left text-xs",
 									onClick: () => void e?.onCalendarEventSelect?.({
 										id: "mw-0042-review",
 										title: "MW-0042 REVIEW",
@@ -4743,7 +4743,7 @@ function Pr({ actions: e } = {}) {
 								}),
 								/* @__PURE__ */ D(b, {
 									type: "button",
-									className: "border-l-2 border-success bg-panel p-2 text-left text-[10px]",
+									className: "border-l-2 border-success bg-panel p-2 text-left text-xs",
 									onClick: () => void e?.onCalendarEventSelect?.({
 										id: "source-sync",
 										title: "SOURCE SYNC",
@@ -4753,7 +4753,7 @@ function Pr({ actions: e } = {}) {
 								}),
 								/* @__PURE__ */ D(b, {
 									type: "button",
-									className: "border-l-2 border-info bg-panel p-2 text-left text-[10px]",
+									className: "border-l-2 border-info bg-panel p-2 text-left text-xs",
 									onClick: () => void e?.onCalendarEventSelect?.({
 										id: "release-gate",
 										title: "RELEASE GATE",
@@ -4776,10 +4776,10 @@ function Fr({ actions: e } = {}) {
 		section: "WORK",
 		title: "Chat",
 		children: [/* @__PURE__ */ D("h1", {
-			className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+			className: "mw-display text-4xl font-black uppercase",
 			children: "Case conversations"
 		}), /* @__PURE__ */ O("div", {
-			className: "mt-8 grid min-h-[640px] gap-5 lg:grid-cols-[280px_1fr]",
+			className: "mt-8 grid min-h-160 gap-5 lg:grid-cols-[280px_1fr]",
 			children: [/* @__PURE__ */ O("aside", {
 				className: "border border-border bg-panel p-4",
 				children: [/* @__PURE__ */ D("p", {
@@ -4859,7 +4859,7 @@ function Ir({ actions: e } = {}) {
 		title: "AI Workspace",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "AI Workspace"
 			}),
 			/* @__PURE__ */ D("p", {
@@ -4869,7 +4869,7 @@ function Ir({ actions: e } = {}) {
 			/* @__PURE__ */ O("div", {
 				className: "mt-8 grid gap-5 xl:grid-cols-[1.35fr_.65fr]",
 				children: [/* @__PURE__ */ O("section", {
-					className: "flex min-h-[620px] flex-col border border-border bg-card p-5",
+					className: "flex min-h-155 flex-col border border-border bg-card p-5",
 					children: [
 						/* @__PURE__ */ D("p", {
 							className: "mw-meta text-muted-foreground",
@@ -4998,7 +4998,7 @@ function Rr() {
 		title: "Resources",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "Resource navigation"
 			}),
 			/* @__PURE__ */ D("p", {
@@ -5013,7 +5013,7 @@ function Rr() {
 				}), /* @__PURE__ */ D("div", {
 					className: "mt-5 overflow-x-auto",
 					children: /* @__PURE__ */ O("table", {
-						className: "w-full min-w-[680px] border-collapse text-left",
+						className: "w-full min-w-170 border-collapse text-left",
 						children: [/* @__PURE__ */ D("thead", { children: /* @__PURE__ */ D("tr", {
 							className: "border-b border-border",
 							children: [
@@ -5066,7 +5066,7 @@ function zr({ actions: e } = {}) {
 		section: "ACCOUNT",
 		title: "Profile / Settings",
 		children: [/* @__PURE__ */ D("h1", {
-			className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+			className: "mw-display text-4xl font-black uppercase",
 			children: "Profile & Settings"
 		}), /* @__PURE__ */ O("div", {
 			className: "mt-8 grid gap-5 lg:grid-cols-[330px_1fr]",
@@ -5180,7 +5180,7 @@ function Br({ actions: e } = {}) {
 		title: "Authorization UX",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "Authorization UX"
 			}),
 			/* @__PURE__ */ D("p", {
@@ -5273,7 +5273,7 @@ function Vr() {
 		backendState: "offline",
 		children: [
 			/* @__PURE__ */ D("h1", {
-				className: "mw-display text-4xl font-black uppercase sm:text-[38px]",
+				className: "mw-display text-4xl font-black uppercase",
 				children: "Error / Empty / Loading / Offline / Forbidden"
 			}),
 			/* @__PURE__ */ D("p", {
