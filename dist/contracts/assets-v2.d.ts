@@ -2,7 +2,7 @@ export declare const ROCKSOUL_ASSETS_SYNC: {
     readonly repository: "bjo163/rocksoul-assets";
     readonly ref: "main";
     readonly commit: "ce46a35d904ae3d4f5338c5193e5c78a8ea9ec2f";
-    readonly acceptedMainCommit: "ce46a35d904ae3d4f5338c5193e5c78a8ea9ec2f";
+    readonly acceptedMainCommit: "b77105a6ea528ee456dbde54070fb8f609effa9b";
     readonly manifestSchemaVersion: 3;
     readonly applicationVersion: "v2";
     readonly syncedAt: "2026-09-08";

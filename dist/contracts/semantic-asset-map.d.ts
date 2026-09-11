@@ -29,4 +29,4 @@ export declare const productionScreenAssetMap: {
         readonly allowed: readonly ["primitive", "illustration"];
     };
 };
-export declare function semanticPrimitiveUrl(id: SemanticPrimitiveId, commit?: "ce46a35d904ae3d4f5338c5193e5c78a8ea9ec2f"): string;
+export declare function semanticPrimitiveUrl(id: SemanticPrimitiveId, commit?: "b77105a6ea528ee456dbde54070fb8f609effa9b"): string;
