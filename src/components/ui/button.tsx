@@ -8,7 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground !text-primary-foreground hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
           "bg-destructive text-[var(--mw-neutral-000)] !text-[var(--mw-neutral-000)] hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
         outline:
@@ -37,6 +37,8 @@ const buttonVariants = cva(
   }
 )
 
+const neutralSurfacePattern = /(?:^|\s)bg-(?:background|card|panel)(?:\s|$)/
+
 function Button({
   className,
   variant = "default",
@@ -49,6 +51,7 @@ function Button({
     asChild?: boolean
   }) {
   const Comp = asChild ? Slot.Root : "button"
+  const usesNeutralSurface = variant === "default" && neutralSurfacePattern.test(className ?? "")
 
   return (
     <Comp
@@ -56,7 +59,11 @@ function Button({
       data-variant={variant}
       data-size={size}
       type={type ?? (asChild ? undefined : "button")}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({ variant, size }),
+        usesNeutralSurface && "text-foreground",
+        className,
+      )}
       {...props}
     />
   )
