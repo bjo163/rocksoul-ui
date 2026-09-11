@@ -46,7 +46,7 @@ export function ResearchDomainOwnershipMap({
         <desc id={descriptionId}>{description}</desc>
         <defs>
           <pattern id={`${id}-grid`} width="32" height="32" patternUnits="userSpaceOnUse">
-            <path d="M32 0H0V32" fill="none" stroke="var(--mw-border)" strokeWidth="1" />
+            <path d="M32 0H0V32" fill="none" stroke="var(--mw-border-default)" strokeWidth="1" />
           </pattern>
         </defs>
         <rect width="960" height="540" fill="var(--mw-surface-page)" />
@@ -88,21 +88,6 @@ export function ResearchDomainOwnershipMap({
       <figcaption className="mt-4 border-t border-border pt-4">
         <p className="mw-meta text-foreground">Text equivalent</p>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
-        <ul className="mt-3 grid gap-2 md:grid-cols-2">
-          {researchDomains.map((domain) => {
-            const owner = canonicalDomainOwners[domain]
-            return (
-              <li key={domain} className="border border-border bg-background p-3 text-xs leading-5">
-                <strong className="text-foreground">{domain}</strong>
-                <span className="block text-muted-foreground">{owner.repository} · {owner.prefix}</span>
-              </li>
-            )
-          })}
-          <li className="border border-primary bg-background p-3 text-xs leading-5">
-            <strong className="text-foreground">RELATIONSHIP</strong>
-            <span className="block text-muted-foreground">{relationship.repository} · {relationship.prefix}</span>
-          </li>
-        </ul>
       </figcaption>
     </figure>
   )
