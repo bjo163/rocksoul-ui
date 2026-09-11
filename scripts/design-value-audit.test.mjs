@@ -47,6 +47,13 @@ test("detects undefined --mw CSS variables", () => {
   assert.deepEqual(findings.map((item) => item.value), ["--mw-not-declared"])
 })
 
+test("recognizes quoted runtime custom-property declarations", () => {
+  const findings = findCssVariableFindings([
+    { filePath: "src/example.tsx", content: 'const style = { "--mw-runtime-grid": `url(grid.svg)` }; const css = "var(--mw-runtime-grid)"' },
+  ])
+  assert.equal(findings.length, 0)
+})
+
 test("allows raw literal inside canonical token declaration", () => {
   const findings = scanSource({
     filePath: "src/styles.css",
