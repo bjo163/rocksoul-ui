@@ -7435,14 +7435,14 @@ function Mi({ nodes: t, edges: n, className: r, title: i = "Event intelligence t
 									height: "52",
 									rx: "6",
 									fill: "var(--mw-surface-page)",
-									stroke: n ? "var(--mw-brand-crimson)" : "var(--mw-border-strong)",
+									stroke: n ? "var(--mw-brand-crimson-ui)" : "var(--mw-border-strong)",
 									strokeWidth: n ? "2" : "1",
 									strokeDasharray: e.external ? "5 4" : void 0
 								}),
 								/* @__PURE__ */ D("text", {
 									x: "10",
 									y: "17",
-									fill: n ? "var(--mw-brand-crimson)" : "var(--mw-text-secondary)",
+									fill: n ? "var(--mw-brand-crimson-ui)" : "var(--mw-text-secondary)",
 									fontSize: "8",
 									fontFamily: "IBM Plex Mono, monospace",
 									children: e.kind.toUpperCase()
