@@ -37,8 +37,30 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Publish already-tagged package release
+        id: pending_release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          current="$(node -p 'require("./package.json").version')"
+          tag="v$current"
+          if git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "published=false" >> "$GITHUB_OUTPUT"
+              echo "No pending GitHub release for $tag."
+            else
+              gh release create "$tag" --title "@rocksoul/ui $tag" --generate-notes --verify-tag
+              echo "published=true" >> "$GITHUB_OUTPUT"
+              echo "Published missing GitHub release for existing tag $tag."
+            fi
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Determine next release
         id: version
+        if: steps.pending_release.outputs.published != 'true'
         shell: bash
         run: |
           current="$(node -p 'require("./package.json").version')"
@@ -101,4 +123,4 @@ jobs:
         env:
           TAG: v${{ steps.version.outputs.next }}
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$TAG" --title "@rocksoul/ui $TAG" --generate-notes --verify-tag "$TAG"
+        run: gh release create "$TAG" --title "@rocksoul/ui $TAG" --generate-notes --verify-tag
