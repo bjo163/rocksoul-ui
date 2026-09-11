@@ -88,6 +88,21 @@ export function ResearchDomainOwnershipMap({
       <figcaption className="mt-4 border-t border-border pt-4">
         <p className="mw-meta text-foreground">Text equivalent</p>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
+        <ul className="mt-3 grid gap-2 md:grid-cols-2">
+          {researchDomains.map((domain) => {
+            const owner = canonicalDomainOwners[domain]
+            return (
+              <li key={domain} className="border border-border bg-background p-3 text-xs leading-5">
+                <strong className="text-foreground">{domain}</strong>
+                <span className="block text-muted-foreground">{owner.repository} · {owner.prefix}</span>
+              </li>
+            )
+          })}
+          <li className="border border-primary bg-background p-3 text-xs leading-5">
+            <strong className="text-foreground">RELATIONSHIP</strong>
+            <span className="block text-muted-foreground">{relationship.repository} · {relationship.prefix}</span>
+          </li>
+        </ul>
       </figcaption>
     </figure>
   )
