@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev
-      - chore/quanta-foundation-guardrails
     paths-ignore:
       - "dist/**"
       - "**/*.md"
@@ -14,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-generated-dist-${{ github.ref_name }}
+  group: sync-generated-dist-dev
   cancel-in-progress: true
 
 jobs:
@@ -25,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: ${{ github.ref_name }}
+          ref: dev
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
@@ -48,7 +47,7 @@ jobs:
           git add dist
           git diff --cached --quiet && exit 0
           git commit -m "chore(dist): synchronize generated delivery artifacts"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin HEAD:dev
       - name: Fail when synchronization was not possible
         if: ${{ steps.check_dist.outcome == 'failure' && success() }}
         run: git diff --exit-code -- dist
