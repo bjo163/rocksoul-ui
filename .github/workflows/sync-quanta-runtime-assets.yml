@@ -1,0 +1,161 @@
+name: Sync accepted runtime assets
+
+on:
+  push:
+    branches:
+      - chore/quanta-foundation-guardrails
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-quanta-runtime-assets
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ASSETS_SHA: fd6a545160312bfe4b3419d846961abbcd7bfabd
+      ASSETS_RELEASE: "1.7.0"
+    steps:
+      - name: Checkout UI branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: chore/quanta-foundation-guardrails
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+      - name: Checkout immutable assets source
+        shell: bash
+        run: |
+          git clone --filter=blob:none --no-checkout https://github.com/bjo163/rocksoul-assets.git /tmp/rocksoul-assets
+          git -C /tmp/rocksoul-assets fetch --depth=1 origin "$ASSETS_SHA"
+          git -C /tmp/rocksoul-assets checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/rocksoul-assets rev-parse HEAD)" = "$ASSETS_SHA"
+          test "$(tr -d '\r\n' </tmp/rocksoul-assets/VERSION)" = "$ASSETS_RELEASE"
+      - name: Materialize accepted runtime mirror
+        shell: bash
+        run: |
+          cat > /tmp/sync-assets.mjs <<'NODE'
+          import fs from "node:fs"
+          import path from "node:path"
+          import { execFileSync } from "node:child_process"
+
+          const root = process.cwd()
+          const sourceRoot = "/tmp/rocksoul-assets"
+          const sha = process.env.ASSETS_SHA
+          const release = process.env.ASSETS_RELEASE
+          const syncedAt = "2026-09-11"
+
+          const abs = (base, rel) => path.join(base, ...rel.split("/"))
+          const copyFile = (sourceRel, targetRel) => {
+            const source = abs(sourceRoot, sourceRel)
+            const target = abs(root, targetRel)
+            fs.mkdirSync(path.dirname(target), { recursive: true })
+            fs.copyFileSync(source, target)
+          }
+          const copyTree = (sourceRel, targetRel) => {
+            const source = abs(sourceRoot, sourceRel)
+            const target = abs(root, targetRel)
+            fs.rmSync(target, { recursive: true, force: true })
+            fs.mkdirSync(path.dirname(target), { recursive: true })
+            fs.cpSync(source, target, { recursive: true })
+          }
+          const walk = (dir, prefix = "") => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+            const rel = prefix ? `${prefix}/${entry.name}` : entry.name
+            return entry.isDirectory() ? walk(path.join(dir, entry.name), rel) : [rel]
+          })
+          const gitBlob = (sourceRel) => execFileSync("git", ["-C", sourceRoot, "hash-object", sourceRel], { encoding: "utf8" }).trim()
+
+          const lockPath = abs(root, "public/assets/asset-lock.json")
+          const lock = JSON.parse(fs.readFileSync(lockPath, "utf8"))
+          const existing = new Set(lock.files.map((entry) => entry.source))
+
+          for (const entry of lock.files) {
+            copyFile(entry.source, entry.path)
+            const sourcePath = abs(sourceRoot, entry.source)
+            entry.blob = gitBlob(entry.source)
+            entry.size = fs.statSync(sourcePath).size
+          }
+
+          const runtimeRoot = abs(sourceRoot, "moonwitness/runtime-motion-pack")
+          for (const rel of walk(runtimeRoot)) {
+            const sourceRel = `moonwitness/runtime-motion-pack/${rel}`
+            if (existing.has(sourceRel)) continue
+            const targetRel = `public/assets/runtime-motion-pack/${rel}`
+            copyFile(sourceRel, targetRel)
+            lock.files.push({
+              source: sourceRel,
+              path: targetRel,
+              blob: gitBlob(sourceRel),
+              size: fs.statSync(abs(sourceRoot, sourceRel)).size,
+            })
+            existing.add(sourceRel)
+          }
+
+          lock.files.sort((a, b) => a.source.localeCompare(b.source))
+          lock.sourceCommit = sha
+          lock.release = release
+          fs.writeFileSync(lockPath, JSON.stringify(lock, null, 2) + "\n")
+
+          copyFile("moonwitness/asset-packs.json", "public/assets/moonwitness/asset-packs.json")
+          copyFile("moonwitness/asset-packs.json", "public/assets/developer-v1.3/asset-packs.json")
+          for (const file of ["assets.json", "assets.css", "sprite.svg"]) {
+            copyFile(`dist/${file}`, `public/assets/developer-v1.3/${file}`)
+          }
+          copyTree("moonwitness/semantic-primitives-pack", "public/assets/moonwitness/semantic-primitives-pack")
+
+          for (const file of ["research-domains.json", "status-semantics.json", "legal-intelligence.json"]) {
+            copyFile(`moonwitness/ui/v2/${file}`, `src/generated/${file}`)
+          }
+
+          const registryJson = JSON.parse(fs.readFileSync(abs(root, "public/assets/developer-v1.3/assets.json"), "utf8"))
+          const generatedTs = `// Generated from public/assets/developer-v1.3/assets.json\nexport const assets = ${JSON.stringify(registryJson, null, 2)} as const\n`
+          fs.writeFileSync(abs(root, "public/assets/developer-v1.3/assets.ts"), generatedTs)
+          fs.writeFileSync(abs(root, "src/generated/assets-v1.3.ts"), generatedTs)
+
+          const contractPath = abs(root, "src/contracts/assets-v2.ts")
+          let contract = fs.readFileSync(contractPath, "utf8")
+          contract = contract
+            .replace(/commit:\s*"[0-9a-f]{40}"/, `commit: "${sha}"`)
+            .replace(/acceptedMainCommit:\s*"[0-9a-f]{40}"/, `acceptedMainCommit: "${sha}"`)
+            .replace(/syncedAt:\s*"[^"]+"/, `syncedAt: "${syncedAt}"`)
+            .replace(/assetRelease:\s*"[^"]+"/, `assetRelease: "${release}"`)
+          fs.writeFileSync(contractPath, contract)
+
+          const packsPath = abs(root, "src/contracts/asset-packs.ts")
+          let packs = fs.readFileSync(packsPath, "utf8")
+          packs = packs.replace(/moonWitnessAssetPackVersion = "[^"]+"/, `moonWitnessAssetPackVersion = "${release}"`)
+          fs.writeFileSync(packsPath, packs)
+          NODE
+          node /tmp/sync-assets.mjs
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Validate explicit asset sync
+        run: npm run ci
+      - name: Verify bounded change set
+        shell: bash
+        run: |
+          git status --short
+          bad="$(git diff --name-only | grep -Ev '^(public/assets/|src/generated/|src/contracts/assets-v2.ts$|src/contracts/asset-packs.ts$|dist/)' || true)"
+          if [ -n "$bad" ]; then
+            echo "$bad"
+            echo "Unexpected files changed by asset sync."
+            exit 1
+          fi
+      - name: Commit explicit asset sync
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets src/generated src/contracts/assets-v2.ts src/contracts/asset-packs.ts dist
+          git diff --cached --quiet && { echo "No asset sync changes."; exit 1; }
+          git commit -m "assets(ui): sync accepted runtime assets v1.7.0"
+          git push origin "HEAD:chore/quanta-foundation-guardrails"
