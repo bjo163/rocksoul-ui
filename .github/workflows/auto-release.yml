@@ -1,10 +1,6 @@
 name: Automatic Release
 
 on:
-  workflow_run:
-    workflows: ["UI CI"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       validated_sha:
@@ -61,7 +57,7 @@ concurrency:
 
 jobs:
   release:
-    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -69,12 +65,6 @@ jobs:
         id: validation
         shell: bash
         env:
-          EVENT_NAME: ${{ github.event_name }}
-          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
-          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
-          RUN_WORKFLOW: ${{ github.event.workflow_run.name }}
-          RUN_URL: ${{ github.event.workflow_run.html_url }}
           INPUT_SHA: ${{ inputs.validated_sha }}
           INPUT_RUN_ID: ${{ inputs.validated_run_id }}
           INPUT_RUN_ATTEMPT: ${{ inputs.validated_run_attempt }}
@@ -82,32 +72,17 @@ jobs:
           INPUT_RUN_URL: ${{ inputs.validated_run_url }}
         run: |
           set -euo pipefail
-          if [ "$EVENT_NAME" = "workflow_run" ]; then
-            validated_sha="$RUN_SHA"
-            validated_run_id="$RUN_ID"
-            validated_run_attempt="$RUN_ATTEMPT"
-            validated_workflow="$RUN_WORKFLOW"
-            validated_run_url="$RUN_URL"
-          else
-            validated_sha="$INPUT_SHA"
-            validated_run_id="$INPUT_RUN_ID"
-            validated_run_attempt="$INPUT_RUN_ATTEMPT"
-            validated_workflow="$INPUT_WORKFLOW"
-            validated_run_url="$INPUT_RUN_URL"
-          fi
-
-          test -n "$validated_sha"
-          test -n "$validated_run_id"
-          test -n "$validated_run_attempt"
-          test -n "$validated_workflow"
-          test -n "$validated_run_url"
-
+          test -n "$INPUT_SHA"
+          test -n "$INPUT_RUN_ID"
+          test -n "$INPUT_RUN_ATTEMPT"
+          test -n "$INPUT_WORKFLOW"
+          test -n "$INPUT_RUN_URL"
           {
-            echo "sha=$validated_sha"
-            echo "run_id=$validated_run_id"
-            echo "run_attempt=$validated_run_attempt"
-            echo "workflow=$validated_workflow"
-            echo "run_url=$validated_run_url"
+            echo "sha=$INPUT_SHA"
+            echo "run_id=$INPUT_RUN_ID"
+            echo "run_attempt=$INPUT_RUN_ATTEMPT"
+            echo "workflow=$INPUT_WORKFLOW"
+            echo "run_url=$INPUT_RUN_URL"
           } >> "$GITHUB_OUTPUT"
 
       - name: Verify validated UI CI run
