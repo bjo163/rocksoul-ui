@@ -19,11 +19,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout main
+      - name: Checkout main history
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: main
           fetch-depth: 0
+
+      - name: Verify exact validated main SHA
+        env:
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --prune origin main
+          current_sha="$(git rev-parse origin/main)"
+          echo "validated_sha=$VALIDATED_SHA"
+          echo "current_main_sha=$current_sha"
+          if [ "$current_sha" != "$VALIDATED_SHA" ]; then
+            echo "::error::Stale release validation: validated=$VALIDATED_SHA current-main=$current_sha"
+            exit 1
+          fi
+          echo "Validated exact main SHA: $VALIDATED_SHA"
 
       - name: Setup Node
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
@@ -42,16 +58,24 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
+          set -euo pipefail
           current="$(node -p 'require("./package.json").version')"
           tag="v$current"
           if git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
+            tagged_commit_sha="$(git rev-parse "$tag^{commit}")"
+            if [ "$tagged_commit_sha" != "$VALIDATED_SHA" ]; then
+              echo "::error::Existing tag $tag points to $tagged_commit_sha, not validated main SHA $VALIDATED_SHA"
+              exit 1
+            fi
             if gh release view "$tag" >/dev/null 2>&1; then
               echo "published=false" >> "$GITHUB_OUTPUT"
               echo "No pending GitHub release for $tag."
             else
               gh release create "$tag" --title "@rocksoul/ui $tag" --generate-notes --verify-tag
               echo "published=true" >> "$GITHUB_OUTPUT"
+              echo "tag=$tag" >> "$GITHUB_OUTPUT"
               echo "Published missing GitHub release for existing tag $tag."
             fi
           else
@@ -62,29 +86,7 @@ jobs:
         id: version
         if: steps.pending_release.outputs.published != 'true'
         shell: bash
-        run: |
-          current="$(node -p 'require("./package.json").version')"
-          before="$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)"
-          range="HEAD"
-          if [ -n "$before" ]; then range="$before..HEAD"; fi
-          subjects="$(git log --format=%s $range)"
-          if [ -z "$subjects" ]; then
-            echo "release=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if printf '%s\n' "$subjects" | grep -Eq '(^|:)BREAKING CHANGE|^[a-z]+(\([^)]*\))?!:'; then
-            bump="major"
-          elif printf '%s\n' "$subjects" | grep -Eq '^feat(\([^)]*\))?:'; then
-            bump="minor"
-          else
-            bump="patch"
-          fi
-          next="$(node -e 'const [M,m,p]=process.argv[1].split(".").map(Number); const b=process.argv[2]; console.log(b==="major"?`${M+1}.0.0`:b==="minor"?`${M}.${m+1}.0`:`${M}.${m}.${p+1}`)' "$current" "$bump")"
-          echo "current=$current" >> "$GITHUB_OUTPUT"
-          echo "next=$next" >> "$GITHUB_OUTPUT"
-          echo "tag=v$next" >> "$GITHUB_OUTPUT"
-          echo "release=true" >> "$GITHUB_OUTPUT"
-          echo "bump=$bump" >> "$GITHUB_OUTPUT"
+        run: node scripts/auto-release.mjs --plan >> "$GITHUB_OUTPUT"
 
       - name: Apply release version
         if: steps.version.outputs.release == 'true'
@@ -124,3 +126,63 @@ jobs:
           TAG: v${{ steps.version.outputs.next }}
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$TAG" --title "@rocksoul/ui $TAG" --generate-notes --verify-tag
+
+      - name: Resolve released tag
+        id: released_tag
+        if: steps.version.outputs.release == 'true' || steps.pending_release.outputs.published == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.pending_release.outputs.published }}" = "true" ]; then
+            tag="${{ steps.pending_release.outputs.tag }}"
+          else
+            tag="v${{ steps.version.outputs.next }}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "release_tag=$tag"
+
+      - name: Emit immutable release evidence
+        if: steps.version.outputs.release == 'true' || steps.pending_release.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.released_tag.outputs.tag }}
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+          VALIDATED_RUN_ID: ${{ github.event.workflow_run.id }}
+          VALIDATED_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          VALIDATED_WORKFLOW: ${{ github.event.workflow_run.name }}
+          VALIDATED_RUN_URL: ${{ github.event.workflow_run.html_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tagged_commit_sha="$(git rev-parse "$TAG^{commit}")"
+          release_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$TAG" --jq '.id')"
+          package_version="$(node -p 'require("./package.json").version')"
+          generated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          cat > release-evidence.json <<EOF
+          {
+            "schema": "rocksoul.release-evidence.v1",
+            "repository": "${GITHUB_REPOSITORY}",
+            "generatedAt": "${generated_at}",
+            "validatedWorkflow": "${VALIDATED_WORKFLOW}",
+            "validatedWorkflowRunId": ${VALIDATED_RUN_ID},
+            "validatedWorkflowRunAttempt": ${VALIDATED_RUN_ATTEMPT},
+            "validatedWorkflowRunUrl": "${VALIDATED_RUN_URL}",
+            "validatedSourceSha": "${VALIDATED_SHA}",
+            "releaseVersion": "${package_version}",
+            "releaseTag": "${TAG}",
+            "taggedCommitSha": "${tagged_commit_sha}",
+            "githubReleaseId": ${release_id}
+          }
+          EOF
+          jq -e '.schema == "rocksoul.release-evidence.v1" and .validatedSourceSha != "" and .releaseVersion != "" and .releaseTag != "" and .taggedCommitSha != "" and .githubReleaseId > 0' release-evidence.json >/dev/null
+          sha256sum release-evidence.json | tee release-evidence.sha256
+          gh release upload "$TAG" release-evidence.json release-evidence.sha256
+
+      - name: Upload release evidence artifact
+        if: steps.version.outputs.release == 'true' || steps.pending_release.outputs.published == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-evidence-${{ steps.released_tag.outputs.tag }}
+          path: |
+            release-evidence.json
+            release-evidence.sha256

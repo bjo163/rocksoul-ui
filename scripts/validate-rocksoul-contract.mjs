@@ -2,7 +2,8 @@ import fs from 'node:fs';
 
 const repo = JSON.parse(fs.readFileSync('ROCKSOUL-REPO.json', 'utf8'));
 const todo = JSON.parse(fs.readFileSync('ROCKSOUL-TODO.json', 'utf8'));
-const statuses = new Set(['NOT_STARTED', 'IN_PROGRESS', 'WAITING_REVIEW', 'VERIFIED', 'BLOCKED', 'PLANNED']);
+const legacyStatuses = new Set(['NOT_STARTED', 'IN_PROGRESS', 'WAITING_REVIEW', 'VERIFIED', 'BLOCKED', 'PLANNED']);
+const projectionStatuses = new Set(['PLANNED', 'READY', 'IN_PROGRESS', 'BLOCKED', 'VERIFYING', 'VERIFIED', 'CLOSED']);
 const errors = [];
 const supportedRepoSchemas = new Set(['rocksoul.repository.v1', 'rocksoul.repository.v2']);
 const supportedTodoSchemas = new Set(['rocksoul.todo.v1', 'rocksoul.todo.v2']);
@@ -15,9 +16,17 @@ if (repo.schema === 'rocksoul.repository.v2') {
   if (repo.governance?.canonical_lockfile !== 'package-lock.json') errors.push('v2 repository must use package-lock.json governance');
 }
 if (!repo.tracking?.master_todo && !repo.governance?.canonical_lockfile) errors.push('tracking.master_todo or v2 governance is required');
+if (!todo.authority || todo.authority.type !== 'github-issues' || todo.authority.sot_issue !== 86) {
+  if (todo.schema === 'rocksoul.todo.v2') errors.push('v2 TODO must declare GitHub issue SOT #86');
+}
 const ids = new Set();
 for (const task of todo.tasks ?? []) {
-  if (!task.id || !task.title || !statuses.has(task.status)) errors.push(`invalid task: ${task.id || '<missing>'}`);
+  const isV2 = todo.schema === 'rocksoul.todo.v2';
+  const validStatus = isV2 ? projectionStatuses.has(task.status) : legacyStatuses.has(task.status);
+  const structurallyValid = isV2
+    ? Boolean(task.id) && validStatus && Number.isInteger(task.issue) && task.issue > 0 && Number.isInteger(task.sot) && task.sot === 86
+    : Boolean(task.id) && Boolean(task.title) && validStatus;
+  if (!structurallyValid) errors.push(`invalid task: ${task.id || '<missing>'}`);
   if (ids.has(task.id)) errors.push(`duplicate task id: ${task.id}`);
   ids.add(task.id);
   if (task.github_issue !== null && task.github_issue !== undefined && typeof task.github_issue !== 'string') errors.push(`invalid github_issue: ${task.id}`);
