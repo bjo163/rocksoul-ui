@@ -61,15 +61,18 @@ jobs:
           VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
-          current="$(node -p 'require("./package.json").version')"
+          current="$(node -p 'require(\"./package.json\").version')"
           tag="v$current"
           if git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
             tagged_commit_sha="$(git rev-parse "$tag^{commit}")"
             if [ "$tagged_commit_sha" != "$VALIDATED_SHA" ]; then
-              echo "::error::Existing tag $tag points to $tagged_commit_sha, not validated main SHA $VALIDATED_SHA"
-              exit 1
-            fi
-            if gh release view "$tag" >/dev/null 2>&1; then
+              if ! git merge-base --is-ancestor "$tagged_commit_sha" "$VALIDATED_SHA"; then
+                echo "::error::Existing tag $tag points to unrelated commit $tagged_commit_sha; validated main is $VALIDATED_SHA"
+                exit 1
+              fi
+              echo "Existing tag $tag points to prior release commit $tagged_commit_sha; continuing to calculate the next release from validated main $VALIDATED_SHA."
+              echo "published=false" >> "$GITHUB_OUTPUT"
+            elif gh release view "$tag" >/dev/null 2>&1; then
               echo "published=false" >> "$GITHUB_OUTPUT"
               echo "No pending GitHub release for $tag."
             else
@@ -156,7 +159,7 @@ jobs:
           set -euo pipefail
           tagged_commit_sha="$(git rev-parse "$TAG^{commit}")"
           release_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$TAG" --jq '.id')"
-          package_version="$(node -p 'require("./package.json").version')"
+          package_version="$(node -p 'require(\"./package.json\").version')"
           generated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           cat > release-evidence.json <<EOF
           {
