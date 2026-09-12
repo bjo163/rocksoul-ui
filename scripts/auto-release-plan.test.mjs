@@ -2,7 +2,7 @@ import test from "node:test"
 import assert from "node:assert/strict"
 import { calculateReleasePlan } from "./release-plan.mjs"
 
-const availableTag = (tag) => tag === "v99.0.0"
+const availableTag = (tag) => tag === "v98.0.1"
 
 test("release planner: breaking footer produces major", () => {
   assert.deepEqual(calculateReleasePlan({
