@@ -5,8 +5,32 @@ on:
     workflows: ["UI CI"]
     types: [completed]
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      validated_sha:
+        description: "Exact main SHA validated by UI CI"
+        required: true
+        type: string
+      validated_run_id:
+        description: "Successful UI CI workflow run ID"
+        required: true
+        type: string
+      validated_run_attempt:
+        description: "UI CI workflow run attempt"
+        required: true
+        type: string
+      validated_workflow:
+        description: "Validated workflow name"
+        required: true
+        default: "UI CI"
+        type: string
+      validated_run_url:
+        description: "Validated UI CI run URL"
+        required: true
+        type: string
 
 permissions:
+  actions: read
   contents: write
 
 concurrency:
@@ -15,10 +39,88 @@ concurrency:
 
 jobs:
   release:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Resolve validation context
+        id: validation
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          RUN_WORKFLOW: ${{ github.event.workflow_run.name }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          INPUT_SHA: ${{ inputs.validated_sha }}
+          INPUT_RUN_ID: ${{ inputs.validated_run_id }}
+          INPUT_RUN_ATTEMPT: ${{ inputs.validated_run_attempt }}
+          INPUT_WORKFLOW: ${{ inputs.validated_workflow }}
+          INPUT_RUN_URL: ${{ inputs.validated_run_url }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "workflow_run" ]; then
+            validated_sha="$RUN_SHA"
+            validated_run_id="$RUN_ID"
+            validated_run_attempt="$RUN_ATTEMPT"
+            validated_workflow="$RUN_WORKFLOW"
+            validated_run_url="$RUN_URL"
+          else
+            validated_sha="$INPUT_SHA"
+            validated_run_id="$INPUT_RUN_ID"
+            validated_run_attempt="$INPUT_RUN_ATTEMPT"
+            validated_workflow="$INPUT_WORKFLOW"
+            validated_run_url="$INPUT_RUN_URL"
+          fi
+
+          test -n "$validated_sha"
+          test -n "$validated_run_id"
+          test -n "$validated_run_attempt"
+          test -n "$validated_workflow"
+          test -n "$validated_run_url"
+
+          {
+            echo "sha=$validated_sha"
+            echo "run_id=$validated_run_id"
+            echo "run_attempt=$validated_run_attempt"
+            echo "workflow=$validated_workflow"
+            echo "run_url=$validated_run_url"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Verify validated UI CI run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VALIDATED_SHA: ${{ steps.validation.outputs.sha }}
+          VALIDATED_RUN_ID: ${{ steps.validation.outputs.run_id }}
+          VALIDATED_RUN_ATTEMPT: ${{ steps.validation.outputs.run_attempt }}
+          VALIDATED_WORKFLOW: ${{ steps.validation.outputs.workflow }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_json="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${VALIDATED_RUN_ID}")"
+          run_name="$(jq -r '.name' <<<"$run_json")"
+          run_branch="$(jq -r '.head_branch' <<<"$run_json")"
+          run_sha="$(jq -r '.head_sha' <<<"$run_json")"
+          run_status="$(jq -r '.status' <<<"$run_json")"
+          run_conclusion="$(jq -r '.conclusion' <<<"$run_json")"
+          run_attempt="$(jq -r '.run_attempt' <<<"$run_json")"
+
+          echo "workflow=$run_name"
+          echo "branch=$run_branch"
+          echo "head_sha=$run_sha"
+          echo "status=$run_status"
+          echo "conclusion=$run_conclusion"
+          echo "run_attempt=$run_attempt"
+
+          test "$run_name" = "$VALIDATED_WORKFLOW"
+          test "$run_name" = "UI CI"
+          test "$run_branch" = "main"
+          test "$run_sha" = "$VALIDATED_SHA"
+          test "$run_status" = "completed"
+          test "$run_conclusion" = "success"
+          test "$run_attempt" = "$VALIDATED_RUN_ATTEMPT"
+
       - name: Checkout main history
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -27,7 +129,7 @@ jobs:
 
       - name: Verify exact validated main SHA
         env:
-          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+          VALIDATED_SHA: ${{ steps.validation.outputs.sha }}
         shell: bash
         run: |
           set -euo pipefail
@@ -58,7 +160,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+          VALIDATED_SHA: ${{ steps.validation.outputs.sha }}
         run: |
           set -euo pipefail
           current="$(node -p 'require(\"./package.json\").version')"
@@ -149,17 +251,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.released_tag.outputs.tag }}
-          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
-          VALIDATED_RUN_ID: ${{ github.event.workflow_run.id }}
-          VALIDATED_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
-          VALIDATED_WORKFLOW: ${{ github.event.workflow_run.name }}
-          VALIDATED_RUN_URL: ${{ github.event.workflow_run.html_url }}
+          VALIDATED_SHA: ${{ steps.validation.outputs.sha }}
+          VALIDATED_RUN_ID: ${{ steps.validation.outputs.run_id }}
+          VALIDATED_RUN_ATTEMPT: ${{ steps.validation.outputs.run_attempt }}
+          VALIDATED_WORKFLOW: ${{ steps.validation.outputs.workflow }}
+          VALIDATED_RUN_URL: ${{ steps.validation.outputs.run_url }}
         shell: bash
         run: |
           set -euo pipefail
           tagged_commit_sha="$(git rev-parse "$TAG^{commit}")"
           release_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$TAG" --jq '.id')"
           package_version="$(node -p 'require(\"./package.json\").version')"
+          test "$TAG" = "v$package_version"
+          if [ "${{ steps.version.outputs.release }}" = "true" ]; then
+            test "$tagged_commit_sha" != "$VALIDATED_SHA"
+          else
+            test "$tagged_commit_sha" = "$VALIDATED_SHA"
+          fi
           generated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           cat > release-evidence.json <<EOF
           {
