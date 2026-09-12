@@ -20,6 +20,10 @@ function normalizeForFingerprint(todo) {
   return JSON.stringify(copy)
 }
 
+function canonicalProjectionFields(item) {
+  return Object.fromEntries(REQUIRED_ITEM_KEYS.map((key) => [key, item[key]]))
+}
+
 function declaredBodyStatus(body = "") {
   const match = body.match(/(?:\*\*)?Current status(?:\*\*)?\s*\n\*{0,2}\s*([A-Z_]+)/i)
   return match?.[1]?.toUpperCase() ?? null
@@ -63,16 +67,17 @@ async function main() {
     for (const key of REQUIRED_ITEM_KEYS) {
       if (!(key in item)) invalidItems.push(`${item.id ?? "<unknown>"}: missing ${key}`)
     }
-    if (!Number.isInteger(item.issue) || item.issue <= 0) invalidItems.push(`${item.id ?? "<unknown>"}: invalid issue`) 
+    if (!Number.isInteger(item.issue) || item.issue <= 0) invalidItems.push(`${item.id ?? "<unknown>"}: invalid issue`)
     if (typeof item.id !== "string" || !item.id) invalidItems.push(`${item.issue ?? "<unknown>"}: invalid id`)
     if (!STATUS_VALUES.has(item.status)) invalidItems.push(`${item.id ?? "<unknown>"}: invalid status ${item.status}`)
     if (item.sot !== 86) invalidItems.push(`${item.id ?? "<unknown>"}: sot must be 86`)
 
     if (Number.isInteger(item.issue)) seenIssueNumbers.add(item.issue)
     if (item.id) {
+      const canonical = canonicalProjectionFields(item)
       const previous = canonicalById.get(item.id)
-      if (previous && JSON.stringify(previous) !== JSON.stringify(item)) duplicateIds.push(item.id)
-      canonicalById.set(item.id, item)
+      if (previous && JSON.stringify(previous) !== JSON.stringify(canonical)) duplicateIds.push(item.id)
+      canonicalById.set(item.id, canonical)
     }
   }
 
@@ -86,6 +91,7 @@ async function main() {
     assert(task.issue === gate.issue, `${gate.id}: gate/task issue mismatch`)
     assert(task.status === gate.status, `${gate.id}: gate/task status mismatch`)
     assert(task.priority === gate.priority, `${gate.id}: gate/task priority mismatch`)
+    assert(task.sot === gate.sot, `${gate.id}: gate/task SOT mismatch`)
   }
 
   for (const item of todo.tasks) {
