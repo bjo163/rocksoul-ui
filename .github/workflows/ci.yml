@@ -49,7 +49,7 @@ jobs:
           git diff --exit-code -- dist
       - name: Upload generated dist on drift
         if: ${{ steps.dist_check.outcome == 'failure' }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: generated-dist-${{ github.run_id }}
           path: dist/**
@@ -64,7 +64,7 @@ jobs:
         run: npm run ci
       - name: Upload Quanta audit evidence
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: quanta-audit-${{ github.run_id }}
           path: artifacts/audit/**
@@ -76,7 +76,7 @@ jobs:
         run: npm run test:browser
       - name: Upload browser QA evidence
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: browser-qa-${{ github.run_id }}
           path: |
@@ -110,7 +110,7 @@ jobs:
         run: npm run test:visual
       - name: Upload visual evidence
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: visual-regression-${{ github.run_id }}
           path: |
