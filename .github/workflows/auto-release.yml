@@ -28,6 +28,28 @@ on:
         description: "Validated UI CI run URL"
         required: true
         type: string
+  workflow_call:
+    inputs:
+      validated_sha:
+        description: "Exact main SHA validated by UI CI"
+        required: true
+        type: string
+      validated_run_id:
+        description: "Successful UI CI workflow run ID"
+        required: true
+        type: string
+      validated_run_attempt:
+        description: "UI CI workflow run attempt"
+        required: true
+        type: string
+      validated_workflow:
+        description: "Validated workflow name"
+        required: true
+        type: string
+      validated_run_url:
+        description: "Validated UI CI run URL"
+        required: true
+        type: string
 
 permissions:
   actions: read
@@ -39,7 +61,7 @@ concurrency:
 
 jobs:
   release:
-    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || github.event_name == 'workflow_dispatch' }}
+    if: ${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
