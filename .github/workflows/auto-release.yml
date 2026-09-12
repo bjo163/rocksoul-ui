@@ -118,3 +118,50 @@ jobs:
           TAG: v${{ steps.version.outputs.next }}
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$TAG" --title "@rocksoul/ui $TAG" --generate-notes --verify-tag
+
+      - name: Emit immutable release evidence
+        if: steps.version.outputs.release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v${{ steps.version.outputs.next }}
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+          VALIDATED_RUN_ID: ${{ github.event.workflow_run.id }}
+          VALIDATED_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          VALIDATED_WORKFLOW: ${{ github.event.workflow_run.name }}
+          VALIDATED_RUN_URL: ${{ github.event.workflow_run.html_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tagged_commit_sha="$(git rev-parse "$TAG^{commit}")"
+          release_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$TAG" --jq '.id')"
+          package_version="$(node -p 'require("./package.json").version')"
+          generated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          cat > release-evidence.json <<EOF
+          {
+            "schema": "rocksoul.release-evidence.v1",
+            "repository": "${GITHUB_REPOSITORY}",
+            "generatedAt": "${generated_at}",
+            "validatedWorkflow": "${VALIDATED_WORKFLOW}",
+            "validatedWorkflowRunId": ${VALIDATED_RUN_ID},
+            "validatedWorkflowRunAttempt": ${VALIDATED_RUN_ATTEMPT},
+            "validatedWorkflowRunUrl": "${VALIDATED_RUN_URL}",
+            "validatedSourceSha": "${VALIDATED_SHA}",
+            "releaseVersion": "${package_version}",
+            "releaseTag": "${TAG}",
+            "taggedCommitSha": "${tagged_commit_sha}",
+            "githubReleaseId": ${release_id}
+          }
+          EOF
+          jq -e '.schema == "rocksoul.release-evidence.v1" and .validatedSourceSha != "" and .releaseVersion != "" and .releaseTag != "" and .taggedCommitSha != "" and .githubReleaseId > 0' release-evidence.json >/dev/null
+          sha256sum release-evidence.json | tee release-evidence.sha256
+          gh release upload "$TAG" release-evidence.json release-evidence.sha256
+
+      - name: Upload release evidence artifact
+        if: steps.version.outputs.release == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-evidence-${{ steps.version.outputs.next }}
+          path: |
+            release-evidence.json
+            release-evidence.sha256
+            
