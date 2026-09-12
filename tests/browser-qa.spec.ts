@@ -6,6 +6,8 @@ const screens = [
   "authorization", "states", "notifications", "platform", "mw0042",
 ] as const
 
+const colorSchemes = ["light", "dark", "no-preference"] as const
+
 async function assertSurface(page: Page) {
   await expect(page.locator("h1").first()).toBeVisible()
 
@@ -42,8 +44,28 @@ for (const screen of screens) {
     await assertSurface(page)
   })
 
+  for (const colorScheme of colorSchemes) {
+    test(`${screen} screen survives ${colorScheme} theme`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme })
+      await page.goto(`/?screen=${screen}`, { waitUntil: "domcontentloaded" })
+      await assertSurface(page)
+    })
+  }
+
   test(`${screen} screen survives reduced motion and forced colors`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" })
+    await page.goto(`/?screen=${screen}`, { waitUntil: "domcontentloaded" })
+    await assertSurface(page)
+  })
+
+  test(`${screen} screen survives broken image resources`, async ({ page }) => {
+    await page.route("**/*", async route => {
+      if (route.request().resourceType() === "image") {
+        await route.abort()
+        return
+      }
+      await route.continue()
+    })
     await page.goto(`/?screen=${screen}`, { waitUntil: "domcontentloaded" })
     await assertSurface(page)
   })
@@ -54,6 +76,12 @@ test("public landing and dashboard remain valid in baseline mode", async ({ page
     await page.goto(path, { waitUntil: "domcontentloaded" })
     await assertSurface(page)
   }
+})
+
+test("desktop shell remains usable at 200% zoom-equivalent viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 720, height: 1024 })
+  await page.goto("/?screen=dashboard", { waitUntil: "domcontentloaded" })
+  await assertSurface(page)
 })
 
 test("application shell skip link is keyboard-operable", async ({ page }) => {
