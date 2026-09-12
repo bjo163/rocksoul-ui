@@ -4,6 +4,11 @@
 
 Changes targeting the next release only. Release-specific changes move here automatically when the version is cut.
 
+## v0.15.1
+
+- test(release): add canonical planner regression coverage
+- refactor(release): extract canonical release planner
+
 ## v0.15.0
 
 - test
