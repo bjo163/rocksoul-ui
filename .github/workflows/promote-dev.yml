@@ -126,7 +126,7 @@ jobs:
     permissions:
       actions: read
       contents: write
-    uses: ./.github/workflows/auto-release.yml@main
+    uses: ./.github/workflows/auto-release.yml
     with:
       validated_sha: ${{ needs.promote.outputs.validated_sha }}
       validated_run_id: ${{ needs.promote.outputs.ui_run_id }}
