@@ -57,7 +57,7 @@
     "cmdk": "1.1.1",
     "date-fns": "4.4.0",
     "embla-carousel-react": "8.6.0",
-    "input-otp": "1.5.2",
+    "input-otp": "1.5.0",
     "radix-ui": "1.6.7",
     "react-day-picker": "10.0.1",
     "react-hook-form": "7.87.0",
@@ -91,65 +91,27 @@
     "vite": "8.2.2",
     "vitest": "^4.0.0"
   },
-  "engines": {
-    "node": ">=22",
-    "npm": ">=11.6.0"
-  },
-  "files": [
-    "dist",
-    "THIRD-PARTY-NOTICES.md"
-  ],
+  "engines": {"node": ">=22", "npm": ">=11.6.0"},
+  "files": ["dist", "THIRD-PARTY-NOTICES.md"],
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
+    ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"},
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json",
     "./brand/*": "./dist/brand/*",
     "./assets/*": "./dist/assets/*",
-    "./components/ui": {
-      "types": "./dist/components/ui/index.d.ts",
-      "import": "./dist/components/ui/index.js"
-    },
-    "./components/ui/*": {
-      "types": "./dist/components/ui/*.d.ts",
-      "import": "./dist/components/ui/*.js"
-    },
-    "./components/molecules": {
-      "types": "./dist/components/molecules/index.d.ts",
-      "import": "./dist/components/molecules/index.js"
-    },
-    "./components/molecules/*": {
-      "types": "./dist/components/molecules/*.d.ts",
-      "import": "./dist/components/molecules/*.js"
-    },
-    "./components/organisms": {
-      "types": "./dist/components/organisms/index.d.ts",
-      "import": "./dist/components/organisms/index.js"
-    },
-    "./components/organisms/*": {
-      "types": "./dist/components/organisms/*.d.ts",
-      "import": "./dist/components/organisms/*.js"
-    },
-    "./components/templates": {
-      "types": "./dist/components/templates/index.d.ts",
-      "import": "./dist/components/templates/index.js"
-    },
-    "./components/templates/*": {
-      "types": "./dist/components/templates/*.d.ts",
-      "import": "./dist/components/templates/*.js"
-    }
+    "./components/ui": {"types": "./dist/components/ui/index.d.ts", "import": "./dist/components/ui/index.js"},
+    "./components/ui/*": {"types": "./dist/components/ui/*.d.ts", "import": "./dist/components/ui/*.js"},
+    "./components/molecules": {"types": "./dist/components/molecules/index.d.ts", "import": "./dist/components/molecules/index.js"},
+    "./components/molecules/*": {"types": "./dist/components/molecules/*.d.ts", "import": "./dist/components/molecules/*.js"},
+    "./components/organisms": {"types": "./dist/components/organisms/index.d.ts", "import": "./dist/components/organisms/index.js"},
+    "./components/organisms/*": {"types": "./dist/components/organisms/*.d.ts", "import": "./dist/components/organisms/*.js"},
+    "./components/templates": {"types": "./dist/components/templates/index.d.ts", "import": "./dist/components/templates/index.js"},
+    "./components/templates/*": {"types": "./dist/components/templates/*.d.ts", "import": "./dist/components/templates/*.js"}
   },
-  "sideEffects": [
-    "./dist/styles.css"
-  ],
-  "peerDependencies": {
-    "react": ">=19",
-    "react-dom": ">=19"
-  },
+  "sideEffects": ["./dist/styles.css"],
+  "peerDependencies": {"react": ">=19", "react-dom": ">=19"},
   "main": "./dist/index.js",
   "style": "./dist/styles.css"
 }
