@@ -19,6 +19,13 @@ jobs:
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: "22"
+          package-manager-cache: false
+      - name: Upgrade npm
+        run: npm install --global npm@11.6.0
+      - name: Verify Node/npm contract
+        run: |
+          node --version
+          npm --version
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
       - name: Strict repository consistency
