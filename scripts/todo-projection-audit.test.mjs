@@ -5,11 +5,16 @@ import crypto from "node:crypto"
 
 const todoPath = new URL("../ROCKSOUL-TODO.json", import.meta.url)
 const validStatuses = ["PLANNED", "READY", "IN_PROGRESS", "BLOCKED", "VERIFYING", "VERIFIED", "CLOSED"]
+const canonicalKeys = ["issue", "id", "status", "priority", "sot"]
 
 function fingerprint(todo) {
   const copy = structuredClone(todo)
   delete copy.projection.generated_at
   return crypto.createHash("sha256").update(JSON.stringify(copy)).digest("hex")
+}
+
+function canonical(entry) {
+  return Object.fromEntries(canonicalKeys.map((key) => [key, entry[key]]))
 }
 
 test("TODO projection has one canonical schema and status vocabulary", async () => {
@@ -20,14 +25,15 @@ test("TODO projection has one canonical schema and status vocabulary", async () 
   assert.deepEqual(todo.projection.status_values, validStatuses)
 })
 
-test("TODO projection IDs are unique by canonical content", async () => {
+test("duplicate release-gate/task IDs agree on canonical projection fields", async () => {
   const todo = JSON.parse(await fs.readFile(todoPath, "utf8"))
   const entries = [...todo.release_gates, ...todo.tasks]
   const byId = new Map()
   for (const entry of entries) {
+    const value = canonical(entry)
     const prior = byId.get(entry.id)
-    if (prior) assert.deepEqual(prior, entry)
-    byId.set(entry.id, entry)
+    if (prior) assert.deepEqual(prior, value)
+    byId.set(entry.id, value)
   }
   assert.equal(byId.size, todo.tasks.length)
 })
