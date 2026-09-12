@@ -69,7 +69,7 @@ describe("semantic composer foundation", () => {
 
     expect(result.primaryRole).toBe("canonical")
     expect(result.secondaryMarks).toEqual(["evidence", "provenance", "line", "mono"])
-    expect(result.tertiaryMetadata).toEqual(["forensic", "canonical"])
+    expect(result.tertiaryMetadata).toEqual(["forensic"])
     expect(result.inspectorDetails).toEqual(["evidence", "provenance", "line", "canonical", "forensic"])
   })
 
