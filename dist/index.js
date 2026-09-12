@@ -27,6 +27,7 @@ import { Timeline as Qe } from "./components/organisms/timeline.js";
 import { AttachmentList as $e } from "./components/organisms/attachment-list.js";
 import { FormSection as et } from "./components/organisms/form-section.js";
 import { FormFooter as tt } from "./components/organisms/form-footer.js";
+import "./components/organisms/index.js";
 import { SimplePagination as nt } from "./components/molecules/pagination.js";
 import { Fragment as E, jsx as D, jsxs as O } from "react/jsx-runtime";
 import { createContext as rt, useContext as it, useEffect as k, useId as A, useMemo as at, useState as j } from "react";
