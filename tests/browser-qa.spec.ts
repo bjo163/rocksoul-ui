@@ -8,6 +8,14 @@ const screens = [
 
 const colorSchemes = ["light", "dark", "no-preference"] as const
 
+async function horizontalOverflow(page: Page) {
+  return page.evaluate(() => Math.max(
+    0,
+    document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    document.body.scrollWidth - document.body.clientWidth,
+  ))
+}
+
 async function assertSurface(page: Page) {
   await expect(page.locator("h1").first()).toBeVisible()
 
@@ -24,12 +32,7 @@ async function assertSurface(page: Page) {
     }))
   expect(blocking).toEqual([])
 
-  const overflow = await page.evaluate(() => Math.max(
-    0,
-    document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    document.body.scrollWidth - document.body.clientWidth,
-  ))
-  expect(overflow).toBeLessThanOrEqual(1)
+  expect(await horizontalOverflow(page)).toBeLessThanOrEqual(1)
 
   const duplicateIds = await page.evaluate(() => {
     const ids = [...document.querySelectorAll("[id]")].map(node => node.id).filter(Boolean)
@@ -70,6 +73,17 @@ for (const screen of screens) {
     await assertSurface(page)
   })
 }
+
+test("all production screens survive 200% zoom-equivalent reflow", async ({ page }) => {
+  // A 1440px desktop viewport viewed at 200% has an effective CSS layout width of 720px.
+  // This exercises WCAG-style reflow without relying on browser-UI zoom controls unavailable to Playwright.
+  await page.setViewportSize({ width: 720, height: 512 })
+  for (const screen of screens) {
+    await page.goto(`/?screen=${screen}`, { waitUntil: "domcontentloaded" })
+    await expect(page.locator("h1").first()).toBeVisible()
+    expect(await horizontalOverflow(page), `${screen} overflowed at 200% equivalent reflow`).toBeLessThanOrEqual(1)
+  }
+})
 
 test("public landing and dashboard remain valid in baseline mode", async ({ page }) => {
   for (const path of ["/", "/?screen=dashboard"]) {
@@ -128,6 +142,24 @@ test("offline system state remains explicit and accessible", async ({ page }) =>
   await expect(page.getByText(/Backend: offline/i)).toBeVisible()
   await expect(page.getByText(/offline/i).first()).toBeVisible()
   await assertSurface(page)
+})
+
+test("system state matrix exposes actionable error, empty, loading, offline, and forbidden states", async ({ page }) => {
+  await page.goto("/?screen=states", { waitUntil: "domcontentloaded" })
+
+  await expect(page.getByText("Error", { exact: true })).toBeVisible()
+  await expect(page.getByText("Empty", { exact: true })).toBeVisible()
+  await expect(page.getByText("Loading", { exact: true })).toBeVisible()
+  await expect(page.getByText("Backend offline", { exact: true })).toBeVisible()
+  await expect(page.getByText("Forbidden", { exact: true })).toBeVisible()
+  await expect(page.getByText(/TRACE-0042-QUERY/)).toBeVisible()
+  await expect(page.getByText(/42 cases cached at 05:32/)).toBeVisible()
+  await expect(page.getByText("legal:publish", { exact: true })).toBeVisible()
+  await expect(page.getByText("researcher", { exact: true })).toBeVisible()
+  await expect(page.getByRole("button", { name: "Try again" })).toBeVisible()
+  await expect(page.getByRole("button", { name: "Clear filters" })).toBeVisible()
+  await expect(page.getByRole("button", { name: "Retry connection" })).toBeVisible()
+  await expect(page.getByRole("button", { name: "Request access" })).toBeVisible()
 })
 
 test("application shell skip link is keyboard-operable", async ({ page }) => {

@@ -10,17 +10,17 @@
   },
   "projection": {
     "generated_from": "github issue graph",
-    "generated_at": "2026-09-12T01:35:47Z",
+    "generated_at": "2026-09-12T05:33:04Z",
     "rule": "No task is authoritative unless it maps to an existing GitHub issue/PR.",
     "status_values": ["PLANNED", "READY", "IN_PROGRESS", "BLOCKED", "VERIFYING", "VERIFIED", "CLOSED"]
   },
   "release_gates": [
-    { "issue": 87, "id": "P0-GOV-001", "status": "PLANNED", "priority": "P0" },
-    { "issue": 88, "id": "P0-REL-001", "status": "IN_PROGRESS", "priority": "P0" },
-    { "issue": 27, "id": "UI-QA-001", "status": "PLANNED", "priority": "P0" },
-    { "issue": 51, "id": "UI-CROSS-REPO-COMPAT-001", "status": "IN_PROGRESS", "priority": "P0" },
-    { "issue": 52, "id": "UI-GOLDEN-CORPUS-HARNESS-001", "status": "BLOCKED", "priority": "P0" },
-    { "issue": 53, "id": "UI-VISUAL-FREEZE-001", "status": "IN_PROGRESS", "priority": "P0" }
+    { "issue": 87, "id": "P0-GOV-001", "status": "PLANNED", "priority": "P0", "sot": 86 },
+    { "issue": 88, "id": "P0-REL-001", "status": "IN_PROGRESS", "priority": "P0", "sot": 86 },
+    { "issue": 27, "id": "UI-QA-001", "status": "PLANNED", "priority": "P0", "sot": 86 },
+    { "issue": 51, "id": "UI-CROSS-REPO-COMPAT-001", "status": "IN_PROGRESS", "priority": "P0", "sot": 86 },
+    { "issue": 52, "id": "UI-GOLDEN-CORPUS-HARNESS-001", "status": "BLOCKED", "priority": "P0", "sot": 86 },
+    { "issue": 53, "id": "UI-VISUAL-FREEZE-001", "status": "IN_PROGRESS", "priority": "P0", "sot": 86 }
   ],
   "tasks": [
     { "issue": 20, "id": "UI-REPO-CONTROL-001", "status": "IN_PROGRESS", "priority": "P0", "role": "governance-entrypoint", "sot": 86 },

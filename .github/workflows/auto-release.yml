@@ -124,6 +124,12 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
       - name: Verify exact validated main SHA
         env:
           VALIDATED_SHA: ${{ steps.validation.outputs.sha }}
@@ -134,17 +140,7 @@ jobs:
           current_sha="$(git rev-parse origin/main)"
           echo "validated_sha=$VALIDATED_SHA"
           echo "current_main_sha=$current_sha"
-          if [ "$current_sha" != "$VALIDATED_SHA" ]; then
-            echo "::error::Stale release validation: validated=$VALIDATED_SHA current-main=$current_sha"
-            exit 1
-          fi
-          echo "Validated exact main SHA: $VALIDATED_SHA"
-
-      - name: Setup Node
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          node-version: "22"
-          package-manager-cache: false
+          node scripts/release-attestation.mjs "$VALIDATED_SHA" "$current_sha"
 
       - name: Upgrade npm
         run: npm install --global npm@11.6.0
@@ -160,7 +156,7 @@ jobs:
           VALIDATED_SHA: ${{ steps.validation.outputs.sha }}
         run: |
           set -euo pipefail
-          current="$(node -p 'require(\"./package.json\").version')"
+          current="$(node -p 'require("./package.json").version')"
           tag="v$current"
           if git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
             tagged_commit_sha="$(git rev-parse "$tag^{commit}")"
@@ -258,7 +254,8 @@ jobs:
           set -euo pipefail
           tagged_commit_sha="$(git rev-parse "$TAG^{commit}")"
           release_id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$TAG" --jq '.id')"
-          package_version="$(node -p 'require(\"./package.json\").version')"
+          package_version="$(node -p 'require("./package.json").version')"
+          visual_identity="$(node scripts/visual-system-v2-identity.mjs)"
           test "$TAG" = "v$package_version"
           if [ "${{ steps.version.outputs.release }}" = "true" ]; then
             test "$tagged_commit_sha" != "$VALIDATED_SHA"
@@ -276,13 +273,14 @@ jobs:
             "validatedWorkflowRunAttempt": ${VALIDATED_RUN_ATTEMPT},
             "validatedWorkflowRunUrl": "${VALIDATED_RUN_URL}",
             "validatedSourceSha": "${VALIDATED_SHA}",
+            "visualSystem": ${visual_identity},
             "releaseVersion": "${package_version}",
             "releaseTag": "${TAG}",
             "taggedCommitSha": "${tagged_commit_sha}",
             "githubReleaseId": ${release_id}
           }
           EOF
-          jq -e '.schema == "rocksoul.release-evidence.v1" and .validatedSourceSha != "" and .releaseVersion != "" and .releaseTag != "" and .taggedCommitSha != "" and .githubReleaseId > 0' release-evidence.json >/dev/null
+          jq -e '.schema == "rocksoul.release-evidence.v1" and .validatedSourceSha != "" and .visualSystem.schema == "rocksoul.visual-system-v2-identity.v1" and .visualSystem.runtimeDeliveryCommit != "" and .visualSystem.upstreamContractBlobSha != "" and .releaseVersion != "" and .releaseTag != "" and .taggedCommitSha != "" and .githubReleaseId > 0' release-evidence.json >/dev/null
           sha256sum release-evidence.json | tee release-evidence.sha256
           gh release upload "$TAG" release-evidence.json release-evidence.sha256
 

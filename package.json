@@ -36,7 +36,7 @@
     "audit:consumer": "node scripts/ui-consumer-audit.mjs",
     "audit:adapters": "node scripts/adapter-audit.mjs",
     "audit:todo-projection": "node scripts/todo-projection-audit.mjs",
-    "test:audits": "node --test scripts/design-value-audit.test.mjs scripts/architecture-audit.test.mjs scripts/api-stability-audit.test.mjs scripts/auto-release-plan.test.mjs scripts/todo-projection-audit.test.mjs",
+    "test:audits": "node --test scripts/design-value-audit.test.mjs scripts/architecture-audit.test.mjs scripts/api-stability-audit.test.mjs scripts/auto-release-plan.test.mjs scripts/release-attestation.test.mjs scripts/todo-projection-audit.test.mjs scripts/visual-system-v2-identity.test.mjs",
     "test:assets:freshness": "node scripts/assets-freshness-classification.test.mjs",
     "ci": "npm run audit:repository && npm run audit:todo-projection && npm run audit:design-values && npm run audit:tokens && npm run audit:styles && npm run audit:architecture && npm run audit:api-stability && npm run test:audits && npm run audit:interaction && npm run audit:foundation && npm run audit:dependencies && npm run audit:a11y && npm run audit:research-visuals && npm run audit:domains && npm run audit:assets-sync && npm run test:assets:freshness && npm run audit:assets-freshness && npm run audit:assets-registry && npm run audit:assets-integrity && npm run audit:platform-admin && npm run audit:application && npm run audit:semantic-map && npm run audit:visual-system-v2 && npm run typecheck && npm run test:unit && npm run build:lib && npm run audit:package && npm run test:consumer && npm run audit:release && npm run build:playground && npm run build-storybook",
     "prepare": "npm run build:lib",
@@ -119,9 +119,36 @@
       "types": "./dist/components/ui/*.d.ts",
       "import": "./dist/components/ui/*.js"
     },
-    "./components/*": {
-      "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.js"
+    "./components/molecules": {
+      "types": "./dist/components/molecules/index.d.ts",
+      "import": "./dist/components/molecules/index.js"
+    },
+    "./components/molecules/*": {
+      "types": "./dist/components/molecules/*.d.ts",
+      "import": "./dist/components/molecules/*.js"
+    },
+    "./components/organisms": {
+      "types": "./dist/components/organisms/index.d.ts",
+      "import": "./dist/components/organisms/index.js"
+    },
+    "./components/organisms/*": {
+      "types": "./dist/components/organisms/*.d.ts",
+      "import": "./dist/components/organisms/*.js"
+    },
+    "./components/templates": {
+      "types": "./dist/components/templates/index.d.ts",
+      "import": "./dist/components/templates/index.js"
+    },
+    "./components/templates/*": {
+      "types": "./dist/components/templates/*.d.ts",
+      "import": "./dist/components/templates/*.js"
     }
-  }
+  },
+  "sideEffects": ["./dist/styles.css"],
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "main": "./dist/index.js",
+  "style": "./dist/styles.css"
 }
