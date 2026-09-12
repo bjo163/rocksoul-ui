@@ -50,8 +50,8 @@
     { "issue": 53, "id": "UI-VISUAL-FREEZE-001", "status": "IN_PROGRESS", "priority": "P0", "role": "v2-exit-gate", "sot": 86 },
     { "issue": 54, "id": "UI-EXEC-BRAND-001", "status": "PLANNED", "priority": "P1", "role": "brand-semantic-separation", "sot": 86 },
     { "issue": 86, "id": "UI-SOT-001", "status": "IN_PROGRESS", "priority": "P0", "role": "single-source-of-truth", "sot": 86 },
-    { "issue": 87, "id": "P0-GOV-001", "status": "OPEN", "priority": "P0", "role": "branch-governance", "sot": 86 },
-    { "issue": 88, "id": "P0-REL-001", "status": "OPEN", "priority": "P0", "role": "exact-sha-release", "sot": 86 },
+    { "issue": 87, "id": "P0-GOV-001", "status": "PLANNED", "priority": "P0", "role": "branch-governance", "sot": 86 },
+    { "issue": 88, "id": "P0-REL-001", "status": "IN_PROGRESS", "priority": "P0", "role": "exact-sha-release", "sot": 86 },
     { "issue": 89, "id": "P1-REL-002", "status": "PLANNED", "priority": "P1", "role": "release-versioning", "sot": 86 },
     { "issue": 90, "id": "P1-PKG-001", "status": "PLANNED", "priority": "P1", "role": "package-distribution", "sot": 86 },
     { "issue": 91, "id": "P1-GOV-002", "status": "IN_PROGRESS", "priority": "P1", "role": "todo-projection", "sot": 86 }
