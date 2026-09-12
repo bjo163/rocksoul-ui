@@ -4,6 +4,37 @@
 
 Changes targeting the next release only. Release-specific changes move here automatically when the version is cut.
 
+## v0.15.1
+
+- test(release): add canonical planner regression coverage
+- refactor(release): extract canonical release planner
+
+## v0.15.0
+
+- test
+- docs(governance): publish GitHub issue SOT entrypoint
+- chore(governance): make GitHub issue graph the TODO source of truth
+- chore(dist): synchronize generated delivery artifacts
+- feat(compat): add fail-closed Visual System V2 contract handshake
+- fix(ci): make generated-dist gate release-authoritative
+- chore(dist): synchronize generated delivery artifacts
+- feat(corpus): establish Visual Golden Corpus foundation
+- docs(v2): add Visual System 2.0 migration guide
+- fix(ci): close promoted-main release chain
+- test(ci): enforce promoted-main release chain
+- fix(ci): dispatch exact main verification after promotion
+- fix(ci): allow explicit main verification dispatch
+- feat(semantic): merge deterministic V2 composer foundation
+- test(semantic): lock concise accessibility summary
+- fix(semantic): dedupe accessibility summary roles
+- test(semantic): prove unknown dimensions fail closed
+- fix(semantic): reject unknown composer dimensions
+- fix(semantic): keep composer foundation internal
+- feat(semantic): export V2 composer foundation
+- test(semantic): cover V2 composer determinism and fail-closed parsing
+- feat(semantic): add deterministic V2 semantic composer foundation
+- fix(release): publish existing package tag before bumping (#65)
+
 ## v0.14.0
 
 - feat(visual-v2): merge compatibility foundation
