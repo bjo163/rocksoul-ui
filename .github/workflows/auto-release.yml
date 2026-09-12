@@ -58,16 +58,24 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
+          set -euo pipefail
           current="$(node -p 'require("./package.json").version')"
           tag="v$current"
           if git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
+            tagged_commit_sha="$(git rev-parse "$tag^{commit}")"
+            if [ "$tagged_commit_sha" != "$VALIDATED_SHA" ]; then
+              echo "::error::Existing tag $tag points to $tagged_commit_sha, not validated main SHA $VALIDATED_SHA"
+              exit 1
+            fi
             if gh release view "$tag" >/dev/null 2>&1; then
               echo "published=false" >> "$GITHUB_OUTPUT"
               echo "No pending GitHub release for $tag."
             else
               gh release create "$tag" --title "@rocksoul/ui $tag" --generate-notes --verify-tag
               echo "published=true" >> "$GITHUB_OUTPUT"
+              echo "tag=$tag" >> "$GITHUB_OUTPUT"
               echo "Published missing GitHub release for existing tag $tag."
             fi
           else
@@ -119,11 +127,25 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$TAG" --title "@rocksoul/ui $TAG" --generate-notes --verify-tag
 
+      - name: Resolve released tag
+        id: released_tag
+        if: steps.version.outputs.release == 'true' || steps.pending_release.outputs.published == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.pending_release.outputs.published }}" = "true" ]; then
+            tag="${{ steps.pending_release.outputs.tag }}"
+          else
+            tag="v${{ steps.version.outputs.next }}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "release_tag=$tag"
+
       - name: Emit immutable release evidence
-        if: steps.version.outputs.release == 'true'
+        if: steps.version.outputs.release == 'true' || steps.pending_release.outputs.published == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: v${{ steps.version.outputs.next }}
+          TAG: ${{ steps.released_tag.outputs.tag }}
           VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
           VALIDATED_RUN_ID: ${{ github.event.workflow_run.id }}
           VALIDATED_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
@@ -157,11 +179,10 @@ jobs:
           gh release upload "$TAG" release-evidence.json release-evidence.sha256
 
       - name: Upload release evidence artifact
-        if: steps.version.outputs.release == 'true'
+        if: steps.version.outputs.release == 'true' || steps.pending_release.outputs.published == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: release-evidence-${{ steps.version.outputs.next }}
+          name: release-evidence-${{ steps.released_tag.outputs.tag }}
           path: |
             release-evidence.json
             release-evidence.sha256
-            
