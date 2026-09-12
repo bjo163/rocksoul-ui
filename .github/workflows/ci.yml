@@ -77,7 +77,7 @@ jobs:
         run: npm run test:browser
       - name: Upload browser QA evidence
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@ea165c3af4b0b32f11111ea6f5e5a4ec2b6a0f # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: browser-qa-${{ github.run_id }}
           path: |
@@ -111,7 +111,7 @@ jobs:
         run: npm run test:visual
       - name: Upload visual evidence
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@ea165c3c4b8b03c97d0636aeb3b4ecbec5883bf # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: visual-regression-${{ github.run_id }}
           path: |
