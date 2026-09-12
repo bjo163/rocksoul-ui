@@ -37,6 +37,42 @@ describe("semantic composer foundation", () => {
     expect(composeVisualSemanticState({ density: "compact" }, "document").density).toBe("compact")
   })
 
+  it("covers every supported surface with a deterministic density adapter", () => {
+    const expected = {
+      table: "compact",
+      graph: "compact",
+      map: "compact",
+      timeline: "comfortable",
+      inspector: "comfortable",
+      document: "editorial",
+      console: "compact",
+      mobile: "compact",
+    } as const
+
+    for (const [surface, density] of Object.entries(expected)) {
+      expect(composeVisualSemanticState({}, surface as keyof typeof expected).density).toBe(density)
+    }
+  })
+
+  it("applies deterministic semantic precedence without collapsing secondary meaning", () => {
+    const result = composeVisualSemanticState(
+      {
+        typography: "mono",
+        chart: "line",
+        graphEdge: "provenance",
+        graphNode: "evidence",
+        lifecycle: "canonical",
+        surface: "forensic",
+      },
+      "graph",
+    )
+
+    expect(result.primaryRole).toBe("canonical")
+    expect(result.secondaryMarks).toEqual(["evidence", "provenance", "line", "mono"])
+    expect(result.tertiaryMetadata).toEqual(["forensic", "canonical"])
+    expect(result.inspectorDetails).toEqual(["evidence", "provenance", "line", "canonical", "forensic"])
+  })
+
   it("produces deterministic accessible output", () => {
     const state = parseVisualSemanticState({
       graphNode: "canonical-record",
