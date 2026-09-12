@@ -18,7 +18,7 @@ jobs:
   promote:
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'dev' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout repository history
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -47,22 +47,89 @@ jobs:
 
           if [ "$main_sha" = "$dev_sha" ]; then
             echo "main and dev are already synchronized at $dev_sha"
-            echo "dispatch_main_ci=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          if ! git merge-base --is-ancestor "$main_sha" "$dev_sha"; then
+          elif ! git merge-base --is-ancestor "$main_sha" "$dev_sha"; then
             echo "::error::Promotion refused: main ($main_sha) is not an ancestor of validated dev ($dev_sha)."
             echo "::error::Reconcile main into dev and rerun UI CI; no force push will be attempted."
             exit 1
+          else
+            git checkout --detach "$dev_sha"
+            git push origin HEAD:main
           fi
 
-          git checkout --detach "$dev_sha"
-          git push origin HEAD:main
           echo "dispatch_main_ci=true" >> "$GITHUB_OUTPUT"
+          echo "validated_sha=$dev_sha" >> "$GITHUB_OUTPUT"
 
       - name: Dispatch exact main UI CI
+        id: dispatch_ci
         if: steps.promote.outputs.dispatch_main_ci == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run ci.yml --ref main
+        run: |
+          set -euo pipefail
+          gh workflow run ci.yml --ref main
+
+      - name: Wait for exact main UI CI
+        id: main_ci
+        if: steps.promote.outputs.dispatch_main_ci == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VALIDATED_SHA: ${{ steps.promote.outputs.validated_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          found_id=""
+          found_attempt=""
+          found_url=""
+          for _ in $(seq 1 30); do
+            run_json="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?branch=main&event=workflow_dispatch&per_page=20" --jq '[.workflow_runs[] | select(.name == "UI CI" and .head_sha == "'"$VALIDATED_SHA"'")] | sort_by(.database_id) | reverse | .[0] // empty')"
+            if [ -n "$run_json" ]; then
+              status="$(jq -r '.status' <<<"$run_json")"
+              conclusion="$(jq -r '.conclusion // ""' <<<"$run_json")"
+              found_id="$(jq -r '.id' <<<"$run_json")"
+              found_attempt="$(jq -r '.run_attempt' <<<"$run_json")"
+              found_url="$(jq -r '.html_url' <<<"$run_json")"
+              echo "UI CI run=$found_id sha=$VALIDATED_SHA status=$status conclusion=$conclusion"
+              if [ "$status" = "completed" ]; then
+                if [ "$conclusion" != "success" ]; then
+                  echo "::error::Exact main UI CI failed: run $found_id conclusion=$conclusion"
+                  exit 1
+                fi
+                break
+              fi
+            fi
+            sleep 20
+          done
+
+          test -n "$found_id"
+          test -n "$found_attempt"
+          test -n "$found_url"
+          final_json="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${found_id}")"
+          test "$(jq -r '.head_sha' <<<"$final_json")" = "$VALIDATED_SHA"
+          test "$(jq -r '.name' <<<"$final_json")" = "UI CI"
+          test "$(jq -r '.head_branch' <<<"$final_json")" = "main"
+          test "$(jq -r '.status' <<<"$final_json")" = "completed"
+          test "$(jq -r '.conclusion' <<<"$final_json")" = "success"
+
+          {
+            echo "run_id=$found_id"
+            echo "run_attempt=$found_attempt"
+            echo "run_url=$found_url"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch exact-SHA automatic release
+        if: steps.promote.outputs.dispatch_main_ci == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VALIDATED_SHA: ${{ steps.promote.outputs.validated_sha }}
+          UI_RUN_ID: ${{ steps.main_ci.outputs.run_id }}
+          UI_RUN_ATTEMPT: ${{ steps.main_ci.outputs.run_attempt }}
+          UI_RUN_URL: ${{ steps.main_ci.outputs.run_url }}
+        run: |
+          set -euo pipefail
+          gh workflow run auto-release.yml \
+            --ref main \
+            -f "validated_sha=$VALIDATED_SHA" \
+            -f "validated_run_id=$UI_RUN_ID" \
+            -f "validated_run_attempt=$UI_RUN_ATTEMPT" \
+            -f "validated_workflow=UI CI" \
+            -f "validated_run_url=$UI_RUN_URL"
