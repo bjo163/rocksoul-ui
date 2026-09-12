@@ -78,9 +78,55 @@ test("public landing and dashboard remain valid in baseline mode", async ({ page
   }
 })
 
-test("desktop shell remains usable at 200% zoom-equivalent viewport", async ({ page }) => {
-  await page.setViewportSize({ width: 720, height: 1024 })
+test("dashboard remains stable with long content injected", async ({ page }) => {
   await page.goto("/?screen=dashboard", { waitUntil: "domcontentloaded" })
+  await page.evaluate(() => {
+    const container = document.createElement("section")
+    container.setAttribute("aria-label", "Long content resilience")
+    container.style.maxWidth = "100%"
+    container.style.overflowWrap = "anywhere"
+    container.textContent = "TRACE-" + "LONG-CONTENT-".repeat(300)
+    document.querySelector("main")?.append(container)
+  })
+  await assertSurface(page)
+})
+
+test("command palette opens from Control+K, traps focus, and closes on Escape", async ({ page }) => {
+  await page.goto("/?screen=dashboard", { waitUntil: "domcontentloaded" })
+  await page.keyboard.press("Control+K")
+  const dialog = page.getByRole("dialog", { name: /Command palette/i })
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByRole("textbox", { name: /Search actions/i })).toBeFocused()
+  await expect(dialog.getByText("Create review task")).toBeVisible()
+  await page.keyboard.press("Escape")
+  await expect(dialog).toBeHidden()
+})
+
+test("notifications drawer opens, exposes unread state, and closes on Escape", async ({ page }) => {
+  await page.goto("/?screen=dashboard", { waitUntil: "domcontentloaded" })
+  await page.getByRole("button", { name: /Notifications, 3 unread/i }).click()
+  const dialog = page.getByRole("dialog", { name: "Notifications" })
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByText("3 unread")).toBeVisible()
+  await expect(dialog.getByRole("button", { name: "Mark all read" })).toBeVisible()
+  await page.keyboard.press("Escape")
+  await expect(dialog).toBeHidden()
+})
+
+test("mobile navigation opens as a focus-managed drawer", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto("/?screen=dashboard", { waitUntil: "domcontentloaded" })
+  await page.getByRole("button", { name: "Open navigation" }).click()
+  const dialog = page.getByRole("dialog", { name: /Navigation/i })
+  await expect(dialog).toBeVisible()
+  await page.keyboard.press("Escape")
+  await expect(dialog).toBeHidden()
+})
+
+test("offline system state remains explicit and accessible", async ({ page }) => {
+  await page.goto("/?screen=states", { waitUntil: "domcontentloaded" })
+  await expect(page.getByText(/Backend: offline/i)).toBeVisible()
+  await expect(page.getByText(/offline/i).first()).toBeVisible()
   await assertSurface(page)
 })
 
