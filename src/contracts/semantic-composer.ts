@@ -138,7 +138,7 @@ export function composeVisualSemanticState(
     semanticState.surface,
     semanticState.density,
     semanticState.lifecycle,
-  ].filter((value): value is string => value !== undefined)
+  ].filter((value): value is string => value !== undefined && value !== primaryRole)
 
   const inspectorDetails = [
     semanticState.graphNode,
